@@ -1,0 +1,53 @@
+<md-list flex ng-controller="CheckBoxFieldViewController">
+    <md-list-item>
+        <div flex>
+            <!-- <label ng-model="fieldModel.label">CheckBox</label>
+ -->
+            <md-input-container>
+                <label>Label</label>
+                <input type="text" name="label" ng-model="fieldModel.label" ng-model-options="{debounce:{'default':1000}}" ng-change="fieldCtrl.getError('label')">
+                <div ng-messages="fieldCtrl.$error.label" class="ng-messages-floating line-clamp-2">
+                    <div ng-message="0" class="ng-message">{{fieldCtrl.$error.label[0]}}</div>
+                </div>
+            </md-input-container>
+        </div>
+    </md-list-item>
+    <md-list-item>
+        <div flex>
+            <!-- <label ng-model="fieldModel.desc">CheckBox Description</label> -->
+            <md-input-container flex>
+                <label>Description</label>
+                <textarea ng-model="fieldModel.desc" ng-model-options="{debounce:{'default':1000}}" ng-change="fieldCtrl.getError('desc')"></textarea>
+                <div ng-messages="fieldCtrl.$error.desc" class="ng-messages-floating line-clamp-2">
+                    <div ng-message="0" class="ng-message">{{fieldCtrl.$error.desc[0]}}</div>
+                </div>
+            </md-input-container>
+        </div>
+        <md-divider class=""></md-divider>
+    </md-list-item>
+    <md-list-item>
+        <md-button ng-click="addCheckBoxField()" ng-disabled="isNotAllowedToAdd" class="" aria-label="Add">
+            Add Check Box Field
+            <md-icon md-font-icon="icon icon-add" class="toolbar-icon"></md-icon>
+        </md-button>
+    </md-list-item>
+    <div class="md-item-padiding-sides" ng-repeat="checkBoxItem in fieldModel.checkBoxListData" layout="columns">
+        <!-- <md-checkbox ng-model="checkBoxItem.selected" aria-label="checkBoxItem.name"></md-checkbox> -->
+
+        <md-list flex class="card">
+            <md-list-item ng-click="editCheckBox($index)">
+                <md-icon aria-label="edit" md-font-icon="icon icon-create"></md-icon>
+                <p flex>{{checkBoxItem.name}}</p>
+
+                <md-icon class="md-secondary" ng-click="removeCheckBox($index)" aria-label="close" md-font-icon="icon icon-close"></md-icon>
+                <md-divider></md-divider>
+            </md-list-item>
+            
+            <md-list-item>
+
+                <md-checkbox ng-model="checkBoxItem.selected" aria-label="checkBoxItem.name" ng-change="updateFormModel()"></md-checkbox> 
+                <span>Default value is {{checkBoxItem.selected}}</span>
+            </md-list-item>
+        </md-list>
+    </div>
+</md-list>

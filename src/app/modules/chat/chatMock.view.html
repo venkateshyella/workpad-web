@@ -1,0 +1,81 @@
+<view type="toolbarView" title="'Chat'">
+  <toolbar app-toolbar title="'Chat'" sub-title="_connStatusMessage">
+    <toolbar-options>
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ng-click="_connStatus.isInARoom ? leaveChatroom() : joinChatroom(); $mdCloseMenu();">
+              {{_connStatus.isInARoom ? 'Exit WP Room' : 'Join Room'}}
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item ng-show="_connStatus.isInARoom">
+            <md-button ng-click="loadOlderMessages(); $mdCloseMenu();">
+              Load more
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <md-list class="chatList" id="mockChatListView">
+
+        <md-list-item ng-repeat="message in messageStack"
+                      class="chItem"
+                      ng-class="{'item-align-right':message.fromUserInfo.userId==session.userId, 'item-align-left':message.fromUserInfo.userId!=session.userId}"
+                      layout="row" layout-align="center start">
+          <div class="chBubble whiteframe-z1">
+            <p>{{message.text}}</p>
+
+            <div class="color-light-2 chSubtext"
+                 layout="row" layout-align="start center">
+              <span class="push-right">{{message.fromUser}}</span>
+              <span>{{MU.getDisplayTime(message.timestamp)}}</span>
+            </div>
+          </div>
+          <div class="chIcon">
+            <img src="assets/images/profile-image-placeholder.png" alt=""
+                 class="img round"/>
+          </div>
+        </md-list-item>
+
+      </md-list>
+
+    </row>
+    <row layout-height="4em" layout-gravity="bottom">
+      <form name="mockChatForm">
+        <div class="chSubmitForm"
+             layout="row">
+          <div class="chMessageInputField" flex>
+            <input ng-model="formModel.newMessage"
+                   ng-keypress="onInputFieldKeyPress($event, newMessage)"
+                   ng-disabled="!_connStatus.isInARoom"
+                   type="text" placeholder="enter message"
+                   class=""/>
+          </div>
+          <md-button ng-click="flush()"
+                     class="md-icon-button chSubmitBtn"
+                     aria-label="Send Message"
+                     md-no-ink>
+            <md-icon md-font-icon="icon icon-send"></md-icon>
+            <!--<span>Send</span>-->
+          </md-button>
+        </div>
+      </form>
+    </row>
+  </layout>
+
+</view>

@@ -1,0 +1,58 @@
+$md-taller-height: 180px;
+
+md-toolbar {
+  position: relative;
+
+  &.md-tall {
+    &.md-taller {
+      height: $md-taller-height;
+      min-height: $md-taller-height;
+      max-height: $md-taller-height;
+    }
+  }
+  &.toolbar-clear {
+    background: $light;
+    color: $dark;
+    * {
+      color: $dark;
+    }
+  }
+  .md-toolbar-tools {
+    position: relative;
+  }
+
+  .toolbar-subtitle {
+    font-size: 70%;
+    line-height: 100%;
+  }
+
+  .toolbar-content {
+    padding: 0 16px;
+    font-size: 16px;
+    z-index: 2;
+  }
+  &.md-auto-height {
+    height: auto;
+  }
+
+  .toolbar-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+
+    .img-bg {
+      width: 100%;
+    }
+    .img-bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparentize($dark, 0.2);
+    }
+  }
+}

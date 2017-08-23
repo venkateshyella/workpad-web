@@ -1,0 +1,58 @@
+<div hide-if-data-absent class="list no-padding" flex>
+<div class="list no-padding" flex>
+<!-- 
+	 <div ng-repeat="member in peopleViewData.people" class="item item-complex item-action-right">
+      <div class="item-content item-avatar-left" >
+          <img ng-src="{{member.user._img_icon}}" on-error-src="assets/images/profile-image-placeholder.png" class="img fit round item-image">
+          <a class="a-org" href="javascript:void(0);" > <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+              {{member.user.userFirstName}} {{member.user.userLastName}}
+          </h2></a>
+          <i class="icon icon-cling-top"
+           ng-class="member.user.userFirstName == user1 ? 'icon-check-box': 'icon-check-box-blank'"></i>
+      </div>
+      
+      
+      <buttonv class="item-action button button-clear push-top tag-btn">
+           <span  ng-if="member.invitationStatus == invitesStatus.PENDING"  class="label no-push-left">Pending</span>
+           <span  ng-if="member.invitationStatus == invitesStatus.REGISTERED"  class="label no-push-left">Registered</span>
+      </button> 
+      
+  </div> 
+   -->
+  
+  
+  <div class="list">
+		<div ng-repeat="member in peopleViewData.people"
+			class="item item-line-single item-content item-avatar-left" flex>
+			 <img ng-src="{{member.user._img_icon}}" on-error-src="assets/images/profile-image-placeholder.png" class="img fit round item-image">
+			<div><h2 class="txt txt-line-pri text-wrap" ng-bind="member.user.userFirstName+' '+member.user.userLastName"></h2>
+			</div>
+			<div> <small>
+			         <span  ng-if="member.invitationStatus == invitesStatus.PENDING"  class="label no-push-left">Pending</span>
+           			 <span  ng-if="member.invitationStatus == invitesStatus.REGISTERED"  class="label no-push-left">Registered</span>
+			       </small>
+			<span style="float: right;" class=" color-light-2 invite-sts-date text-right push-top" ng-bind="(member.invitationStatus == invitesStatus.PENDING) ? MU.getDisplayDateTime(member.createTime): MU.getDisplayDateTime(member.updateTime)"></span>
+			</div>
+			 
+					
+		</div>
+	</div> 
+  
+  
+  
+  <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+      <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear" aria-label="Load More">
+          <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+          <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+      </button>
+  </div>
+</div>
+</div> 
+<div class="list" layout="row" layout-align="center center" ng-show="peopleViewData.people.length == 0">
+<div class="item item-backdrop text-center">
+  <div class="backdrop-filler-image">
+      <i class="icon icon-backdrop icon-people"></i>
+      <h4 class="color-light-2">No Invites available</h4>
+  </div>
+</div>
+</div>

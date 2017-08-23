@@ -1,0 +1,68 @@
+<md-dialog class="register-pop-up" aria-label="{{config.title}}"
+           layout="column" layout-align="space-between center">
+  <md-toolbar class="toolbar-custom">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>{{config.title || 'default title'}}</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width " >
+
+    <div class="list no-padding" flex>
+      <div
+        class="item item-line-single item-icon-right push-bottom"
+        ng-click="multiSelectList.toggleSelectionAll()"
+        flex>
+        <h2 class="txt txt-line-pri text-wrap">
+          <small ng-bind="selectAllText || 'Select all'"></small>
+        </h2>
+
+        <i class="icon icon-cling-top"
+           ng-class="multiSelectList.isAllSelected ? 'icon-check-box': 'icon-check-box-blank'"></i>
+      </div>
+      <div
+        ng-repeat="file in multiSelectList.list"
+        class="item item-line-single item-icon-left item-icon-right"
+        ng-class="{'bg-light-primary':file.isSelected}"
+        ng-click="file.totalFiles === 0 ? multiSelectList.toggleItemSelection(file) : ''" 
+        ng-mouseenter="file.show=true" ng-mouseleave="file.show=false"
+        flex>
+       <!-- <md-tooltip ng-if="file.totalFiles !== 0" md-direction="bottom" class="folderToolTip">
+              Folder is not Empty
+            </md-tooltip> --> 
+            
+        <i class="icon icon-folder icon-cling-top"></i>
+
+        <h2 class="txt txt-line-pri text-wrap">{{file.name}}</h2>
+ 		<p>
+          <span ng-bind="file.folderSize" class="push-right pr-sm"></span>
+            <span class="text-no-wrap"><b ng-bind="file.totalFiles"></b> <span>{{file.totalFiles == 1 ? 'file' : 'files'}}</span></span>
+                <span class="text-no-wrap">
+                </span>
+        </p>
+        <span ng-if="file.totalFiles !== 0" class="folder-Tip" ng-show="file.show">Folder is not Empty</span>
+        <i class="icon icon-cling-top"
+           ng-class="file.isSelected ? 'icon-check-box' : 'icon-check-box-blank'"></i>
+          
+      </div>
+    </div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               aria-label="Cancel Workflow">
+      <span ng-bind="config.cancelButtonText"></span>
+    </md-button>
+    <md-button ng-click="action()"
+               ng-disabled=""
+               aria-label="Execute Action">
+      <span ng-bind="config.actionButtonText"></span>
+    </md-button>
+  </div>
+</md-dialog>

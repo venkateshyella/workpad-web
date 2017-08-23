@@ -1,0 +1,79 @@
+<view type="toolbarView" title="'Job Contributors'">
+  <toolbar app-toolbar title="'Job Contributors'">
+
+    <toolbar-options>
+    
+      <md-progress-linear ng-show="toolbarLoader.async_active" md-mode="indeterminate"
+                          class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+    </toolbar-options>
+  </toolbar>
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+     <!--  <div class="item" flex ng-controller="InviteDelegatorController as ctrl" ng-if="isInviteDelegatorAllowed">
+        <div layout="row">
+          <md-autocomplete flex
+                           name="inviteDelegator"
+                           md-selected-item="inviteDelegator"
+                           md-search-text-change="ctrl.searchTextChange(inviteDelegator, ctrl.searchText)"
+                           md-search-text="ctrl.searchText"
+                           md-selected-item-change="sendInvitation(item,{$event: $event}); ctrl.selectedItemChange(item)"
+                           md-items="item in ctrl.querySearch(ctrl.searchText)"
+                           md-item-text="item.userFirstName"
+                           md-min-length="2"
+                           placeholder="Invite Contributor"
+                           ng-disabled="disableInviteContributor">
+            <md-item-template>
+              <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" class="item-title">{{item.userFirstName}} {{item.userLastName}}</span>
+            </md-item-template>
+            <md-not-found>
+              <div class="item-title">{{searchStatusText}}</div>
+            </md-not-found>
+          </md-autocomplete>
+        </div>
+      </div> -->
+
+      <div class="item ng-binding">
+        <div ng-if="jobContributorList.length > 0">
+          <span class="color-light txt-normal">Contributors</span>
+          <span ng-show="jobContributorList && jobContributorList.length > 0">({{jobContributorList.length}})</span>
+        </div>
+      </div>
+
+      <div class="list" layout="row" layout-align="center center" ng-show="showMsgJobContainer">
+        <div class="item item-backdrop text-center">
+          <div ng-show="loadingImage" class="backdrop-filler-image">
+            <i class="icon icon-backdrop icon-people"></i>
+
+            <div class="text-center">Loading Contributors..</div>
+          </div>
+          <div ng-show="showNoDataMsg">
+            <i class="icon icon-backdrop icon-people"></i>
+            <h4 class="color-light-2">No Contributors found in this job.</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="list full-width overflow-hide">
+        <div ng-repeat="job in jobContributorList" class="item item-complex item-line-double">
+          <div class="item-content" ng-click="jobItemClickAction($event, job)">
+            <div class="txt txt-line-pri" layout="row">
+              <h2 class="txt-bold" class="" flex>{{job.userFirstName}} {{job.userLastName}}</h2>
+            </div>
+
+            <div layout="row">
+              <span class="push-right" aria-hidden="false">{{job.userEmail}}</span>
+            </div>
+          </div>
+        </div>
+        <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+          <md-button ng-click="fetchMoreJobContributors()" ng-disabled class="full-width txt-ignore-case"
+                     aria-label="Load More">
+            <span ng-hide="ui.isLoadingNext">Load more.</span>
+            <span ng-show="ui.isLoadingNext">Loading...</span>
+          </md-button>
+        </div>
+      </div>
+    </row>
+  </layout>
+</view>

@@ -1,0 +1,15 @@
+
+<div>
+<md-list-item>
+    <h5>{{fieldModel.label}}</h5>
+</md-list-item>
+
+<div class="md-item-padiding-sides" ng-repeat="checkBoxItem in formField.keyValue" layout="columns" ng-disabled="fieldCtrl.isDisabled()">
+    <md-list flex class="card">
+        <md-list-item>
+            <md-checkbox ng-model="checkBoxItem.selected" aria-label="checkBoxItem.name" ng-disabled="fieldCtrl.isDisabled()"></md-checkbox>
+            <p flex>{{checkBoxItem.name}}</p>
+        </md-list-item>
+    </md-list>
+</div>
+</div>

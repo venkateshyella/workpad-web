@@ -1,0 +1,41 @@
+<md-dialog class="register-pop-up" aria-label="Create Timesheet">
+    <md-toolbar>
+        <div  layout="row" class="md-toolbar-tools">
+            <h2 class="txt-capitalize text-ellipsis">
+        <span>Timesheet</span></h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="form.create_timesheet" class="full-height" novalidate>
+        <div class="full-height" layout="column" layout-align="space-between center">
+            <md-dialog-content class="full-width">
+                <!-- <div layout="row">
+          <h2 class="md-title">Create Timesheet</h2>
+        </div> -->
+                <div>
+                    <div class="inset">
+                        <p class="txt-pri text-wrap ng-binding line-clamp-3 overflow-hide" >Please enter number of hours spent on {{job.title}}</p>
+                    </div>
+                    <md-input-container md-no-float>
+                        <input type="number" name="jobTime" placeholder="" required ng-model="formModel.create_timesheet.hrs" ng-pattern="/^\d+(?:\.\d{1,2})?$/" ng-trim>
+                        <div ng-messages="form.create_timesheet.jobTime.$error">
+                            <div ng-message="pattern" class="ng-message">Please enter valid hours.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </md-dialog-content>
+            <div class="md-actions full-width" layout="row">
+                <span flex></span>
+                <md-button ng-click="cancel()">
+                    Cancel
+                </md-button>
+                <md-button type="submit" ng-disabled="!form.create_timesheet.$valid" ng-click="submitTime()" class="md-primary">Done
+                </md-button>
+            </div>
+        </div>
+    </form>
+</md-dialog>

@@ -1,0 +1,30 @@
+<md-dialog class="" aria-label="Job Time-sheet">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Timesheet</h2>
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width">
+    <form name="form.timeSheet" novalidate>
+      <div class="list">
+        <div class="item item-input">
+          <label for="timeSheet_duration">Number of hours spent on <span>(Job Name--)</span></label>
+          <input id="timeSheet_duration" type="text">
+        </div>
+      </div>
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-disabled="" ng-click="cancel()">
+      <span ng-bind="BUTTON.CANCEL"></span>
+    </md-button>
+    <md-button type="submit" ng-disabled="!form.timeSheet.$valid" ng-click="submit()" class="md-primary">
+      <span ng-bind="BUTTON.SUBMIT"></span>
+    </md-button>
+  </div>
+</md-dialog>

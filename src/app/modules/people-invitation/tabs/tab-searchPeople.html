@@ -1,0 +1,115 @@
+  <form name="searchForm" class="full-height" novalidate>
+                <div class="card list">
+                    <div class="item">
+                        <md-input-container md-no-float>
+                            <input type="text" name="userName" placeholder="Name" ng-model="searchFormModel.name" ng-maxlength="50" ng-pattern="/^[A-Za-z0-9 ]+$/" ng-trim>
+                            <div ng-messages="searchForm.userName.$error">
+                                <div ng-message="maxlength" class="ng-message">Maximum 50 characters allowed</div>
+                                <div ng-message="minlength" class="ng-message">Enter minimum 3 characters</div>
+                                <div ng-message="pattern" class="ng-message">Only numbers and alphabets are allowed
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    
+				    <div class="item">
+							<md-autocomplete auto-input-focus flex name="skill"
+								md-no-cache md-delay="300"
+								md-selected-item="newSkillName"
+								md-search-text-change="searchTextChange(newSkillName, searchText)"
+								md-selected-item-change="addSkill(item.name,'','');selectedItemChange(item)"
+								md-search-text="searchText"
+								md-items="item in querySearch(searchText)" md-item-text="item.name"
+								md-min-length="2" placeholder="Skill Name"> 
+								<md-item-template>
+								<span md-highlight-text="searchText" md-highlight-flags="^i"
+								class="item-title">{{item.name}}</span> 
+								</md-item-template> 
+								<md-not-found>
+								<div ng-click class="item-title">"{{searchStatusText}}" Skill
+								was not found.</div>
+								</md-not-found> 
+							</md-autocomplete>
+				    </div>
+				    
+				    <div class="item" ng-if="skillObj.enable">
+				    Skill Name: {{skillObj.skillName}} 
+				    </div>
+				    
+                     <div class="item">
+							<md-autocomplete auto-input-focus flex name="location"
+								md-no-cache md-delay="300"
+								md-selected-item="newLocationName"
+								md-search-text-change="searchTextChange(newLocationName, searchLocationText)"
+								md-selected-item-change="addLocation(item.name);selectedLocItemChange(item)"
+								md-search-text="searchLocationText"
+								md-items="item in queryLocSearch(searchLocationText)" md-item-text="item.name"
+								md-min-length="2" placeholder="Location Name"> 
+								<md-item-template>
+								<span md-highlight-text="searchLocationText" md-highlight-flags="^i"
+								class="item-title">{{item.name}}</span> 
+								</md-item-template> 
+								<md-not-found>
+								<div ng-click class="item-title">"{{searchLocStatusText}}" Location
+								was not found.</div>
+								</md-not-found> 
+							</md-autocomplete>
+				    </div>
+				    
+				    <div class="item" ng-if="locObj.enable">
+				    Location Name: {{locObj.locationName}} 
+				    </div>
+                  
+                </div>
+                <div class="md-actions full-width" layout="row">
+                    <span flex></span>
+                      <md-button type="submit" ng-click="resetSearchModel();" class="md-primary">Reset
+                    </md-button>
+                   <!--  <md-button ng-click="cancel()">
+                        Cancel
+                    </md-button> -->
+                    <md-button type="submit" ng-disabled="!searchForm.$valid || !(!!searchFormModel.name || !!newSkillName  || !!newLocationName)" ng-click="searchPeople();" class="md-primary">Search
+                    </md-button>
+                </div>
+            </form>
+            
+
+<div class="list">            
+<div hide-if-data-absent ng-if="peopleSearchData.people.length > 0" class="no-padding-top">
+<div class="list">
+  <div ng-repeat="member in peopleSearchData.people" class="item item-complex item-action-right">
+      <div class="item-content item-avatar-left">
+          <img ng-src="{{member.user._img_icon}}" on-error-src="assets/images/profile-image-placeholder.png" class="img fit round item-image">
+         <a  class="a-org" href="javascript:void(0);" > <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+              {{member.user.userFirstName}} {{member.user.userLastName}}
+            </h2>
+        </a>
+        
+        <div layout="row" class="push-top pt-sm">
+              <p class="txt txt-line-sec text-ellipsis">
+                  <span class="">Since {{MU.getDisplayDateTime(member.createTime)}}</span>
+              </p>
+          </div>
+         
+      </div>
+      
+      
+      <button ng-if="!member.tagStatus" ng-click="tagUser(member.user.id);" class="item-action button button-clear push-top tag-btn">
+           <span  class="folder-Tip tag">Tag</span>
+      </button> 
+      
+      <button ng-if="member.tagStatus" class="item-action button button-clear push-top tag-btn">
+           <span  class="folder-Tip tagged">Tagged</span>
+      </button> 
+
+  </div>
+
+  <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+      <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear" aria-label="Load More">
+          <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+          <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+      </button>
+  </div>
+</div>
+</div>
+</div>

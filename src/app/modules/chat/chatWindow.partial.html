@@ -1,0 +1,78 @@
+<md-list class="chatList  tall-form">
+
+  <md-list-item
+    ng-show="_connStatus.isInARoom"
+    class="name-chatListView"
+    layout="column" layout-align="center center">
+    <button ng-click="loadEarlierMessages()"
+            ng-if="messageStackInfo.isOlderMessagesPending"
+            ng-disabled="_connStatus.loadingMessages"
+            class="button button-clear button-small">
+      {{_connStatus.loadingMessages ? 'Loading...' : 'Load earlier messages'}}
+    </button>
+
+  </md-list-item>
+
+  <md-list-item ng-repeat="message in messageStack track by message.id"
+                class="chItem"
+                ng-class="message.fromUserInfo.userId==session.userId ? 'item-align-right':'item-align-left'"
+                layout="row" layout-align="center start">
+    <div class="chBubble whiteframe-z1">
+      <div class="chat-txt-selectable">
+        <div class="txt-bold color-light">{{message.fromUser}}</div>
+        <p class="chat-content-block pull-left pre-formatted">{{message.text}}</p>
+      </div>
+
+      <div class="color-light-2 chSubtext"
+           ng-class="message.fromUserInfo.userId==session.userId ? 'pull-right':'pull-right'"
+           layout="column" layout-align="end end">
+        <div><span class="">{{util.getDisplayDateTimeOffset(message.timestamp)}}</span></div>
+      </div>
+    </div>
+    <div class="chIcon" ng-click="chatUserProfileDetail(message.fromUserInfo.userId)">
+      <img src="{{util.getUserIconImageUrl(message.fromUserInfo.userId)}}"
+           on-error-src="assets/images/profile-image-placeholder.png"
+           alt=""
+           class="img round"/>
+    </div>
+  </md-list-item>
+  
+  <md-list-item class="chItem" layout="row" layout-align="center start" style="opacity:0;">
+  
+  </md-list-item>
+
+  <md-list-item ng-show=" _connStatus.sendMessage_error">
+    <p ng-class="_connStatus.sendMessage_error ? 'assertive':'colo-light-2'"
+       class="item-line-single">
+      <span ng-if="_connStatus.sendMessage_inProgress"
+            class="push-right">Sending...</span>
+      <span ng-if="_connStatus.sendMessage_error"
+            class="push-right">Failed to send: </span>
+      <span ng-bind="inTransitMessage"></span>
+    </p>
+  </md-list-item>
+  
+  <!-- 
+  <md-list-item
+    ng-show="_connStatus.sendMessage_inProgress"
+    class="chItem" layout="row" layout-align="center start">
+    <div class="chBubble whiteframe-z1">
+      <div class="">
+        <div class="txt-bold color-light">{{inTransitMessage.fromUser}}</div>
+        <p class="chat-content-block pre-formatted pull-left">{{inTransitMessage.text}}</p>
+      </div>
+
+      <div class="color-light-2 chSubtext"
+           layout="column" layout-align="end end">
+        <div><span class="color-primary">Sending...</span></div>
+      </div>
+    </div>
+    <div class="chIcon">
+      <img src="{{util.getUserIconImageUrl(session.userId)}}"
+           on-error-src="assets/images/profile-image-placeholder.png"
+           alt=""
+           class="img round"/>
+    </div>
+  </md-list-item>
+ -->
+</md-list>

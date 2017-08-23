@@ -1,0 +1,53 @@
+<md-dialog class="" aria-label="Submit Form">
+  <md-toolbar class="">
+    <div class="md-toolbar-tools">
+      <h2 flex>Form submission</h2>
+      <md-button class="md-icon-button" ng-click="cancel()"
+                 aria-label="Cancel Form">
+        <md-icon md-font-icon="icon icon-close"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="dialog-custom">
+    <form name="form.dForm" novalidate>
+      <md-list>
+
+        <md-list-item class="md-2-line">
+          <h4>{{formModel.formName}}</h4>
+
+          <p>{{formModel.desc}}</p>
+        </md-list-item>
+
+        <md-list-item ng-repeat="field in formModel.fields"
+                      class="no-padding">
+          <md-card layout="column" flex>
+            <md-card-content class="no-padding">
+              <field form-field="field"
+                     name="field.keyName"
+                     ng-model="field"></field>
+            </md-card-content>
+          </md-card>
+        </md-list-item>
+      </md-list>
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-disabled=""
+               ng-click="cancel()">
+      Cancel
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="!isFormValid()"
+               ng-click="submit()"
+               class="md-primary">
+      Submit
+    </md-button>
+  </div>
+</md-dialog>

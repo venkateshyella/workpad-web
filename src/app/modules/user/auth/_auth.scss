@@ -1,0 +1,21 @@
+// _auth.scss
+
+$auth-max-width: 340px;
+
+.auth-form {
+  position: relative;
+
+  .auth-form-options-row {
+    .auth-option-checbox {
+      font-size: 1.1*$font-size-base;
+    }
+
+    .auth-option-button {
+      .button {
+        margin-top: $unit;
+        font-size: 1.1*$font-size-base;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,81 @@
+<view type="toolbarView" title="title">
+
+  <toolbar app-toolbar title="title">
+    <toolbar-options>
+
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon ng-if="isContextMenuRequired" md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+
+        <md-menu-content width="4">
+         
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('INVITE_STATUS', tab_curr, tabs)">
+            <md-button ng-click="$mdCloseMenu();invitePeople()"
+                       aria-label="InviteStatus">
+                       Invite People
+            </md-button>
+          </md-menu-item>
+          
+			
+
+        </md-menu-content>
+      </md-menu>
+
+      <md-progress-linear ng-show="toolbarLoader.async_active"
+                          md-mode="indeterminate"
+                          class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+    </toolbar-options>
+
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row layout-gravity="top" layout-height="4em">
+      <md-tabs class="md-primary tabs" md-selected="tab1" md-align-tabs="top">
+
+        <md-tab md-on-select="onTabSelect('TAB_SEARCH')"
+                id="tabSearch"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+            <i class="icon icon-tab icon-search"></i>
+            <h4 class="tab-text">SEARCH</h4>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_TAG')"
+                id="tabTag"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+           <i class="fa fa-tag" aria-hidden="true"></i>
+           <h4 class="tab-text" style="top:0px;">TAG</h4>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_INVITES')"
+                id="tabInvites"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+            <i class="icon icon-tab icon-person-add"></i>
+            <h4 class="tab-text">INVITES</h4>
+
+          </div>
+        </md-tab>
+
+        
+
+      </md-tabs>
+
+    </row>
+
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <ui-view name="peopleTabContainer"></ui-view>
+    </row>
+
+  </layout>
+
+</view>

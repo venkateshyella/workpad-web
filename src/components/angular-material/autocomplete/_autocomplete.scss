@@ -1,0 +1,10 @@
+ul.md-autocomplete-suggestions {
+ /* max-height: initial !important;   (remove for invite member scrolling)*/
+
+  > li {
+    padding: 9px 15px;
+    line-height: 28px;
+    height: auto;
+    white-space: normal;
+  }
+}

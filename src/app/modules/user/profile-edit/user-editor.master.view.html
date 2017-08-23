@@ -1,0 +1,55 @@
+<view type="toolbarView" screen-type="device">
+  <toolbar app-toolbar
+           ng-hide="viewScope.toggleEditToolbar"
+           title="viewScope.editorViewTitle">
+    <toolbar-options>
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   ng-show="viewScope.optionsMenuItems.length>0"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item ng-repeat="item in viewScope.optionsMenuItems">
+            <md-button ng-click="item.action(); $mdCloseMenu()"
+                       ng-hide="item.isHidden"
+                       ng-bind="item.text"
+                       aria-label="'-'+item.text+'-">
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </toolbar-options>
+  </toolbar>
+  <toolbar
+    ng-show="viewScope.toggleEditToolbar" view-toolbar title="">
+    <toolbar-options class="full-width">
+      <md-button
+        ng-click="discardChanges()" ng-disabled="form.isDisabled"
+        class="toolbar-button"><span>Discard</span>
+        <md-icon
+          class="toolbar-icon" md-font-icon="icon icon-close"></md-icon>
+      </md-button>
+      <md-button
+        ng-click="submitUserProfileData()" ng-disabled="form.isDisabled"
+        class="toolbar-button">
+        <md-icon class="toolbar-icon"
+                 md-font-icon="icon icon-floppy"></md-icon>
+        <span>Save</span></md-button>
+
+    </toolbar-options>
+  </toolbar>
+  <layout
+    type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <form name="form.userForm" ng-model="userFormModel" novalidate>
+        <div ui-view="editor_form_content"></div>
+      </form>
+
+    </row>
+  </layout>
+</view>

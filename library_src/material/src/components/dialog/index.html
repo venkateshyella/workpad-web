@@ -1,0 +1,18 @@
+<div ng-controller="AppCtrl" class="md-padding">
+  <p class="inset">
+    Nested dialog inside a larger dialog.
+  </p>
+
+  <div class="dialog-demo-content" layout="row" layout-wrap>
+    <md-button class="md-primary md-raised" ng-click="showAdvanced($event)" flex flex-md="100">
+      Custom Dialog
+    </md-button>
+  </div>
+
+  <div ng-if="alert">
+    <br/>
+    <b layout="row" layout-align="center center" class="md-padding">
+      {{alert}}
+    </b>
+  </div>
+</div>

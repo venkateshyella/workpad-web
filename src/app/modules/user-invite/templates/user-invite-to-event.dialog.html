@@ -1,0 +1,35 @@
+<md-dialog aria-label="User Invitation">
+  <md-toolbar class="toolbar-clear">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">Action</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="padding-top full-width">
+    <p ng-click="cancel();locals.action.viewEventDetails();" style="padding-bottom: 24px;">{{bundle.post.notificationDescription}}</p>
+    <div class="timeline-title">
+         <p ng-if="bundle.post.groupPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="bundle.post.groupPath"></context-path></a></p>
+         <p ng-if="bundle.post.messageLineItems.length>0"   ng-repeat="item in bundle.post.messageLineItems"><a href="javascript:;">{{item}}</a></p>
+    </div>
+    <p class="color-light-2 text-right push-top">
+      <span>{{bundle.post.createdDate_displayText}}</span>
+    </p>
+     <p class="color-light-2" style="margin-top: 35px;">Click 'Ok' for further notifications on this event</p> 
+    
+  </md-dialog-content>
+
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="submit(false)">
+      <span>Dismiss</span>
+    </md-button>
+     <md-button ng-click="locals.action.viewEvents();cancel();">
+      <span>Ok</span>
+    </md-button>
+
+  </div>
+</md-dialog>
+

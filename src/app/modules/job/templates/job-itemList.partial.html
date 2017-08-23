@@ -1,0 +1,10 @@
+<md-list>
+  <md-list-item ng-repeat="item in results"
+                ng-click="selectCtrl.onListItemSelect(item)"
+                class="md-2-line">
+    <div class="md-list-item-text">
+      <h3 class="text-ellipsis">{{item.title}}</h3>
+      <p class="text-ellipsis">{{item.desc}}</p>
+    </div>
+  </md-list-item>
+</md-list>

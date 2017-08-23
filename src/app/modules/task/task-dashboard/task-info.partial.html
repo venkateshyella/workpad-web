@@ -1,0 +1,75 @@
+<div class="card no-padding-top">
+  <div class="item card-rich-media">
+    <div class="profile-card overlay">
+      <div class="profile-cover">
+        <div class="inner" layout="row" layout-align="center center">
+        </div>
+      </div>
+      <div class="inner overlay-content" layout="row">
+        <div class="profile-img border">
+          <img ng-src="{{taskTabCtrl.taskModel._img_icon || 'assets/images/org-icon-placeholder.png'}}"
+               on-error-src="assets/images/org-icon-placeholder.png"
+               alt="" class="img"/>
+        </div>
+        <div flex layout="row" layout-align="center center">
+          <div class="profile-img">
+            <img ng-src="assets/images/logo.png" on-error-src="assets/images/profile-placeholder.png" alt=""
+                 class="img img-floating-icon bg-none"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item item-text-wrap">
+
+    <!-- Task title -->
+    <h3
+      ng-bind="taskTabCtrl.taskModel.title"
+      class="card-title-text"></h3>
+
+    <!-- Task creator info -->
+    <p
+      ng-show="taskTabCtrl.taskModel.$_creator"
+      class="push-bottom pb-sm">
+      <span
+        ng-bind="::LANG.TASK.LABEL.CREATOR_TEXT_PREFIX"></span>
+      <span
+        ng-bind="taskTabCtrl.taskModel.$_creator.userFirstName+' '+taskTabCtrl.taskModel.$_creator.userLastName"></span>
+
+    </p>
+
+    <!-- Task owner info -->
+    <p
+      ng-show="taskTabCtrl.taskModel.$_owner"
+      class="push-bottom pb-sm">
+      <span
+        ng-bind="::LANG.TASK.LABEL.OWNER_TEXT_PREFIX"></span>
+      <span
+        ng-bind="taskTabCtrl.taskModel.$_owner.userFirstName+' '+taskTabCtrl.taskModel.$_owner.userLastName"></span>
+
+    </p>
+
+    <!-- Task status -->
+    <div
+      ng-show="taskTabCtrl.taskModel && taskTabCtrl.taskModel.updateTime"
+      class="push-top pt-sm push-bottom pb-sm">
+      <small><i
+        ng-bind="::LANG.JOB.LABEL.STATUS"
+        class="color-light-2"></i></small>
+      <p class="txt-pri text-wrap">
+        <span ng-bind="taskTabCtrl.taskModel.displayStatus"></span>
+        <span ng-bind="'on'"></span>
+        <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(taskTabCtrl.taskModel.updateTime)"></span>
+      </p>
+    </div>
+
+    <!-- Task description -->
+    <div ng-show="taskTabCtrl.taskModel && taskTabCtrl.taskModel.desc">
+      <small><i
+        class="color-light-2"
+        ng-bind="::LANG.LABEL.DESCRIPTION"></i></small>
+      <p ng-bind="taskTabCtrl.taskModel.desc"
+         class="txt-pri text-wrap pre-formatted"></p>
+    </div>
+  </div>
+</div>

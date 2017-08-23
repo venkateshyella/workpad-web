@@ -1,0 +1,71 @@
+<div class="item item-thumbnail-left">
+  <img class="img corner-round" ng-src="{{user._img_icon || 'assets/images/profile-image-placeholder.png'}}"
+       on-error-src="assets/images/profile-image-placeholder.png"/>
+
+  <div class="txt-sub-header">Profile Image</div>
+  <div ng-click="editProfileImage()" ng-disabled="form.isDisabled"
+       class="button button-small icon-left icon-camera-alt button-stable">Edit
+  </div>
+</div>
+
+<!--<div class="card list">-->
+  <!--<label for="user_firstName" class="item item-positive item-input item-stacked-label">-->
+    <!--<span class="input-label">First Name</span>-->
+
+    <!--<input type="text" name="userFirstName" placeholder="first name"-->
+           <!--ng-disabled="form.isDisabled"-->
+           <!--ng-change="onUserModelFormChange(form.userForm)"-->
+           <!--ng-model="user.userEntity.userFirstName" id="user_firstName" required-->
+           <!--ng-maxlength="50"-->
+           <!--ng-pattern="/^[A-Za-z0-9 ]+$/" ng-trim>-->
+
+    <!--<div ng-messages="form.userForm.userFirstName.$error"-->
+         <!--ng-show="form.userForm.userFirstName.$dirty">-->
+      <!--<div ng-message="required" class="ng-message" style="color: red">First name cannot be empty.</div>-->
+      <!--<div ng-message="maxlength" class="ng-message" style="color: red">Please limit the first name to-->
+        <!--50 characters.-->
+      <!--</div>-->
+      <!--<div ng-message="pattern" class="ng-message" style="color: red">Only letters,numbers and spaces-->
+        <!--are allowed in the first name.-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</label>-->
+  <!--<label for="user_lastName" class="item item-positive item-input item-stacked-label">-->
+    <!--<span class="input-label">Last Name</span>-->
+    <!--<input type="text"-->
+           <!--name="userLastName" placeholder="last name"-->
+           <!--ng-disabled="form.isDisabled"-->
+           <!--ng-change="onUserModelFormChange(form.userForm)"-->
+           <!--ng-model="user.userEntity.userLastName" id="user_lastName" required-->
+           <!--ng-maxlength="50" ng-pattern="/^[A-Za-z0-9 ]+$/" ng-trim>-->
+
+    <!--<div ng-messages="form.userForm.userLastName.$error"-->
+         <!--ng-show="form.userForm.userLastName.$dirty">-->
+      <!--<div ng-message="required" class="ng-message" style="color: red">Last name cannot be empty.</div>-->
+      <!--<div ng-message="maxlength" class="ng-message" style="color: red">Please limit the last name to 50-->
+        <!--characters.-->
+      <!--</div>-->
+      <!--<div ng-message="pattern" class="ng-message" style="color: red">Only letters, numbers and spaces-->
+        <!--are allowed in the last name.-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</label>-->
+<!--</div>-->
+
+<div class="card list">
+  <div class="item">
+    <md-input-container flex>
+      <label>Description</label>
+
+                    <textarea name="userDesc"
+                              ng-model="user.userEntity.desc"
+                              ng-change="onUserModelFormChange(form.userForm)"
+                              columns="1" md-maxlength="150"></textarea>
+
+      <div ng-messages="form.userForm.userDesc.$error"
+           ng-show="form.userForm.userDesc.$dirty">
+        <div ng-message="md-maxlength" class="ng-message">Please limit the description to 150 characters.</div>
+      </div>
+    </md-input-container>
+  </div>
+</div>

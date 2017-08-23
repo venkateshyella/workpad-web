@@ -1,0 +1,89 @@
+<md-dialog class="register-pop-up" aria-label="Create Talk">
+   <md-toolbar >
+      <div class="md-toolbar-tools">
+         <h2  ng-if="!isUpdate" >Create Conference</h2>
+         <h2  ng-if="isUpdate" >Update Conference</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="close()">
+            <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+      </div>
+   </md-toolbar>
+   <md-dialog-content class="full-width">
+      <form name="form.create_Meeting" class="full-width"  novalidate>
+         <md-input-container md-no-float>
+            <input ng-disabled="isUpdate" auto-input-focus type="text" name="name" placeholder="Conference Name" required ng-model="formModel.name" ng-maxlength="50"
+               ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/" ng-trim>
+            <div ng-messages="form.create_Meeting.name.$error">
+               <div ng-message="maxlength" class="ng-message">Conference name should not exceed 50 characters.</div>
+               <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),. are allowed in the
+                  Conference name.
+               </div>
+            </div>
+         </md-input-container>
+         <md-input-container flex>
+            <label>Description</label>
+            <textarea name="meetingDesc" required ng-model="formModel.desc" columns="1" md-maxlength="256"></textarea>
+            <div ng-messages="form.create_Meeting.meetingDesc.$error">
+               <div ng-message="md-maxlength" class="ng-message">
+                  Please limit the Job description to 256 characters.
+               </div>
+            </div>
+         </md-input-container>
+         <div layout-gt-sm="row" >
+            <label for="input_11" style="padding-top: 10px;padding-right: 30px;">Duration</label>
+            <md-input-container flex>
+               <input ng-change="setMinMinutes();formModel.endTime = prepareMeetingEndTime(formModel)" type="number" min="0" max="23" name="meetingHours" required ng-model="formModel.hours" style="width:100%"></input>
+            </md-input-container>
+            <label for="input_11" style="padding-top: 10px;padding-right: 30px; padding-left: 10px;">Hours</label>
+            <md-input-container flex>
+               <input ng-change="formModel.endTime = prepareMeetingEndTime(formModel)" type="number"  max="59" name="meetingMinutes" step="15" required ng-model="formModel.minutes" style="width:100%"></input>
+            </md-input-container>
+            <label for="input_12" style="padding-top: 10px; padding-left: 10px;">Minutes</label>
+         </div>
+         <div layout="row" style="float: right;">
+            <small style=" margin: -15px 0px 15px 0px;"class="text-muted ng-binding"><i class="glyphicon glyphicon-time"></i> End Time {{MU.getDisplayDateTimeOffset(formModel.endTime)}}</small>
+         </div>
+         
+           <div class="form-check send-check">
+          <label style="padding-left: 15px;" class="form-check-label">
+                <input class="form-check-input" type="checkbox" ng-model="formModel.sendToAll" ng-change="addAllMembersToMeeting(formModel.sendToAll)">
+           Send to all Members
+          </label>
+        </div>
+         
+         <div style="display: inline-block;" class="padding-horizontal ph-lg padding-top push-top full-width">
+            <div layout="row">
+               <md-autocomplete placeholder="Search member" md-no-cache="true" md-selected-item="newAdvertisementGroup" md-search-text-change="memberSearchCtrl.searchTextChange(memberSearchCtrl.searchText)" 
+                  md-search-text="memberSearchCtrl.searchText" md-selected-item-change="memberSearchCtrl.selectedItemChange(user)" md-items="user in memberSearchCtrl.querySearch(memberSearchCtrl.searchText)" md-item-text="user.userFirstName" md-min-length="2" md-delay="300" flex>
+                  <md-item-template>
+                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{user.userFirstName}}  {{user.userLastName}}</span>
+                  </md-item-template>
+                  <md-not-found>
+                     No Members found.
+                  </md-not-found>
+               </md-autocomplete>
+            </div>
+         </div>
+         <div class="list no-padding-top push-top pt-lg"  ng-show="formModel.members.length > 0 ">
+            <span class="item item-input">Selected members are</span>
+            <md-list class="no-padding-bottom">
+               <md-list-item class="" ng-repeat="invitee in formModel.members">
+                  <h2>{{invitee.userFirstName}} {{invitee.userLastName}}</h2>
+                  <md-icon ng-click="removeSelectedMember(invitee)" class="md-secondary no-push-top" aria-label="Remove adv group" md-font-icon="icon icon-close"></md-icon>
+               </md-list-item>
+            </md-list>
+         </div>
+         <p ng-show="formModel.members.length == 0" class="push-top full-width text-right">Please select at-least one member to join conference.
+         </p>
+      </form>
+   </md-dialog-content>
+   <div class="md-actions full-width" layout="row">
+      <span flex></span>
+      <md-button ng-click="close()">
+         Cancel
+      </md-button>
+      <md-button ng-if="!isUpdate" type="submit" ng-disabled="!form.create_Meeting.$valid || formModel.members.length == 0" ng-click="submitToCreate(formModel)" class="md-primary"> Start </md-button>
+      <md-button ng-if="isUpdate" type="submit" ng-disabled="!form.create_Meeting.$valid || formModel.members.length == 0" ng-click="submitToUpdate(formModel)" class="md-primary"> Update </md-button>
+   </div>
+</md-dialog>

@@ -1,0 +1,24 @@
+$height: 58px;
+
+.wptr-loader-container {
+  position: absolute;
+  top: -$height;
+  left: 0px;
+  width: 100%;
+  height: $height;
+  background: transparentize($light, 0.4);
+  padding: 28px 0;
+  z-index: 10;
+  font-size: 18px;
+  transition: transform 0.1s;
+}
+
+.wptr-enable-pan {
+  -webkit-user-drag: auto !important;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+  -webkit-touch-callout: none !important;
+  //-webkit-user-select: none;
+  //-webkit-touch-callout: none;
+  //-webkit-user-drag: none;
+  //-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}

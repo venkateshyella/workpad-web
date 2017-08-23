@@ -1,0 +1,27 @@
+<md-dialog aria-label="New CheckBox Item">
+    <md-toolbar class="">
+        <div class="md-toolbar-tools">
+            <h2 flex>{{checkBoxHeading}} Checkbox</h2>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <form name="form.addCheckBoxField">
+            <md-input-container>
+                <label>Checkbox name</label>
+                <input type="text" required ng-model="formModel.addCheckBoxField.name" />
+            </md-input-container>
+        </form>
+    </md-dialog-content>
+    <div class="md-actions">
+        <span flex></span>
+        <md-button ng-click="cancel()">
+            Cancel
+        </md-button>
+        <md-button ng-disabled="!form.addCheckBoxField.$valid" ng-click="submit()">
+            {{checkBoxHeading}}
+        </md-button>
+    </div>
+</md-dialog>

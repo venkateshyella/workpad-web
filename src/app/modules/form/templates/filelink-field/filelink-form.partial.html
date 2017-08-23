@@ -1,0 +1,15 @@
+<div ng-controller="LinkFormPartialViewController">
+    <div class="md-item-padiding-sides" >
+        <md-subheader class="md-no-sticky" ng-show="availableFiles.length>0">Please select from available files</md-subheader>
+        <md-list flex  ng-show="availableFiles.length>0" >
+         <md-list-item ng-repeat="file in availableFiles">
+                <md-checkbox ng-model="file.selected" aria-label="file.fileName" ng-change="selectionChange(file)" ng-disabled="fieldCtrl.isDisabled()"></md-checkbox>
+                <p flex>{{file.fileName}}</p>
+            </md-list-item>
+        
+         </md-list> 
+         <md-list-item ng-show="availableFiles.length == 0">
+            <p> No Files Available. </p>
+        </md-list-item>
+    </div>
+</div>

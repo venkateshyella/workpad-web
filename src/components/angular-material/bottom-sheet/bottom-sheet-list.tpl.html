@@ -1,0 +1,24 @@
+<md-bottom-sheet class="md-list md-has-header view-bottom-sheet">
+
+  <div class="list">
+
+    <div class="item item-sub-header pull-left">{{subHeader}}</div>
+
+    <div ng-repeat="item in items"
+         class="bottom-sheet-wrapper">
+      <div ng-click="listItemClick($index)"
+           class="bottom-sheet-item button button-small button-stable">
+        <i class="icon" ng-class="item.icon"></i>
+        <span>{{ item.name }}</span>
+      </div>
+    </div>
+  </div>
+  <!--<md-list>-->
+  <!--<md-list-item ng-repeat="item in items">-->
+  <!--<md-button class="md-list-item-content" ng-click="listItemClick(item, $index)">-->
+  <!--<md-icon md-icon-src="{{item.icon}}"></md-icon>-->
+  <!--<span class="md-inline-list-icon-label">{{ item.name }}</span>-->
+  <!--</md-button>-->
+  <!--</md-list-item>-->
+  <!--</md-list>-->
+</md-bottom-sheet>

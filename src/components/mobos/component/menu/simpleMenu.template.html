@@ -1,0 +1,16 @@
+<div class="popup-container popup-menu-container popup-showing active" ng-class="cssClass">
+  <div
+       class="popup state-rendering popup-menu popup-align-{{optionPopup.align || 'right'}}">
+    <div class="popup-body">
+      <span>{{optionPopup.popup_state}}</span>
+      <div class="list">
+        <div ng-repeat="optionItem in optionPopup.menuItems"
+             ng-click="$onOptionItemSelect(optionItem.name, $event)"
+             class="item menu-item">
+          {{optionItem.value}}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

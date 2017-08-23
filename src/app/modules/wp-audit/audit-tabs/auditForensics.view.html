@@ -1,0 +1,110 @@
+<style>
+  .ui-grid-cell {
+   float: none;
+   display: table-cell;
+   }
+   
+   ._720kb-datepicker-calendar {position:absolute !important; z-index:99999 !important;}
+   
+   .card-search { display:inline-block; width:100%; padding:0px 20px;}
+   .input-group {margin:0px; padding:0px;}
+   .card-search form label {line-height:34px;}
+   .flds-width {width:48%;}
+   .bdr-radius {border-radius:4px !important;}
+   abbr[title] {
+  border-bottom: none !important;
+  cursor: inherit !important;
+  text-decoration: none !important;
+}
+.ui-grid-pager-control .ui-grid-pager-max-pages-number {
+    vertical-align: middle;
+} 
+option {
+    color: #000;
+}
+.ui-grid-pager-control input{
+    padding-right: 1px;
+}
+
+</style>
+
+<div layout-align="center center " layout-padding class="" style="position:relative;">
+	<div class="card-search">
+   <form name="form.audit_search" class="full-height form-horizontal " novalidate>
+      <div layout="row" layout-align="start" flex>
+         <div flex="50">
+            <label style="padding-bottom: 5px;" class="col-sm-4">From Date </label>
+            <datepicker  datepicker-class="" class=" col-sm-7 flds-width input-group date end-dt-picker " selector="form-control" date-format="{{dateFormat}}" date-max-limit="{{maxDate}}" date-min-limit="{{minDate}}"
+               button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+               button-next="<i class='fa fa-arrow-right'></i>">
+               <div class="input-group inner-addon right-addon" >
+                  <i class="glyphicon glyphicon-calendar"></i>
+                  <input name="fromDate" ng-model="searchModel.fromDate" class="bdr-radius form-control event-icon"
+                     style="font-family: inherit;color: #000;    padding-top: 9px;" placeholder="Choose Date"  />  
+               </div>
+            </datepicker>
+         </div>
+         <div flex="50">
+            <label style="padding-bottom: 5px;" class="col-sm-4">To Date </label>
+            <datepicker datepicker-class="" class="col-sm-7 flds-width input-group date end-dt-picker" selector="form-control" date-format="{{dateFormat}}"   date-max-limit="{{maxDate}}" date-min-limit="{{minDate}}"
+               button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+               button-next="<i class='fa fa-arrow-right'></i>">
+               <div class="input-group inner-addon right-addon">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                  <input name="endDate" ng-model="searchModel.endDate" class="bdr-radius form-control event-icon"
+                     style="font-family: inherit;color: #000;    padding-top: 9px;" placeholder="Choose Date"  />  
+               </div>
+            </datepicker>
+         </div>
+      </div>
+      <div layout="row" layout-align="start" flex>
+         <div flex="50" style="margin-top:10px;">
+            <label style="padding-bottom: 5px;font-size:15px;" class="col-sm-4">User Name</label>
+            <input class="form-control flds-width" type="text" name="userName" placeholder="Please Enter Username" style="color: #000;" ng-model="searchModel.userName" ng-maxlength="50" ng-pattern="/^[A-Za-z0-9 ]+$/" ng-trim>
+            <div ng-messages="form.audit_search.userName.$error">
+               <div ng-message="maxlength" class="ng-message">{{LANG.JOB.JOB_CREATE_VALIDATION_MSGS.JOB_NAME_LIMIT}}</div>
+               <div ng-message="pattern" class="ng-message">{{LANG.JOB.JOB_CREATE_VALIDATION_MSGS.JOB_NAME_ALLOW}}
+               </div>
+            </div>	
+         </div>
+         <div flex="50" style="margin-top:10px;">
+            <label style="padding-bottom: 5px;" class="col-sm-4">Event Type </label>
+            <select name="eventType" class="form-control col-sm-7 flds-width"  ng-style="{ color: searchModel.eventType ? '#000' : '#b3b3b3' }" ng-model="searchModel.eventType" ng-options="opt.code as opt.name  for opt in eventTypes" style="color: #000;"><option value="" disabled selected hidden>Please Choose</option></select>
+         </div>
+      </div>
+      <div layout="row" layout-align="start" flex>
+      <div flex="50" style="margin-top:10px;">
+     
+            <label style="padding-bottom: 5px;" class="col-sm-4">Module Type </label>
+            <select name="moduleType" class="form-control col-sm-7 flds-width"  ng-style="{ color: searchModel.moduleType ? '#000' : '#b3b3b3' }"
+             ng-model="searchModel.moduleType" ng-options="opt.code as opt.name for opt in moduleTypes" style="color: #000;">
+             <option value="" disabled selected hidden>Please Choose</option></select>
+         </div>
+         
+       <div flex="50" class=" full-width" layout="" style="margin-top:10px;margin-left: 110px;">
+     	<md-button ng-disabled="!(searchModel.moduleType || searchModel.eventType || searchModel.userName || searchModel.endDate || searchModel.fromDate)" ng-click="onSearchClick(searchModel,form.audit_search)">
+      <span>SEARCH</span>
+    </md-button>
+    <md-button  ng-click="onResetClick(form.audit_search)">
+      <span >RESET</span>
+    </md-button>
+  </div>
+      </div>
+   </form>
+   </div>
+</div>
+
+<div class="" ng-if="audit.data.length > 0">
+   <div ui-grid="gridOptions" ui-grid-pagination class="grid" ></div>
+</div>
+<div  ng-if="audit.data.length == 0" class="item item-backdrop text-center">
+          
+                        <div class="list" layout="row" layout-align="center center" ng-show="audit.data.length == 0">
+                            <div class="item item-backdrop text-center">
+                                <div class="backdrop-filler-image" >
+                                    <i class="icon icon-tab icon-history" style="font-size: 45px;"></i>
+                                    <h4 class="color-light-2">No audit available.</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>

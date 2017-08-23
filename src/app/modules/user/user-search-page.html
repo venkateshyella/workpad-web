@@ -1,0 +1,52 @@
+<layout-toolbar
+	title="'Search Members'"
+	component-id="userSearchToolbar"
+	on-navbutton-click="transitionBack()"
+	on-side-menu-toggle-click="toggleSideMenu()">
+
+	<!--<form name="form.searchBar" ng-submit="onSearchTextChange()">-->
+		<!--<div class="searchbar sub-header">-->
+			<!--<md-input-container md-no-float>-->
+				<!--<input type="text" ng-model="searchtext"-->
+							 <!--placeholder="Search members"-->
+					<!--/>-->
+				<!--<md-button-->
+					<!--ng-click="onSearchTextChange()"-->
+					<!--type="submit"-->
+					<!--class="md-fab md-icon-button searchbutton" aria-label="Search members">-->
+					<!--<md-icon md-font-icon="icon icon-search"></md-icon>-->
+				<!--</md-button>-->
+			<!--</md-input-container>-->
+		<!--</div>-->
+	<!--</form>-->
+
+	<md-list class="">
+		<md-item ng-repeat="user in data.searchResults">
+			<md-card>
+				<md-card-content>
+					<md-list class="list">
+
+						<div class="item-tile-header" ng-click="onSearchItemClick(user.id)">
+							<div class="item-tile-image" aria-hidden="true">
+								<img class="img fit round" ng-src="{{user._img_icon}}"
+								on-error-src="assets/images/profile-image-placeholder.png"></div>
+
+							<div class="item-tile-header-content w-img-left">
+
+								<header class="header-content-inline">
+									<h2 class="small light no-margin item-tile">
+										<span class="">{{user.userFirstName}}</span>
+										<span class="label-block bg-solid" ng-show="member.memberType==1">'label'</span>
+									</h2>
+								</header>
+
+							</div>
+						</div>
+
+					</md-list>
+				</md-card-content>
+			</md-card>
+		</md-item>
+	</md-list>
+
+</layout-toolbar>

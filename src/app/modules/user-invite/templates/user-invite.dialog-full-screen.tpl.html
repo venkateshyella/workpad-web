@@ -1,0 +1,57 @@
+<md-dialog class="dialog-full-screen" aria-label="invite user"
+           layout="column" layout-align="space-between center">
+
+  <md-toolbar class="toolbar-clear full-width">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>Invite Member</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width no-padding" flex layout="column">
+
+    <form name="form.user_invite" class="full-height" novalidate>
+      <div class="" layout="column" layout-align="space-between center">
+
+        <div class="full-width" layout="row">
+          <md-list class="full-width">
+
+            <md-list-item>
+              <p ng-if="inviteBundle.toGroup">
+                Invite to group
+                <b>{{inviteBundle.toGroup.groupName}}</b>
+              </p>
+              <p ng-if="inviteBundle.toOrg && !inviteBundle.toGroup">
+                Invite to WorkSpace
+                <b>{{inviteBundle.toOrg.orgName}}</b>
+              </p>
+            </md-list-item>
+
+          </md-list>
+        </div>
+      </div>
+
+
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button
+      ng-disabled="!isActionsEnabled"
+      ng-click="cancel()">
+      Cancel
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="!form.user_invite.$valid || !isActionsEnabled"
+               ng-click="submit()" class="md-primary"
+    >
+      Send
+      <!--<md-icon md-font-icon="icon icon-send"></md-icon>-->
+    </md-button>
+  </div>
+</md-dialog>

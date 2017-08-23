@@ -1,0 +1,21 @@
+<view type="toolbarView" screen-type="device" title="'Account'">
+  <toolbar app-toolbar title="'Account'">
+  </toolbar>
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+       <md-list ng-controller="SettingsListViewController">
+        <form name="form.settings">
+          <!-- <md-subheader class="md-no-sticky">Account Settings</md-subheader> -->
+          <md-list-item ng-click="changePasswordNew()">
+            <p class="txt-pri">Change Password</p>
+          </md-list-item> 
+<!--           <md-list-item ng-click="mySubScriptions()">
+            <p class="txt-pri">My Subscriptions</p>
+          </md-list-item>  -->
+        </form>
+      </md-list>
+    </row>
+  </layout>
+</view>
+

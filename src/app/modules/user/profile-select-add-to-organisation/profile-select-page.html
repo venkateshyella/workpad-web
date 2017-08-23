@@ -1,0 +1,202 @@
+<layout-toolbar
+	title="user.userFirstName+ ' ' +user.userLastName"
+	component-id="userSelectViewToolbar"
+	on-navbutton-click="transitionBack()"
+	on-side-menu-toggle-click="toggleSideMenu()">
+
+	<div class="subheader tabs">
+		<div class="tab-header">
+			<div class="tab-header-items-container tabs-4">
+				<div class="tab-header-items clearfix">
+					<div class="tab tab-icon"
+							 ng-class="{'active':ui.profileTab.currTab=='info'}"
+							 ng-click="ui.profileTab.currTab = 'info'">
+						<md-icon md-font-icon="icon icon-info"></md-icon>
+					</div>
+
+					<div class="tab tab-icon"
+							 ng-class="{'active':ui.profileTab.currTab=='contact'}"
+							 ng-click="ui.profileTab.currTab = 'contact'">
+						<md-icon md-font-icon="icon icon-person"></md-icon>
+					</div>
+
+					<div class="tab tab-icon"
+							 ng-class="{'active':ui.profileTab.currTab=='skill'}"
+							 ng-click="ui.profileTab.currTab = 'skill'">
+						<md-icon md-font-icon="icon icon-tools"></md-icon>
+					</div>
+
+					<div class="tab tab-icon"
+							 ng-class="{'active':ui.profileTab.currTab=='location'}"
+							 ng-click="ui.profileTab.currTab = 'location'">
+						<md-icon md-font-icon="icon icon-pin"></md-icon>
+					</div>
+				</div>
+
+				<div class="tab"></div>
+			</div>
+		</div>
+		<div class="tabs-content" ng-switch="ui.profileTab.currTab">
+			<div
+				ng-switch-when="info"
+				class="tab-content">
+				<!-- Info -->
+				<md-card>
+					<md-card-content >
+						<div user-info user-id="userId" hide-info="true"></div>
+						<section>
+							<div class="full-width push-top lg field">
+								<div class="f-header">First Name</div>
+								<div class="f-content ">{{user.userFirstName}}</div>
+							</div>
+							<div class="full-width push-top lg field">
+								<div class="f-header">Last Name</div>
+								<div class="f-content ">{{user.userLastName}}</div>
+							</div>
+
+							<div class="full-width push-top lg field">
+								<div class="f-header">Date and time created</div>
+								<div class="f-content ">{{user.createDateTime}}</div>
+							</div>
+						</section>
+
+					</md-card-content>
+				</md-card>
+			</div>
+			<div
+				ng-switch-when="skill"
+				class="tab-content">
+				<!-- Skills -->
+				<md-card>
+					<md-card-content >
+
+						<md-list class="list">
+							<md-item ng-hide="user.skills.length>0">
+								<h4 class="light v-center txt-center">
+									No record.
+								</h4>
+							</md-item>
+							<md-item
+								item-tile
+								tile-content-css="label"
+								tile-icon-left="icon icon-tools"
+								tile-icon-left-css="icon-2x"
+								class="layout-md-item-50"
+								ng-repeat="skill in user.skills">
+								<span ng-bind="skill.expertise"></span>
+								<!--<span ng-bind-html="' ('+skill.rating+')'"></span>-->
+							</md-item>
+
+						</md-list>
+					</md-card-content>
+				</md-card>
+			</div>
+
+			<div
+				ng-switch-when="contact"
+				class="tab-content">
+				<!-- Contact -->
+				<md-card>
+					<md-card-content >
+
+						<md-list class="list">
+
+							<md-item
+								ng-show="user.userEntity.contactNumber1"
+								item-tile
+								tile-content-css=""
+								tile-icon-left="icon icon-call"
+								tile-icon-left-css=""
+								class="">
+								<span ng-bind="user.userEntity.contactNumber1"></span>
+							</md-item>
+
+							<md-item
+								ng-show="user.userEntity.contactNumber2"
+								item-tile
+								tile-content-css=""
+								tile-icon-left="icon icon-call"
+								tile-icon-left-css=""
+								class="">
+								<span ng-bind="user.userEntity.contactNumber2"></span>
+							</md-item>
+
+							<md-item
+								ng-show="user.userEntity.contactNumber3"
+								item-tile
+								tile-content-css=""
+								tile-icon-left="icon icon-call"
+								tile-icon-left-css=""
+								class="">
+								<span ng-bind="user.userEntity.contactNumber3"></span>
+							</md-item>
+
+							<md-item
+								ng-show="user.userEmail"
+								item-tile
+								tile-content-css=""
+								tile-icon-left="icon icon-email"
+								tile-icon-left-css=""
+								class="">
+								<span ng-bind="user.userEmail"></span>
+							</md-item>
+
+							<md-item
+								ng-show="user.userEntity.userEmail2"
+								item-tile
+								tile-content-css=""
+								tile-icon-left="icon icon-email"
+								tile-icon-left-css=""
+								class="">
+								<span ng-bind="user.userEntity.userEmail2"></span>
+							</md-item>
+
+							<md-item
+								ng-show="user.userEntity.userEmail3"
+								item-tile
+								tile-content-css=""
+								tile-icon-left="icon icon-email"
+								tile-icon-left-css=""
+								class="">
+								<span ng-bind="user.userEntity.userEmail3"></span>
+							</md-item>
+
+
+						</md-list>
+					</md-card-content>
+				</md-card>
+			</div>
+
+			<div
+				ng-switch-when="location"
+				class="tab-content">
+				<!-- Location -->
+				<md-card>
+					<md-card-content>
+						<md-list>
+
+							<md-item ng-show="!user.location || user.location.length==0">
+								<h4 class="light v-center txt-center">
+									No record.
+								</h4>
+							</md-item>
+
+							<md-item
+								item-tile
+								tile-icon-left-css=""
+								tile-icon-left="icon icon-pin"
+								ng-repeat="address in user.location">
+								<div layout="column" flex>
+									<span ng-bind="address.countryName"></span>
+									<span ng-bind="address.cityName"></span>
+								</div>
+							</md-item>
+
+						</md-list>
+					</md-card-content>
+				</md-card>
+			</div>
+		</div>
+	</div>
+
+</layout-toolbar>

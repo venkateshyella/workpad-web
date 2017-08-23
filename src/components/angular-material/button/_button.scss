@@ -1,0 +1,87 @@
+$button-border-color: darken($stable, 20%);
+$button-bar-border: 1px solid transparentize($light, 0.7);
+$box-border: transparentize($light, 0.7);
+
+button {
+  .icon {
+    &.md-font {
+      font-size: 25px;
+      line-height: 30px;
+    }
+  }
+  md-icon {
+    height: 29px;
+  }
+}
+
+button.md-button {
+  padding: 0 8px;
+  &.md-icon-button {
+    min-width: 48px;
+    &.md-button-small {
+      height: 36px;
+      min-height: 36px;
+      line-height: 36px;
+      width: 36px;
+      min-width: 36px;
+    }
+  }
+}
+
+.md-button-bar {
+  button {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+
+    margin: 0px;
+
+    &:not(:last-child) {
+      border-right: $button-bar-border;
+    }
+  }
+  &.border-top {
+    box-shadow: inset 0px 1px 0px 0px $box-border;
+  }
+  &.border-bottom {
+    box-shadow: inset 0px -1px 0px 0px $box-border;
+  }
+}
+
+button {
+  &.md-button {
+    &[disabled] {
+      span {
+        color: rgba(0,0,0,0.26);
+      }
+    }
+    &.md-button-outline {
+      border: 1px solid $button-border-color;
+    }
+    &.button-auto-adj {
+      height: auto;
+    }
+    &.md-clear {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &.md-button-large {
+    padding: 6px 18px ;
+  }
+
+  &.height-md-input {
+    min-height: 42px;
+    line-height: 42px;
+  }
+
+  &.auto-width {
+    min-width: initial;
+  }
+
+  &.button-thin {
+    min-width: 62px;
+  }
+}

@@ -1,0 +1,17 @@
+<div ng-controller="LinkFormPreviewViewController">
+    <div class="md-item-padiding-sides">
+        <md-list-item ng-show="fieldModel.label">
+            <label>{{fieldModel.label}}</label>
+        </md-list-item>
+        <md-subheader class="md-no-sticky" ng-show="fileLst.length>0">Linked files are</md-subheader>
+        <md-list flex ng-show="fileLst.length>0">
+            <md-list-item ng-repeat="file in fileLst">
+                <p flex>{{file.fileName}}</p>
+                <md-icon md-font-icon="icon icon-file-download" aria-label="Preview file" class="md-hue-3" ng-click="downloadFile(file.fileId)"></md-icon>
+            </md-list-item>
+        </md-list>
+        <md-list-item ng-show="fileLst.length == 0">
+            <p> No available files to display.</p>
+        </md-list-item>
+    </div>
+</div>

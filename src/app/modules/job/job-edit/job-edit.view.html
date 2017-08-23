@@ -1,0 +1,96 @@
+<view type="toolbarView" title="'Edit Job'">
+<toolbar ng-hide="form.edit_job.$dirty" app-toolbar title="'Edit Job'">
+    <toolbar-options>
+      <div class="menu-option-group"></div>
+    </toolbar-options>
+  </toolbar>
+
+  <toolbar ng-show="form.edit_job.$dirty" view-toolbar title="Edit">
+    <toolbar-options class="full-width">
+
+      <div class="menu-option-group">
+
+        <div ng-click="resetJobFormModel()"
+             ng-disabled="formActivity == '_SUBMITTING'"
+             class="menu-option-item button">
+          <span>{{LANG.BUTTON.DISCARD}}</span>
+          <i class="icon icon-close"></i>
+        </div>
+
+        <div ng-click="submit()"
+             ng-disabled="formActivity == '_SUBMITTING' || !form.edit_job.$valid"
+             class="menu-option-item button icon-left icon-floppy"
+          >{{LANG.BUTTON.SAVE}}
+        </div>
+
+      </div>
+    </toolbar-options>
+  </toolbar>
+<layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <form name="form.edit_job" class="full-height" novalidate>
+        <div class="card list">
+          <div class="item">
+            <md-input-container md-no-float>
+            <input type="text"
+           		name="jobName"
+                placeholder="Job Name"
+                required
+                ng-model="formModel.title" 
+                ng-maxlength="50"
+                ng-pattern="/^[A-Za-z0-9 ]+$/"
+                ng-trim>
+              <div ng-messages="form.edit_job.jobName.$error">
+              	<div ng-message="maxlength" class="ng-message">{{LANG.JOB.JOB_CREATE_VALIDATION_MSGS.JOB_NAME_LIMIT}}</div>
+              	<div ng-message="pattern" class="ng-message">{{LANG.JOB.JOB_CREATE_VALIDATION_MSGS.JOB_NAME_ALLOW}}
+              	</div>
+              </div>
+          </md-input-container>
+          </div>
+
+          <div class="item">
+           <md-input-container flex>
+            <label>Description</label>
+            <textarea name="jobDesc" ng-model="formModel.desc"
+                      columns="1" md-maxlength="150"></textarea>
+            <div ng-messages="form.edit_job.jobDesc.$error">
+              <div ng-message="md-maxlength" class="ng-message">{{LANG.JOB.JOB_CREATE_VALIDATION_MSGS.JOB_DESCRIPTION_LIMIT}}</div>
+            </div>
+          </md-input-container>
+          </div>
+
+           <div class="item">
+           <md-input-container flex>
+            <label>Objective</label>
+            <textarea name="jobObjective" ng-model="formModel.objective"
+                      columns="1" md-maxlength="150"></textarea>
+            <div ng-messages="form.edit_job.jobObjective.$error">
+              <div ng-message="md-maxlength" class="ng-message">{{LANG.JOB.JOB_CREATE_VALIDATION_MSGS.JOB_OBJECTIVE_LIMIT}}</div>
+            </div>
+          </md-input-container>
+          </div>
+
+
+
+
+        </div>
+
+        <div class="md-actions full-width" layout="row">
+        <span flex></span>
+        <!-- <md-button ng-click="cancel()">
+          Cancel
+        </md-button>
+        <md-button type="submit"
+                   ng-disabled="!form.edit_job.$valid"
+                   ng-click="submit()" class="md-primary"
+          >edit
+        </md-button> -->
+      </div>
+
+      </form>
+
+    </row>
+  </layout>
+
+  </view>

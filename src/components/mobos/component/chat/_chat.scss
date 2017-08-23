@@ -1,0 +1,141 @@
+// _chat.scss
+
+$ch-input-field-height: 45px;
+$ch-textarea-field-height: 110px;
+$ch-form-padding: 6px;
+$ch-icon-size: 45px;
+
+.chatList {
+  .chItem {
+    &:not(:first-child) {
+      margin-top: 10px
+    }
+    .chIcon {
+      height: $ch-icon-size;
+      min-height: $ch-icon-size;
+      width: $ch-icon-size;
+      min-width: $ch-icon-size;
+      padding: 10px;
+      img {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    &.item-align-left {
+      .chIcon {
+        padding-left: 0px;
+        -webkit-order: 1;
+        order: 1;
+      }
+      .chBubble {
+        -webkit-order: 2;
+        order: 2;
+      }
+      p {
+        text-align: left;
+      }
+    }
+    &.item-align-right {
+      .chIcon {
+        padding-right: 0px;
+        -webkit-order: 2;
+        order: 2;
+      }
+      .chBubble {
+        -webkit-order: 1;
+        order: 1;
+      }
+      p {
+        text-align: left;
+      }
+    }
+  }
+  .chBubble {
+    width: 100%;
+    padding: 8px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.35);
+    overflow: auto;
+    .chat-content-block {
+      margin-bottom: 2px;
+      margin-top: 2px;
+    }
+  }
+  .chSubtext {
+    margin-top: 3px;
+    font-size: 14px;
+  }
+  &.padding-for-footer {
+    padding-bottom: 72px;
+  }
+  &.withStickyChSubmitForm {
+    padding-bottom: $ch-input-field-height + (2 * $ch-form-padding) + 10;
+    &.tall-form {
+      padding-bottom: $ch-textarea-field-height + (2 * $ch-form-padding) + 10;
+    }
+  }
+}
+
+.chSubmitForm {
+  box-shadow: 0px 10px 15px 12px rgba(0, 0, 0, 0.26);
+  padding-top: $ch-form-padding;
+  padding-bottom: $ch-form-padding;
+  background: $light;
+  height: 100%;
+  .chMessageInputField {
+    height: $ch-input-field-height;
+    padding-top: 8px;
+    padding-bottom: 2px;
+    border-radius: 2px;
+    margin-left: 6px;
+    background-color: darken($light, 5%);
+    input, textarea {
+      width: 100%;
+      padding-left: 4px;
+      padding-top: 2px;
+      line-height: 1.6;
+      border-color: transparent;
+      background-color: transparent;
+    }
+    &.chMessageTextAreaField {
+      height: 100%;
+      textarea {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+  .chSubmitBtn {
+    padding-left: 5px;
+    padding-right: 5px;
+    min-width: auto;
+  }
+}
+
+.chatListFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  &.CLF-textarea {
+    height: 8em;
+    form {
+      height: 100%;
+    }
+  }
+}
+
+.platform-ios {
+  .chatListFooter {
+    position: absolute;
+  }
+}
+
+.platform-android {
+  .chatListFooter {
+    position: fixed;
+  }
+}

@@ -1,0 +1,16 @@
+.autocomplete-group-member-tpl {
+  height: auto;
+  &.md-autocomplete-suggestions li {
+    height: auto;
+    padding-top: 4px;
+    padding-bottom: 15px;
+  }
+  .item-title {
+    font-size: 110%;
+    display: block;
+  }
+  .item-metadata {
+    line-height: 1;
+    display: block;
+  }
+}

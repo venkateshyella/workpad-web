@@ -1,0 +1,5 @@
+/*!
+   angular-block-ui v0.2.0
+   (c) 2015 (null) McNull https://github.com/McNull/angular-block-ui
+   License: MIT
+*/.btn,.text-select-disable{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}html{overflow-y:scroll}.spacer-sm{margin-top:10px}.spacer{margin-top:20px}.spacer-lg{margin-top:40px}body{padding-bottom:80px}.example{position:relative;padding:45px 15px 15px;background-color:#fff;border-color:#ddd;border-style:solid;border-width:1px}.example:after{content:"Example";position:absolute;top:15px;left:15px;font-size:12px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:1px}.form-block .block-ui-message-container{top:30%}.example-container{min-height:300px;overflow:hidden}.my-demo-table th{width:25%}.my-demo-table .pagination,.my-demo-table table{margin-bottom:0}@media (max-width:767px){.navbar-collapse.collapsed{display:none}}.navbar-collapse{overflow-y:hidden}

@@ -1,0 +1,28 @@
+<div>
+    <div class="list">
+        <div ng-show="GroupGroupdata.groupGroups && GroupGroupdata.groupGroups.length==0" class="item item-backdrop text-center">
+            <div class="backdrop-filler-image">
+                <i class="icon icon-backdrop icon-group-work"></i>
+            </div>
+            <p>{{LANG.GROUP.LOADING_MSG.NO_GROUPS_FOUND}}</p>
+        </div>
+        <div class="item item-text-wrap item-avatar-left" ng-repeat="group in GroupGroupdata.groupGroups" ng-click="showGroupOptions(group, $event)">
+            <img ng-src="{{group._img_icon}}" on-error-src="assets/images/group-icon-placeholder.png" class="img fit item-image with-padding corner-round">
+            <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+                  {{group.groupName}}
+                </h2>
+            <div layout="row" class="push-top pt-sm">
+                <p class="txt txt-line-sec text-ellipsis">
+                    <span ng-show="LANG.GROUP.ROLES[group._roleName]" ng-bind="LANG.GROUP.ROLES[group._roleName]" class="label"></span>
+                    <span class="inline-block push-left pl-sm">{{LANG.ORGANISATION.LABEL.PREFIX_CREATED_DATE}} {{MU.getDisplayDate_DDMMYYYYHHMMSS(group.createTime)}}</span>
+                </p>
+            </div>
+        </div>
+        <div ng-show="ui.isNextPageAvailable" layout="row" layout-align="center center" class="item">
+            <md-button ng-click="loadNextPage()" ng-disabled="!ui.loadingNext" class="full-width txt-ignore-case" aria-label="Load next page">
+                <span ng-show="ui.loadingNext">Load more</span>
+                <span ng-hide="ui.loadingNext">Loading ...</span>
+            </md-button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<md-dialog class="" aria-label="Edit Date time validation">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Date Range</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="dialog-custom">
+    <form name="form.dateTimeEditor">
+      <md-list>
+        <md-list-item layout="column" layout-align="start start">
+         <h4>Select from date</h4>
+        <input type="date" required ng-model="validationModel.earliest">
+
+      </md-list>
+
+       <md-list>
+        <md-list-item layout="column" layout-align="start start">
+          <h4>Select to date</h4>
+        <input type="date" required ng-model="validationModel.latest" ng-change="checkForValiddate()">
+        <!-- <div  class="ng-messages-floating line-clamp-2" ng-show="dateErrorMsg">
+            <div class="ng-message"> To date should be greater than from date </div>
+        </div> -->
+
+      </md-list>
+    </form>
+
+  </md-dialog-content>
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button type="submit"
+               ng-click="cancel()"
+      >Cancel
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="!form.dateTimeEditor.$valid"
+               ng-click="saveValidationModel()"
+               class="md-primary"
+      >Save
+    </md-button>
+
+  </div>
+</md-dialog>

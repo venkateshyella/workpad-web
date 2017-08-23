@@ -1,0 +1,59 @@
+<div hide-if-data-absent class="card no-padding-top">
+  <div class="item card-rich-media">
+
+    <div class="profile-card overlay">
+      <div class="profile-cover">
+        <div class="inner">
+          <img ng-src="{{data.org._img_full || 'assets/images/profile-placeholder.png'}}"
+               on-error-src="assets/images/profile-placeholder.png"
+               alt=""
+               class="img"/>
+        </div>
+      </div>
+
+      <div class="inner overlay-content">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="item item-text-wrap item-thumbnail-left">
+    <div class="item-image item-padded overflow-hide">
+      <img ng-src="{{data.org._img_icon}}"
+           on-error-src="assets/images/org-icon-placeholder.png"
+           alt=""
+           class="img"/>
+    </div>
+
+    <h2 class="card-title-text">{{data.org.orgName}}</h2>
+
+    <p ng-class="{'line-clamp-2 overflow-hide':!ui.flags.toggleOrgDesc}"
+       ng-click="ui.flags.toggleOrgDesc=!ui.flags.toggleOrgDesc"
+      class=""
+      >{{data.org.desc}}</p>
+  </div>
+
+  <div class="item-divider"></div>
+
+  <div class="button-bar color-light-2"
+       layout="row"
+       ng-show="data.org.members || data.org.groups">
+
+    <span flex></span>
+
+    <md-button ng-click="transitionTo('root.app.org-members', {orgId:data.org.id})"
+               class="auto-width txt-ignore-case">
+      <span>{{data.org.members.length}}</span>
+      <span>{{data.org.members.length>1 ? LANG.ORGANISATION.LABEL.MEMBERS : LANG.ORGANISATION.LABEL.MEMBER}}</span>
+      <!--<md-icon md-font-icon="icon icon-person"></md-icon>-->
+    </md-button>
+
+    <md-button ng-click="onTabSelect('TAB_GROUPS')"
+               class="auto-width txt-ignore-case">
+      <span class="">{{data.org.groups.length}}</span>
+      <span class="">{{data.org.groups.length>1 ? LANG.ORGANISATION.LABEL.GROUPS : LANG.ORGANISATION.LABEL.GROUP}}</span>
+      <!--<md-icon md-font-icon="icon icon-people"></md-icon>-->
+    </md-button>
+  </div>
+
+</div>

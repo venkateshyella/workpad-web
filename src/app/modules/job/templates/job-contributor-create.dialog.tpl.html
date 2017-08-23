@@ -1,0 +1,325 @@
+<md-dialog class="dialog-full-screen" aria-label="Create Advertisement">
+  <md-toolbar class="toolbar-custom">
+    <div class="md-toolbar-tools">
+      <div>
+        <h2>Job Contributor Invitation</h2>
+
+        <p class="toolbar-subtitle">{{jobAdvCtrl.job.title}}</p>
+      </div>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width " >
+    <div class="padding-horizontal ph-lg padding-top push-top full-width">
+
+      <div>
+        <div layout="row">
+          <div class="select">
+            <select
+              ng-model="jobAdvCtrl.searchMode"
+              name="singleSelect"
+              class="select"
+              style="height: 40px;">
+              <option value="group">Group</option>
+              <option value="user">Members</option>
+            </select>
+          </div>
+
+          <div ng-switch="jobAdvCtrl.searchMode"
+               layout="column" flex class="">
+            <div ng-switch-when="group">
+              <md-autocomplete
+                placeholder="Select group"
+                md-no-cache="true"
+                md-selected-item="newAdvertisementGroup"
+                md-search-text-change="groupSearchCtrl.searchTextChange(groupSearchCtrl.searchText)"
+                md-search-text="groupSearchCtrl.searchText"
+                md-selected-item-change="groupSearchCtrl.selectedItemChange(item)"
+                md-items="item in groupSearchCtrl.querySearch(groupSearchCtrl.searchText)"
+                md-item-text="item.groupName"
+                md-min-length="2"
+                md-delay="300">
+                <md-item-template>
+                  <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.groupName}}</span>
+                </md-item-template>
+                <md-not-found>
+                  No matches found.
+                </md-not-found>
+              </md-autocomplete>
+            </div>
+            <div ng-switch-when="user">
+              <md-autocomplete
+                class=""
+                placeholder="Select Members"
+                md-no-cache="true"
+                md-selected-item="newAdvMember"
+                md-search-text-change="memberSearchCtrl.searchTextChange(memberSearchCtrl.searchText)"
+                md-search-text="memberSearchCtrl.searchText"
+                md-selected-item-change="memberSearchCtrl.selectedItemChange(queryResult)"
+                md-items="queryResult in memberSearchCtrl.querySearch(memberSearchCtrl.searchText)"
+                md-item-text="queryResult.userFirstName"
+                md-min-length="2"
+                md-delay="300"
+                md-menu-class="">
+                <md-item-template>
+                  <span class="item-title"
+                        md-highlight-text="ctrl.searchText"
+                        md-highlight-flags="^i">
+                     {{queryResult.userFirstName + ' ' + queryResult.userLastName}}
+                  </span>
+                </md-item-template>
+                <md-not-found>
+                  No matches found.
+                </md-not-found>
+              </md-autocomplete>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="list no-padding-top">
+
+        <md-list
+          ng-show="jobAdv.getInvitationMembers().length>0"
+          class="card no-push-right no-push-left">
+          <md-list-item
+            ng-repeat="userId in jobAdv.getInvitationMembers()"
+            class="">
+            <div flex
+                 class="padding-vertical">
+              <h2 class="no-push-bottom" ng-bind="getUserModel(userId).$_fullName"></h2>
+              <p ng-bind="getUserModel(userId).userEmail"></p>
+            </div>
+            <md-icon ng-click="removeMemberFromAdvertisement(userId)"
+                     class="md-secondary no-push-top"
+                     aria-label="Remove adv member"
+                     md-font-icon="icon icon-close"></md-icon>
+            <md-divider ng-show="!$last"></md-divider>
+          </md-list-item>
+        </md-list>
+
+        <!-- Selected Groups for advertisement. -->
+        <div ng-repeat="(groupId, advGroup) in jobAdv.getInvitationGroups()"
+             class="item card no-padding">
+
+          <md-list class="no-padding-bottom">
+            <md-list-item class="">
+              <md-icon
+                ng-click="toggleAdvGroupSelectAll(groupId)"
+                ng-class="advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+                md-font-icon="icon {{advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+              ></md-icon>
+              <div flex
+                   ng-click="toggleAdvGroupMembersList(groupId)">
+                <h2>{{getModel.Group(groupId).groupName}}</h2>
+
+                <p ng-show="advGroup.sendToAll">Send invitations to all members.</p>
+              </div>
+              <md-icon ng-click="removeGroup(groupId)"
+                       class="md-secondary no-push-top"
+                       aria-label="Remove adv group"
+                       md-font-icon="icon icon-close"></md-icon>
+            </md-list-item>
+
+            <md-divider></md-divider>
+
+            <!--<md-list-item ng-click="toggleAdvGroupMembersList(getModel.Group(groupId))">-->
+            <!--<md-icon class="push-right"-->
+            <!--ng-class="advGroup._isMembersListExpanded ? 'icon icon-expand-less':'icon icon-chevron-right' "-->
+            <!--aria-label="Collapse group members list"-->
+            <!--md-font-icon="icon icon-chevron-right"></md-icon>-->
+            <!--<md-icon ng-if="advGroup._isMembersListExpanded"-->
+            <!--class=""-->
+            <!--aria-label="Expand group members list"-->
+            <!--md-font-icon="icon icon-expand-less"></md-icon>-->
+            <!--<p>{{advGroup._isAllMembersSelected ? 'All Members Selected': 'Select members'}}</p>-->
+            <!--<md-icon-->
+            <!--ng-click="toggleAdvGroupSelectAll(groupId)"-->
+            <!--ng-class="advGroup._isAllMembersSelected ? 'icon-check-box': 'icon-check-box-blank'"-->
+            <!--md-font-icon="icon {{advGroup._isAllMembersSelected? 'icon-check-box': 'icon-check-box-blank'}}"-->
+            <!--aria-label="Toggle delete permission"-->
+            <!--class="md-secondary"></md-icon>-->
+            <!--<md-checkbox class="md-secondary"-->
+            <!--ng-model="advGroup._isAllMembersSelected"></md-checkbox>-->
+            <!--</md-list-item>-->
+
+            <md-list ng-show="groupsMeta[groupId]._isMembersListExpanded"
+                     class="no-padding">
+              <md-list-item
+                ng-if="groupsMeta[groupId]._isLoadingMembersList">
+                <md-progress-circular class="no-push-right"
+                                      md-mode="indeterminate"
+                                      md-diameter="16"></md-progress-circular>
+                <p class="">Loading Room members..</p>
+              </md-list-item>
+
+              <md-list-item
+                ng-show="advGroup.invitee.length==0 && !advGroup.sendToAll">
+                <p class="text-wrap">
+                  No members selected. Please select at least one member to invite</p>
+              </md-list-item>
+
+              <!--<md-list-item ng-repeat="userId in advGroup.invitee"-->
+              <!--class="item-complex item-action-right" style="display: block;">-->
+
+              <!--<div class="item-content">-->
+              <!--<h2 class="txt text-wrap">{{getModel.User(userId).userFirstName}}-->
+              <!--{{getModel.User(userId).userLastName}}</h2>-->
+
+              <!--<p class="text-wrap color-light">{{getModel.User(userId).userEmail}}</p>-->
+              <!--</div>-->
+              <!--<div class="item-action item-action-secondary">-->
+              <!--<md-icon-->
+              <!--ng-click="removeAdvGroupMember(groupId, userId)"-->
+              <!--md-font-icon="icon icon-close"-->
+              <!--aria-label="Remove member"-->
+              <!--class="md-secondary no-push-top push-right">-->
+              <!--</md-icon>-->
+              <!--</div>-->
+              <!--</md-list-item>-->
+
+              <md-list-item
+                ng-repeat="user in groupsMeta[groupId].users"
+                ng-click="toggleAdvGroupMember(groupId, user.id)"
+                class="">
+                <md-icon
+                  ng-class="advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+                  md-font-icon="icon {{advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+                ></md-icon>
+                <div flex>
+                  <h2 class="txt text-wrap">{{user.userFirstName}}
+                    {{user.userLastName}}</h2>
+
+                  <p class="text-wrap color-light">{{user.userEmail}}</p>
+                </div>
+              </md-list-item>
+
+            </md-list>
+
+          </md-list>
+        </div>
+      </div>
+
+      <!-- Pending Invitations list -->
+     <!--  <div class="list">
+        <div ng-show="jobAdvertiseInviteOwnerList.length > 0"
+             class="item item-sub-header bg-primary push-top pt-lg">
+          <span class="">Pending Invitations</span>
+              <span class="push-right pr-sm"
+              >({{jobAdvertiseInviteOwnerList.length}})</span>
+        </div>
+        <div  ng-show="jobAdvertiseInviteOwnerList.length > 0"
+             class="item card no-padding">
+          <md-list class="no-padding-bottom">
+            <md-list-item class="item-sub-header">
+              <p>{{jobAdv.groupName || LANG.JOB.LABEL.JOB_PENDING_ADVERTISEMENT_MEMBERS}}</p>
+            </md-list-item>
+            <md-divider></md-divider> 
+            <md-list-item class="item-complex item-action-right" ng-repeat="jobAdv in jobAdvertiseInviteOwnerList">
+              <div class="item-content">
+                <h2 class="txt text-wrap">{{jobAdv.user.userFirstName}} {{jobAdv.user.userLastName}}</h2>
+                <p class="text-wrap color-light">{{jobAdv.user.userEmail}}</p>
+              </div>
+              <md-divider></md-divider>
+            </md-list-item>
+          </md-list>
+        </div>
+      </div> -->
+
+       <div class="list">
+        <div ng-show="jobAdvertiseInviteOwnerList.length > 0"
+             class="item item-sub-header bg-primary push-top pt-lg">
+          <span class="">Pending Invitations</span>
+              <span class="push-right pr-sm"
+              >({{jobAdvertiseInviteOwnerList.length}})</span>
+        </div>
+        <div ng-repeat="jobAdv in jobAdvertiseInviteOwnerList"
+             class="item card no-padding">
+          <md-list class="no-padding-bottom">
+            <md-list-item class="item-sub-header">
+              <p>{{jobAdv.groupName || LANG.JOB.LABEL.JOB_PENDING_ADVERTISEMENT_MEMBERS}}</p>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-repeat="users in jobAdv.members" class="item-complex item-action-right">
+              <div class="item-content">
+                <h2 class="txt text-wrap">{{users.user.userFirstName}} {{users.user.userLastName}}</h2>
+
+                <p class="text-wrap color-light">{{users.user.userEmail}}</p>
+              </div>
+              <md-divider></md-divider>
+            </md-list-item>
+          </md-list>
+        </div>
+      </div>
+    </div>
+
+    <!--<div ng-show="showMsgJobContainer"-->
+    <!--class="list"-->
+    <!--layout="row"-->
+    <!--layout-align="center center">-->
+    <!--<div class="item item-backdrop text-center">-->
+    <!--<div ng-show="loadingImage" class="backdrop-filler-image">-->
+    <!--<i class="icon icon-backdrop icon-people"></i>-->
+
+    <!--<div class="text-center">Loading invitations ..</div>-->
+    <!--</div>-->
+    <!--<div ng-show="showNoDataMsg">-->
+    <!--<i class="icon icon-backdrop icon-people"></i>-->
+    <!--<h4 class="color-light-2 text-wrap">No Invitation have been sent for this job.</h4>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+
+    <form name="form.createAdvertisement" class="full-width push-top pt-lg" novalidate>
+      <div class="list">
+        <div class="item item-input">
+          <span class="input-label">Reason</span>
+          <textarea ng-model="formModel.inviteMsg"
+                    name="invite_msg"
+                    id="inviteMsgTextbox" rows="5"
+                    maxlength="150"></textarea>
+          <div flex layout="row">
+            <span flex></span>
+            <small ng-bind="formModel.inviteMsg.length+'/150'"
+                   class="color-light-2"></small>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="column">
+    <p ng-show="!jobAdv.isValid()" class="push-top full-width text-right">Please select at-least one room or
+      member.</p>
+
+    <div layout="row" class="full-width">
+      <span flex></span>
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      <md-button type="submit"
+                 ng-disabled="!jobAdv.isValid()"
+                 ng-click="submit()" class="md-primary"
+      >Send Invitation(s)
+      </md-button>
+    </div>
+  </div>
+
+  <!--<form name="form.create_job_advertisement" class="full-height" novalidate>-->
+  <!--<div class="full-height" layout="column" layout-align="space-between center">-->
+
+  <!--</div>-->
+
+  <!--</form>-->
+</md-dialog>

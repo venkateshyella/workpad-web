@@ -1,0 +1,17 @@
+<ng-form class="row" novalidate name="jobDynamicForm.formfield{{fieldModel.id}}">
+<div class="row job-form-field">
+   <h5 class="job-form-field-lab">{{fieldModel.label}}
+   <span ng-if="fieldModel.validations.required.value" style="color: red;padding-left: 5px;">*</span></h5>
+   <div class="md-item-padiding-sides" layout="columns">
+      <md-radio-group ng-model="fieldModel.groupFieldValue">
+         <md-radio-button name="field{{fieldModel.id}}" ng-disabled="isJobInProgress" ng-repeat="radioItem in fieldModel.groupFields" ng-value="radioItem.label" ng-required="{{fieldModel.validations.required.value}}"
+            aria-label="radioItem.label">
+            <p flex>{{radioItem.label}}</p>
+         </md-radio-button>
+      </md-radio-group>
+      <div ng-messages="jobDynamicForm.formfield{{fieldModel.id}}.field{{fieldModel.id}}.$error">
+		<div ng-message="maxlength" class="ng-message">Please select at-least one Radio Button.</div>
+	</div>
+   </div>
+   </div>
+</ng-form>

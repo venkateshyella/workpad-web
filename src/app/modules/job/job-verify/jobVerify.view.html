@@ -1,0 +1,94 @@
+<view type="toolbarView" title="'Job Finish'">
+  <toolbar app-toolbar title="xtras.title" sub-title="xtras.jobstatus">
+    <toolbar-options>
+      <!--<md-button ng-click="showOptionsMenu($event)"-->
+      <!--class="md-icon-button toolbar-button button-thin"-->
+      <!--aria-label="Options">-->
+      <!--<md-icon md-font-icon="icon icon-more-vert"-->
+      <!--class="toolbar-icon"></md-icon>-->
+      <!--</md-button>-->
+      <!--  <md-menu md-position-mode="target-right target">
+           <md-button ng-click="$mdOpenMenu()" class="md-icon-button toolbar-button button-thin" aria-label="Options">
+               <md-icon md-font-icon="icon icon-more-vert" class="toolbar-icon" md-menu-origin></md-icon>
+           </md-button>
+           <md-menu-content width="4">
+               <md-menu-item>
+                   <md-button ng-click="refresh(); $mdCloseMenu()">
+                       Refresh
+                   </md-button>
+               </md-menu-item>
+               <md-menu-item>
+       <md-button ng-click="createThenEditOrganisation($event); ; $mdCloseMenu()">
+         Create Job
+       </md-button>
+     </md-menu-item>
+           </md-menu-content>
+       </md-menu> -->
+      <md-progress-linear ng-show="toolbarLoader.async_active" md-mode="indeterminate"
+                          class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+    </toolbar-options>
+  </toolbar>
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free" ng-class="APP_DATA_CSS[_state]">
+      <div ng-show="(_state=='_data_na') || (_activity='_fetching')" class="list full-width" layout="row"
+           layout-align="center center">
+        <div ng-show="_state=='_data_na' && (_activity='_idle')" class="item item-backdrop text-center">
+          <div ng-show="_state=='_data_na'" class="backdrop-filler-image">
+            <i class="icon icon-backdrop icon-domain"></i></div>
+          <div ng-switch="_activity">
+            <div ng-switch-when="_idle">
+              <div class="text-center">Your Tasks..</div>
+            </div>
+            <div ng-switch-when="_fetching">
+              <div class="text-center">Loading Tasks..</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="list full-width overflow-hide">
+
+        <div layout="row" ng-show="jobModel.isOriginator()" layout-align="center center" class="card no-padding">
+          <md-button ng-click="onJobLifeCycleEventTrigger('TRY_CLOSE')" class="md-primary md-button-large" flex>
+            <md-icon md-font-icon="icon icon-check"></md-icon>
+            Close
+          </md-button>
+          <md-button ng-click="onJobLifeCycleEventTrigger('TRY_REJECT')" class="md-accent md-button-large" flex>
+            <md-icon md-font-icon="icon icon-report"></md-icon>
+            Reject
+          </md-button>
+        </div>
+
+        <md-list>
+          <div ng-show="jobModel && jobModel.count_tasks==0"
+               class="item" ng-click="">
+            <span class="color-light txt-normal"><i>No Tasks
+              available.</i></span>
+          </div>
+
+          <md-list-item class="md-3-line"
+                        ng-click="onTaskItemClick()" ng-repeat="task in taskList">
+            <div class="md-list-item-text" layout="column">
+              <h3 class="txt-bold">{{task.title}}</h3>
+
+              <p>{{task.assignee.userFirstName}}</p>
+
+              <p class="txt txt-line-sec text-no-wrap oveflow-x-hide text-ellipsis">{{task.desc}}</p>
+
+              <p>
+                <span class="label" aria-hidden="false">{{task.displayStatus}}</span>
+                <small>{{task.assignee.userFirstName}}</small>
+              </p>
+            </div>
+          </md-list-item>
+        </md-list>
+
+        <div ng-show="!ui.isRefreshing && isNextPageAvailable" class="item" layout="row" layout-align="center center">
+          <md-button ng-click="fetchMoreJobs()" ng-disabled class="full-width txt-ignore-case" aria-label="Load More">
+            <span ng-hide="ui.isLoadingNext">Load more.</span>
+            <span ng-show="ui.isLoadingNext">Loading...</span>
+          </md-button>
+        </div>
+      </div>
+    </row>
+  </layout>
+</view>

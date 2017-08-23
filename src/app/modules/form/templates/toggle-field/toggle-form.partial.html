@@ -1,0 +1,12 @@
+<md-list flex ng-controller="ToggleFormPartialViewController">
+   <md-list-item >
+    <p> {{fieldModel.label}} </p>
+    <md-switch class="md-secondary" 
+               ng-model="formField.keyValue"
+               ng-disabled="fieldCtrl.isDisabled()"
+               ng-change="fieldCtrl.getFormFieldError()"></md-switch>
+    <div ng-messages="fieldCtrl.$formError" class="ng-messages-floating line-clamp-2">
+        <div ng-message="0" class="ng-message">{{fieldCtrl.$formError[0]}}</div>
+      </div>
+  </md-list-item>
+</md-list>

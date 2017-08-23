@@ -1,0 +1,63 @@
+<div>
+  <div class="card no-padding-top">
+    <div class="item card-rich-media">
+
+      <div class="profile-card overlay">
+        <div class="profile-cover">
+          <div class="inner" layout="row" layout-align="center center">
+            <!--<img ng-src="assets/images/WW-img.png"-->
+            <!--on-error-src="assets/images/profile-placeholder.png"-->
+            <!--alt=""-->
+            <!--class="img"/>-->
+          </div>
+        </div>
+
+        <div class="inner overlay-content" layout="row">
+          <div class="profile-img border">
+            <img ng-src="{{data.user._img_icon}}"
+                 on-error-src="assets/images/profile-image-placeholder.png"
+                 alt=""
+                 class="img"/>
+          </div>
+
+          <div flex layout="row" layout-align="center center">
+            <div class="profile-img">
+              <img ng-src="assets/images/logo.png"
+                   on-error-src="assets/images/profile-placeholder.png"
+                   alt=""
+                   class="img img-floating-icon bg-none"/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="item item-text-wrap">
+      <h2 class="card-title-text">
+        {{data.user.userEntity.userFirstName}} {{data.user.userEntity.userLastName}}
+      </h2>
+
+
+      <p ng-show="data.user.userEntity.createTime"
+         class="push-top pt-sm no-push-bottom"
+      >{{LANG.USER_PROFILE.LABEL.CREATED_AT}} {{MU.getDisplayDate_DDMMYYYYHHMMSS(data.user.userEntity.createTime)}}</p>
+
+      <p class="push-top pt-sm no-push-bottom" ng-show="data.user.lastActivityTime">
+        <span class="">{{LANG.USER_PROFILE.LABEL.LAST_ACTIVITY_TIMESTAMP}}:</span>
+        <span class="">{{MU.getDisplayDateTimeOffset(data.user.lastActivityTime)}}</span>
+      </p>
+
+      <p class="push-top pt-sm" ng-show="data.user.overallRating>=0">
+        <span class="">{{LANG.USER_PROFILE.LABEL.RATING_PREFIX}}:</span>
+        <span class="" ng-bind="data.user.overallRating+' '+LANG.USER_PROFILE.LABEL.RATING_POSTFIX"></span>
+      </p>
+
+      <p class="push-top pre-formatted"
+         ng-show="data.user.userEntity.desc"
+         ng-bind="data.user.userEntity.desc"></p>
+
+    </div>
+  </div>
+
+</div>

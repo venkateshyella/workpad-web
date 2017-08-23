@@ -1,0 +1,66 @@
+<md-dialog class="register-pop-up" aria-label="Create Talk" >
+   <md-toolbar >
+      <div class="md-toolbar-tools">
+         <h2 ng-bind="title"></h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="close()">
+            <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+      </div>
+   </md-toolbar>
+   <md-dialog-content style="min-height: 220px;" class="full-width" >
+<div ng-if="auditData.audit.length>0">
+	<ul class="notifications">
+		<li ng-repeat="audit in auditData.audit | orderBy:'updateTime':true"
+			class="notification" ng-class-even="'row-alt-color'">
+			<div class="media">
+				<div class="media-body"><strong class="notification-title"> <span ng-bind="audit.desc || 'NA'"></span></strong>
+					<div class="notification-meta">
+						<small class="timestamp" ng-bind="MU.getDisplayDateTime(audit.updateTime)"></small>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+    <button ng-click="fetchMoreAudits()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+            aria-label="Load More">
+      <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+      <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+    </button>
+</div>
+
+<div ng-show="isLoading" class="item" layout="row"
+	layout-align="center center">
+	<button ng-disabled="true"
+		class="button button-block button-small button-clear"
+		aria-label="Load More">
+		<span>{{LANG.MESSAGES.LOADING}}...</span>
+	</button>
+</div>
+</md-dialog-content>
+   <div class="md-actions full-width" layout="row">
+      <span flex></span>
+      <md-button ng-click="close()">
+         Cancel
+      </md-button>
+   </div>
+</md-dialog>
+<!-- <script>
+
+$(document).ready(function(){
+	
+	var getWindowHeight = $( window ).height();
+	
+	$( ".md-dialog-container" ).css( "height", "100% !important") ;
+	$(".register-pop-up").css("height", getWindowHeight);
+
+});
+
+$( window ).resize(function() {
+	var getWindowHeight = $( window ).height();
+	$( ".md-dialog-container" ).css( "height", "100% !important") ;
+	$(".register-pop-up").css("height", getWindowHeight);
+	});
+</script> -->

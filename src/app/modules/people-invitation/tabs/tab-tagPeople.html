@@ -1,0 +1,39 @@
+<div hide-if-data-absent class="no-padding-top">
+<div class="list">
+	 <div ng-repeat="member in PeopleTagData.taggedPeople" class="item item-complex item-action-right">
+      <div class="item-content item-avatar-left"  ng-click="onTaggedPeopleListItemClick(member.user, $event)">
+          <img ng-src="{{member.user._img_icon}}" on-error-src="assets/images/profile-image-placeholder.png" class="img fit round item-image">
+          <a class="a-org" href="javascript:void(0);" > <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+              {{member.user.userFirstName}} {{member.user.userLastName}}
+          </h2></a>
+          
+          <div layout="row" class="push-top pt-sm">
+              <p class="txt txt-line-sec text-ellipsis">
+                  <span class="">Tagged on {{MU.getDisplayDateTime(member.updateTime)}}</span>
+              </p>
+          </div>
+           
+      </div>
+      
+      <button ng-if="member.tagStatus" class="item-action button button-clear push-top tag-btn" ng-click="unTagUser(member.user.id);">
+           <span  class="folder-Tip tag">Untag</span>
+      </button> 
+      
+  </div> 
+  
+  <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+      <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear" aria-label="Load More">
+          <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+          <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+      </button>
+  </div>
+</div>
+</div> 
+<div class="list" layout="row" layout-align="center center" ng-show="PeopleTagData.taggedPeople.length == 0">
+<div class="item item-backdrop text-center">
+  <div class="backdrop-filler-image">
+      <i class="icon icon-backdrop icon-people"></i>
+      <h4 class="color-light-2">{{LANG.MESSAGES.NO_MEMBERS}}</h4>
+  </div>
+</div>
+</div>

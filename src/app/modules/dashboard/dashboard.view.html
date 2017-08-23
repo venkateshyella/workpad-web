@@ -1,0 +1,48 @@
+            <div ng-repeat="dash in dashboradList">
+            <div class="col-lg-6 col-md-12 col-sm-12" id="center" >
+              <div class="widget-in widget-block" >
+                <div class="icon">
+                  <button type="button" class="btn btn-default btn-circle btn-xl"><i class="icon icon-tab {{dash.icon}}"></i></button>
+                  <span class="widget-title txt-capitalize">{{dash.title}}</span> </div>
+                <div class="text">
+                  <div class="widget-text-row">
+                    <div class="left-sec">Total</div>
+                    <div class="right-sec">{{dash.total || "0"}}</div>
+                  </div>
+                   <div ng-if=" dash.title != 'docs' " class="widget-text-row">
+                    <div class="left-sec">Owned</div>
+                    <div class="right-sec">{{dash.owned || "0"}}</div>
+                  </div>
+                  <div ng-if=" dash.title != 'docs' "  class="widget-text-row">
+                    <div class="left-sec">Member</div>
+                    <div class="right-sec">{{dash.member || "0"}}</div>
+                  </div> 
+                </div> 
+              </div>
+            </div>
+            </div>
+			<div class="col-lg-6 col-md-12 col-sm-12" id="center">
+              <div class="widget-in widget-block">
+                 <div class="icon">
+                  <button type="button" class="btn btn-default btn-circle btn-xl"><i class="icon icon-briefcase-case-two"></i></button>
+                  <span class="widget-title">Jobs</span> 
+                  </div>
+                <div class="text">
+                  <div class="widget-text-row">
+                    <div class="left-sec">Total</div>
+                    <div class="right-sec">{{jobObj.total || "0"}}</div>
+                    
+                  </div>
+                  <div class="widget-text-row">
+                    <div class="left-sec">In-progress</div>
+                    <div class="right-sec">{{jobObj.inProgress|| "0"}}</div>
+                    
+                  </div>
+                  <div class="widget-text-row">
+                    <div class="left-sec">Closed</div>
+                    <div class="right-sec">{{jobObj.closed || "0"}}</div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>

@@ -1,0 +1,30 @@
+view, .view {
+  position: relative;
+  display: block;
+
+  [scroll] {
+    .scroll-container {
+    }
+  }
+
+  .view-toolbar {
+    height: $toolbar-height;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    display: block;
+    background: $primary;
+    color: find-text-color($primary);
+    z-index: 10;
+  }
+  &[type="content"] {
+    height: 100%;
+    position: relative;
+    .view-content {
+      height: 100%;
+    }
+  }
+
+
+
+}

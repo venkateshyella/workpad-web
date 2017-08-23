@@ -1,0 +1,59 @@
+<form name="form.taskForm" class="full-height" novalidate>
+   <md-input-container md-no-float>
+      <input auto-input-focus type="text"
+         name="taskName"
+         placeholder="Task Name"
+         ng-model="jobTaskModel.name"
+         ng-maxlength="50"
+         ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+         ng-trim>
+      <div ng-messages="form.taskForm.taskName.$error">
+         <div ng-message="maxlength" class="ng-message">Please limit the Task name to 50 characters.</div>
+         <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),.  are allowed in the
+            task name.
+         </div>
+      </div>
+   </md-input-container>
+   <md-input-container flex>
+      <label>Description</label>
+      <textarea name="taskDesc" 
+         ng-model="jobTaskModel.desc"
+         columns="1" md-maxlength="maxLength"></textarea>
+      <div ng-messages="form.taskForm.taskDesc.$error">
+         <div ng-message="md-maxlength" class="ng-message">Please limit the Task description to 256 characters.</div>
+      </div>
+   </md-input-container>
+</form>
+<div class="" layout="row">
+      <span flex></span>
+      <md-button class="md-primary" ng-disabled="!jobTaskModel.name || !jobTaskModel.desc" ng-click="taskSubmit(jobTaskModel,taskForm.task)">
+         Add
+      </md-button>
+   </div>
+<div ng-show="formModel.tasks.length>0">
+   <table class="table job-template-task">
+      <thead>
+         <tr>
+            <th>#</th>
+            <th>Task Name</th>
+            <th>Task Description</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr ng-repeat="task in formModel.tasks">
+            <th scope="row">{{$index+1}}</th>
+            <td ng-bind="task.name"></td>
+            <td ng-bind="task.desc"></td>
+            <td>
+               <a href="javascript:void(0)">
+                  <md-icon style="margin-right: -15px;color: #ff7043;"
+                     ng-click="removeTask($index)"
+                     class="no-push-top"
+                     aria-label="Remove"
+                     md-font-icon="icon icon-delete"></md-icon>
+               </a>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>

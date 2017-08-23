@@ -1,0 +1,126 @@
+<md-dialog class="" aria-label="User Invitation">
+
+  <md-toolbar class="md-auto-height toolbar-clear">
+    <div class="md-toolbar-tools">
+      <h2>Action</h2>
+      <span flex></span>
+      <md-button ng-click="cancel()"
+                 class="md-icon-button"
+                 aria-label="Close">
+        <md-icon md-font-icon="icon icon-close"
+                 class="toolbar-icon"></md-icon>
+      </md-button>
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="padding-top full-width">
+    <p ng-click="cancel();bundle.action.viewOrganisation();" style="padding-bottom: 24px;">{{bundle.post.notificationDescription}}</p>
+    <div class="timeline-title">
+         <p ng-if="bundle.post.groupPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="bundle.post.groupPath"></context-path></a></p>
+         <p ng-if="bundle.post.messageLineItems.length>0"  ng-repeat="item in bundle.post.messageLineItems"><a href="javascript:;" >{{item}}</a></p>
+    </div>
+    
+    <p class="color-light-2 text-right push-top">
+      <span>{{bundle.post.createdDate_displayText}}</span>
+    </p>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-disabled="!isActionsEnabled"
+               ng-click="submit(false)"
+               >{{locals.LANG.BUTTON.REJECT}}</md-button>
+
+    <md-button type="submit"
+               ng-disabled="!isActionsEnabled"
+               ng-click="submit(true)"
+      >{{locals.LANG.BUTTON.ACCEPT}}</md-button>
+  </div>
+</md-dialog> 
+
+
+
+<!-- <md-dialog class="" aria-label="User Invitation">
+
+  <md-toolbar class="md-auto-height">
+    <div class="md-toolbar-tools">
+      <h2>{{bundle.post.title || 'Invitation'}}</h2>
+      <span flex></span>
+      <md-button ng-click="cancel()"
+                 class="md-icon-button"
+                 aria-label="Close">
+        <md-icon md-font-icon="icon icon-close"
+                 class="toolbar-icon"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+      <div class="txt-upper text-ellipsis">
+        <b><small>{{bundle.post.fromUser.userFirstName}} {{bundle.post.fromUser.userLastName}}</small></b>
+      </div>
+      <p class="padding-top push-bottom">
+        <small>{{bundle.post.notificationDescription}}</small></p>
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width dialog-custom">
+
+    <form name="form.user_invite" class="full-height" novalidate>
+      <div class="" layout="column" layout-align="space-between center">
+
+        <div class="full-width" layout="row">
+          <md-list class="full-width no-padding-top no-padding-bottom">
+
+            <md-list-item class="item-rich-media item-tall bg-primary">
+              <div class="card-img">
+                <img ng-src="{{bundle.org._img_full}}"
+                     on-error-src="assets/images/profile-placeholder.png"
+                     alt="Organisation Profile Image"/>
+              </div>
+              <div class="content-overlay">
+                <div class="item item-clear item-thumbnail-left item-thumbnail-small">
+                  <img ng-src="{{bundle.org._img_icon}}"
+                       on-error-src="assets/images/org-icon-placeholder.png"
+                       alt=""
+                       class="item-image-small"/>
+
+                  <h2 class="md-title">{{bundle.org.orgName}}</h2>
+
+                  <p ng-show="bundle.org.desc"
+                     ng-bind="bundle.org.desc"
+                     class="text-wrap text-break-all line-clamp-2"></p>
+                  <h4 ng-click="cancel();bundle.action.viewOrganisation();"
+                    class="color-primary push-top txt-underline">
+                    <b ng-bind="locals.LANG.DIALOG.USER_INVITE_ORG.LABEL_VIEW_ORG"></b></h4>
+              
+                </div>
+              </div>
+            </md-list-item>
+
+          </md-list>
+        </div>
+
+        <div ng-hide="isActionsEnabled"
+             class="dialog-content-blocker"></div>
+      </div>
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-disabled="!isActionsEnabled"
+               ng-click="submit(false)"
+               class="md-warn">{{locals.LANG.BUTTON.REJECT}}</md-button>
+
+    <md-button type="submit"
+               ng-disabled="!form.user_invite.$valid || !isActionsEnabled"
+               ng-click="submit(true)"
+               class="md-primary md-raised"
+      >{{locals.LANG.BUTTON.ACCEPT}}</md-button>
+  </div>
+</md-dialog>  -->
+
+
+

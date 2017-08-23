@@ -1,0 +1,87 @@
+<!--sidebar start-->
+  <aside>
+    <div id="sidebar"  class="nav-collapse "> 
+      <!-- sidebar menu start-->
+      <ul class="sidebar-menu" id="nav-accordion">
+        <li> 
+        <a href="javascript:;"  ng-class="{'active': sharedData.sideMenu.currItem=='dashboard'}"
+               ng-click="resetTransitionTo('root.app.dashboard');action.enableDashboardItem('dashboard')"> 
+        <i class="icon icon-home"></i> <span>Home</span> </a>
+         </li>
+	 <li class="sub-menu"> 
+           <a href="javascript:;" ng-class="{'active': sharedData.sideMenu.currItem=='my_jobs'}"
+               ng-click="resetTransitionTo('root.app.job-list.openJobList', {userId: session.userId});action.enableDashboardItem('my_jobs')" > 
+           <i class="icon icon-briefcase-case-two"></i> <span>Work</span> </a> 
+        </li>
+        <li class="sub-menu"> 
+           <a href="javascript:;" ng-class="{'active': sharedData.sideMenu.currItem=='my_orgs'}"
+               ng-click="resetTransitionTo('root.app.org-list', {userId: session.userId});action.enableDashboardItem('my_orgs')"> 
+           <i class="icon icon-domain"></i> <span>WorkSpaces</span> </a> 
+        </li>
+        
+         <li class="sub-menu"> 
+           <a href="javascript:;" ng-class="{'active': sharedData.sideMenu.currItem=='people'}"
+               ng-click="resetTransitionTo('root.app.people.search');action.enableDashboardItem('people')"> 
+           <i class="fa fa-users" style="line-height: 1.2;"></i> <span>People</span> </a> 
+        </li>
+        
+       <!--  
+         <li class="sub-menu"> 
+            <a href="javascript:;" > <i class="fa fa-bullhorn" aria-hidden="true"></i><span>Notifications</span></a> 
+        </li>
+         -->
+        
+<!--            <li class="sub-menu">
+          <a href="javascript:;"  ng-class="{'active': sharedData.sideMenu.currItem=='subscribers'}"
+               ng-click="resetTransitionTo('root.app.subscription', {id: session.userId});action.enableDashboardItem('subscribers')" ><span>Subscription</span> </a> 
+        </li>   -->
+         <!-- <li><a href="javascript:void(0);" ng-class="{'active': sharedData.sideMenu.currItem=='account'}"
+                    ng-click="resetTransitionTo('root.app.account', {id: session.userId});action.enableDashboardItem('account'); 
+                              showHeaderDropdown = !showHeaderDropdown">
+                  <i class="icon icon-tools"></i>
+                  <div ng-bind="LANG.APP_NAV.LIST.ACCOUNT"></div>
+                  </a>
+              </li> -->
+          
+         <li class="sub-menu">
+          <a href="javascript:;"  ng-class="{'active': sharedData.sideMenu.currItem=='profile'}"
+               ng-click="resetTransitionTo('root.app.user', {id: session.userId});action.enableDashboardItem('profile')" > <i class="icon icon-user"></i> <span>Profile</span> </a> 
+        </li>
+        
+         <li class="sub-menu">
+          <a href="javascript:;"  ng-class="{'active': sharedData.sideMenu.currItem=='audit'}"
+               ng-click="resetTransitionTo('root.app.audit-org-list', {userId: session.userId});action.enableDashboardItem('audit')" > <i class="icon icon-tab icon-history"></i> <span>Audit</span> </a> 
+        </li>      
+        
+        <!--multi level menu start-->
+       <!--  <li class="sub-menu"> 
+          <a href="javascript:;" ng-class="{'active': sharedData.sideMenu.currItem=='settings'}"
+               ng-click="resetTransitionTo('root.app.settings', {id: session.userId});action.enableDashboardItem('settings')" ><i class="icon icon-cog-gear"></i>Settings</a> 
+        </li>
+         -->
+        <li class="sub-menu"> </li>
+        <!--multi level menu end-->
+        
+      </ul>
+      <!-- sidebar menu end--> 
+    </div>
+  </aside>
+  <!--sidebar end--> 
+  
+  
+ <!--  <script>
+  
+  $(document).scroll(function(){
+	  var docScrollH = $(window).scrollTop();
+	  var widH = $(window).height();
+	  var DocH = $(document).height();
+	  var scrollH = DocH - widH;
+	  		//console.log("docScrollH :::::"+docScrollH+" ++++++ "+"widH ::::::::"+widH+" scrollH ::::"+scrollH);
+	  if(docScrollH >= scrollH){
+		  $('#sidebar').css({'position':'absolute','top':'70px'});
+	  }else{
+		  $('#sidebar').css({'position':'fixed','top':'0px'});
+	  }
+	  
+  });
+  </script>  -->

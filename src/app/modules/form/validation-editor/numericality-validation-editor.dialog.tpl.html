@@ -1,0 +1,49 @@
+<md-dialog class="" aria-label="Edit Numericality validation">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Numericality</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="dialog-custom">
+    <form name="form.numericalityEditor">
+      <md-list>
+        <md-list-item layout="column" layout-align="start start">
+          <div layout="column" class="full-width">
+            <md-input-container>
+              <label>GreaterThan</label>
+              <input ng-model="validationModel.greaterThan"
+                     type="number">
+            </md-input-container>
+
+            <md-input-container>
+              <label>LessThanOrEqualTo</label>
+              <input ng-model="validationModel.lessThanOrEqualTo"
+                     type="number">
+            </md-input-container>
+          </div>
+        </md-list-item>
+
+      </md-list>
+    </form>
+
+  </md-dialog-content>
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button type="submit"
+               ng-disabled="!form.numericalityEditor.$valid"
+               ng-click="cancel()"
+      >Cancel
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="!form.numericalityEditor.$valid"
+               ng-click="saveValidationModel()"
+               class="md-primary"
+      >Save
+    </md-button>
+
+  </div>
+</md-dialog>

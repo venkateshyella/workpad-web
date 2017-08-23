@@ -1,0 +1,17 @@
+<md-toolbar class="dn-fade-up">
+    <div
+            class="md-toolbar-tools"
+            layout="row" layout-align="space-between center">
+        <md-toolbar-item-container name="left">
+            <button
+                    ng-click="toggleSideMenu()"
+                    class="clear-button" aria-label="Toggle Menu">
+                <md-icon md-font-icon="icon-menu"
+                         class="size-auto icon-2x"></md-icon>
+            </button>
+        </md-toolbar-item-container>
+
+        <md-toolbar-item-container name="right" ui-view="toolbarOptions">
+        </md-toolbar-item-container>
+    </div>
+</md-toolbar>

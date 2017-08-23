@@ -1,0 +1,176 @@
+<view type="toolbarView" title="'Organization Dashboard'" class="job-toolbar">
+  <!--sub-title="taskModel.displayStatus" -->
+  <toolbar app-toolbar title="orgTabCtrl.orgModel.orgName" class="title-no-wrap">
+    <toolbar-options>
+      <md-menu md-position-mode="target-right target" ng-show="orgTabCtrl.optionMenuItems[tab_curr].length > 0">
+        <md-button ng-click="$mdOpenMenu()" class="md-icon-button toolbar-button button-thin" aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert" class="toolbar-icon" md-menu-origin></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+        	
+          <md-menu-item ng-repeat="optionItem in orgTabCtrl.optionMenuItems[tab_curr]">
+            <md-button
+              ng-click="optionItem.action(optionItem.args); $mdCloseMenu()"
+              ng-class="(optionItem.name == 'Delete') ? 'md-accent md-raised' : ''">
+              <span ng-bind="optionItem.name"></span>
+            </md-button>
+          </md-menu-item>
+          
+        </md-menu-content>
+      </md-menu>
+      <md-progress-linear
+        ng-show="toolbarLoader.async_active"
+        md-mode="indeterminate"
+        class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+    </toolbar-options>
+  </toolbar>
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row layout-gravity="top"
+         layout-height="4em">
+      <md-tabs class="md-primary tabs"
+               md-selected="xtras.selectedTabIndex" md-align-tabs="top">
+
+        <md-tab md-on-select="onTabSelect('TAB_INFO')" id="tabInfo">
+          <div>
+            <i class="icon icon-tab icon-info-outline"></i>
+            <span class="tab-text"> {{LANG.JOB.JOB_DASHBOARD_TABS.INFO}}</span>
+          </div>
+        </md-tab>
+        <md-tab md-on-select="onTabSelect('TAB_MEMBER_LIST')" id="tabMemberList">
+          <div>
+            <i class="icon icon-tab icon-people"></i>
+            <span class="tab-text">{{LANG.JOB.JOB_DASHBOARD_TABS.MEMBERLIST}}</span>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_GROUPS')" id="tabGroupList">
+          <div>
+            <i class="icon icon-tab icon-group-work"></i>
+            <span class="tab-text">{{LANG.JOB.JOB_DASHBOARD_TABS.GROUPS}}</span>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_CHAT')" id="tabChat" ng-disabled="orgTabCtrl.isOrgVisitor || orgTabCtrl.orgModel.members.length == 1">
+          <div>
+            <i class="icon icon-tab icon-forum"></i>
+            <span class="tab-text">{{LANG.JOB.JOB_DASHBOARD_TABS.CHAT}}</span>
+          </div>
+        </md-tab>
+        
+	<md-tab md-on-select="onTabSelect('TAB_TALK')" id="tabTalk" ng-disabled="orgTabCtrl.isOrgVisitor|| orgTabCtrl.orgModel.members.length == 1">
+          <div>
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            <span class="tab-text">Talk</span>
+          </div>
+        </md-tab> 
+        
+        <md-tab md-on-select="onTabSelect('TAB_VAULT')" id="tabData" ng-disabled="orgTabCtrl.isOrgVisitor">
+          <div>
+            <i class="icon icon-tab icon-drive-document"></i>
+            <span class="tab-text">{{LANG.JOB.JOB_DASHBOARD_TABS.DATA}}</span>
+          </div>
+        </md-tab>
+
+          <md-tab md-on-select="onTabSelect('TAB_JOBS')" id="tabJobs" ng-disabled="orgTabCtrl.isOrgVisitor">
+          <div>
+            <i class="icon icon-tab icon-briefcase-case-two"></i>
+            <span class="tab-text">{{LANG.JOB.JOB_DASHBOARD_TABS.JOB}}</span>
+          </div>
+        </md-tab> 
+        
+        <md-tab md-on-select="onTabSelect('TAB_SCHEDULE')" id="tabSchedule" ng-disabled="orgTabCtrl.isOrgVisitor">
+          <div>
+            <i class="icon icon-tab icon-event"></i>
+            <span class="tab-text">{{LANG.JOB.JOB_DASHBOARD_TABS.SCHEDULE}}</span>
+          </div>
+        </md-tab>
+        
+ 		<md-tab md-on-select="onTabSelect('TAB_TEMPLATE')" id="tabJobTemplate" ng-disabled="orgTabCtrl.isOrgVisitor">
+          <div>
+            <i class="icon icon-tab demo-icon icon-docs"> &#xf0c5;</i>
+            <span class="tab-text">{{LANG.JOB.JOB_DASHBOARD_TABS.TEMPLATE}}</span>
+          </div>
+        </md-tab> 
+
+        <!--------------->
+        <!-- Audit Tab -->
+        <!--------------->
+<!--         <md-tab md-on-select="onTabSelect('TAB_AUDIT')" id="tabAudit"
+                ng-disabled="orgTabCtrl.isOrgVisitor">
+          <div>
+            <i class="icon icon-tab icon-history"></i>
+            <span class="tab-text">{{LANG.JOB.JOB_DASHBOARD_TABS.AUDIT}}</span>
+          </div>
+        </md-tab> -->
+        
+      </md-tabs>
+    </row>
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <ui-view name="orgDashboardTabContainer"></ui-view>
+    </row>
+<!--     <row layout-height="8em" layout-gravity="bottom" mv-show="tab_curr=='TAB_CHAT' && !!orgTabCtrl.orgModel.chatRoomId"
+         ng-show="tab_curr=='TAB_CHAT' && !!orgTabCtrl.orgModel.chatRoomId">
+      <div class="chatListFooter CLF-textarea">
+        <form name="">
+          <div class="chSubmitForm" layout="row">
+            <div class="chMessageInputField chMessageTextAreaField" flex>
+              <textarea ng-model="chatFormModel.newMessage"
+                        ng-disabled="!ui.flags.isInARoom || ui.flags.isSendingMessage"
+                        ng-keypress="onInputFieldKeyPress($event, newMessage)" type="text"
+                        placeholder="{{_connStatusMessage}}" class=""></textarea>
+            </div>
+            <md-button
+              ng-mousedown="sendNewMessage($event, chatFormModel.newMessage)" ng-if="ui.flags.isInARoom"
+              class="md-icon-button chSubmitBtn" ng-disabled="!ui.flags.isInARoom || ui.flags.sendMessage_inProgress"
+              aria-label="Send Message" md-no-ink>
+              <md-icon md-font-icon="icon icon-send"></md-icon>
+              <span>Send</span>
+            </md-button>
+            <md-progress-circular ng-if="!ui.flags.isInARoom" md-diameter="24"
+                                  md-mode="indeterminate"></md-progress-circular>
+          </div>
+        </form>
+      </div>
+    </row> -->
+  </layout>
+</view>
+
+
+<script type="text/javascript">
+
+ $( document ).ready(function() {
+	 
+	 var widH = $(window).height();
+	 if(widH > 800){
+		 $(".chatListFooter.CLF-textarea").css("bottom", "100px");
+	 }else{
+		 $(".chatListFooter.CLF-textarea").css("bottom", "0px");
+	 }
+	  
+ });
+ 
+$(window).scroll(function () { 
+	
+	   if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
+	         $(".chatListFooter.CLF-textarea").css("bottom","100px");
+	   }
+	   else{
+	    $(".chatListFooter.CLF-textarea").css("bottom", "100px");
+	   }
+	   if($(window).scrollTop() < 50){
+		   
+		   var widH = $(window).height();
+			 if(widH < 800){
+		   		$(".chatListFooter.CLF-textarea").css("bottom", "0px");
+			 }else{
+				 $(".chatListFooter.CLF-textarea").css("bottom", "100px");
+			 }
+			 
+	   }else{
+		   $(".chatListFooter.CLF-textarea").css("bottom", "100px");
+	   }
+	   
+	});
+	 
+
+</script>

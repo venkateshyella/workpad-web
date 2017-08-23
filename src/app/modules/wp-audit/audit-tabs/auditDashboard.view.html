@@ -1,0 +1,61 @@
+<view type="toolbarView" title="'WP Audit Dashboard'" class="job-toolbar">
+  <!--sub-title="taskModel.displayStatus" -->
+  <toolbar app-toolbar title="orgTabCtrl.orgModel.orgName" class="title-no-wrap">
+    <toolbar-options>
+      <md-menu md-position-mode="target-right target" ng-show="orgTabCtrl.optionMenuItems[tab_curr].length > 0">
+        <md-button ng-click="$mdOpenMenu()" class="md-icon-button toolbar-button button-thin" aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert" class="toolbar-icon" md-menu-origin></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+        	
+          <md-menu-item ng-repeat="optionItem in orgTabCtrl.optionMenuItems[tab_curr]">
+            <md-button
+              ng-click="optionItem.action(optionItem.args); $mdCloseMenu()"
+              ng-class="(optionItem.name == 'Delete') ? 'md-accent md-raised' : ''">
+              <span ng-bind="optionItem.name"></span>
+            </md-button>
+          </md-menu-item>
+          
+        </md-menu-content>
+      </md-menu>
+      <md-progress-linear
+        ng-show="toolbarLoader.async_active"
+        md-mode="indeterminate"
+        class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+    </toolbar-options>
+  </toolbar>
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row layout-gravity="top"
+         layout-height="4em">
+      <md-tabs class="md-primary tabs"
+               md-selected="xtras.selectedTabIndex" md-align-tabs="top">
+
+        <md-tab md-on-select="onTabSelect('TAB_FORENSICS')" id="tabForensics">
+          <div>
+            
+            <span class="tab-text">Forensics</span>
+          </div>
+        </md-tab>
+        <md-tab md-on-select="onTabSelect('TAB_PRODUCTIVITY')" id="tabProductivity" >
+          <div>
+            
+            <span class="tab-text">Productivity</span>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_COLLABORATION')" id="tabCollaboration" ng-disabled="true">
+          <div>
+            
+            <span class="tab-text">Collaboration</span>
+          </div>
+        </md-tab>
+      </md-tabs>
+    </row>
+    <row  layout-height="fill_remaining" layout-gravity="free">
+      <ui-view name="auditDashboardTabContainer"></ui-view>
+    </row>
+
+  </layout>
+</view>
+
+

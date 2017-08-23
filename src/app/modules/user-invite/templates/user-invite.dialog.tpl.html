@@ -1,0 +1,95 @@
+<md-dialog class="" aria-label="User Invite">
+
+  <md-dialog-content class="full-width dialog-custom">
+
+    <form name="form.user_invite" class="full-height" novalidate>
+      <div class="" layout="column" layout-align="space-between center">
+
+        <div class="full-width" layout="row">
+          <md-list class="full-width">
+
+            <md-list-item class="md-3-line">
+              <img ng-src="{{inviteBundle.invitee._img_icon}}"
+                   on-error-src="assets/images/profile-image-placeholder.png"
+                   class="md-avatar avatar-medium" alt=""/>
+
+              <div class="md-list-item-text">
+                <h2 class="md-title no-push-bottom">{{inviteBundle.invitee.userFirstName}} {{inviteBundle.invitee.userLastName}}</h2>
+
+                <p class="text-ellipsis padding-bottom">
+                  {{inviteBundle.invitee.userEmail}}
+                </p>
+              </div>
+
+            </md-list-item>
+
+            <md-list-item>
+              <p class="text-center">To join</p>
+            </md-list-item>
+
+            <!-- Organisation Selection -->
+
+            <!-- Group Selection -->
+
+
+            <md-list-item ng-show="inviteBundle.toGroup">
+              <div class="full-width">
+                <div class="row-center">
+                  <img ng-src="{{inviteBundle.toGroup._img_icon}}"
+                       on-error-src="assets/images/group-icon-placeholder.png"
+                       class="img medium-icon h-center" alt="Group Icon"/>
+                </div>
+                <h2 class="md-title text-center">{{inviteBundle.toGroup.groupName}}</h2>
+                <p class="text-ellipsis text-center txt-upper color-light"><b>{{inviteBundle.toOrg.orgName}}</b></p>
+                <p class="text-ellipsis text-center">{{inviteBundle.toGroup.desc}}</p>
+              </div>
+            </md-list-item>
+
+            <md-list-item ng-show="inviteBundle.toOrg && !inviteBundle.toGroup"
+              class="item-rich-media">
+              <div class="card-img">
+                <img ng-src="{{inviteBundle.toOrg._img_full}}"
+                     on-error-src="assets/images/profile-placeholder.png"
+                     alt="WorkSpace Profile Image"/>
+              </div>
+              <div class="content-overlay">
+                <div class="item item-clear item-thumbnail-left item-thumbnail-small">
+                  <img ng-src="{{inviteBundle.toOrg._img_icon}}"
+                       on-error-src="assets/images/profile-image-placeholder.png"
+                       alt=""
+                       class="item-image-small"/>
+
+                  <h2 class="md-title">{{inviteBundle.toOrg.orgName}}</h2>
+
+                  <div class="text-wrap text-break-all">{{inviteBundle.toOrg.desc}}</div>
+                </div>
+              </div>
+            </md-list-item>
+
+          </md-list>
+        </div>
+
+        <div ng-hide="isActionsEnabled"
+             class="dialog-content-blocker"></div>
+      </div>
+
+
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button
+      ng-disabled="!isActionsEnabled"
+      ng-click="cancel()">
+      Cancel
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="!form.user_invite.$valid || !isActionsEnabled"
+               ng-click="submit()" class="md-primary"
+      >
+      Send
+      <md-icon md-font-icon="icon icon-send"></md-icon>
+    </md-button>
+  </div>
+</md-dialog>

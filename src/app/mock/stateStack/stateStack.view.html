@@ -1,0 +1,54 @@
+<view type="toolbarView" screen-type="device" title="stateTitle">
+
+  <toolbar app-toolbar title="stateTitle">
+    <toolbar-options>
+      <div class="menu-option-group">
+      </div>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <div class="list">
+
+          <div class="card">
+            <div class="item item-divider">
+              Navigation Stack
+            </div>
+            <div class="item" data-ng-repeat="state in navStack">
+              <p class="label">{{state.toState}} {{state.toParams.name}}</p>
+            </div>
+          </div>
+
+          <div class="padding">
+            <label class="item item-input">
+              <input ng-model="newStateName"
+                     placeholder="New stack name"
+                     type="text">
+            </label>
+
+            <button
+              ng-click="newState('root.app.statestack', newStateName)"
+              ng-disabled="newStateName.length==0"
+              class="button button-block">
+              Add New State
+            </button>
+            <button
+              ng-click="replaceState('root.app.statestack', newStateName)"
+              ng-disabled="newStateName.length==0"
+              class="button button-block">
+              Replace State
+            </button>
+
+            <!--<div class="button button-block button-positive"-->
+            <!--ng-disabled="newStateName.length==0"-->
+            <!--ng-click="newState('root.app.statestack', newStateName)">-->
+            <!--New State-->
+            <!--</div>-->
+          </div>
+        </div>
+    </row>
+
+  </layout>
+</view>

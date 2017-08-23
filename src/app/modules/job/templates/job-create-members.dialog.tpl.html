@@ -1,0 +1,292 @@
+<div>
+   <div>
+      <md-checkbox style='margin: 20px 0px;' ng-model="formModel.jobOwner" aria-label="Finished?">
+         Set as Owner
+      </md-checkbox>
+   </div>
+   <div ng-show="!formModel.jobOwner">
+      <span class='job-template-search'>Invite Owners</span>
+      <div layout="row" style="margin: 8px 0px;">
+         <md-autocomplete
+            placeholder="Search WorkSpace or Room"
+            md-no-cache="true"
+            md-selected-item="newAdvertisementGroup"
+            md-search-text-change="ownerSearchCtrl.searchTextChange(ownerSearchCtrl.searchText)"
+            md-search-text="ownerSearchCtrl.searchText"
+            md-selected-item-change="ownerSearchCtrl.selectedItemChange(item)"
+            md-items="item in ownerSearchCtrl.querySearch(ownerSearchCtrl.searchText)"
+            md-item-text="item.displayText"
+            md-min-length="2"
+            md-delay="300"
+            flex>
+            <md-item-template>
+               <span md-highlight-text="ctrl.searchText"
+                  md-highlight-flags="^i">{{item.displayText}}</span>
+            </md-item-template>
+            <md-not-found>
+               No WorkSpace or Room found.
+            </md-not-found>
+         </md-autocomplete>
+      </div>
+      <div class="list no-padding-top">
+         <div ng-repeat="(orgId, advOrg) in ownerInvite.getInvitationOrgs()"
+            class="item card no-padding">
+            <md-list class="">
+               <md-list-item class="">
+                  <md-icon
+                     ng-click="ownerToggleSelectAllOrgMembers(orgId);" 
+                     ng-class="advOrg.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+                     md-font-icon="icon {{advOrg.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+                     ></md-icon>
+                  <div flex>
+                     <h3>{{getOwnerModel.Org(orgId).orgName}}</h3>
+                  </div>
+                  <md-icon
+                     ng-click="ownerRemoveOrg(orgId)"
+                     class="md-secondary no-push-top"
+                     aria-label="Remove WorkSpace"
+                     md-font-icon="icon icon-close"></md-icon>
+               </md-list-item>
+               <md-list-item  
+                  ng-click="ownerToggleOrgMembersList(orgId)"
+                  class="md-list-item-short border-top">
+                  <p flex class=""><small ng-bind="'View WorkSpace members'"></small></p>
+                  <div class="button button-clear no-padding-left">
+                     <i
+                        ng-class="{'icon-expand-less':advOrg.xtras.flag_expanded, 'icon-expand-more':!advOrg.xtras.flag_expanded}"
+                        class="icon icon-expand-more"></i>
+                  </div>
+               </md-list-item>
+               <md-list-item
+                  ng-show="advOrg.invitee.length==0 && !advOrg.sendToAll">
+                  <p class="text-wrap">
+                     No members selected. Please select at least one member to invite
+                  </p>
+               </md-list-item>
+               <md-list-item
+                  ng-repeat="user in advOrg.xtras.users"
+                  ng-show="advOrg.xtras.flag_expanded"
+                  ng-click="ownerToggleAdvOrgMember(orgId, user.id)"
+                  class="">
+                  <md-icon
+                     ng-class="advOrg.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+                     md-font-icon="icon {{advOrg.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+                     ></md-icon>
+                  <div flex class="padding-vertical">
+                     <p class="txt text-wrap no-push-bottom">{{user.userFirstName}}
+                        {{user.userLastName}}
+                     </p>
+                     <p class="txt text-wrap color-light-2">{{user.userEmail}}</p>
+                  </div>
+               </md-list-item>
+            </md-list>
+         </div>
+         <!-- Selected Groups for advertisement. -->
+         <div ng-repeat="(groupId, advGroup) in ownerInvite.getInvitationGroups()"
+            class="item card no-padding">
+            <md-list class="no-padding-bottom">
+               <md-list-item class="">
+                  <md-icon
+                     ng-click="ownerToggleAdvGroupSelectAll(groupId)"
+                     ng-class="advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+                     md-font-icon="icon {{advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+                     ></md-icon>
+                  <div flex>
+                     <h3>{{getOwnerModel.Group(groupId).groupName}}</h3>
+                  </div>
+                  <md-icon ng-click="ownerRemoveGroup(groupId)"
+                     class="md-secondary no-push-top"
+                     aria-label="Remove adv group"
+                     md-font-icon="icon icon-close"></md-icon>
+               </md-list-item>
+               <md-divider></md-divider>
+               <md-list class="no-padding">
+                  <md-list-item  
+                     ng-click= "ownerToggleAdvGroupMembersList(groupId)" class="md-list-item-short border-top">
+                     <p flex class=""><small ng-bind="'View Room members'"></small></p>
+                     <div class="button button-clear no-padding-left">
+                        <i
+                           ng-class="{'icon-expand-less':advGroup.xtras.flag_expanded, 'icon-expand-more':!advGroup.xtras.flag_expanded}"
+                           class="icon icon-expand-more"></i>
+                     </div>
+                  </md-list-item>
+                  <md-list-item
+                     ng-if="advGroup.xtras._isLoadingMembersList">
+                     <md-progress-circular
+                        class="no-push-right"
+                        md-mode="indeterminate"
+                        md-diameter="16"></md-progress-circular>
+                     <p class="">Loading Room members..</p>
+                  </md-list-item>
+                  <md-list-item
+                     ng-show="advGroup.invitee.length==0 && !advGroup.sendToAll">
+                     <p class="text-wrap">
+                        No members selected. Please select at least one member to invite
+                     </p>
+                  </md-list-item>
+                  <md-list-item
+                     ng-repeat="user in advGroup.xtras.users"
+                     ng-show="advGroup.xtras.flag_expanded"
+                     ng-click="ownerToggleAdvGroupMember(groupId, user.id)"
+                     class="">
+                     <md-icon
+                        ng-class="advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+                        md-font-icon="icon {{advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+                        ></md-icon>
+                     <div flex class="padding-vertical">
+                        <p class="txt text-wrap no-push-bottom">{{user.userFirstName}}
+                           {{user.userLastName}}
+                        </p>
+                        <p class="txt text-wrap color-light-2">{{user.userEmail}}</p>
+                     </div>
+                  </md-list-item>
+               </md-list>
+            </md-list>
+         </div>
+      </div>
+   </div>
+</div>
+<br/>
+<div ng-show="formModel.jobOwner">
+<span class='job-template-search' >Invite Contributors</span>
+<div  layout="row" style="margin: 8px 0px;">
+
+   <md-autocomplete
+      placeholder="Search WorkSpace or Room"
+      md-no-cache="true"
+      md-selected-item="newMemberGroup"
+      md-search-text-change="memberSearchCtrl.searchTextChange(memberSearchCtrl.searchText)"
+      md-search-text="memberSearchCtrl.searchText"
+      md-selected-item-change="memberSearchCtrl.selectedItemChange(item)"
+      md-items="item in memberSearchCtrl.querySearch(memberSearchCtrl.searchText)"
+      md-item-text="item.displayText"
+      md-min-length="2"
+      md-delay="300"
+      flex>
+      <md-item-template>
+         <span md-highlight-text="ctrl.searchText"
+            md-highlight-flags="^i">{{item.displayText}}</span>
+      </md-item-template>
+      <md-not-found>
+         No WorkSpace or Room found.
+      </md-not-found>
+   </md-autocomplete>
+</div>
+<div class="list no-padding-top">
+   <!-- Selected Org -->
+   <div ng-repeat="(orgId, advOrg) in memberInvite.getInvitationOrgs()"
+      class="item card no-padding">
+      <md-list class="">
+         <md-list-item class="">
+            <md-icon
+               ng-click="memberToggleSelectAllOrgMembers(orgId)"
+               ng-class="advOrg.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+               md-font-icon="icon {{advOrg.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+               ></md-icon>
+            <div flex>
+               <h3>{{getOwnerModel.Org(orgId).orgName}}</h3>
+            </div>
+            <md-icon
+               ng-click="memberRemoveOrg(orgId)"
+               class="md-secondary no-push-top"
+               aria-label="Remove Org"
+               md-font-icon="icon icon-close"></md-icon>
+         </md-list-item>
+         <md-list-item  
+            ng-click="memberToggleOrgMembersList(orgId)"
+            class="md-list-item-short border-top">
+            <p flex class=""><small ng-bind="'View WorkSpace members'"></small></p>
+            <div class="button button-clear no-padding-left">
+               <i
+                  ng-class="{'icon-expand-less':advOrg.xtras.flag_expanded, 'icon-expand-more':!advOrg.xtras.flag_expanded}"
+                  class="icon icon-expand-more"></i>
+            </div>
+         </md-list-item>
+         <md-list-item
+            ng-show="advOrg.invitee.length==0 && !advOrg.sendToAll">
+            <p class="text-wrap">
+               No members selected. Please select at least one member to invite
+            </p>
+         </md-list-item>
+         <md-list-item
+            ng-repeat="user in advOrg.xtras.users"
+            ng-show="advOrg.xtras.flag_expanded"
+            ng-click="memberToggleAdvOrgMember(orgId, user.id)"
+            class="">
+            <md-icon
+               ng-class="advOrg.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+               md-font-icon="icon {{advOrg.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+               ></md-icon>
+            <div flex class="padding-vertical">
+               <p class="txt text-wrap no-push-bottom">{{user.userFirstName}}
+                  {{user.userLastName}}
+               </p>
+               <p class="txt text-wrap color-light-2">{{user.userEmail}}</p>
+            </div>
+         </md-list-item>
+      </md-list>
+   </div>
+   <!-- Selected Groups for advertisement. -->
+   <div ng-repeat="(groupId, advGroup) in memberInvite.getInvitationGroups()"
+      class="item card no-padding">
+      <md-list class="no-padding-bottom">
+         <md-list-item class="">
+            <md-icon
+               ng-click="memberToggleAdvGroupSelectAll(groupId)"
+               ng-class="advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+               md-font-icon="icon {{advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+               ></md-icon>
+            <div flex>
+               <h3>{{getMemberModel.Group(groupId).groupName}}</h3>
+            </div>
+            <md-icon ng-click="memberRemoveGroup(groupId)"
+               class="md-secondary no-push-top"
+               aria-label="Remove adv group"
+               md-font-icon="icon icon-close"></md-icon>
+         </md-list-item>
+         <md-divider></md-divider>
+         <md-list class="no-padding">
+            <md-list-item 
+               ng-click= "memberToggleAdvGroupMembersList(groupId)" class="md-list-item-short border-top">
+               <p flex class=""><small ng-bind="'View Room members'"></small></p>
+               <div class="button button-clear no-padding-left">
+                  <i
+                     ng-class="{'icon-expand-less':advGroup.xtras.flag_expanded, 'icon-expand-more':!advGroup.xtras.flag_expanded}"
+                     class="icon icon-expand-more"></i>
+               </div>
+            </md-list-item>
+            <md-list-item
+               ng-if="advGroup.xtras._isLoadingMembersList">
+               <md-progress-circular
+                  class="no-push-right"
+                  md-mode="indeterminate"
+                  md-diameter="16"></md-progress-circular>
+               <p class="">Loading Room members..</p>
+            </md-list-item>
+            <md-list-item
+               ng-show="advGroup.invitee.length==0 && !advGroup.sendToAll">
+               <p class="text-wrap">
+                  No members selected. Please select at least one member to invite
+               </p>
+            </md-list-item>
+            <md-list-item
+               ng-repeat="user in advGroup.xtras.users"
+               ng-show="advGroup.xtras.flag_expanded"
+               ng-click="memberToggleAdvGroupMember(groupId, user.id)"
+               class="">
+               <md-icon
+                  ng-class="advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+                  md-font-icon="icon {{advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+                  ></md-icon>
+               <div flex class="padding-vertical">
+                  <p class="txt text-wrap no-push-bottom">{{user.userFirstName}}
+                     {{user.userLastName}}
+                  </p>
+                  <p class="txt text-wrap color-light-2">{{user.userEmail}}</p>
+               </div>
+            </md-list-item>
+         </md-list>
+      </md-list>
+   </div>
+</div>
+</div>

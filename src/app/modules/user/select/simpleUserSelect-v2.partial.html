@@ -1,0 +1,48 @@
+<md-dialog class="dialog-full-screen" aria-label="User Selection">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            
+            <md-input-container md-no-float flex>
+                <input ng-model="queryString" autocorrect="off" autocapitalize="off" ng-model-options="{debounce: { 'default': 500}}" ng-change="refresh({queryString: queryString})" placeholder="Search users" type="text">
+            </md-input-container>
+
+            <md-button ng-click="cancel()" class="md-icon-button" aria-label="Close">
+                <md-icon md-font-icon="icon icon-close" class="toolbar-icon"></md-icon>
+            </md-button>
+            <!--<md-button ng-click="refresh({bypassCache: true})"-->
+            <!--class="md-icon-button"-->
+            <!--aria-label="Retry">-->
+            <!--<md-icon md-font-icon="icon icon-refresh"-->
+            <!--class="toolbar-icon"></md-icon>-->
+            <!--</md-button>-->
+            <md-progress-linear ng-show="search_isLoading" md-mode="indeterminate" class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="full-width " >
+         <md-list class="no-padding">
+            <md-list-item ng-repeat="user in users" ng-click="toggleUserSelection(user)" class="">
+                <md-icon ng-class="OrgInvitees.indexOf(user)>-1 ? 'icon-check-box': 'icon-check-box-blank'" md-font-icon="icon {{OrgInvitees.indexOf(user)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"></md-icon>
+                <div flex class="padding-vertical">
+                    <p class="txt text-wrap no-push-bottom">{{user.userFirstName}} {{user.userLastName}}</p>
+                </div>
+            </md-list-item>
+        </md-list> 
+    </md-dialog-content>
+    <div class="md-actions full-width" layout="column" ng-show="true" >
+       
+       <div ng-show="OrgInvitees.length == 0">
+         <p  class="push-top full-width text-right">Please select at-least one member for invitation.</p>
+       </div>
+    <div layout="row" class="full-width" >
+      <span flex></span>
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      <md-button type="submit"
+                 ng-disabled="OrgInvitees.length == 0"
+                 ng-click="submit()" class="md-primary"
+      >Send Invitation(s)
+      </md-button>
+    </div>
+  </div>
+</md-dialog>

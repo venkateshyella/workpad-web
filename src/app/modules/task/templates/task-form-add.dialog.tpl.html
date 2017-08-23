@@ -1,0 +1,117 @@
+<md-dialog class="" aria-label="New Job Form'">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools md-tall">
+      <!--<h2>{{locals.LANG.POST.JOB_INVITATION.POST_DIALOG_TITLE}}</h2>-->
+      <h2>New Form
+        <br/>
+        <small class="font-light">{{task.title}}</small>
+      </h2>
+      <span flex></span>
+      <md-button ng-click="taskFormCreateCtrl.cancel()"
+                 class="md-icon-button"
+                 aria-label="Close">
+        <md-icon md-font-icon="icon icon-close"
+                 class="toolbar-icon"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="dialog-custom">
+
+    <md-list>
+      <md-list-item class="md-3-line">
+        <div class="md-list-item-text">
+          <h3><b>{{template.name}}</b></h3>
+
+          <p ng-show="template.desc"
+             ng-class="{'text-ellipsis': !ui.isTemplateDescExpanded}"
+             ng-click="ui.isTemplateDescExpanded = !ui.isTemplateDescExpanded">
+            <i class="color-light push-right pr-sm">Description: </i>
+            <span>{{template.desc}}</span></p>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
+
+    <div class="dialog-content-padding-sides">
+
+      <form name="form.taskAddNewForm">
+
+        <div>
+          <md-input-container>
+            <label>Form name</label>
+            <input type="text"
+                   name="formName"
+                   ng-model="formModel.name"
+                   ng-maxlength="100"
+                   ng-trim
+                   aria-label="Form name">
+
+            <div ng-messages="form.taskAddNewForm.formName.$error">
+              <div ng-message="maxlength" class="ng-message">Please limit the Form name to 100 characters.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="full-width">
+            <label>Description</label>
+              <textarea name="formDesc"
+                        ng-model="formModel.desc"
+                        columns="1" rows="1"
+                        md-maxlength="150"
+                        aria-label="Form description"></textarea>
+
+            <div ng-messages="form.taskAddNewForm.formDesc.$error">
+              <div ng-message="md-maxlength" class="ng-message">Please limit the description to 150 characters.</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <md-list class="no-padding">
+          <p class="color-light">Please select the event before which the form will be triggered.</p>
+          <md-list-item class="no-padding">
+            <span class="push-right color-light">Trigger before: </span>
+            <md-select
+              ng-model="formModel.lifecycleEvent"
+              placeholder="Select Event"
+              class="padding-top padding-bottom">
+              <md-option
+                ng-repeat="eventName in taskFormCreateCtrl.taskLifecycleEvents"
+                value="{{eventName}}"
+                class="full-width">Task {{taskFormCreateCtrl.LANG.TASK.LABEL[eventName]}}
+              </md-option>
+            </md-select>
+          </md-list-item>
+        </md-list>
+      </form>
+    </div>
+
+    <div class="list">
+
+      <div class="item item-sub-header">
+        <h3>Form fields preview</h3>
+      </div>
+
+      <div ng-repeat="field in template.template"
+           class="item no-padding card">
+        <field-preview field="field"
+               name="field.keyName"
+               is-disabled="true"></field-preview>
+      </div>
+    </div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-click="taskFormCreateCtrl.cancel()">
+      Cancel
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="!isAddNewFormFormValid()"
+               ng-click="taskFormCreateCtrl.sendAddFormRequest(lifecycleEvent)"
+               class="md-primary">
+      <span>Add</span>
+    </md-button>
+  </div>
+
+</md-dialog>

@@ -1,0 +1,86 @@
+<md-dialog class="register-pop-up" aria-label="Job Time-sheet">
+
+  <md-toolbar class="toolbar-custom">
+    <div class="md-toolbar-tools">
+      <h2 flex>Rating</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close"
+                 aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width"  >
+    <form name="form.timeSheet" novalidate>
+      <div class="list" flex layout="column">
+
+        <div class="card list" ng-repeat="user in jobMembers">
+
+          <div class="item item-sub-header padding-bottom">
+            <p class="color-normal txt-bold">
+              Performance Rating
+            </p>
+          </div>
+
+          <div class="item item-sub-header item-text-wrap"
+               layout="row">
+            <div>
+              <h3 ng-bind="user.userFirstName+' '+user.userLastName"
+                  class="txt-bold line-clamp-2 overflow-hide"></h3>
+            </div>
+            <span flex></span>
+            <rating ng-model="user.ratingVal"
+                    ng-change="onRatingChange()"
+                    class=""
+                    max="5" style="min-width: 230px;"></rating>
+          </div>
+
+          <div ng-click="user.skill_drawerOpen = !user.skill_drawerOpen"
+               class="item item-sub-header item-button-right">
+            <p class="color-normal txt-bold">
+              Skills Rating
+              <span ng-show="user.skills"
+                    ng-bind="'('+user.skills.length+')'"></span>
+            </p>
+            <button class="button button-clear">
+              <i class="icon"
+                 ng-class="user.skill_drawerOpen ? 'icon-expand-less' : 'icon-expand-more'"></i>
+            </button>
+          </div>
+
+          <div ng-repeat="skill in user.skills"
+               ng-show="user.skill_drawerOpen"
+               class="item item-text-wrap range"
+               ng-class="{'bg-light-2':$even}"
+               layout="row">
+            <div ng-bind="skill.name"
+                 class="line-clamp-2"
+                 flex></div>
+            <rating ng-model="skill.ratingVal"
+                    ng-change="onRatingChange()"
+                    max="5" style="min-width: 230px;"></rating>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-disabled=""
+               ng-click="cancel()"
+               aria-label="Cancel">
+      <span ng-bind="BUTTON.CANCEL"></span>
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="!form.timeSheet.$valid"
+               ng-click="submit()"
+               class="md-primary"
+               aria-label="Submit Rating">
+      <span ng-bind="BUTTON.SUBMIT"></span>
+    </md-button>
+  </div>
+</md-dialog>

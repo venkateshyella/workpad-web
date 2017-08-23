@@ -1,0 +1,56 @@
+<md-dialog style="width:50%;" class="register-pop-up" aria-label="{{config.title}}"
+           layout="column" layout-align="space-between center">
+  <md-toolbar class="toolbar-custom">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>{{config.title || 'default title'}}</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width">
+    <form name="form.fileNames">
+      <div class="list no-padding" flex>
+        <label
+          ng-repeat="file in fileList"
+          class="item item-input"
+          layout="row" layout-align="start start" flex>
+          <div flex="55" class="overflow-x-scroll">
+            <span class="input-label push-right item-text-wrap">{{file.fileDisplayName}}</span>
+          </div>
+          <div flex="45" class="padding-left pdl-lg">
+            <input type="text"
+                   name="{{'newName-'+$index}}"
+                   ng-model="file.newName"
+                   ng-maxlength="50"
+                   ng-change="onFileNameChange(file)"
+                   ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+                   placeholder="{{config.newFileNamePlaceHolder || 'file Name'}}">
+            <div ng-messages="form.fileNames['newName-'+$index].$error">
+              <div ng-message="maxlength" class="ng-message">Please limit the maximum length to 50 characters.</div>
+              <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),. are allowed in the
+                			File name.
+              			</div>
+            </div>
+          </div>
+        </label>
+      </div>
+    </form>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               aria-label="Cancel Workflow">
+      <span ng-bind="config.cancelButtonText"></span>
+    </md-button>
+    <md-button ng-click="action()"
+               ng-disabled=""
+               aria-label="Execute Action">
+      <span ng-bind="config.actionButtonText"></span>
+    </md-button>
+  </div>
+</md-dialog>

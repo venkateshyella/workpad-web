@@ -1,0 +1,379 @@
+<view type="toolbarView" screen-type="device" title="'Subscriptions'">
+   <toolbar app-toolbar title="'Subscriptions'">
+   </toolbar>
+   <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+      <row scroll layout-height="fill_remaining" layout-gravity="free">
+         <!-- <md-subheader class="md-no-sticky">Account Settings</md-subheader> -->
+         <div  class=" full-width overflow-hide" >
+            <div class="card" style="padding-bottom:1px;">
+               <h2 class="txt txt-line-pri sub-item-head">Subscription Info</h2>
+               <div class="subscription-card-fee">
+                  <span class="md-subhead"  ng-if="packTypes.CHARGED!= subscriptionInfoViewModel.packageInfo.id">
+                  Charges : Free
+                  </span>
+                  <span class="md-subhead"  ng-if="packTypes.CHARGED  == subscriptionInfoViewModel.packageInfo.id">
+                  Charges : {{subscriptionInfoViewModel.packageInfo.currency}} {{subscriptionInfoViewModel.packageInfo.price * subscriptionInfoViewModel.orgSubscriptionInfo.totalSubscriptionPeriod}} 
+                  </span>
+                  <br/><span class="md-subhead"  ng-if="subscriptionInfoViewModel.orgSubscriptionInfo.orgSubscriptionEndDate"> 
+                  Subscription End Date : {{MU.getDisplayDateDDMMYYYY(subscriptionInfoViewModel.orgSubscriptionInfo.orgSubscriptionEndDate);}}
+                  </span>
+                  <p style="">*Extra charges applied on addons </p>
+               </div>
+               <div class="subscription-card-info">
+                  <span class="md-subhead">Subscription Period : {{subscriptionInfoViewModel.orgSubscriptionInfo.totalSubscriptionPeriod}} months</span>
+                  <br/>
+                  <span class="md-subhead"  ng-if="subscriptionInfoViewModel.orgSubscriptionInfo.orgSubscriptionEndDate && !isOrganizationExpired">Remaining Months : {{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</span>
+                  <span class="md-subhead" ng-if="isOrganizationExpired" style="color:red; font-size: 16px;" ng-bind="orgExpireMsg"></span>
+               </div>
+               <!--                <md-divider ng-if="!isNewOrg" style="display: inline-block;width: 100%;padding-top: -6px;position: relative;top: -13px;"></md-divider>
+                  <div style="padding: 0px 10px;width:100%;margin-top:-12px" ng-if="!isNewOrg">
+                     <small style="margin-left: 10px;"><i class="color-light-2">Organisation Name</i></small><br/>
+                     <span class="md-headline" style="margin-left: 10px;margin-top: 5px;font-size: 20px;font-weight: 400;" ng-bind="subscriptionInfoViewModel.orgSubscriptionInfo.orgName">
+                     </span><br/>
+                     <small style="margin-left: 10px;"><i ng-bind="::LANG.LABEL.DESCRIPTION" class="color-light-2"></i></small><br/>
+                     <div style="margin-left: 10px;" ng-bind="subscriptionInfoViewModel.orgSubscriptionInfo.desc"></div>
+                  </div> -->
+            </div>
+         </div>
+         <div class=" full-width overflow-hide" ng-if="!isNewOrg">
+            <div class="card">
+               <h2 class="txt txt-line-pri sub-item-head">Organisaton Info</h2>
+               <div>
+                  <div style="padding:12px">
+                     <div class="md-headline" style="margin-left: 10px;font-size: 16px;font-weight: 400;" ng-bind="subscriptionInfoViewModel.orgSubscriptionInfo.orgName">
+                     </div>
+                  </div>
+                  <md-divider></md-divider>
+                  <div style="padding:12px">
+                     <small style="margin-left: 10px;"><i ng-bind="::LANG.LABEL.DESCRIPTION" class="color-light-2"></i></small><br/>
+                     <div style="margin-left: 10px;" ng-bind="subscriptionInfoViewModel.orgSubscriptionInfo.desc"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class=" full-width overflow-hide" ng-if="isNewOrg">
+            <div class="card">
+               <h2 class="txt txt-line-pri sub-item-head">WorkSpace Info</h2>
+               <form  style="padding: 20px;" name="form.create_org" class="full-height" novalidate>
+                  <md-input-container md-no-float>
+                     <input auto-input-focus type="text"
+                        name="orgName"
+                        placeholder="WorkSpace Name"
+                        required
+                        ng-model="upgradedSubscriptionInfo.organization.orgName" 
+                        ng-maxlength="50"
+                        ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+                        ng-trim>
+                     <div ng-messages="form.create_org.orgName.$error">
+                        <div ng-message="maxlength" class="ng-message">Please limit the WorkSpace name to 50 characters.</div>
+                        <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),.  are allowed in the
+                           WorkSpace name.
+                        </div>
+                     </div>
+                  </md-input-container>
+                  <md-input-container flex>
+                     <label>Description</label>
+                     <textarea name="orgDesc"  ng-model="upgradedSubscriptionInfo.organization.desc"
+                        columns="1" md-maxlength="256" required ></textarea>
+                     <div ng-messages="form.create_org.orgDesc.$error">
+                        <div ng-message="md-maxlength" class="ng-message">Please limit the WorkSpace description to 256 characters.</div>
+                     </div>
+                  </md-input-container>
+               </form>
+            </div>
+         </div>
+         <div class=" full-width overflow-hide" ng-repeat="item in subscriptionInfoViewModel.items">
+            <div class="card">
+               <h2 class="txt txt-line-pri sub-item-head">{{item.itemName}}</h2>
+               <md-list>
+                  <md-list-item ng-if="item.itemCode != 'DATA_PROTECTION' && item.itemCode != 'DATA_ENC' && item.itemCode != 'CHAT_ENC'">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Current Subscription</div>
+                        <br> 
+                     </div>
+                     <div layout="row">
+                        <div class="sub-qty-label">
+                           Quantity : <b> {{item.subscribedItemInfo.quantity}}   </b>
+                           <span ng-if="item.subscribedItemInfo.uom.id != uomTypes.EACH">{{item.subscribedItemInfo.uom.type}} </span>
+                        </div>
+                     </div>
+                     <div class="curr-sub" layout="row" ng-if="!isNewOrg">
+                        Available : <b> {{item.subscribedItemInfo.usageInfo.available}}</b> 
+                     </div>
+                  </md-list-item>
+                  <md-list-item ng-if="item.itemCode == 'DATA_PROTECTION'">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Current Subscription</div>
+                        <br> 
+                     </div>
+                     <div layout="row">
+                        <div class="sub-qty-label">
+                           Type : <b> {{item.subscribedItemInfo.value}}   </b>
+                        </div>
+                     </div>
+                     <div class="curr-sub" layout="row" ng-if="item.dataVolume > 0 && item.subscribedItemInfo.value != 'Triple'" >
+                        for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months&nbsp;on&nbsp;<b>{{item.dataVolume}} GB</b> 
+                     </div>
+                     <div class="curr-sub" layout="row" ng-if="item.dataVolume == 0 && item.subscribedItemInfo.value == 'Triple' ">
+                     for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months&nbsp;on&nbsp;<b>{{subscribedDataVolume}} GB</b>
+                     </div>
+                  </md-list-item>
+                  <md-divider></md-divider>
+                  <md-list-item ng-if="item.selectedAddon.isShown && item.itemCode != 'DATA_PROTECTION' && item.itemCode != 'DATA_ENC' && item.itemCode != 'CHAT_ENC'">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Add On</div>
+                        <br> 
+                     </div>
+                     <div layout="row" >
+                        <div class="sub-qty-label">
+                           Quantity : <b> {{item.selectedAddon.qty}}  </b>
+                           <span ng-if="item.subscribedItemInfo.uom.id != uomTypes.EACH">{{item.subscribedItemInfo.uom.type}} </span>
+                        </div>
+                     </div>
+                     <div class="curr-sub" layout="row">
+                        <span>Amount&nbsp;<b>{{item.itemAddons[0].currency}} {{item.selectedAddon.amount}}</b>&nbsp;for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months</span>
+                     </div>
+                     <md-icon ng-click="removeAddon(item);" class="md-secondary no-push-top" aria-label="Remove" md-font-icon="icon icon-close"></md-icon>
+                  </md-list-item>
+                  <!--                   <md-list-item ng-if="item.itemCode == 'DATA_VOL' && subscriptionInfoViewModel.dataProtection.isEnabled">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label"></div>
+                        <br> 
+                     </div>
+                     <div layout="row">
+                        <div class="sub-qty-label">
+                           Data Protection
+                        </div>
+                     </div>
+                     <div class="curr-sub" layout="row">
+                        <span style="margin-left: 3px;">Amount&nbsp;<b>USD {{subscriptionInfoViewModel.dataProtection.amount}}</b>&nbsp;for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months</span>
+                     </div>
+                     </md-list-item>
+                     <md-list-item ng-if="item.itemCode == 'DATA_VOL' && subscriptionInfoViewModel.dataEncryption.isEnabled">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label"></div>
+                        <br> 
+                     </div>
+                     <div layout="row">
+                        <div class="sub-qty-label">
+                           Data Encryption
+                        </div>
+                     </div>
+                     <div class="curr-sub" layout="row">
+                        <span>Amount&nbsp;<b>USD {{subscriptionInfoViewModel.dataEncryption.amount}}</b>&nbsp;for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months</span>
+                     </div>
+                     </md-list-item>
+                     -->
+                  <md-list-item ng-if="item.itemCode == 'DATA_ENC' && (subscriptionInfoViewModel.isEncryptionEnabled) ">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Add On</div>
+                        <br> 
+                     </div>
+                     <div class="curr-sub" layout="row" ng-if="subscriptionInfoViewModel.dataEncryption.amount && subscriptionInfoViewModel.dataEncryption.amount > 0">
+                        <span>Amount&nbsp; 
+                        <b ng-if="subscriptionInfoViewModel.dataEncryption.quantity > 0 && subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated">
+                        USD {{roundAmount(item.itemAddons[0].price * ((subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty + ((currentEncryptVolume==defaultDataVolume) ? (currentEncryptVolume-defaultDataVolume) : currentEncryptVolume)) * subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining));}}	  
+                        </b>  
+                        <b ng-if="subscriptionInfoViewModel.dataEncryption.quantity > 0 && !subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated">USD {{subscriptionInfoViewModel.dataEncryption.amount}}</b>&nbsp;for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months
+                        &nbsp;on <b ng-if="subscriptionInfoViewModel.dataEncryption.quantity > 0 && !subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated">  {{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty}} GB </b>
+                        <b ng-if="subscriptionInfoViewModel.dataEncryption.quantity > 0 && subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated">  {{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty + ((currentEncryptVolume==defaultDataVolume) ? (currentEncryptVolume-defaultDataVolume) : currentEncryptVolume)}} GB </b>
+                        
+                        </span>
+                     </div>
+                     <div class="curr-sub" layout="row" ng-if="!subscriptionInfoViewModel.dataEncryption.amount || subscriptionInfoViewModel.dataEncryption.amount <= 0">
+                        <span>Amount&nbsp;<b>USD {{roundAmount(item.itemAddons[0].price  * (item.dataVolume > 0 ?item.dataVolume : defaultDataVolume ) * subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining);}}</b>&nbsp;
+                        for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months
+                        &nbsp; on <b ng-if="!subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated"> {{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty}} GB </b>
+                        <b ng-if="subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated"> {{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty + currentEncryptVolume}} GB </b>
+                        </span>
+                     </div>
+                  </md-list-item>
+                  <md-divider ng-if="item.selectedAddon.isShown"></md-divider>
+                  <md-list-item ng-if="item.itemCode == 'DATA_ENC'">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label" ng-if="item.subscribedItemInfo.value == '0'">Add On</div>
+                        <div class="sub-label" ng-if="item.subscribedItemInfo.value == '1'">Current Subscription</div>
+                        <br> 
+                     </div>
+                     <div layout="row" style="max-width: 560px;width: 100%;margin-top: 14px;" >
+                        <div class="sub-qty-label" style="padding: 0px 30px;width: 50%;" ng-if="item.subscribedItemInfo.value == '1'">
+                           <b> On </b>
+                        </div>
+                         <div class="sub-qty-label" style="padding: 0px 30px;width: 100%;" ng-if="item.subscribedItemInfo.value == '0'">
+                            <span >Price&nbsp;<b>USD {{item.itemAddons[0].price}}</b>&nbsp; per month &nbsp; on <b>1 GB</b> </span>
+                        </div>
+                        <div class="curr-sub" style="width:350px" layout="row "  >
+                           <!--     <span>Price&nbsp;<b>USD {{item.itemAddons[0].price}}</b>&nbsp; per month &nbsp; on <b>1 GB</b> -->
+                        <span ng-if="item.subscribedItemInfo.value == '1' ">for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months&nbsp;on&nbsp;<b>{{subscribedDataVolume}} GB</b></span> 
+                        </div>
+                        
+                        <div class="sub-qty-label1">
+                           <md-switch class="md-primary" ng-if="item.subscribedItemInfo.value == '0'"  md-no-ink="" aria-label="Switch No Ink" ng-change="upgradeDataEncryption(item, subscriptionInfoViewModel.items[key].selectedAddon.isEnabled);" ng-model="subscriptionInfoViewModel.items[key].selectedAddon.isEnabled"></md-switch>
+                           <md-switch ng-disabled="true" ng-if="item.subscribedItemInfo.value == '1'" ng-model="item.subscribedItemInfo.value == '1'" aria-label="Disabled active switch">
+                           </md-switch>
+                        </div>
+                     </div>
+                  </md-list-item>
+                   <md-divider ng-if="subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated && item.subscribedItemInfo.value == '1'" ></md-divider>
+                  <md-list-item ng-if="item.itemCode == 'DATA_ENC' && item.subscribedItemInfo.value == '1' && subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated && !item.selectedAddon.isShown">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Add On</div>
+                        <br> 
+                     </div>
+                     <div layout="row" style="max-width: 560px;width: 100%;margin-top: 14px;">
+                        <div class="sub-qty-label" style="padding: 0px 30px;width: 100%;">
+                           Amount : &nbsp;<b>USD {{roundAmount(item.itemAddons[0].price * (subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty) * subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining);}} </b> &nbsp;for <b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b> months
+                           &nbsp; on &nbsp;<b ng-if="item.subscribedItemInfo.value == '1'">{{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty}} GB </b> 
+                           <!-- <b ng-if="item.subscribedItemInfo.value == '1'">{{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty}} GB </b> -->
+                        </div>
+                     </div>
+                  </md-list-item>
+                  <md-list-item ng-if="item.selectedAddon.isShown && item.itemCode == 'DATA_PROTECTION'">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Add On</div>
+                        <br> 
+                     </div>
+                     <div layout="row" >
+                        <div class="sub-qty-label">
+                           Type : <b>{{item.selectedAddon.displayValue}} </b>
+                        </div>
+                     </div>
+                     <div class="curr-sub" layout="row">
+                        Amount&nbsp;<b>{{item.itemAddons[0].currency}} {{item.selectedAddon.amount}}</b>&nbsp;for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months
+                        &nbsp;on &nbsp; <b ng-if="subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated ">{{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty + ((currentSubDataVolume==defaultDataVolume) ? (currentSubDataVolume-defaultDataVolume) : currentSubDataVolume)}} GB</b>
+                        <b ng-if="!subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated ">{{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty}} GB</b> 
+                     </div>
+                     <md-icon ng-click="removeAddon(item);" class="md-secondary no-push-top" aria-label="Remove" md-font-icon="icon icon-close"></md-icon>
+                  </md-list-item>
+                  <md-list-item ng-if="subscriptionInfoViewModel.defaultSubscribedItems.dataProtection.show && subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated && item.itemCode == 'DATA_PROTECTION' && !item.selectedAddon.isShown">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Add On</div>
+                        <br> 
+                     </div>
+                     <div layout="row" >
+                        <div class="sub-qty-label">
+                           Type : <b>{{item.subscribedItemInfo.value}} </b>
+                        </div>
+                     </div>
+                     <div class="curr-sub" layout="row">
+                        Amount&nbsp;<b>{{roundAmount(subscriptionInfoViewModel.defaultSubscribedItems.dataProtection.price * (subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty) * subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining);}}</b> 
+                        &nbsp;for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months
+                        &nbsp;on &nbsp;<b>{{subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.qty}} GB</b>
+                     </div>
+                  </md-list-item>
+                  <md-divider ng-if="subscriptionInfoViewModel.defaultSubscribedItems.dataVolume.isUpdated && item.itemCode != 'DATA_ENC'"></md-divider>
+                  <md-list-item ng-if="item.itemCode == 'CHAT_ENC' && subscriptionInfoViewModel.isChatEncryptionEnabled">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label"></div>
+                        <br> 
+                     </div>
+                     <div class="curr-sub" layout="row">
+                        <span>Amount&nbsp;<b>USD {{item.selectedAddon.amount}}</b>&nbsp;for&nbsp;<b>{{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}}</b>&nbsp;months</span>
+                     </div>
+                  </md-list-item>
+                  <md-divider ng-if="item.selectedAddon.isShown && item.itemCode != 'DATA_ENC'"></md-divider>
+                  <md-list-item ng-if="item.itemCode == 'CHAT_ENC'">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Add On</div>
+                        <br> 
+                     </div>
+                     <div layout="row" style="max-width: 560px;width: 100%;margin-top: 14px;"">
+                        <div class="sub-qty-label ng-scope" style="padding: 0px 30px;width: 50%;" ng-if="item.subscribedItemInfo.value == '1'"></div>
+                        <div class="sub-qty-label" style="padding: 0px 30px;width: 50%;" ng-if="item.subscribedItemInfo.value != '0'"> <b>On</b> </div>
+                        <!-- <div class="curr-sub" layout="row" style="width: 310px;" ng-if="item.subscribedItemInfo.value != '0'">
+                           Amount : &nbsp;<b>USD {{item.itemAddons[0].price * 1 * subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}} </b> &nbsp;for &nbsp;<b> {{subscriptionInfoViewModel.orgSubscriptionInfo.monthsRemaining}} </b>months
+                           </div>
+                           -->
+                        <div class="curr-sub" layout="row" style="width: 310px;" ng-if="item.subscribedItemInfo.value == '0'">
+                           Price : &nbsp;<b>USD {{item.itemAddons[0].price * 1}} </b> &nbsp;per month
+                        </div>
+                        <div class="sub-qty-label1">
+                           <md-switch class="md-primary" ng-if="item.subscribedItemInfo.value == '0'"  md-no-ink="" aria-label="Switch on" ng-change="upgradeChatEncryption(item, item.selectedAddon.isEnabled);" ng-model="item.selectedAddon.isEnabled"></md-switch>
+                           <md-switch ng-disabled="true" ng-if="item.subscribedItemInfo.value != '0'" ng-model="item.subscribedItemInfo.value != '0'" aria-label="Disabled">
+                           </md-switch>
+                        </div>
+                     </div>
+                  </md-list-item>
+                  <md-list-item class="md-no-proxy" ng-if="item.itemCode != 'DATA_ENC' && item.itemCode != 'CHAT_ENC' && item.subscribedItemInfo.value != 'Triple'">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">Add On</div>
+                        <br> 
+                     </div>
+                     <div ng-if="item.itemAddons.length==1">
+                        <div layout="row" style="display: inline-block;">
+                           <div class="sub-qty-label">
+                              <md-button class="md-raised md-primary" style="min-width: 30px!important;" ng-click="decrementAddonQty(item) && upgradeSubscription(item)">-</md-button>
+                              <!-- <input style="color: #e3eaf6;background-color: #285ebb;border-color: #285ebb;" type="button" value="-" ng-click="decrementAddonQty(item) && upgradeSubscription(item)" /> -->
+                              <input class="wd-50" style="display: inline-block; padding-left: 14px !important;width: 60px !important;    height: 35px;"   ng-model="item.addonQty" readonly/> 
+                              <!-- <input  style="color: #e3eaf6;background-color: #285ebb;border-color: #285ebb;" type="button" value="+" ng-click="(item.addonQty=item.addonQty+item.incrementCount) && upgradeSubscription(item)" /> -->
+                              <md-button class="md-raised md-primary" style="min-width: 30px!important;" ng-click="(item.addonQty=item.addonQty+item.incrementCount) && upgradeSubscription(item)">+</md-button>
+                           </div>
+                        </div>
+                        <div class="curr-sub" layout="row" style="display: inline-block;">
+                           Price&nbsp;<b>{{item.itemAddons[0].currency}} {{item.itemAddons[0].price * item.incrementCount}}</b>&nbsp;for&nbsp;<b>{{item.incrementCount}}</b> {{addOnFilter(item.id)}} per month 
+                        </div>
+                     </div>
+                     <div ng-if="item.itemAddons.length > 1  && (item.itemCode == 'DATA_PROTECTION') && (item.subscribedItemInfo.value != 'Triple') ">
+                        <div layout="row" style="display: inline-block;" >
+                           <div class="sub-qty-label">
+                              <md-radio-group ng-model="item.selectedAddon" ng-change="upgradeDataProtection(item, item.selectedAddon, true);">
+                                 <md-radio-button ng-disabled="item.subscribedItemInfo.value == opt.displayValue" ng-repeat="opt in item.itemAddons"
+                                    ng-value="opt" class="md-primary">
+                                    <span style="display:inline-block; padding-right: 50px; width:100px"> {{opt.displayValue}} </span> 
+                                    <span style="color:black"> Price :&nbsp; <b>{{opt.currency}}&nbsp;{{opt.price}}</b>&nbsp; per month on <b>1 GB </b>  </span>
+                                 </md-radio-button>
+                              </md-radio-group>
+                           </div>
+                        </div>
+                     </div>
+                  </md-list-item>
+                  <md-divider ng-if="item.itemCode == 'DATA_ENC' && item.subscribedItemInfo.value == '1' "></md-divider>
+                   <md-list-item ng-if="(item.itemCode == 'DATA_ENC' || item.itemCode == 'DATA_PROTECTION') && (item.subscribedItemInfo.value == 'Triple' || item.subscribedItemInfo.value=='1')">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">&nbsp;</div>
+                        <br> 
+                     </div>
+                     <div layout="row" style="max-width: 560px;width: 100%;margin-top: 14px;">
+                        <div  ng-if="item.itemCode == 'DATA_ENC'" class="sub-qty-label" style="padding: 0px 30px;width: 100%;">
+                           <span>Price&nbsp;<b>USD {{item.itemAddons[0].price}}</b>&nbsp; per month &nbsp; on <b>1 GB</b> </span>
+                        </div>
+                          <div  ng-if="item.itemCode == 'DATA_PROTECTION'" class="sub-qty-label" style="padding: 0px 30px;width: 100%;">
+                           <md-radio-group ng-model="item.selectedAddon" ng-change="upgradeDataProtection(item, item.selectedAddon, true);">
+                                 <md-radio-button ng-disabled="true" ng-repeat="opt in item.itemAddons"
+                                    ng-value="opt" class="md-primary">
+                                    <span style="display:inline-block; padding-right: 50px; width:100px"> {{opt.displayValue}} </span> 
+                                    <span style="color:black"> Price :&nbsp; <b>{{opt.currency}}&nbsp;{{opt.price}}</b>&nbsp; per month on <b>1 GB </b>  </span>
+                                 </md-radio-button>
+                              </md-radio-group>
+                        </div>
+                     </div>
+                  </md-list-item> 
+                  
+                  <md-divider ng-if="item.itemCode == 'CHAT_ENC' && (item.subscribedItemInfo.value == '1') "></md-divider>
+                  <md-list-item ng-if="item.itemCode == 'CHAT_ENC' && (item.subscribedItemInfo.value == '1') ">
+                     <div class="sub-label-wrap">
+                        <div class="sub-label">&nbsp;</div>
+                        <br> 
+                     </div>
+                     <div layout="row" style="max-width: 560px;width: 100%;margin-top: 14px;">
+                        <div class="sub-qty-label" style="padding: 0px 30px;width: 100%;">
+                           <span>Price&nbsp;<b>USD {{item.itemAddons[0].price}}</b>&nbsp; per month </span>
+                        </div>
+                     </div>
+                  </md-list-item>
+               </md-list>
+            </div>
+         </div>
+         <span class="ng-binding ng-scope" style="
+            float: right;
+            padding-right: 20px;">Grand Total : <b>USD {{upgradedSubscriptionInfo.totalAmount}}</b></span> </br>
+         <div ng-if="isNewOrg" >
+            <md-button ng-if="packTypes.BASE == subscriptionInfoViewModel.packageInfo.id && upgradedSubscriptionInfo.items.length == 0" ng-disabled="!upgradedSubscriptionInfo.organization.orgName || !upgradedSubscriptionInfo.organization.desc" style="float: right;margin-right: 20px;margin-top: 10px;" class="md-primary sub-btn" ng-click="proceedSubscribeToOrg();" >Create & Subscribe</md-button>
+            <md-button ng-if="packTypes.CHARGED == subscriptionInfoViewModel.packageInfo.id || upgradedSubscriptionInfo.items.length > 0"   ng-disabled="!upgradedSubscriptionInfo.organization.orgName || !upgradedSubscriptionInfo.organization.desc"  style="float: right;margin-right: 20px;margin-top: 10px;" class="md-primary sub-btn" ng-click="proceedSubscribeToOrg();" >Create & Pay</md-button>
+         </div>
+         <div ng-if="!isNewOrg" >
+            <md-button ng-disabled="isOrganizationExpired || upgradedSubscriptionInfo.items.length <= 0" style="float: right;margin-right: 20px;margin-top: 10px;" class="md-primary sub-btn" ng-click="proceedSubscribeToOrg();" >Pay</md-button>
+         </div>
+      </row>
+   </layout>
+</view>

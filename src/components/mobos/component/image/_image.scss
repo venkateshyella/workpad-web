@@ -1,0 +1,86 @@
+$image-icon-tiny-height: 35px;
+$image-icon-nano-height: 25px;
+
+.img {
+  background: $light;
+  &.corner-round {
+    @include border-radius($unit);
+  }
+  &.with-padding {
+    border: 1px solid darken($stable, 10%);
+    padding: $unit;
+  }
+
+  &.round {
+    @include border-radius(50%);
+  }
+
+  &.medium-icon {
+    width: 85px;
+    max-height: 85px;
+    display: block;
+    @include border-radius(4px);
+    &.round {
+      @include border-radius(50%);
+    }
+    &.with-padding {
+      padding: $unit * 0.2;
+    }
+  }
+
+  &.small-icon {
+    max-width: 50px;
+    width: 50px;
+    max-height: 50px;
+    height: 50px;
+    display: block;
+    @include border-radius(4px);
+    &.round {
+      @include border-radius(50%);
+    }
+  }
+
+  &.tiny-icon {
+    max-width: $image-icon-tiny-height;
+    width: $image-icon-tiny-height;
+    max-height: $image-icon-tiny-height;
+    height: $image-icon-tiny-height;
+    display: block;
+    @include border-radius(4px);
+    &.round {
+      @include border-radius(50%);
+    }
+  }
+
+  &.nano-icon {
+    max-width: $image-icon-nano-height !important;
+    width: $image-icon-nano-height !important;;
+    max-height: $image-icon-nano-height !important;;
+    height: $image-icon-nano-height !important;;
+    display: block;
+  }
+}
+
+.card-img {
+  position: relative;
+  min-height: 150px;
+  width: 100%;
+  img {
+    position: absolute;
+    width: 100%;
+    display: block;
+  }
+}
+
+img {
+  .fit-width {
+    width: 100%;
+  }
+  .fit-height {
+    height: 100%;
+  }
+}
+
+.image-row {
+  max-height: 64px;
+}

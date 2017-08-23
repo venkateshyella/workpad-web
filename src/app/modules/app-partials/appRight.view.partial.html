@@ -1,0 +1,105 @@
+          <ul class="nav nav-tabs">
+            <li ng-class="{'active': !state.showAudit}"  ng-click="toggleAudit(false)">
+               <a data-toggle="tab" href="javascript:void(0);">
+               <i class="icon-drive-document" aria-hidden="true"></i>NOTIFICATIONS  <i ng-if="!state.showAudit"  class="fa fa-refresh" aria-hidden="true"></i> </a>
+            </li>
+            
+            <li ng-class="{'active':state.showAudit}"  ng-click="toggleAudit(true)">
+               <a data-toggle="tab"  href="javascript:void(0);">
+               <i class="icon-history" aria-hidden="true"></i> AUDIT  <i ng-if="state.showAudit" class="fa fa-refresh" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+          
+          <div class="tab-content">
+            <div id="notifications" ng-show="!state.showAudit" ng-class="{'active in': !state.showAudit}"
+                 class="tab-pane fade">
+            
+              <div ng-show="data.posts.length==0 && chatSummaryList.length==0"
+		             class="list" layout="row"
+		             layout-align="center center">
+		          <div class="item item-backdrop text-center">
+		            <div class="backdrop-filler-image"><i class="icon icon-backdrop icon-drafts"></i></div>
+		            <div ng-bind="::LANG.DASHBOARD.MESSAGES.NO_POSTS_AVAILABLE"></div>
+		          </div>
+               </div>
+              <ul class="timeline col-sm-12"> 
+                
+                <!-- chat notifications -->
+                <li ng-repeat="chatItem in chatSummaryList | orderBy: '-createDate'"
+               		ng-click="onChatSummaryItemClick(chatItem)" >
+                  <div class="timeline-badge default">
+                     <img ng-src="{{getChatUserIconUrl(chatItem);}}" 
+                          class="img-circle img-responsive"
+                          on-error-src="assets/images/org-icon-placeholder.png" />
+                  </div>
+                  <div class="timeline-panel">
+                    <div class="icon-name"> <span class="blue">I</span> </div>
+                    <div class="timeline-heading">
+                      <div class="timeline-title"> 
+                       <a href="javascript:;"> <span ng-bind="::LANG.DASHBOARD.LABEL.CHAT_POST_DISPLAY_MESSAGE_PREFIX"></span>
+                  	    <span ng-bind="chatItem.chatRoomName"></span>
+                  	    </a>
+                  	  </div>
+                  	          <div class="timeline-title" style="padding-top: 12px;">
+         <p ng-if="chatItem.fullPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="chatItem.fullPath"></context-path></a></p>
+    </div>
+                      <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{MU.getDisplayDateTimeOffset(chatItem.createDate)}}</small> </div>
+                  </div>
+                </li>
+                
+                <!-- post notifications -->
+                <li  ng-repeat="post in data.posts" ng-click="postItemPrimaryAction(post, $event)">
+                 	<post-item post-model="post"></post-item>
+                </li>
+                
+              </ul>
+                   
+	               <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+	            	<md-button ng-click="fetchMorePosts()" ng-disabled="ui.isRefreshing" class="full-width txt-ignore-case"
+	                       aria-label="Load More">
+	              	<span>{{ui.isLoadingNext|| ui.isRefreshing ? 'Loading...':'Load more posts'}}</span>
+	               </md-button>
+	              </div>
+              
+            </div>
+            <div id="audits" class="tab-pane fade"  ng-class="{'active in':state.showAudit}">
+                <audit-list list="notificationAuditData"> </audit-list>
+                
+              
+		              <div ng-show="isNextAuditPageAvailable()"
+		                   class="item" layout="row" layout-align="center center">
+		                <md-button ng-click="fetchMoreAudits()"
+		                     ng-disabled="ui.auditActivityStore.isLoading" class="full-width txt-ignore-case"
+		                     aria-label="Load More">
+		                 <span>{{ui.auditActivityStore.isLoading ? 'Loading...':'Load more audits'}}</span>
+		               </md-button>
+		             </div>
+		             
+		            
+              
+            </div>
+          </div>
+          
+        <!--   
+          <div class="events">
+            <div class="events-block"> <i class="fa fa-calendar" aria-hidden="true"></i> Events </div>
+            <ul>
+              <li>
+                <div class="circle">Jun <span>30</span></div>
+                <div class="event-content">Workpad is going to launch its version 2.0 on 30th Jun</div>
+              </li>
+              <li>
+                <div class="circle">Jun <span>30</span></div>
+                <div class="event-content">New feature to be introduced in workpad mobile app. </div>
+              </li>
+              <li>
+                <div class="circle">Jun <span>30</span></div>
+                <div class="event-content">Workpad is going to introduce new data consumption packages</div>
+              </li>
+              <li>
+                <div class="circle">Jun <span>30</span></div>
+                <div class="event-content">Workpad mobile app upgrading to version 3.2</div>
+              </li>
+            </ul>
+          </div>
+         -->

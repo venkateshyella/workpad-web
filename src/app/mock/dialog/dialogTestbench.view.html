@@ -1,0 +1,78 @@
+<view type="toolbarView" title="'Dialogs'">
+
+  <toolbar app-toolbar title="'Dialogs'">
+    <toolbar-options>
+      <div class="menu-option-group">
+
+        <!--<div ng-click="showSimpleMenu($event)"-->
+             <!--class="menu-option-item thin">-->
+          <!--<div class="icon icon-account-box"></div>-->
+        <!--</div>-->
+
+      </div>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+
+    <row id="content" scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <div class="list">
+
+        <div class="card">
+          <div class="item item-divider">
+            Simple Dialog
+          </div>
+          <div class="item item-text-wrap">
+            <p>Click to show a simple alert.</p>
+
+            <div class="button"
+              ng-click="showSimpleAlert()">
+              Simple Alert
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="item item-divider">
+            Simple Confirm
+          </div>
+          <div class="item item-text-wrap">
+
+            <p>Click to show a confirm dialog.</p>
+
+            <div class="button button-positive"
+              ng-click="showConfirm()">
+              How are you?
+            </div>
+
+            <h3 ng-show="myMoodToday">You are {{myMoodToday}}</h3>
+
+          </div>
+        </div>
+
+
+        <div class="card">
+          <div class="item item-divider">
+            Custom Dialog
+          </div>
+          <div class="item item-text-wrap">
+
+            <p>Click to show fully customized dialog</p>
+
+            <div class="button button-dark"
+                 ng-click="showCustomDialog()">
+              Custom dialog
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+    </row>
+
+  </layout>
+</view>

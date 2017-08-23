@@ -1,0 +1,122 @@
+md-tabs.tabs {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+
+md-tabs-wrapper {
+  md-prev-button
+  ,md-next-button{
+    md-icon {
+      color: $light;
+    }
+  }
+}
+
+tabs {
+  display: block;
+  height: 100%;
+  .tab {
+
+  }
+}
+.tab-bar-container {
+  background: $button-primary-bg;
+  color: $button-primary-text;
+  height: 12*$unit;
+}
+.tab-bar {
+  position: relative;
+  height: 12*$unit;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .button-tab {
+    @include border-radius(0px);
+    height: $tabs-height;
+    line-height: $tabs-line-height;
+    vertical-align: middle;
+    background: inherit;
+    color: inherit;
+    text-align: center;
+    min-width: $tabs-min-width;
+    max-width: $tabs-max-width;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    &.icon-left,
+    &.icon-right,
+    &.icon-center{
+      &::before {
+        font-size: $button-icon-size*1.35;
+        line-height: 12*$unit;
+      }
+    }
+  }
+  .tab-label {
+    line-height: normal;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: $tabs-max-width - 15*$unit;
+  }
+}
+
+.tabs-content-container {
+  min-height: 0;
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  overflow: hidden;
+
+  //padding: 0 2*$unit;
+
+  .content-area {
+  }
+  .tab-content {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    &.content-right {
+      @include translate3d ( 100%, 0, 0);
+    }
+
+    &.content-left {
+      @include translate3d ( -100%, 0, 0);
+    }
+
+    &.transitioning {
+      transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+    }
+
+    &.active {
+      position: relative;
+      @include translate3d ( 0, 0, 0);
+    }
+  }
+}
+
+md-tabs {
+  .icon.icon-tab {
+    font-size: 1.3rem;
+  }
+  .md-tab {
+    .tab-text {
+      display: inline-block;
+      margin-left: 2px;
+      margin-right: 2px;
+      position: relative;
+      top: -4px;
+      font-size: 100%;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<md-dialog class="" aria-label="Upload image">
+
+  <md-dialog-content class="dialog-custom">
+    <md-content>
+      <img ng-show="img" class="full-width" ng-src="{{img}}" alt="img">
+      <p class="text-center padding" ng-if="!img">No Image Selected</p>
+    </md-content>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-click="cancel()">
+      Cancel
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="status.inProgress"
+               ng-click="startUpload()"
+               class="md-primary">
+      <span>Upload</span>
+      <md-icon md-font-icon="icon icon-file-upload"></md-icon>
+    </md-button>
+  </div>
+
+</md-dialog>

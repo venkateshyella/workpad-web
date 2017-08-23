@@ -1,0 +1,26 @@
+<ng-form class="row" novalidate name="jobDynamicForm.formfield{{fieldModel.id}}">
+<div class="column job-form-field">
+    <h5 class="job-form-field-lab">{{fieldModel.label}}
+    <span ng-if="fieldModel.validations.required.value" style="color: red; padding-left: 5px;">*</span></h5>
+
+<md-input-container class="md-block">
+<div class="md-item-padiding-sides" ng-repeat="checkBoxItem in fieldModel.groupFields" layout="column">
+    
+    
+            <md-checkbox name="field{{fieldModel.id}}" ng-model="checkBoxItem.isSelected" aria-label="checkBoxItem.label"  ng-required="{{fieldModel.validations.required.value}}" ng-disabled="isJobInProgress">
+            	<p flex>{{checkBoxItem.label}}</p>
+            </md-checkbox>
+            <div ng-messages="jobDynamicForm.formfield{{fieldModel.id}}.field{{fieldModel.id}}.$error">
+		<div ng-message="maxlength" class="ng-message">Please select {{fieldModel.label}}.</div>
+	</div>
+           
+</div>
+</md-input-container> 
+
+
+
+</div>
+</ng-form>
+
+
+

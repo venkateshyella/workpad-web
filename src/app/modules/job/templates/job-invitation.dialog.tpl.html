@@ -1,0 +1,38 @@
+<md-dialog aria-label="Job Advertisement">
+  <md-toolbar class="toolbar-clear">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">Action</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="padding-top">
+    <p ng-click="cancel();locals.action.viewJobDetails();" style="padding-bottom: 24px;">{{post.notificationDescription}}</p>
+    <div class="timeline-title">
+         <p ng-if="post.groupPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="post.groupPath"></context-path></a></p>
+         <p ng-if="post.messageLineItems.length>0"   ng-repeat="item in post.messageLineItems"><a href="javascript:;">{{item}}</a></p>
+    </div>
+    <div ng-if="bundle.post.reason">
+      <p ng-bind="bundle.post.fromUser.userFirstName+' '+bundle.post.fromUser.userLastName+':'"
+         ng-if="bundle.post.fromUser"
+         class="push-top"></p>
+      <p class="blockquote pre-formatted">
+        <span ng-bind="bundle.post.reason" class="color-light"></span>
+      </p>
+    </div>
+    <p class="color-light-2 text-right push-top">
+      <span>{{bundle.post.createdDate_displayText}}</span>
+    </p>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="submit(false)">
+      <span> {{locals.LANG.BUTTON.REJECT}}</span>
+    </md-button>
+    <md-button ng-click="submit(true)">
+      <span>{{locals.LANG.BUTTON.ACCEPT}}</span>
+    </md-button>
+  </div>
+</md-dialog>

@@ -1,0 +1,112 @@
+<view type="toolbarView" screen-type="device">
+  <toolbar ng-hide="form.org_edit.$dirty" app-toolbar title="'Edit WorkSpace'">
+    <toolbar-options>
+      <div class="menu-option-group"></div>
+    </toolbar-options>
+  </toolbar>
+
+  </toolbar>
+  <toolbar ng-show="form.org_edit.$dirty" view-toolbar title="Edit">
+    <toolbar-options class="full-width">
+
+      <div class="menu-option-group">
+
+        <div ng-click="resetOrgFormModel()"
+             ng-disabled="formActivity == '_SUBMITTING'"
+             class="menu-option-item button">
+          <span>Discard</span>
+          <i class="icon icon-close"></i>
+        </div>
+
+        <div ng-click="submit()"
+             ng-disabled="formActivity == '_SUBMITTING' || !form.org_edit.$valid"
+             class="menu-option-item button icon-left icon-floppy"
+          >Save
+        </div>
+
+      </div>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <form name="form.org_edit" novalidate>
+
+        <div class="card list">
+          <!-- <div class="item item-sub-header">
+            Organisation cover image
+          </div>
+          <div class="item item-image">
+            <div class="profile-card overlay">
+              <div class="profile-cover">
+                <div class="inner">
+                  <img ng-src="{{formModel.org_edit._img_full || 'assets/images/profile-placeholder.png'}}"
+                       on-error-src="assets/images/profile-placeholder.png" alt="Profile cover"
+                       class="img fit editable"/>
+                </div>
+              </div>
+
+              <div class="inner overlay-content overlay-bottom">
+                <div class="item">
+                  <div ng-click="editOrganisationCoverImage()"
+                       ng-disabled="form.isDisabled"
+                       class="button button-small button-stable icon-left icon-camera-alt pull-right">
+                    Edit
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="item item-thumbnail-left">
+            <img class="img corner-round" ng-src="{{formModel.org_edit._img_icon}}"
+                 on-error-src="assets/images/profile-image-placeholder.png"/>
+
+            <div class="txt-sub-header">WorkSpace profile image</div>
+            <div ng-click="editOrganisationProfileImage()"
+                 ng-disabled="formActivity == '_SUBMITTING'"
+                 class="button button-small icon-left icon-camera-alt button-stable">Edit
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card list">
+          <div class="item">
+            <md-input-container>
+              <label>WorkSpace Name</label>
+              <input name="orgName"
+                     required
+                     ng-disabled="formActivity == '_SUBMITTING'"
+                     ng-maxlength="50"
+                     ng-model="formModel.org_edit.orgName"
+                     type="text">
+              <div ng-messages="form.org_edit.orgName.$error">
+                <div ng-message="required" class="ng-message">Please provide your WorkSpace name.</div>
+                <div ng-message="maxlength" class="ng-message">Please limit the WorkSpace name to 50 characters.</div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <div class="item">
+            <md-input-container flex>
+              <label>Description</label>
+              <textarea name="orgDesc" class='autoExpand'
+                        ng-model="formModel.org_edit.desc"
+                        ng-disabled="formActivity == '_SUBMITTING'"
+                        columns="1" md-maxlength="150"></textarea>
+              <div ng-messages="form.editOrg.orgDesc.$error">
+                <div ng-message="md-maxlength" class="ng-message">Please limit the WorkSpace description to 150 characters.</div>
+              </div>
+            </md-input-container>
+          </div>
+
+        </div>
+
+      </form>
+
+    </row>
+  </layout>
+</view>

@@ -1,0 +1,101 @@
+<!-- <md-dialog class="" aria-label="User Invitation">
+
+  <md-toolbar class="md-auto-height">
+    <div class="md-toolbar-tools">
+      <h2>Invitation</h2>
+      <span flex></span>
+      <md-button ng-click="cancel()"
+                 class="md-icon-button"
+                 aria-label="Close">
+        <md-icon md-font-icon="icon icon-close"
+                 class="toolbar-icon"></md-icon>
+      </md-button>
+    </div>
+    <div class="toolbar-content">
+      <div>
+        <b>{{bundle.fromUser.userFirstName}} {{bundle.fromUser.userLastName}}</b>
+        <br/>
+        <small><i>Organisation administrator</i></small>
+      </div>
+      <p class="push-top push-bottom"><small>{{bundle.post.notificationDescription}}</small></p>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width dialog-custom">
+    <div class="" layout="column" layout-align="space-between center">
+      <md-list class="full-width">
+
+        <md-list-item class="">
+
+          <div class="item item-clear item-text-wrap item-thumbnail-left item-thumbnail-small">
+            <img ng-src="{{bundle.group._img_icon}}"
+                 on-error-src="assets/images/group-icon-placeholder.png"
+                 class="img medium-icon h-center" alt="Group Icon"/>
+
+            <h2 class="md-title">{{bundle.group.groupName}}</h2>
+            <p class="">{{bundle.group.desc}}</p>
+
+            <p class="txt-upper padding-top"><b><small>{{bundle.org.orgName}}</small></b></p>
+
+            <h4 ng-click="cancel();bundle.action.viewGroup();"
+                class="color-primary push-top txt-underline">
+              <b ng-bind="locals.LANG.DIALOG.USER_INVITE_GROUP.LABEL_VIEW_GROUP"></b></h4>
+
+          </div>
+        </md-list-item>
+
+      </md-list>
+    </div>
+    <div ng-hide="isActionsEnabled"
+         class="dialog-content-blocker"></div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-disabled="!isActionsEnabled"
+               ng-click="submit(false)"
+               class="md-warn">{{locals.LANG.BUTTON.REJECT}}</md-button>
+
+    <md-button type="submit"
+               ng-disabled="!isActionsEnabled"
+               ng-click="submit(true)"
+               class="md-primary md-raised"
+      >{{locals.LANG.BUTTON.ACCEPT}}</md-button>
+  </div>
+</md-dialog> -->
+
+
+
+<md-dialog aria-label="User Invitation">
+  <md-toolbar class="toolbar-clear">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">Action</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="padding-top full-width">
+    <p ng-click="cancel();bundle.action.viewGroup();" style="padding-bottom: 24px;">{{bundle.post.notificationDescription}}</p>
+    
+    <div class="timeline-title">
+         <p ng-if="bundle.post.groupPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="bundle.post.groupPath"></context-path></a></p>
+         <p ng-if="bundle.post.messageLineItems.length>0"  ng-repeat="item in bundle.post.messageLineItems"><a href="javascript:;">{{item}}</a></p>
+    </div>
+    
+    <p class="color-light-2 text-right push-top">
+      <span>{{bundle.post.createdDate_displayText}}</span>
+    </p>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button  ng-click="submit(false)">
+      <span>{{locals.LANG.BUTTON.REJECT}}</span>
+    </md-button>
+    <md-button ng-click="cancel();bundle.action.updateViewPost()">
+      <span>Ok</span>
+    </md-button>
+  </div>
+</md-dialog>

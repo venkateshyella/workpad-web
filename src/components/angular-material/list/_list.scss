@@ -1,0 +1,114 @@
+md-list {
+  .md-thumbnail {
+    width: 65px;
+    height: 65px;
+  }
+  .md-3-line {
+    .md-avatar {
+      &.avatar-large {
+        width: 65px;
+        height: 65px;
+      }
+    }
+  }
+  .md-subheader {
+    &.multi-line {
+      line-height: 1.2rem;
+    }
+  }
+
+  md-list-item,
+  .md-list-item {
+    h2 {
+      font-size: 1.3rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+    &.md-list-item-short {
+      min-height: 40px;
+      .md-list-item-inner {
+        min-height: 40px;
+      }
+    }
+    &.md-list-item-complex {
+      position: relative;
+      .md-list-item-text {
+        padding-top: 0px;
+        padding-bottom: 0px;
+      }
+    }
+    &.md-item-padding-sides {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    &.md-item-padding-left {
+      padding-left: 16px;
+    }
+    &.md-item-padding-right {
+      padding-right: 16px;
+    }
+    &.md-2-line {
+      .md-list-item-text,
+      > .md-no-style .md-list-item-text {
+        h3 {
+          line-height: 1.35em;
+          margin-bottom: 1px;
+          overflow: hidden;
+        }
+      }
+      > .md-avatar:first-child {
+        margin-top: 18px;
+      }
+    }
+
+    &.md-3-line {
+      .md-list-item-text,
+      > .md-no-style .md-list-item-text {
+        h3 {
+          line-height: 1.35em;
+          margin-bottom: 2px;
+          overflow: hidden;
+        }
+      }
+      > .md-no-style .md-list-item-text {
+        padding: 12px 0;
+      }
+    }
+
+    &.md-with-secondary {
+      padding-right: 64px;
+      .md-secondary-container {
+        &.align-top {
+          top: 16px;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+    }
+    &.item-rich-media {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .item-subtext {
+      display: block;
+      font-size: small;
+      margin: 3px 0;
+    }
+
+    button {
+      &.md-button.md-clear {
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+
+    md-divider {
+      &.divider-top {
+        top: 0;
+        bottom: auto;
+      }
+    }
+
+  }
+}

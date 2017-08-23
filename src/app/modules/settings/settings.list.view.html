@@ -1,0 +1,112 @@
+<view type="toolbarView" screen-type="device" title="'Settings'">
+  <toolbar app-toolbar title="'Settings'">
+  </toolbar>
+
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <md-list ng-controller="SettingsListViewController"
+               class="push-left push-right">
+        <form name="form.settings">
+
+          <md-list-item>
+            <p class="txt-pri">
+              <span>Push Notifications</span>
+            </p>
+            <md-switch ng-model="settingsData.push.value.enabled"
+                       name="push"
+                       ng-change="onChange('push')"
+                       ng-disabled="form.settings.push.$pending"
+                       class="md-primary"
+                       aria-label="Push Notifications"
+                       role="checkbox"></md-switch>
+          </md-list-item>
+
+          <md-subheader ng-show="form.settings.push.$pending"
+                        class="item-subtext">{{settingStatus.pushNotification}}
+          </md-subheader>
+
+          <md-divider></md-divider>
+
+          <md-list-item class="push-top">
+            <div layout="row" layout-align="start center" flex>
+              <p flex class="color-light-2">
+                <span ng-bind="LANG_SETTINGS.LABEL_PN_SETTINGS_SUB_HEADER"></span>
+              </p>
+              <div
+                ng-click="fetchPreferences()"
+                class="button button-clear icon-refresh button-icon push-right icon-2x icon"></div>
+            </div>
+          </md-list-item>
+
+          <md-list-item class="">
+            <div layout="column" flex class="padding-vertical pdt-lg pdb-lg"
+                 ng-class="{'color-light-2':!isPushSettingsEnabled() || form.settings.pushPrefInvitation.$pending}">
+              <p class="txt-pri">
+                <span ng-bind="LANG_SETTINGS.LABEL_PN_INVITATION"></span>
+              </p>
+              <p class="color-light-2 push-top pt-sm">
+                <span ng-bind="LANG_SETTINGS.LABEL_PN_INVITATION_SUBTEXT"></span>
+              </p>
+            </div>
+            <md-switch
+              ng-model="settingsData.pushPref.value.invitation"
+              name="pushPrefInvitation"
+              ng-change="onChange('invitation')"
+              ng-disabled="!isPushSettingsEnabled() || form.settings.pushPrefInvitation.$pending"
+              class="md-primary"
+              aria-label="Push Notifications"
+              role="checkbox"></md-switch>
+          </md-list-item>
+          <md-divider></md-divider>
+
+          <md-list-item class="">
+            <div layout="column" flex class="padding-vertical pdt-lg pdb-lg"
+                 ng-class="{'color-light-2':!isPushSettingsEnabled() || form.settings.pushPrefChat.$pending}">
+              <p class="txt-pri">
+                <span ng-bind="LANG_SETTINGS.LABEL_PN_CHAT"></span>
+              </p>
+              <p class="color-light-2 push-top pt-sm">
+                <span ng-bind="LANG_SETTINGS.LABEL_PN_CHAT_SUBTEXT"></span>
+              </p>
+            </div>
+
+            <md-switch
+              ng-model="settingsData.pushPref.value.chat"
+              name="pushPrefChat"
+              ng-change="onChange('chat')"
+              ng-disabled="!isPushSettingsEnabled() || form.settings.pushPrefChat.$pending"
+              class="md-primary"
+              aria-label="Push Notifications"
+              role="checkbox"></md-switch>
+          </md-list-item>
+          <md-divider></md-divider>
+
+          <md-list-item class="">
+            <div layout="column" flex class="padding-vertical pdt-lg pdb-lg"
+                 ng-class="{'color-light-2':!isPushSettingsEnabled() || form.settings.pushPrefData.$pending}">
+              <p class="txt-pri">
+                <span ng-bind="LANG_SETTINGS.LABEL_PN_DATA"></span>
+              </p>
+              <p class="color-light-2 push-top pt-sm">
+                <span ng-bind="LANG_SETTINGS.LABEL_PN_DATA_SUBTEXT"></span>
+              </p>
+            </div>
+            <md-switch
+              ng-model="settingsData.pushPref.value.data"
+              name="pushPrefData"
+              ng-change="onChange('data')"
+              ng-disabled="!isPushSettingsEnabled() || form.settings.pushPrefData.$pending"
+              class="md-primary"
+              aria-label="Push Notifications"
+              role="checkbox"></md-switch>
+          </md-list-item>
+          <md-divider></md-divider>
+
+        </form>
+      </md-list>
+
+    </row>
+  </layout>
+</view>

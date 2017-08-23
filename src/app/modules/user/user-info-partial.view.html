@@ -1,0 +1,29 @@
+<div class="profile-content overlay">
+
+	<div class="mug-shot md-whiteframe-z2" ng-switch="editable">
+		<img ng-switch-default=""
+				 on-error-src="assets/images/profile-image-placeholder.png"
+				 ng-src="{{user._img_icon}}" alt="" class="img round">
+		<img ng-switch-when="true" ng-click=""
+				 on-error-src="assets/images/profile-image-placeholder.png"
+				 ng-src="{{user._img_icon}}" alt="" class="img editable round">
+	</div>
+
+	<div class="info" ng-hide="hideInfo">
+		<!--Profile info-->
+		<div class="txt-center padding lg">
+			<div class="txt" ng-bind-template="{{user.userEntity.userFirstName}} {{user.userEntity.userLastName}}"></div>
+			<!--<div ng-bind="user.userEntity.userEmail"></div>-->
+		</div>
+	</div>
+
+	<div class="cover">
+		<div class="inner">
+			<img class="img fit"
+					 on-error-src="assets/images/profile-placeholder.png"
+					 ng-src="{{user._img_full}}"
+					 alt=""/>
+		</div>
+		<div class="shadow"></div>
+	</div>
+</div>

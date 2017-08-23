@@ -1,0 +1,40 @@
+<md-dialog class="" aria-label="User Profile">
+
+  <md-toolbar class="md-tall">
+
+    <div class="toolbar-overlay">
+      <img src="{{data.user._img_full}}" alt="" class="img-bg"/>
+      <div class="img-bg-overlay"></div>
+    </div>
+
+    <div class="md-toolbar-tools">
+      <div>
+        <h2 class="">{{data.user.userFirstName}} {{data.user.userLastName}}</h2>
+      </div>
+
+      <span flex></span>
+
+      <md-button class="md-icon-button" ng-click="dialogCancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+      <p class="">{{data.user.userEmail}}</p>
+    </div>
+    <div class="toolbar-content"
+         layout="row" layout-align="end center">
+      <span flex></span>
+      <md-button
+        >View full profile
+      </md-button>
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width dialog-custom">
+
+
+
+  </md-dialog-content>
+</md-dialog>

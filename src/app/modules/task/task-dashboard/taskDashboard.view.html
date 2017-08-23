@@ -1,0 +1,189 @@
+<view type="toolbarView" title="'Task Assignment'">
+  <!--sub-title="taskModel.displayStatus" -->
+  <toolbar
+    app-toolbar
+    title="taskTabCtrl.taskModel.title"
+    sub-title="taskTabCtrl.taskModel.getTaskCreatedFullPath()"
+    class="title-ellipsis">
+    <toolbar-options>
+      <toolbar-options>
+        <md-menu
+          md-position-mode="target-right target"
+          ng-show="taskTabCtrl.optionMenuItems[tab_curr].length > 0">
+          <md-button
+            ng-click="$mdOpenMenu()"
+            class="md-icon-button toolbar-button button-thin"
+            aria-label="Options">
+            <md-icon
+              md-font-icon="icon icon-more-vert"
+              class="toolbar-icon" md-menu-origin></md-icon>
+          </md-button>
+          <md-menu-content width="4">
+
+            <md-menu-item
+              ng-repeat="optionItem in taskTabCtrl.optionMenuItems[tab_curr]">
+              <md-button
+                ng-click="optionItem.action(optionItem.args); $mdCloseMenu()"
+                ng-disabled="optionItem.isDisabled"
+                ng-class="optionItem.btn_type"
+                aria-label="optionItem.name">
+                <div>
+                  <span ng-bind="optionItem.name"></span>
+                  <small
+                    class=""
+                    ng-show="optionItem.subText">(<i ng-bind="optionItem.subText"></i>)</small>
+                </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+        <md-progress-linear
+          ng-show="toolbarLoader.async_active"
+          md-mode="indeterminate"
+          class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+      </toolbar-options>
+    </toolbar-options>
+  </toolbar>
+  <layout
+    type="linearLayout"
+    orientation="vertical"
+    layout-height="match_parent">
+    <row
+      layout-gravity="top"
+      layout-height="4em">
+      <md-tabs
+        class="md-primary tabs"
+        md-selected="xtras.selectedTabIndex"
+        md-align-tabs="top">
+        <md-tab md-on-select="onTabSelect('TAB_INFO')" id="tabProfile">
+          <div>
+            <i class="icon icon-tab icon-info-outline"></i>
+            <span
+              ng-bind="::LANG.JOB.JOB_DASHBOARD_TABS.INFO"
+              class="tab-text"></span>
+          </div>
+        </md-tab>
+        <md-tab
+          md-on-select="onTabSelect('TAB_MEMBER_LIST')"
+          id="tabMemberList">
+          <div>
+            <i class="icon icon-tab icon-people"></i>
+            <span
+              ng-bind="::LANG.JOB.JOB_DASHBOARD_TABS.MEMBERLIST"
+              class="tab-text"></span>
+          </div>
+        </md-tab>
+        <md-tab md-on-select="onTabSelect('TAB_CHAT')" ng-disabled="isChatTabEnabled == true" id="tabTask">
+          <div>
+            <i class="icon icon-tab icon-forum"></i>
+            <span
+              ng-bind="::LANG.JOB.JOB_DASHBOARD_TABS.CHAT"
+              class="tab-text"></span>
+          </div>
+        </md-tab>
+        
+<!--         <md-tab md-on-select="onTabSelect('TAB_TALK')" id="tabTalk" ng-disabled="isChatTabEnabled == true" >
+          <div>
+            <i class="icon icon-tab icon-forum"></i>
+            <span class="tab-text">Talk</span>
+          </div>
+        </md-tab> -->
+
+        <md-tab md-on-select="onTabSelect('TAB_VAULT')" id="tabSkill">
+          <div>
+            <i class="icon icon-tab icon-drive-document"></i>
+            <span
+              ng-bind="::LANG.JOB.JOB_DASHBOARD_TABS.DATA"
+              class="tab-text"></span>
+          </div>
+        </md-tab>
+
+       <!--  <md-tab md-on-select="onTabSelect('TAB_AUDIT')" id="tabSkill">
+          <div>
+            <i class="icon icon-tab icon-drive-document"></i>
+            <span
+              ng-bind="::LANG.JOB.JOB_DASHBOARD_TABS.AUDIT"
+              class="tab-text"></span>
+          </div>
+        </md-tab> -->
+      </md-tabs>
+    </row>
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <ui-view name="taskDasboardTabContainer"></ui-view>
+    </row>
+
+<!--     <row
+      layout-height="8em"
+      layout-gravity="bottom"
+      mv-show="tab_curr=='TAB_CHAT' && !!taskTabCtrl.taskModel.chatRoomId"
+      ng-show="tab_curr=='TAB_CHAT' && !!taskTabCtrl.taskModel.chatRoomId">
+      <div class="chatListFooter CLF-textarea">
+        <form name="">
+          <div
+            class="chSubmitForm"
+            layout="row">
+            <div class="chMessageInputField chMessageTextAreaField" flex>
+              <textarea
+                ng-model="chatFormModel.newMessage"
+                ng-disabled="!ui.flags.isInARoom || ui.flags.isSendingMessage"
+                ng-keypress="onInputFieldKeyPress($event, newMessage)"
+                type="text"
+                placeholder="{{_connStatusMessage}}" class=""></textarea>
+            </div>
+            <md-button
+              ng-click="sendNewMessage(chatFormModel.newMessage)" ng-if="ui.flags.isInARoom"
+              class="md-icon-button chSubmitBtn"
+              ng-disabled="!ui.flags.isInARoom || ui.flags.sendMessage_inProgress || taskTabCtrl.taskModel.isTaskClosed()"
+              aria-label="Send Message" md-no-ink>
+              <md-icon md-font-icon="icon icon-send"></md-icon>
+              <span>Send</span>
+            </md-button>
+            <md-progress-circular ng-if="!ui.flags.isInARoom" md-diameter="24"
+                                  md-mode="indeterminate"></md-progress-circular>
+          </div>
+        </form>
+      </div>
+    </row> -->
+  </layout>
+</view>
+
+
+<script type="text/javascript">
+
+ $( document ).ready(function() {
+	 
+	 var widH = $(window).height();
+	 if(widH > 800){
+		 $(".chatListFooter.CLF-textarea").css("bottom", "100px");
+	 }else{
+		 $(".chatListFooter.CLF-textarea").css("bottom", "0px");
+	 }
+	  
+ });
+ 
+$(window).scroll(function () { 
+	
+	   if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
+	         $(".chatListFooter.CLF-textarea").css("bottom","100px");
+	   }
+	   else{
+	    $(".chatListFooter.CLF-textarea").css("bottom", "100px");
+	   }
+	   if($(window).scrollTop() < 50){
+		   
+		   var widH = $(window).height();
+			 if(widH < 800){
+		   		$(".chatListFooter.CLF-textarea").css("bottom", "0px");
+			 }else{
+				 $(".chatListFooter.CLF-textarea").css("bottom", "100px");
+			 }
+			 
+	   }else{
+		   $(".chatListFooter.CLF-textarea").css("bottom", "100px");
+	   }
+	   
+	});
+	 
+
+</script>
+

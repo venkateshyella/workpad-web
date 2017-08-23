@@ -1,0 +1,67 @@
+<div class="list full-width overflow-hide">
+
+  <div ng-show="pendingRatingJobsList.length==0" class="item item-backdrop text-center">
+    <div class="backdrop-filler-image">
+      <i class="icon icon-backdrop icon-briefcase-case-two"></i>
+    </div>
+    <p>{{LANG.JOB.JOB_LOADING_MSGS.NO_JOBS}}</p>
+  </div>
+
+  <div
+    ng-repeat="job in pendingRatingJobsList"
+    ng-class="{'border-top':!$first}"
+    class="item item-complex item-line-double">
+
+    <div class="item-content" ng-click="jobEditRatingAction($event, job)">
+      <div class="txt txt-line-pri no-push-bottom"
+           layout="row">
+        <h3 class="no-push-bottom"
+            flex>{{job.title}}</h3>
+
+        <!--<div class="color-light-2 text-ellipsis">-->
+          <!--<small>{{MU.getDisplayDateOffset(job.createTime)}}</small>-->
+        <!--</div>-->
+      </div>
+
+      <div layout="row" class="push-top pt-sm">
+        <p class="txt txt-line-sec text-ellipsis">
+          <span class="overflow-hide txt-pri text-wrap pre-formatted" >{{job.desc}}</span></p>
+      </div>
+
+      <div layout="column">
+        <p
+          ng-show="job.createdFullPath.length>0"
+          class="text-ellipsis push-bottom pb-sm">
+          <span ng-repeat="item in job.createdFullPath"
+                class="push-right pr-sm max-full-width">
+            <i ng-class="{'icon-group-work':item.type=='GROUP', 'icon-domain':item.type=='ORG'}"
+               class="icon"></i>
+            <small ng-bind="item.name" class="text-ellipsis"></small>
+          </span>
+        </p>
+
+        <div class="txt txt-line-sec text-ellipsis">
+          <p><span
+            ng-bind="job.displayStatus"
+            class="label no-push-left"
+            ng-class="{'label-balanced': job.isInProgress(),'label-accent':job.isStopped()}"
+            aria-hidden="false"></span>
+
+            <span
+              ng-bind="LANG.JOB.ROLES[ROLE_NAMES[role]]"
+              ng-repeat="role in job.roles"
+              class="label no-push-left"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="areMorePRatingsJobsAvailable()"
+       class="item" layout="row" layout-align="center center">
+    <md-button ng-click="pendingRatingJobsLoader.refresh()"
+               ng-disabled="pendingRatingJobsLoader.isActive()"
+               class="full-width txt-ignore-case" aria-label="Load More">
+      <span ng-hide="ui.isLoadingNext">{{LANG.JOB.JOB_LOADING_MSGS.LOAD_MORE}}</span>
+      <span ng-show="ui.isLoadingNext">{{LANG.JOB.JOB_LOADING_MSGS.LOADING}}</span>
+    </md-button>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+$stable-color: darken($stable, 60%);
+
+.letter-icon {
+  height: 100%;
+  width: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+
+  border: 0.12rem solid $stable-color;
+  border-radius: 50%;
+
+  div.iconLetters {
+    font-size: 1.2rem;
+    color: $stable-color;
+    span.icon-letter-1 {
+      text-transform: uppercase;
+    }
+    span.icon-letter-2 {
+      text-transform: lowercase;
+      margin-left: -0.3rem;
+      font-size: 90%;
+    }
+  }
+
+  &.li-solid {
+    background: lighten($stable-color, 10%);
+    span {
+      color: find-text-color($stable-color);
+    }
+  }
+}

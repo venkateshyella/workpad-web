@@ -1,0 +1,195 @@
+
+/**
+ * Lists
+ * --------------------------------------------------
+ */
+
+.list {
+  position: relative;
+  padding-top: $item-padding / 2;
+  //padding-bottom: $item-border-width;
+  padding-left: 0; // reset padding because ul and ol
+  //margin-bottom: 20px;
+
+  .txt {
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 1.3rem;
+  }
+  .icon.icon-cling-top {
+    max-height: $item-padding-top*2 + $item-icon-font-size;
+  }
+  .txt-large {
+    font-size: 1.2rem;
+  }
+  &.list-bg-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+  }
+
+}
+.list:last-child {
+  margin-bottom: 0px;
+  &.card{
+    margin-bottom:40px;
+  }
+}
+
+/**
+ * Single Line item
+ * --------------------------------------------------
+ */
+.item-line-single {
+  width: 100%;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  .icon {
+  }
+  &.item-avatar,
+  &.item-avatar-left,
+  &.item-avatar-right {
+    .txt {
+      line-height: $item-avatar-width;
+    }
+  }
+}
+
+
+/**
+ * Double Line item
+ * --------------------------------------------------
+ */
+
+$list-item-sec-lineheight: 1.4rem;
+
+.item-line-double {
+  .txt-line-pri {
+    font-size: $font-size-base*1.15;
+    line-height: 20px;
+    margin-bottom: 0.6*$unit;
+    &.text-wrap {
+      line-height: 1.6rem;
+    }
+  }
+  .txt-line-sec {
+    color: mix($font-color-base, #fff, 70%);
+    font-size: $font-size-base*1.05;
+    margin-bottom: $unit;
+    //line-height: 1.3rem;
+  }
+  .two-line-sec {
+    white-space: normal;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    line-height: $list-item-sec-lineheight;
+    max-height: $list-item-sec-lineheight * 2;
+    overflow: hidden;
+  }
+  .multi-line-sec {
+    white-space: normal;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    line-height: $list-item-sec-lineheight;
+  }
+  .icon.icon-cling-top {
+    max-height: $item-padding-top*2 + $item-icon-font-size;
+  }
+}
+
+
+
+
+/**
+ * List Header
+ * --------------------------------------------------
+ */
+
+.list-header {
+  margin-top: $list-header-margin-top;
+  padding: $list-header-padding;
+  background-color: $list-header-bg;
+  color: $list-header-color;
+  font-weight: bold;
+}
+
+// when its a card make sure it doesn't duplicate top and bottom borders
+.card.list .list-item {
+  padding-right: 1px;
+  padding-left: 1px;
+}
+
+
+/**
+ * Cards and Inset Lists
+ * --------------------------------------------------
+ * A card and list-inset are close to the same thing, except a card as a box shadow.
+ */
+
+.list-inset {
+  overflow: hidden;
+  margin: ($content-padding * 2) $content-padding;
+  border-radius: $card-border-radius;
+  background-color: $card-body-bg;
+}
+
+.padding {
+  .card, .list-inset {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.list-inset .item,
+.padding > .list .item
+{
+  &:first-child {
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
+
+    .item-content {
+      border-top-left-radius: $card-border-radius;
+      border-top-right-radius: $card-border-radius;
+    }
+  }
+  &:last-child {
+    border-bottom-right-radius: $card-border-radius;
+    border-bottom-left-radius: $card-border-radius;
+
+    .item-content {
+      border-bottom-right-radius: $card-border-radius;
+      border-bottom-left-radius: $card-border-radius;
+    }
+  }
+}
+
+.list-inset .item:last-child {
+  margin-bottom: $item-border-width * -1;
+}
+
+.list-inset .item,
+.padding > .list .item,
+.padding-horizontal > .list .item {
+  margin-right: 0;
+  margin-left: 0;
+
+  &.item-input input {
+    padding-right: 44px;
+  }
+}
+.padding-left > .list .item {
+  margin-left: 0;
+}
+.padding-right > .list .item {
+  margin-right: 0;
+}
+
+.aside-time {
+  max-width: 75px;
+  padding-left: 6px;
+}

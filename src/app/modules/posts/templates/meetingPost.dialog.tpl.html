@@ -1,0 +1,33 @@
+<md-dialog aria-label="Meeting details">
+  <md-toolbar class="toolbar-clear">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">Action</h2>
+        
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="$mdDialog.cancel();">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+ 
+  <md-dialog-content class="padding-top full-width">
+    <p ng-click="locals.action.viewMeetingsList();"> {{locals.post.notificationDescription}}</p>
+    <p class="color-light-2 text-right push-top">
+      <span>{{locals.post.createdDate_displayText}}</span>
+    </p>
+    
+  </md-dialog-content>
+  
+  
+  
+  <div class="md-actions" layout="row">
+    <md-button ng-click="$mdDialog.hide('true');">
+      <span>Join</span>
+    </md-button>
+    
+    <md-button ng-click="$mdDialog.hide('false');">
+      <span>Dismiss</span>
+    </md-button>
+    
+  </div>
+</md-dialog>

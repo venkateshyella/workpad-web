@@ -1,0 +1,18 @@
+<ul class="timeline timeline-post col-sm-12">
+<li>
+
+<div class="timeline-badge "><img ng-src="{{getFromUserIconUrl();}}"
+                           on-error-src="assets/images/profile-image-placeholder.png"
+                           alt="" class="img-circle img-responsive"/></div>
+                  <div class="timeline-panel">
+                    <div class="icon-name"> <span class="blue">{{MU.getDisplayAlphabet(postModel.notificationCategory)}}</span> </div>
+                    <div class="timeline-heading">
+                      <div class="timeline-title" style="padding-bottom: 24px;"> <a href="javascript:;">{{postModel.notificationDescription}} </a></div>
+                      <div class="timeline-title">
+                      <p ng-if="postModel.groupPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="postModel.groupPath"></context-path></a></p>
+                      <p ng-if="postModel.messageLineItems.length>0" ng-repeat="item in postModel.messageLineItems"><a href="javascript:;">{{item}}</a></p>
+                      </div>
+                      <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{MU.getDisplayDateTimeOffset(postModel.createDate)}}</small> </div>
+ </div>
+ </li>
+ </ul>

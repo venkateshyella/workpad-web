@@ -1,0 +1,96 @@
+<view type="toolbarView" title="'File List'">
+
+  <toolbar app-toolbar title="'File Upload Testbench'">
+    <toolbar-options>
+
+      <!--<md-menu md-position-mode="target-right target">-->
+        <!--<md-button ng-click="$mdOpenMenu()"-->
+                   <!--class="md-icon-button toolbar-button button-thin"-->
+                   <!--aria-label="Options">-->
+          <!--<md-icon md-font-icon="icon icon-more-vert"-->
+                   <!--class="toolbar-icon"-->
+                   <!--md-menu-origin></md-icon>-->
+        <!--</md-button>-->
+        <!--<md-menu-content width="4">-->
+          <!--<md-menu-item>-->
+            <!--<md-button ng-click="refresh({bypassCache:true}); $mdCloseMenu();">-->
+              <!--Refresh-->
+            <!--</md-button>-->
+          <!--</md-menu-item>-->
+
+        <!--</md-menu-content>-->
+      <!--</md-menu>-->
+
+      <md-progress-linear ng-show="toolbarLoader.async_active"
+                          md-mode="indeterminate"
+                          class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+
+      <md-list>
+
+
+        <md-list-item>
+
+          <div class="file-picker">
+            <md-button ng-disabled="true"
+                       class="">
+              <label for="file-input">Input type=[file]</label>
+            </md-button>
+            <input ng-model="data.inputFiles"
+                   input-file-model
+                   ng-change="onFileInputChange()"
+                   id="file-input" type="file">
+          </div>
+
+        </md-list-item>
+
+        <md-list-item>
+
+          <div class="">
+            <md-button ng-disabled="inProgress"
+                       ng-click="invokeFileChooser()"
+                       class="">
+              <span>Select file from file chooser.</span>
+            </md-button>
+          </div>
+
+        </md-list-item>
+
+
+        <md-list-item ng-repeat="file in data.files"
+                      class="md-2-line md-with-secondary md-no-proxy">
+          <md-icon md-font-icon="icon icon-drive-file"></md-icon>
+          <div class="md-list-item-text">
+            <h3>{{file.name}}</h3>
+            <p class="text-break-all">ContentUri: {{file.dataUrl}}</p>
+            <p class="color-light">{{file.size/1024}} Kb</p>
+            <p><i>{{error}}</i></p>
+            <md-progress-linear ng-show="inProgress"
+                                md-mode="determinate"
+              value="{{noti.percentage*100}}"></md-progress-linear>
+          </div>
+          <md-button ng-hide="uploadDone" ng-click="upload(file)"
+                     ng-disabled="inProgress"
+                     class="md-secondary-container align-top md-icon-button">
+            <md-icon md-font-icon="icon icon-call-made"
+                     aria-label="Preview file" class="md-hue-3"></md-icon>
+          </md-button>
+
+          <md-button ng-show="uploadDone"
+                     class="md-secondary-container align-top md-icon-button">
+            <md-icon md-font-icon="icon icon-check"
+                     aria-label="Preview file" class="md-hue-3"></md-icon>
+          </md-button>
+        </md-list-item>
+
+      </md-list>
+
+    </row>
+  </layout>
+
+</view>

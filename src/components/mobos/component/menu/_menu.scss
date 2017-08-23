@@ -1,0 +1,50 @@
+.popup-container {
+  &.popup-menu-container {
+    .popup-menu {
+      width: auto;
+      box-shadow: $whiteframe-shadow-z2
+    }
+  }
+}
+
+.popup {
+  &.state-rendering {
+    opacity: 0;
+  }
+  &.state-active {
+    opacity: 1;
+  }
+  &.popup-menu {
+    .popup-body {
+      padding: 8px 0px;
+      overflow: hidden;
+      .menu-item {
+        padding: 12px 20px 12px 16px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        border-width: 0px;
+        &.ng-click-active {
+          background: darken($stable, 5%);
+        }
+      }
+    }
+    &.popup-align-right {
+      text-align: left;
+      .menu-item {
+        padding-right: 16px;
+        padding-left: 20px;
+      }
+    }
+  }
+}
+
+toolbar {
+  .md-menu {
+    padding: 0;
+  }
+}
+
+.md-open-menu-container {
+  //top: 10px !important;
+}

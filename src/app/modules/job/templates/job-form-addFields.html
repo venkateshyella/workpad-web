@@ -1,0 +1,37 @@
+<md-dialog class="register-pop-up" aria-label="Add Fields">
+
+<md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2>Add Fields</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+    </div>
+
+  </md-toolbar>
+
+<form name="form.add_fields" class="full-height" novalidate>
+
+	<div flex="50" ng-repeat="item in fieldTypes">
+		<div>
+			<md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)"> {{item.fileldType }} </md-checkbox>
+		</div>
+		<div>
+			<input ng-if="item.fileldType == 'Radio'" class="form-control wd-50" type="number" min="1" ng-model="item.count"> 
+			<input ng-if="item.fileldType == 'Checkbox'" class="form-control wd-50" type="number" min="1" ng-model="item.count">
+		</div>
+	</div>
+
+            
+		<div class="md-actions full-width" layout="row">
+			<span flex></span>
+			<md-button ng-click="cancel()"> {{LANG.BUTTON.CANCEL}} </md-button>
+			<md-button type="submit" ng-disabled="!form.add_fields.$valid"
+				ng-click="submit()" class="md-primary"> ADD </md-button>
+		</div>
+	
+</form>

@@ -1,0 +1,95 @@
+<div class="card list">
+  <div class="item item-sub-header">Phone</div>
+
+  <label
+    ng-repeat="telephone in user.$_telephoneNumberList"
+    class="item item-input item-icon-left item-button-right">
+    <i class="icon icon-call"></i>
+    <input name="{{'tel-'+$index}}"
+           ng-model="telephone.telNum" ng-trim
+           ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+           ng-change="onUserModelFormChange(form.userForm)"
+           ng-disabled="form.isDisabled || true"
+           maxlength="20" max="20" ng-maxlength="20"
+           ng-pattern="/^\+?[0-9]+$/"
+           type="text"
+           placeholder="Phone number"
+           focus-me="focusTriggerElem">
+
+    <button ng-click="delPhoneNumber($index)"
+            class="button button-stable">
+      <i class="icon icon-close"></i>
+    </button>
+
+    <div ng-messages="form.userForm['tel-'+$index].$error">
+      <div ng-message="pattern" class="ng-message" style="color: red">Phone number
+        should be numeric and can have '+' sign at the beginning.
+      </div>
+      <div ng-message="maxlength" class="ng-message" style="color: red">Please limit
+        the phone numbers to 20 digits
+      </div>
+    </div>
+  </label>
+
+  <!--<div class="item">-->
+  <!--<md-button ng-click="addNewPhoneNumber()"-->
+  <!--class="md-raised">-->
+  <!--Add Phone Number-->
+  <!--<md-icon md-font-icon="icon icon-add"></md-icon>-->
+  <!--</md-button>-->
+  <!--</div>-->
+</div>
+
+<div class="card list">
+  <div class="item item-sub-header">Email</div>
+
+  <!--<div class="item item-complex">-->
+  <!--<div class="item-content item-icon-left">-->
+  <!--<i class="icon icon-email icon-cling-top"></i>-->
+
+  <!--<h2 class="txt txt-line-pri text-wrap">{{user.userEntity.userEmail}}</h2>-->
+
+  <!--&lt;!&ndash;   <div class="txt txt-line-sec txt-wrap">Primary email</div> &ndash;&gt;-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <label
+    ng-repeat="emailObj in user.$_otherEmailList"
+    class="item item-input item-icon-left item-button-right">
+    <i class="icon icon-email"></i>
+    <input name="{{'email-'+$index}}"
+           ng-model="emailObj.emailId"
+           ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+           ng-change="onUserModelFormChange(form.userForm)"
+           ng-disabled="form.isDisabled || true"
+           type="email" rh-form-email
+           ng-maxlength="70" minlength="7"
+           min="7" maxlength="70" max="20"
+           placeholder="Email"
+           focus-me="focusTriggerElem">
+
+    <button ng-click="delNewEmail($index)"
+            class="button button-stable">
+      <i class="icon icon-close"></i>
+    </button>
+
+    <div ng-messages="form.userForm['email-'+$index].$error">
+      <div ng-message="email" class="ng-message">Please provide a
+        valid email address.
+      </div>
+      <div ng-message="maxlength" class="ng-message">Please limit the email to 70
+        characters.
+      </div>
+    </div>
+  </label>
+
+
+  <!--<div class="item">-->
+  <!--<md-button ng-click="addNewEmail()"-->
+  <!--class="md-raised">-->
+  <!--Add Email-->
+  <!--<md-icon md-font-icon="icon icon-add"></md-icon>-->
+  <!--</md-button>-->
+  <!--</div>-->
+
+</div>

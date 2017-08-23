@@ -1,0 +1,146 @@
+$loader-width: 5rem;
+
+$loading-bg: $light;
+$loading-color: mix($loading-bg, find-text-color($loading-bg), 40%);
+$loading-spinner-color: darken($loading-color, 10%);
+
+$loading-dark-bg: $dark;
+$loading-dark-color: $light;
+$loading-spinner-dark-color: darken($loading-dark-color, 10%);
+
+[block-ui-container] {
+  .block-ui-overlay {
+    background: $dark;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    &.light {
+      background: $light;
+      opacity: 0.2;
+    }
+  }
+}
+
+.block-ui-container,
+.appProgressBlocker {
+  z-index: 9999999;
+  .block-ui-container {
+    position: relative;
+    z-index: 1000;
+  }
+
+  .block-ui-message-container {
+    text-align: center;
+    position: static;
+    min-width: 200px;
+    min-height: 5.4rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background-color: $loading-bg;
+    color: #666666;
+    //padding: 1.2rem;
+    border-radius: 4px;
+    font-size: 1.05rem;
+    width: 85%;
+    mx-width: 500px;
+    height: auto;
+    max-height: 80%;
+    overflow: scroll;
+    z-index: 9999999;
+
+    @media screen and (min-width: 500px) {
+      width: 75%;
+    }
+
+    &.dark {
+      background-color: $loading-dark-bg;
+      color: $loading-dark-color;
+
+      .block-ui-message {
+        background-color: $loading-dark-bg;
+        color: $loading-dark-color;
+      }
+
+      md-progress-circular.block-ui-spinner .md-inner .md-right .md-half-circle {
+        border-right-color: $loading-spinner-dark-color;
+      }
+
+      md-progress-circular.block-ui-spinner .md-inner .md-left .md-half-circle, md-progress-circular.block-ui-spinner .md-inner .md-right .md-half-circle {
+        border-top-color: $loading-spinner-dark-color;
+      }
+      md-progress-circular.block-ui-spinner .md-inner .md-gap {
+        border-top-color: $loading-spinner-dark-color;
+        border-bottom-color: $loading-spinner-dark-color;
+      }
+      md-progress-circular.block-ui-spinner .md-inner .md-left .md-half-circle {
+        border-left-color: $loading-spinner-dark-color;
+      }
+
+    }
+  }
+
+  .block-ui {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  }
+
+  .block-ui-message {
+    text-align: left;
+    position: relative;
+    background-color: $loading-bg;
+    color: #666666;
+    font-weight: normal;
+    padding-bottom: 0px;
+    font-size: 17px;
+
+    .message-txt {
+      font-size: 1.07rem;
+      margin: 5px 0 0;
+      max-height: 350px;
+      overflow: scroll;
+    }
+
+    &.with-loader-left {
+      padding-left: $loader-width;
+    }
+
+    .loader-left {
+      position: absolute;
+      left: 4*$unit;
+      top: 4*$unit;
+      .loader-icon {
+        font-size: 2.8rem;
+      }
+    }
+
+    md-progress-circular.block-ui-spinner .md-inner .md-right .md-half-circle {
+      border-right-color: $loading-spinner-color;
+    }
+
+    md-progress-circular.block-ui-spinner .md-inner .md-left .md-half-circle, md-progress-circular.block-ui-spinner .md-inner .md-right .md-half-circle {
+      border-top-color: $loading-spinner-color;
+    }
+    md-progress-circular.block-ui-spinner .md-inner .md-gap {
+      border-top-color: $loading-spinner-color;
+      border-bottom-color: $loading-spinner-color;
+    }
+    md-progress-circular.block-ui-spinner .md-inner .md-left .md-half-circle {
+      border-left-color: $loading-spinner-color;
+    }
+  }
+
+  .block-ui-action {
+    background-color: inherit;
+    padding: 10px 0px;
+    .button {
+      font-size: 1.1rem;
+      line-height: 2.4rem;
+    }
+  }
+}

@@ -1,0 +1,134 @@
+<md-dialog class="dialog-full-screen" aria-label="File Details"
+  layout="column">
+
+  <md-toolbar class="md-tall">
+    <div class="md-toolbar-tools">
+      <md-icon md-font-icon="icon icon-drive-file push-right"></md-icon>
+      <div class="toolbar-title">
+        <h2>{{fileDisplayName || 'File Name'}}</h2>
+
+        <p class="line-clamp-2 toolbar-subtitle">
+          Modified: {{display_updatedAt}}</p>
+      </div>
+      <span flex></span>
+      <!--<md-button ng-click="cancel()"-->
+      <!--class="md-icon-button"-->
+      <!--aria-label="Close">-->
+      <!--<md-icon md-font-icon="icon icon-close"-->
+      <!--class="toolbar-icon"></md-icon>-->
+      <!--</md-button>-->
+    </div>
+
+    <div class="toolbar-content">
+      <div class="text-ellipsis">
+        <small>
+          <!--<md-icon md-font-icon="icon icon-domain icon-2sx"></md-icon>-->
+          <span class="">Location: </span>
+          <span class="push-right">{{fileContextDisplayName}}</span>
+        </small>
+      </div>
+
+      <div class="divider"></div>
+
+      <!--<div class="button-bar"-->
+           <!--flex layout="row">-->
+        <!--<span flex></span>-->
+        <!--<md-button class="no-push-left no-push-right md-raised md-primary"-->
+                   <!--aria-label="Delete File">-->
+          <!--<md-icon md-font-icon="icon icon-delete"></md-icon>-->
+          <!--Delete File-->
+        <!--</md-button>-->
+
+      <!--</div>-->
+
+      <div class=""
+           flex layout="row">
+        <small>
+          <md-checkbox
+            ng-model="doAllMembersHaveDownloadAccess"
+            aria-label="Allow Download access to all"
+            ng-true-value="true"
+            ng-false-value="false"
+            ng-change="toggleAllDownloadAccess()"
+            class="no-push-left no-push-top">
+            Visible
+          </md-checkbox>
+        </small>
+        <span flex></span>
+        <small class="push-top pt-sm">
+          Delete
+        </small>
+      </div>
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width dialog-custom">
+    <md-content>
+      <md-list class="no-padding-top">
+
+        <md-list-item ng-if="!isLoading_userPermissions && userPermissions.length==0">
+          <p class="text-center">No User permissions found.</p>
+        </md-list-item>
+
+        <md-list-item ng-if="isLoading_userPermissions && userPermissions.length==0">
+          <p class="text-center">Loading permissions...</p>
+        </md-list-item>
+
+        <md-list-item ng-repeat="userPermission in userPermissions">
+          <md-checkbox ng-model="userPermission.canDownload"
+                       ng-disabled="isUpdating_userPermissions"
+                       ng-change="onPermissionsChange('canDownload', userPermission)"></md-checkbox>
+          <p>{{userPermission.user.userFirstName}} {{userPermission.user.userLastName}}</p>
+
+          <md-icon
+            ng-click="!isUpdating_userPermissions && onPermissionsChange('canDelete', userPermission)"
+            ng-class="{'md-primary icon-check-box' : userPermission.canDelete, 'icon-check-box-blank':!userPermission.canDelete}"
+            md-font-icon="icon {{userPermission.canDelete ? 'icon-check-box': 'icon-check-box-blank'}}"
+            aria-label="Toggle delete permission"
+            class="md-secondary"></md-icon>
+        </md-list-item>
+
+        <md-list-item ng-show="nextResultsSetCount>0">
+          <md-button ng-disabled="isUpdating_userPermissions || isLoading_userPermissions"
+                     ng-click="refresh()"
+                     class="md-raised txt-ignore-case"
+                     flex
+            >
+            <span ng-show="isLoading_userPermissions">Loading permissions...</span>
+            <span ng-hide="isLoading_userPermissions"
+              >Load next {{nextResultsSetCount}} of {{remaining_results}} user permissions</span>
+          </md-button>
+        </md-list-item>
+
+      </md-list>
+    </md-content>
+  </md-dialog-content>
+
+  <span class="dialog-filler" flex></span>
+
+  <div class="md-actions border-top full-width" layout="column">
+    <!--<div flex class="full-width" layout="row">-->
+      <!--<md-checkbox ng-disabled="isUpdating_userPermissions"-->
+                   <!--ng-model="toSendNotification" aria-label="Notify members">-->
+        <!--Notify {{userPermissions.length}} users.-->
+      <!--</md-checkbox>-->
+    <!--</div>-->
+
+    <div class="full-width" flex layout="row">
+      <span flex></span>
+
+      <md-button ng-disabled="isUpdating_userPermissions"
+                 ng-hide="forcePermissionUpdate"
+                 ng-click="cancel()">
+        {{isPermissionsDirty ? 'Cancel' : 'Done'}}
+      </md-button>
+      <md-button ng-disabled="!forcePermissionUpdate && (isUpdating_userPermissions || !isPermissionsDirty)"
+                 ng-click="update(userPermissions)"
+                 class="md-primary">
+        <span>Update</span>
+      </md-button>
+    </div>
+  </div>
+
+</md-dialog>

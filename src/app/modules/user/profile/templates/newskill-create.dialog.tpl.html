@@ -1,0 +1,51 @@
+<md-dialog class="" aria-label="Create New Skill">
+<form name="form.create_newskill" novalidate>
+	<md-toolbar class="">
+	<div class="md-toolbar-tools">
+		<h2>Add New Skill</h2>
+		<span flex></span>
+		<md-button class="md-icon-button" ng-click="cancel()"> <md-icon
+			md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon> </md-button>
+	</div>
+	<div class="toolbar-content"></div>
+	</md-toolbar>
+	<md-dialog-content class="full-width dialog-custom">
+	<div class="dialog-content-padding-sides push-top">
+		<div class="item item-input">
+		 <label>Add New Skill</label>
+			<input name="newSkillName"
+				ng-disabled="form.isDisabled" ng-model="formModel.create_newskill.newSkillName" ng-trim
+				ng-maxlength="50" type="text" placeholder="Skill Name" />
+			<p style="color:red" class="text-wrap" ng-show="form.create_newskill.newSkillName.$error.maxlength">Please limit the skill name to 50 characters.</p>
+		</div>
+		
+		<div class="item item-input">
+			 <label>Enter the Description</label>
+			<md-input-container flex md-no-float>
+				<textarea style="resize:none;"
+					name="newSkillDesc" ng-model="formModel.create_newskill.newSkillDesc"
+					ng-disabled="form.isDisabled" placeholder="Description" md-maxlength="150"
+					id="newSkillDesc" rows="2">
+				</textarea>
+				<div ng-messages="form.create_newskill.newSkillDesc.$error">
+              		<div ng-message="md-maxlength" class="ng-message text-wrap" style="color:red">Please limit the skill description to 150 characters.</div>
+            	</div>
+			</md-input-container>
+		</div>
+		
+		<!-- <div class="item">
+			<md-select name="newSkillRating" placeholder="Please Skill Rating"
+				ng-model="newSkillRating"> <md-option value="1">1</md-option>
+			<md-option value="2">2</md-option> <md-option value="3">3</md-option>
+			<md-option value="4">4</md-option> <md-option value="5">5</md-option>
+			</md-select>
+		</div> -->
+	</div>
+	</md-dialog-content>
+	<div class="md-actions full-width" layout="row">
+		<span flex></span>
+		<md-button type="submit" ng-disabled="!form.create_newskill.$valid"
+			ng-click="submit()" class="md-primary">Create </md-button>
+	</div>
+</form>
+</md-dialog>

@@ -1,0 +1,92 @@
+<view type="toolbarView" screen-type="device">
+  <toolbar ng-hide="form.group_edit.$dirty" app-toolbar
+           title="data.group.groupName || 'Edit Group'"
+           sub-title="'Edit'">
+    <toolbar-options>
+      <div class="menu-option-group"></div>
+    </toolbar-options>
+  </toolbar>
+
+  </toolbar>
+  <toolbar ng-show="form.group_edit.$dirty" view-toolbar title="Edit">
+    <toolbar-options class="full-width">
+
+      <div class="menu-option-group">
+
+        <div ng-click="initGroupEditFormModel()"
+             ng-disabled="formActivity == '_SUBMITTING'"
+             class="menu-option-item button">
+          <span>Discard</span>
+          <i class="icon icon-close"></i>
+        </div>
+
+        <div ng-click="submit()"
+             ng-disabled="formActivity == '_SUBMITTING' || !form.group_edit.$valid"
+             class="menu-option-item button icon-left icon-floppy"
+          >Save
+        </div>
+
+      </div>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <form name="form.group_edit" novalidate>
+
+        <!--<div class="card list">-->
+
+        <!--<div class="item item-thumbnail-left">-->
+        <!--<img class="img corner-round" ng-src="{{formModel.group_edit._img_icon}}"-->
+        <!--on-error-src="assets/images/group-icon-placeholder.png"/>-->
+
+        <!--<div class="txt-sub-header">Group Icon</div>-->
+        <!--<div ng-click="editGroupImage()"-->
+        <!--ng-disabled="formActivity == '_SUBMITTING'"-->
+        <!--class="button button-small icon-left icon-camera-alt button-stable">Edit-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <div class="card list">
+          <div class="item">
+            <md-input-container>
+              <label>Room Name</label>
+              <input name="orgName"
+                     required
+                     ng-disabled="formActivity == '_SUBMITTING'"
+                     ng-maxlength="50"
+                     ng-model="formModel.group_edit.groupName"
+                     type="text">
+
+              <div ng-messages="form.group_edit.orgName.$error">
+                <div ng-message="required" class="ng-message">Please provide a name for your Room.</div>
+                <div ng-message="maxlength" class="ng-message">Please limit the name to 50 characters.</div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <div class="item">
+            <md-input-container flex>
+              <label>Description</label>
+              <textarea name="desc" class='autoExpand'
+                        ng-model="formModel.group_edit.desc"
+                        ng-disabled="formActivity == '_SUBMITTING'"
+                        columns="1" md-maxlength="150"></textarea>
+
+              <div ng-messages="form.group_edit.desc.$error">
+                <div ng-message="md-maxlength" class="ng-message">Please limit the description to 150 characters.</div>
+              </div>
+            </md-input-container>
+          </div>
+
+        </div>
+
+      </form>
+
+    </row>
+  </layout>
+</view>

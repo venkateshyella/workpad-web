@@ -1,0 +1,21 @@
+<div class="popup popup-progress">
+  <!--<div class="popup-head" ng-if="dialog.title">-->
+  <!--</div>-->
+  <div class="popup-body">
+    <div ng-if="dialog.content" class="dialog-content" ng-bind="dialog.content"></div>
+    <div ng-if="dialog.contentHTML" class="dialog-content" ng-bind-html="dialog.contentHTML"></div>
+  </div>
+  <div class="popup-buttons clearfix" ng-show="readyToDismiss && dialog.buttons.length">
+    <div class="popup-buttons-container">
+
+      <div ng-click="hide()"
+           class="button button-clear"
+           ng-class="dialog.okType || 'button-default'"
+           ng-bind="dialog.okText">
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

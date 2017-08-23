@@ -1,0 +1,119 @@
+<md-dialog class="register-pop-up" aria-label="Add Skill"
+           layout="column" layout-align="space-between center">
+  <md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>Add Skill</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close"
+                 aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="full-width"  layout="column">
+    <div class="item" flex ng-show="!iscreateAndAddNewSkill">
+      <!--<div class="inset">-->
+      <!--<p class="txt-pri text-wrap ng-binding line-clamp-3 overflow-hide" ng-show="!isDisabled"></p>-->
+      <!--</div>-->
+      <div layout="row">
+        <!--addSkill(item.name,'',''); -->
+        <md-autocomplete auto-input-focus flex name="newSkillName"
+                         ng-disabled="form.isDisabled"
+                         md-no-cache
+                         md-delay="300"
+                         md-selected-item="newSkillName"
+                         md-search-text-change="searchTextChange(newSkillName, searchText)"
+                         md-selected-item-change="addSkill(item.name,'','');selectedItemChange(item)"
+                         md-search-text="searchText" md-items="item in querySearch(searchText)"
+                         md-item-text="item.name" md-min-length="2" placeholder="Skill Name">
+          <md-item-template>
+            <span md-highlight-text="searchText" md-highlight-flags="^i" class="item-title">{{item.name}}</span>
+          </md-item-template>
+          <md-not-found>
+            <div ng-click class="item-title">"{{searchStatusText}}" Skill was not found. Please create a new one by
+              clicking on the Create button.
+            </div>
+          </md-not-found>
+        </md-autocomplete>
+
+        <md-button ng-disabled="isDisabled"
+                   ng-click="createAddSkill(searchText)"
+                   class="md-primary md-raised create-button ">Create
+        </md-button>
+      </div>
+    </div>
+    <!--  <div ng-repeat="skill in user.skills" class="item item-complex item-line-double item-action-right item-icon-left">
+         <i class="icon icon-tools icon-cling-top"></i>
+         <div class="item-content">
+             <div class="txt text-wrap">{{skill.expertise}}</div>
+             <p class="text-wrap">{{skill.description}}</p>
+         </div>
+         <div class="item-action item-action-secondary" ng-click="form.isDisabled || confirmAndDeleteSkill($index)" ng-disabled="form.isDisabled">
+             <i class="icon icon-close"></i>
+         </div>
+     </div> -->
+
+    <div ng-show="iscreateAndAddNewSkill">
+      <form name="form.create_newskill" novalidate>
+        <div class="dialog-content-padding-sides push-top">
+          <div class="item item-input">
+            <label>Add New Skill</label>
+            <md-input-container flex md-no-float>
+              <textarea
+                style="resize:none;"
+                name="newSkillName"
+                ng-model="createSkillData.newSkillName"
+                placeholder="Name"
+                md-maxlength="50" required id="newSkillName" rows="1">
+                                    </textarea>
+              <div ng-messages="form.create_newskill.newSkillName.$error">
+                <div ng-message="md-maxlength" class="ng-message text-wrap" style="color:red">Please limit the skill
+                  Name to 50 characters.
+                </div>
+                <div ng-message="required" class="ng-message text-wrap" style="color:red">Please enter a skill.</div>
+              </div>
+            </md-input-container>
+          </div>
+          <div class="item item-input">
+            <label>Enter the Description</label>
+            <md-input-container flex md-no-float>
+              <textarea
+                style="resize:none;" name="newSkillDesc"
+                ng-model="createSkillData.newSkillDesc"
+                placeholder="Description"
+                md-maxlength="150" id="newSkillDesc" rows="2">
+                                    </textarea>
+              <div ng-messages="form.create_newskill.newSkillDesc.$error">
+                <div
+                  ng-message="md-maxlength"
+                  class="ng-message text-wrap" style="color:red">Please limit the skill
+                  description to 150 characters.
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+        </div>
+        <div class="md-actions full-width" layout="row">
+          <span flex></span>
+        </div>
+      </form>
+    </div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               aria-label="Cancel">
+      Cancel
+    </md-button>
+    <md-button type="submit" ng-show="!iscreateAndAddNewSkill" ng-click="submit()" ng-disabled="isAddSkillDisabled"
+               class="md-primary">Add Skill
+    </md-button>
+    <md-button type="submit" ng-show="iscreateAndAddNewSkill"
+               ng-click="createAndAddSkillsubmit()"
+               ng-disabled="!form.create_newskill.$valid"
+               class="md-primary" aria-label="Add Skill">Add New Skill
+    </md-button>
+  </div>
+</md-dialog>

@@ -1,0 +1,39 @@
+<div class="list">
+  <div ng-show="OrgGroupdata.orgGroups && OrgGroupdata.orgGroups.length==0" class="item item-backdrop text-center">
+    <div class="backdrop-filler-image">
+      <i class="icon icon-backdrop icon-group-work"></i>
+    </div>
+    <p>{{LANG.GROUP.LOADING_MSG.NO_GROUPS_FOUND}}</p>
+  </div>
+  <div class="item item-text-wrap item-avatar-left" ng-repeat="group in OrgGroupdata.orgGroups"
+       ng-click="showGroupOptions(group, $event)">
+    <img ng-src="{{group._img_icon}}" on-error-src="assets/images/group-icon-placeholder.png"
+         class="img fit item-image with-padding corner-round">
+    <h2 class="txt txt-line-pri push-top  text-wrap">
+      {{group.groupName}}
+    </h2>
+    <div layout="row" class="push-top pt-sm">
+      <p class="txt txt-line-sec text-ellipsis">
+        <span ng-show="LANG.GROUP.ROLES[group._roleName]"
+              class="label no-push-left">
+          <small ng-bind="LANG.GROUP.ROLES[group._roleName]"></small></span>
+        <small class="inline-block">
+          <span ng-bind="::LANG.ORGANISATION.LABEL.PREFIX_CREATED_DATE"></span>
+          <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(group.createTime)"></span></small>
+      </p>
+    </div>
+  </div>
+  <!-- <div ng-show="ui.isNextPageAvailable" layout="row" layout-align="center center" class="item">
+          <md-button ng-click="loadNextPage()" ng-disabled="!ui.loadingNext" class="full-width txt-ignore-case" aria-label="Load next page">
+              <span ng-show="ui.loadingNext">Load more</span>
+              <span ng-hide="ui.loadingNext">Loading ...</span>
+          </md-button>
+      </div> -->
+  <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+    <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+            aria-label="Load More">
+      <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+      <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+    </button>
+  </div>
+</div>

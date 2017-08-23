@@ -1,0 +1,52 @@
+<div ng-class="state.options.overlayClass || 'light'" class="block-ui-overlay"></div>
+
+<div class="full-width full-height appProgressBlocker"
+     aria-live="assertive"
+     aria-atomic="true"
+     layout="column" layout-align="center center">
+  <div ng-class="state.options.overlayClass=='light' ? 'dark' : 'light'"
+       class="block-ui-message-container" layout="row" layout-align="center center">
+    <div class="block-ui-message with-loader-left full-width"
+         ng-class="$_blockUiMessageClass">
+
+      <div class="">
+        <h4 ng-bind="state.message"
+            class="message-txt primary"></h4>
+        <div class="line-clamp-2 subtext">{{state.options.subText}}</div>
+      </div>
+      <div class="loader-left">
+        <div ng-switch="state.options.status">
+
+          <div ng-switch-when="isLoading">
+            <md-progress-circular
+              class="md-primary md-hue-3"
+              md-mode="indeterminate"
+              md-diameter="32"></md-progress-circular>
+          </div>
+
+          <div ng-switch-when="isSuccess">
+            <i class="icon icon-check loader-icon"></i>
+          </div>
+
+          <div ng-switch-when="isError">
+            <i class="icon icon-close loader-icon"></i>
+          </div>
+
+        </div>
+      </div>
+
+      <div ng-if="state.options.action" class="block-ui-action clearfix push-top">
+        <div ng-click="$_stop()"
+             class="button button-stable pull-right">{{state.options.action || OK}}
+        </div>
+      </div>
+
+    </div>
+
+    <!--<div ng-if="state.options.action" class="block-ui-action clearfix">-->
+    <!--<div ng-click="$_stop()"-->
+    <!--class="button button-stable pull-right">{{state.options.action || OK}}</div>-->
+    <!--</div>-->
+
+  </div>
+</div>

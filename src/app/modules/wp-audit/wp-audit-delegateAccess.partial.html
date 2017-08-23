@@ -1,0 +1,96 @@
+<md-dialog class="register-pop-up" aria-label="">
+   <md-toolbar >
+      <div class="md-toolbar-tools">
+         <h2>{{flagExpanded ? "Members" : "Owned WorkSpaces"}}</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="close()">
+            <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+      </div>
+   </md-toolbar>
+   <md-dialog-content  class="full-width" >
+    <div ng-if="OrgData.orgs.length==0" class="item item-backdrop text-center">
+            <div ng-switch="_activity">
+               <div ng-switch-when="_idle">
+                  <div ng-bind="OrgData.orgs.length>0 ? '' : 'No WorkSpaces available'" class="text-center"></div>
+               </div>
+               <div class="list" layout="row" layout-align="center center" ng-show="OrgData.orgs.length == 0">
+                  <div class="item item-backdrop text-center">
+                     <div class="backdrop-filler-image">
+                        <i class="icon icon-backdrop icon-domain"></i>
+                        <h4 class="color-light-2">No WorkSpaces. Please create an WorkSpace.</h4>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div ng-show="!flagExpanded"  ng-if="OrgData.orgs.length>0" class="list full-width overflow-hide">
+            <div ng-repeat="org in OrgData.orgs" class="card">
+               <div ng-click= "getOrgMembersList(org.id,org.adminId)" class="item item-line-double">
+                  <h2 class="txt txt-line-pri">{{org.orgName}}</h2>
+               </div>
+            </div>
+         </div>
+<div ng-show="flagExpanded">
+	
+	 <div class="list no-padding" flex>
+      <div ng-show="Workspace.members.length > 1"
+        class="item item-line-single item-icon-right push-bottom"
+        ng-click="multiSelectList.toggleSelectionAll()"
+        flex>
+        <h2 class="txt txt-line-pri text-wrap" ng-bind="selectAllText || 'Select all'">
+        </h2>
+
+        <i class="icon icon-cling-top"
+           ng-class="multiSelectList.isAllSelected ? 'icon-check-box': 'icon-check-box-blank'"></i>
+      </div>
+      <div class="list" layout="row" layout-align="center center" ng-show="Workspace.members.length == 1">
+                  <div class="item item-backdrop text-center">
+                     <div class="backdrop-filler-image">
+                        <i class="icon icon-backdrop icon-user"></i>
+                        <h4 class="color-light-2">No WorkSpaces Members found.</h4>
+                     </div>
+                  </div>
+               </div>
+      <div ng-repeat="member in multiSelectList.list" ng-if="member.id != adminId"
+        class="item item-line-single item-icon-left item-icon-right"
+        ng-class="{'bg-light-primary':member.isSelected}"
+        ng-click="multiSelectList.toggleItemSelection(member)"
+        flex>
+        <i class="icon icon icon-user"></i>
+
+        <h2  class="txt txt-line-pri text-wrap">{{member.userFirstName}}
+			{{member.userLastName}}</h2>
+
+        <i class="icon icon-cling-top" 
+           ng-class="member.isSelected ? 'icon-check-box' : 'icon-check-box-blank'"></i>
+      </div>
+    </div>
+</div>
+<div ng-show="isNextPageAvailable && !flagExpanded" class="item" layout="row" layout-align="center center">
+            <button ng-click="fetchMoreOrgs()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+               aria-label="Load More">
+            <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+            <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+            </button>
+         </div>
+</md-dialog-content>
+<div class="md-actions full-width" layout="row">
+	<span flex></span>
+	
+	<div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               aria-label="Cancel Workflow">
+      <span ng-bind="config.cancelButtonText"></span>
+    </md-button>
+    <md-button ng-show="flagExpanded" ng-click="action()"
+               ng-disabled=""
+               aria-label="Execute Action">
+      <span ng-bind="config.actionButtonText"></span>
+    </md-button>
+  </div>
+	
+	
+</div>
+
+</md-dialog>

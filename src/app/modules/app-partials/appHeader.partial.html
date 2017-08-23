@@ -1,0 +1,89 @@
+ <nav class="navbar navbar-findcond navbar-fixed-top">
+    <div class="sidebar-toggle-box">
+      <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+    </div>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button id="sideMenuHam" type="button" class="navbar-toggle collapsed"> 
+	        <span class="sr-only">Toggle navigation</span> 
+	        <span class="icon-bar"></span> 
+	        <span class="icon-bar"></span> 
+	        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="assets/images/workpad-logo.png"/></a> </div>
+        
+        <div class="blink_me header-call-redirect" ng-if="isMeetingInProgress" ng-click="toRedirectMeeting()">Click to return to Call </div>
+        
+        <div class="header-call-redirect meeting-prompt" ng-show="showMeetingPrompt && isMeetingInProgress"> Meeting end time extended to 
+                <span ng-bind="MU.getDisplayDateTimeOffset(meetingInfo.endTime)"></span>               
+            </div>
+        
+        <div class="header-call-redirect meeting-prompt" ng-show="meetingInfo.isTimerRunning && isMeetingInProgress">
+           <!--  <div ng-show="showMeetingPrompt && isMeetingInProgress"> Meeting end time extended to 
+                <span class="" ng-bind="MU.getDisplayDateTimeOffset(meetingInfo.endTime)"></span>               
+            </div>  -->
+            
+            <div id="alert-wrapper"  ng-show="meetingInfo.isTimerRunning">
+                        Meeting ends in <span id="countdown"></span> mins.<br/> 
+                        <span ng-if="!meetingInfo.isEndTimeIntersects">Click "Ok" to extend meeting by 15 mins.</span>
+                       
+                        <md-button ng-if="!meetingInfo.isEndTimeIntersects" class="md-primary meeting-prompt-btn" class="md-primary" 
+                        ng-click="updateMeetingEndTime(meetingInfo.meetingId, meetingInfo.endTime);">Ok </md-button>
+                        
+            </div>
+        </div>
+        
+        
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="nav nav-pdg-top navbar-nav navbar-right">
+          <li class="dropdown" ng-class="{'open' : showHeaderDropdown}"> <a data-toggle="dropdown" id="dropdown_menu" ng-click="showHeaderDropdown = !showHeaderDropdown" class="dropdown-toggle" href="#">
+           <img height="36" ng-src="{{sharedData.user._img_icon}}"
+                           on-error-src="assets/images/profile-image-placeholder.png"
+                           alt="" class="bdr-round">
+           
+            <span class="username" ng-bind="userDisplayName">
+                    </span> <b class="caret"></b> </a>
+            <ul class="dropdown-menu extended logout">
+              <div class="log-arrow-up"></div>
+            <li><a href="javascript:void(0);" ng-class="{'active': sharedData.sideMenu.currItem=='account'}"
+                    ng-click="resetTransitionTo('root.app.account', {id: session.userId});action.enableDashboardItem('account'); 
+                              showHeaderDropdown = !showHeaderDropdown">
+                  <i class="icon icon-tools"></i>
+                  <div ng-bind="LANG.APP_NAV.LIST.ACCOUNT"></div>
+                  </a>
+              </li>
+               
+              <li ng-controller="SideMenuController"><a href="javascript:void(0);" ng-click="action.logout()">
+                  <i class="fa fa-lock"></i> 
+                  <div ng-bind="LANG.APP_NAV.LIST.LOGOUT"></div>
+                  </a>
+              </li>
+              
+              
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+  
+  <script type="text/javascript">
+  
+  $('body').click(function(e){
+	  if(e.target.id != 'dropdown_menu'){
+		  $('.dropdown').removeClass('open');
+	  }else{
+		  $('.dropdown').addClass('open');
+	  }
+  })
+  
+  $(document).ready(function(){
+	  var elem =  $('#sidebar');
+      $( '#sideMenuHam' ).click(function(){
+      $('#sidebar').toggleClass('expand');
+        $('#sideMenuHam').toggleClass('ext');
+      });
+   });
+  
+  </script>

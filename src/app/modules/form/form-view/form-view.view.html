@@ -1,0 +1,68 @@
+<view type="toolbarView" title="'Form View'">
+
+  <toolbar app-toolbar title="'Form View'">
+    <toolbar-options>
+
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ng-click="$mdCloseMenu(); refresh()">
+              {{LANG.BUTTON.REFRESH}}
+            </md-button>
+          </md-menu-item>
+
+          <!--<md-menu-item>-->
+            <!--<md-button ng-click="$mdCloseMenu(); askAndDeleteForm(formModel.formId)">-->
+              <!--{{LANG.BUTTON.DELETE}}-->
+            <!--</md-button>-->
+          <!--</md-menu-item>-->
+
+          <md-menu-divider></md-menu-divider>
+
+        </md-menu-content>
+      </md-menu>
+
+      <md-progress-linear ng-show="toolbarLoader.async_active"
+                          md-mode="indeterminate"
+                          class="toolbar-loading-bar md-hue-3"></md-progress-linear>
+
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical"
+          layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <div class="list">
+        <div class="item">
+          <h3>{{formModel.formName}}</h3>
+        </div>
+
+       <!--  <div
+          ng-repeat="field in formModel.fields"
+          class="item card no-padding-left no-padding-right">
+          <field form-field="field"
+                 name="field.keyName"
+                 is-disabled="true"></field>
+        </div> -->
+
+        <div ng-repeat="field in formModel.fields"
+           class="item card no-padding-left no-padding-right">
+        <field-preview field="field"
+               name="field.keyName"
+               is-disabled="true"></field-preview>
+        </div>
+
+
+      </div>
+
+    </row>
+  </layout>
+</view>

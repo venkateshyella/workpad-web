@@ -1,0 +1,47 @@
+<md-dialog class="register-pop-up " aria-label="Invitees Status">
+    <md-toolbar class="toolbar-custom">
+        <div class="md-toolbar-tools">
+            <div>
+                <h2>Invitees Status</h2>
+            </div>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+        <div class="toolbar-content">
+        </div>
+    </md-toolbar> 
+    
+    <md-dialog-content class="full-width" layout="column">
+	<div class="list">
+		<div ng-repeat="grpUsers in statusGrpData.grpInvites"
+			class="item item-line-single" flex>
+			<div><h2 class="txt txt-line-pri text-wrap" ng-bind="grpUsers.user.userFirstName+' '+grpUsers.user.userLastName"></h2>
+			</div>
+			<div> <small><span class="label no-push-left" ng-bind="grpUsers.status | invitationStatus"></span></small>
+			<span style="float: right;" class=" color-light-2 invite-sts-date text-right push-top" ng-bind="(grpUsers.status == -2) ? MU.getDisplayDateTime(grpUsers.createTime): MU.getDisplayDateTime(grpUsers.updateTime)"></span>
+			</div>
+			 
+					
+		</div>
+	</div> 
+	
+	<div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+    <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+            aria-label="Load More">
+      <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+      <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+    </button>
+  </div>
+</md-dialog-content>
+
+    <div class="md-actions full-width" layout="column">
+        <div layout="row" class="full-width">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+        </div>
+    </div>
+</md-dialog>

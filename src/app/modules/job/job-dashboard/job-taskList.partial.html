@@ -1,0 +1,90 @@
+<div class="full-width overflow-hide">
+
+  <div class="list" layout="row" layout-align="center center"
+       ng-show="JobTabCtrl.jobModel.$_tasks.length == 0">
+    <div class="item item-backdrop text-center">
+      <div class="backdrop-filler-image">
+        <i class="icon icon-backdrop icon-list-unordered"></i>
+        <h4
+          ng-bind="::LANG.TASK.TASK_LOADING_MSGS.NO_TASKS"
+          class="color-light-2"></h4>
+      </div>
+    </div>
+  </div>
+  <div class="list">
+
+    <div
+      ng-click="onTaskItemClick(task)"
+      ng-repeat="task in JobTabCtrl.jobModel.$_tasks"
+      class="item item-complex item-line-double">
+      <div class="item-content" layout="column">
+        <div class="txt txt-line-pri">
+          <div ng-bind="task.title"
+               class=""></div>
+        </div>
+
+        <p ng-bind="task.desc"
+           class="txt txt-line-sec text-no-wrap oveflow-x-hide text-ellipsis no-push-bottom"></p>
+
+        <!-- Task status text and status change timestamp -->
+        <div class="txt txt-line-sec">
+          <p class="color-light-2">
+            <span
+              ng-bind="task.displayStatus"
+              class="" aria-hidden="false"></span>
+            <span ng-bind="'on'"></span>
+            <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(task.createTime)"></span>
+          </p>
+
+          <!-- Task Creator -->
+          <p class="push-bottom pb-sm max-full-width text-ellipsis txt-line-sec" ng-show="task.$_creator">
+            <span class="label no-push-left">
+                <small>Originator</small>
+            </span>
+            <span class="icon-label">
+              <md-icon md-font-icon="icon icon-person"></md-icon>
+              <span> {{task.$_creator.userFirstName}}  {{task.$_creator.userLastName}}</span>
+            </span>
+            <!--<context-path path="task.createdFullPath"></context-path>-->
+          </p>
+
+          <!-- Task Owner -->
+          <p class="push-bottom pb-sm max-full-width text-ellipsis txt-line-sec" ng-show="task.$_owner">
+            <span class="label no-push-left">
+                <small>Owner</small>
+            </span>
+            <span class="icon-label">
+              <md-icon md-font-icon="icon icon-person"></md-icon>
+              <span> {{task.$_owner.userFirstName}}  {{task.$_owner.userLastName}}</span>
+            </span>
+          </p>
+           <p ng-repeat="contributor in task.contributors"
+                 class="push-bottom pb-sm max-full-width text-ellipsis txt-line-sec"
+                 ng-show="task.contributors.length > 0">
+                        <span class="label no-push-left">
+                            <small>Contributor</small>
+                        </span>
+                        <span class="icon-label">
+                          <md-icon md-font-icon="icon icon-person"></md-icon>
+                          <span> {{contributor.userFirstName}}  {{contributor.userLastName}}</span>
+                        </span>
+              </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div ng-show="taskListCtrl.isNextPageAvailable()"
+       class="item" layout="row"
+       layout-align="center center">
+    <md-button ng-click="fetchMoreTasks()" ng-disabled class="full-width txt-ignore-case" aria-label="Load More">
+      <span ng-bind="::LANG.TASK.TASK_LOADING_MSGS.LOAD_MORE"
+            ng-hide="!loadingActivity.isLoading"></span>
+      <span ng-bind="::LANG.TASK.TASK_LOADING_MSGS.LOADING"
+            ng-show="loadingActivity.isLoading"></span>
+    </md-button>
+  </div>
+
+
+</div>

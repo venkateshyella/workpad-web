@@ -1,0 +1,34 @@
+<md-dialog aria-label="Chat details">
+  <md-toolbar class="toolbar-clear">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">Information</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content ng-if="!chatRestricted" class="padding-top full-width">
+    <p ng-click="submit()">You have unread messages in {{chatRoomName}}</p>
+        <div class="timeline-title" style="padding-top: 12px;">
+         <p ng-if="fullPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="fullPath"></context-path></a></p>
+    </div>
+    <p class="color-light-2 text-right push-top">
+     <span>{{chatDate}}</span> 
+    </p>
+  </md-dialog-content>
+  
+  <md-dialog-content ng-if="chatRestricted" class="padding-top full-width">
+    <p>{{ackMessage}}</p>
+    
+  </md-dialog-content>
+  
+  <div class="md-actions" layout="row">
+    <md-button ng-if="!chatRestricted" ng-click="handleChatAction(true)">
+      <span>Ok</span>
+    </md-button>
+    <md-button ng-if="chatRestricted" ng-click="cancel()">
+      <span>Ok</span>
+    </md-button>
+  </div>
+</md-dialog>

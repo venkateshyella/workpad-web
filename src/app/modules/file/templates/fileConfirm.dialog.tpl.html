@@ -1,0 +1,83 @@
+<md-dialog class="register-pop-up pop-up-md" aria-label="New File">
+   <md-dialog-content class="full-width">
+      <md-content>
+         <form name="form.newFile" class="full-height" novalidate>
+            <lf-ng-md-file-input lf-files="fileObject" lfFilesize
+               lf-browse-label="Search" lf-remove-label="Delete"
+               lf-drag-and-drop-label="Drag and Drop here!" name="fileObject" drag >
+            </lf-ng-md-file-input>
+            
+            <div class="table color-light">
+               <div ng-if="fileObject.length > 0"  class="tr">
+                  <md-input-container  class="tc-file-name">
+                     <label>Filename</label>
+                     <input ng-model="fileObject[0].lfFileName"
+                        trigger-focus="triggerFileNameInputFocus" ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+                        required>
+                     <div ng-messages="form.newFile.$error">	
+                        <div ng-message="required" class="ng-message">Please provide a file name.</div>
+                        <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),. are allowed in the
+                			File name.
+              			</div>
+                     </div>
+                  </md-input-container>
+                  <div class="tc-full">
+                     <div class="tc tc-label">Size </div>
+                     <div class="tc"> : {{getDisplaySize(fileObject[0].lfFile.size);}}</div>
+                  </div>
+               </div>
+            </div>
+            
+			<div class="form-group row" ng-show="!fileUploadModel.isNewFolder" style="display: inherit;">
+				<label for="folderId" class="col-sm-12 col-form-label" style="padding: 10px 0px;font-size: 13px;">Select 
+					Folder:</label>
+				<div class="col-sm-12" style="padding: 0px;">
+					<select ng-model="selectedFolder" class="form-control" ng-change="fileUploadModel.isNewFolder = false; fileUploadModel.folderName= '';"
+						ng-options="folder as folder.name for folder in foldersList track by folder.id" style="font-size: 13px;">
+					</select>
+				</div>
+			</div>
+			
+			
+			<div class="col-sm-12" style="padding: 0px;" >
+	        <div class="form-check">
+	          <label class="form-check-label col-form-label" style="padding: 0px;font-size: 13px;">
+	                <input class="form-check-input" type="checkbox" ng-click="resetDDOptions();" ng-model="fileUploadModel.isNewFolder">
+	                New Folder
+	          </label>
+	        </div>
+	      </div>
+	      
+	      
+	      <md-input-container  class="tc-file-name" ng-show="fileUploadModel.isNewFolder" style="padding-bottom: 0px !important;">
+                     <label style="font-size: 14px;">Folder Name</label>
+                     <input name="newFolderName" ng-model="fileUploadModel.folderName" 
+                    	    ng-maxlength="50"
+                	        ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+                	        ng-trim>
+                     <div ng-messages="form.newFile.newFolderName.$error">
+                        <div ng-message="required" class="ng-message">Please provide a folder name.</div>
+                        <div ng-message="maxlength" class="ng-message">Please limit the Folder name to 50 characters.</div>
+              			<div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),.  are allowed in the
+                			Folder name.
+              			</div>
+                     </div>
+          </md-input-container>
+	      
+            <div class="md-actions full-width tc-upload-button" layout="row">
+               <span flex></span>
+               <md-button ng-click="cancel()">
+                  Cancel
+               </md-button>
+               <md-button type="submit"
+                  ng-disabled="fileObject == '' ||(fileUploadModel.isNewFolder && !fileUploadModel.folderName) || !form.newFile.$valid"
+                  ng-click="confirm()"
+                  class="md-primary">
+                  <span>Upload
+                  <md-icon md-font-icon="icon icon-file-upload"></md-icon>
+               </md-button>
+            </div>
+         </form>
+      </md-content>
+   </md-dialog-content>
+</md-dialog>

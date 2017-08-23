@@ -1,0 +1,16 @@
+.platform-ios {
+  view, .view {
+    display: block;
+
+    [scroll] {
+      .scroll-container {
+        position: absolute;
+        height: 100%;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+        box-sizing: content-box;
+        padding-bottom: 1px;
+      }
+    }
+  }
+}

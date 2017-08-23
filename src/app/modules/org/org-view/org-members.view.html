@@ -1,0 +1,77 @@
+<view type="toolbarView" title="'WorkSpace Members'">
+
+  <toolbar app-toolbar title="xtras.title" sub-title="xtras.subTitle">
+    <toolbar-title></toolbar-title>
+    <toolbar-options>
+
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ng-click="$mdCloseMenu(); refresh({bypassCache:true})">
+              Refresh
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item ng-show="xtras.flag.isAdmin">
+            <md-button ng-click="findThenInviteUser(data.org, {$event: $event}); $mdCloseMenu();">
+              Invite User
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+
+      <md-progress-linear ng-show="toolbarLoader.async_active"
+                          md-mode="indeterminate"
+                          class="toolbar-loading-bar md-hue-3"></md-progress-linear>
+
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical"
+          layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free"
+         ng-class="APP_DATA_CSS[_state]">
+
+      <div class="list">
+
+        <div
+          ng-hide="data.orgMembers.length>0"
+          class="item">
+          <h4 class="color-light-2">{{"No members found."}}</h4>
+        </div>
+
+        <div class="item item-avatar-left"
+             ng-repeat="user in data.orgMembers"
+             ng-click="onOrgMemberListItemClick(user, $event)">
+          <img ng-src="{{user._img_icon}}"
+               on-error-src="assets/images/profile-image-placeholder.png"
+               class="img fit round item-image">
+
+          <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+            {{user.userFirstName}} {{user.userLastName}}
+          </h2>
+
+          <div layout="row" class="push-top pt-sm">
+            <p class="txt txt-line-sec text-ellipsis">
+              <span class="label" ng-show="user.id == data.org.adminId">Owner </span>
+              <span class="label" ng-show="user.id != data.org.adminId">Member</span>
+            </p>
+          </div>
+
+          <!--<p class="txt txt-line-sec">{{user.userEmail}}</p>-->
+        </div>
+
+      </div>
+
+    </row>
+  </layout>
+
+</view>

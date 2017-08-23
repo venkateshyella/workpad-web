@@ -1,0 +1,39 @@
+<view type="toolbarView" screen-type="device" title="'Register'">
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row id="content" scroll  layout-height="fill_remaining" layout-gravity="center" class="">
+
+      <div class="center-content full-width">
+        <form>
+          <div class="list padding">
+
+            <label for="first_name" class="item item-input item-stacked-label text-left">
+              <span class="input-label">First Name</span>
+              <input type="text" id="first_name"/>
+            </label>
+
+            <label for="last_name" class="item item-input item-stacked-label text-left">
+              <span class="input-label">Last Name</span>
+              <input type="text" id="last_name"/>
+            </label>
+
+            <label for="email" class="item item-input item-stacked-label text-left">
+              <span class="input-label">Email</span>
+              <input type="email" id="email"/>
+            </label>
+
+            <div class="padding">
+              <div class="button button-block" ng-click>Register</div>
+            </div>
+
+            <input type="submit" class="input-hidden"/>
+
+
+
+          </div>
+        </form>
+      </div>
+
+    </row>
+  </layout>
+</view>

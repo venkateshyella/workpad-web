@@ -1,0 +1,304 @@
+<!-- <div ng-if="isMeetingInProgress">
+<div hide-if-data-absent class="card no-padding-top">
+  <div class="item card-rich-media">
+    <div class="profile-card overlay">
+      <div class="profile-cover">
+        <div class="inner"
+             layout="row"
+             layout-align="center center">
+        </div>
+      </div>
+      <div class="inner overlay-content" layout="row">
+        <div class="profile-img border">
+          <img ng-src="{{orgTabCtrl.orgModel._img_icon}}"
+               on-error-src="assets/images/org-icon-placeholder.png" alt=""
+               class="img"/>
+        </div>
+        <div flex layout="row"
+             layout-align="center center">
+          <div class="profile-img">
+            <img ng-src="assets/images/logo.png" on-error-src="assets/images/profile-placeholder.png" alt=""
+                 class="img img-floating-icon bg-none"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item item-text-wrap">
+    <h2 class="card-title-text">{{meetingInfo.meetingName}}</h2>
+    <p  class="push-top pt-sm push-bottom pb-sm">Owned by
+      <span>{{meetingInfo.moderator.userFirstName}}</span>
+      <span>{{meetingInfo.moderator.userLastName}}</span></p>
+      
+      <div>
+	      <small><i
+	        ng-bind="::LANG.LABEL.DESCRIPTION"
+	        class="color-light-2"></i></small>
+	      <p
+	        ng-bind="meetingInfo.desc"
+	        class="txt txt-line-sec text-wrap pre-formatted push-top pt-sm"></p>
+      </div>
+      
+      <div class="txt-line-sec">
+                  <p class="push-bottom pb-sm ">
+                     <i class="icon icon-tab icon-schedule"></i>                                         
+                     <span ng-bind="MU.getDisplayDateTimeOffset(meetingInfo.startTime)"></span>
+                     <span>&nbsp;&nbsp;to&nbsp;&nbsp;</span>
+                     <span class="" ng-bind="MU.getDisplayDateTimeOffset(meetingInfo.endTime)"></span>
+                  </p>
+       </div>
+      
+      <div style="padding-left: 15px;" ng-repeat="member in meetingInfo.members"
+                        class="item item-complex item-line-double padding-bottom padding-top">
+                        <span class="icon-label">
+                           <md-icon md-font-icon="icon icon-person" 
+                              class="ng-isolate-scope md-default-theme md-font icon icon-person" aria-hidden="true"></md-icon>
+                           <span class="text-ellipsis no-push-bottom push-right event-attendees" ng-bind="member.userFirstName+' '+member.userLastName"></span>
+                           <span ng-if="meetingInfo.moderator.id == member.id"
+                              class="label no-push-left">Owner</span>
+                              
+                            <span ng-if="participant_KV[''+member.id].details.hasJoined"
+                              class="label no-push-left">Joined 
+                              
+                              </span>
+                             
+                             <span ng-if="participant_KV[''+member.id].details.hasJoined && meetingInfo.moderator.id == userId && meetingInfo.moderator.id != member.id"
+                             	ng-click="removeParticipantFromMeeting(participant_KV[''+member.id].details.conferenceParticipantId);"	
+                              	class="label no-push-left"> 
+                              	remove
+                              </span> 
+                              
+                              
+                             <span  ng-if="member.id == userId" ng-click="isUserMuted = !isUserMuted && toggleMuteUser();"	
+                              	class="label no-push-left"> 
+                              	 <p ng-if="!isUserMuted">mute </p>
+                              	 <p ng-if="isUserMuted">unmute </p>
+                              </span> 
+                              
+                              
+                              
+                        </span>
+        </div>
+    
+    <p ng-show="meetingInfo.createTime" class="push-top pt-sm push-bottom pb-sm">Created on
+      <span>{{MU.getDisplayDate_DDMMYYYYHHMMSS(meetingInfo.createTime)}}</span></p>
+    
+    
+     <div ng-click="leaveMeeting(meetingInfo);"
+               class="button button-small button-stable">Leave Meeting
+            </div>
+
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+-->
+
+
+
+<md-dialog class="register-pop-up" aria-label="WorkSpace Conference">
+   <md-toolbar >
+      <div class="md-toolbar-tools">
+         
+         <h2>{{meetingInfo.meetingName}}</h2>
+         <span flex></span>
+        <!--  <md-button class="md-icon-button" ng-click="close()">
+            <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>  -->
+      </div>
+   </md-toolbar>
+   <md-dialog-content class="full-width">
+     
+     <div hide-if-data-absent class="card no-padding-top">
+  <div class="item card-rich-media">
+  
+    <div class="profile-card overlay">
+      <div class="profile-cover">
+        <div class="inner"
+             layout="row"
+             layout-align="center center">
+        </div>
+      </div>
+      
+      
+      <div class="inner overlay-content" layout="row">
+        
+        <div flex layout="row"
+             layout-align="center center">
+          <div class="profile-img">
+            <img ng-src="assets/images/conference-room-icon.png"  alt=""
+                 class="img img-floating-icon bg-none"/>
+          </div>
+        </div>
+        
+        
+      </div>
+      
+      <div class="inner overlay-content" layout="row">
+        
+        <div flex layout="row"
+             layout-align="center center">
+          <div  ng-click="isUserMuted = !isUserMuted; toggleMuteUser(isUserMuted);">
+           
+            <img ng-if="!isUserMuted" ng-src="assets/images/mic.png"  alt=""
+                 class="img img-floating-icon bg-none"/>
+                 
+             <img ng-if="isUserMuted" ng-src="assets/images/mic-off.png"  alt=""
+            class="img img-floating-icon bg-none"/>
+                              
+          </div>
+        </div>
+        
+        
+      </div>
+      
+       <div class="inner overlay-content" layout="row">
+        
+        <div flex layout="row"
+             layout-align="center center">
+          <div>
+           
+           <div ng-show="showMeetingPrompt"> Meeting end time extended to 
+				<span class="" ng-bind="MU.getDisplayDateTimeOffset(meetingInfo.endTime)"></span>               
+           </div>
+           
+           <div id="alert-wrapper" class="alert-wrapper timer-btn">
+        		Meeting ends in <span id="countdown"></span> mins.<br/> 
+        		Click "Ok" to extend meeting by 10 mins.
+        		<input type="button" value="Ok"  class="ok" ng-click="updateMeetingEndTime(meetingInfo.id, meetingInfo.endTime);" />
+        		<!-- <input type="button" value="Cancel"  class="timer-btn cancel" ng-click="cancelMeetingExtend();" />  -->
+    		</div>
+            <!--  <select ng-model="selectedAudioOPDevice" 
+                    ng-options="device.label for device in audioOPDevicesList"
+                    ng-change="changeAudioOPDevice(selectedAudioOPDevice);" >
+			</select>
+			
+			<input type="number" ng-model="volumeLevel" ng-change="setLocalTrackVolume(volumeLevel);">
+              -->                 
+          </div>
+        </div>
+        
+        
+      </div>
+      
+     
+      
+    </div>
+    
+  </div>
+  <div class="item item-text-wrap">
+    <h2 class="card-title-text">{{meetingInfo.meetingName}}</h2>
+    <p  class="push-top pt-sm push-bottom pb-sm">Owned by
+      <span>{{meetingInfo.moderator.userFirstName}}</span>
+      <span>{{meetingInfo.moderator.userLastName}}</span></p>
+      
+      <div>
+	      <small><i
+	        ng-bind="::LANG.LABEL.DESCRIPTION"
+	        class="color-light-2"></i></small>
+	      <p
+	        ng-bind="meetingInfo.desc"
+	        class="txt txt-line-sec text-wrap pre-formatted push-top pt-sm"></p>
+      </div>
+      
+      <div class="txt-line-sec">
+                  <p class="push-bottom pb-sm ">
+                     <i class="icon icon-tab icon-schedule"></i>                                         
+                     <span ng-bind="MU.getDisplayDateTimeOffset(meetingInfo.startTime)"></span>
+                     <span>&nbsp;&nbsp;to&nbsp;&nbsp;</span>
+                     <span class="" ng-bind="MU.getDisplayDateTimeOffset(meetingInfo.endTime)"></span>
+                  </p>
+       </div>
+      <div style="padding-left: 15px;" ng-repeat="member in meetingInfo.members | unique:'id'" 
+                        class="item item-complex item-line-double padding-bottom padding-top">
+                        <span class="icon-label">
+                           <md-icon ng-if="!participant_KV[''+member.id].details.hasJoined" md-font-icon="icon icon-person"
+                              class="ng-isolate-scope md-default-theme md-font icon icon-person" aria-hidden="true"></md-icon>
+                              
+                           <md-icon ng-if="participant_KV[''+member.id].details.hasJoined" md-font-icon="icon icon-person"  style="color:green"
+                              class="ng-isolate-scope md-default-theme md-font icon icon-person" aria-hidden="true"></md-icon>
+                              
+                           <span class="text-ellipsis no-push-bottom push-right event-attendees" ng-bind="member.userFirstName+' '+member.userLastName"></span>
+                           <span ng-if="meetingInfo.moderator.id == member.id"
+                              class="label no-push-left">Owner</span>
+                              
+                            <span ng-if="participant_KV[''+member.id].details.hasJoined"
+                              class="label no-push-left">Joined 
+                              
+                              </span>
+                             
+                             <span ng-if="participant_KV[''+member.id].details.hasJoined && meetingInfo.moderator.id == userId && meetingInfo.moderator.id != member.id"
+                             	ng-click="removeParticipantFromMeeting(participant_KV[''+member.id].details.conferenceParticipantId, meetingInfo.id, member.id);"	
+                              	class="label no-push-left"> 
+                              	remove
+                              </span> 
+                              
+                              
+                           <!--  <span  ng-if="member.id == userId" ng-click="isUserMuted = !isUserMuted; toggleMuteUser(!isUserMuted);"	
+                              	class="label no-push-left"> 
+                              	 <p ng-if="!isUserMuted">mute </p>
+                              	 <p ng-if="isUserMuted">unmute </p>
+                              </span> 
+                           -->     
+                              
+                              
+                        </span>
+        </div>
+        
+        <div ng-if="meetingInfo.moderator.id == userId" style="border: .5px solid #e8e8e8;margin-top: 30px;padding-bottom: 48px;padding-top: 5px;padding-left: 3px;">
+        <b>Invite Members:</b>
+                   <div class="form-check send-check">
+          <label style="padding-left: 15px;" class="form-check-label">
+                <input class="form-check-input" type="checkbox" ng-model="addMember.sendToAll" ng-change="addMembersToMeeting(addMember.sendToAll)">
+           Send to all Members
+          </label>
+        </div>
+         
+         <div style="display: inline-block;" class="padding-horizontal ph-lg padding-top push-top full-width">
+            <div layout="row">
+               <md-autocomplete placeholder="Search member" md-no-cache="true" md-selected-item="newAdvertisementGroup" md-search-text-change="memberSearch.searchTextChange(memberSearch.searchText)" 
+                  md-search-text="memberSearch.searchText" md-selected-item-change="memberSearch.selectedItemChange(user)" md-items="user in memberSearch.querySearch(memberSearch.searchText)" md-item-text="user.userFirstName" md-min-length="2" md-delay="300" flex>
+                  <md-item-template>
+                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{user.userFirstName}}  {{user.userLastName}}</span>
+                  </md-item-template>
+                  <md-not-found>
+                     No Members found.
+                  </md-not-found>
+               </md-autocomplete>
+            </div>
+         </div>
+                  <div class="list no-padding-top push-top pt-lg" style="margin-top: 0.2rem !important;" ng-show="addMember.members.length > 0 ">
+            <span class="item item-input" style="padding: 15px 20px 5px 20px;">Selected members are</span>
+            <md-list class="no-padding-bottom">
+               <md-list-item class="" ng-repeat="invitee in addMember.members">
+                  <h2>{{invitee.userFirstName}} {{invitee.userLastName}}</h2>
+                  <md-icon ng-click="removeSelectedMember(invitee)" class="md-secondary no-push-top" aria-label="Remove adv group" md-font-icon="icon icon-close"></md-icon>
+               </md-list-item>
+            </md-list>
+         </div>
+         <md-button type="submit" style="float:right" ng-disabled="addMember.members.length == 0" ng-click="addingMembersToMeeting()" class="md-primary"> Invite </md-button>
+    </div>
+    <p ng-show="meetingInfo.createTime" class="push-top pt-sm push-bottom pb-sm">Created on
+      <span>{{MU.getDisplayDate_DDMMYYYYHHMMSS(meetingInfo.createTime)}}</span></p>
+    
+    
+  </div>
+</div>
+     
+     
+     
+     
+   </md-dialog-content>
+   <div class="md-actions full-width" layout="row">
+      <span flex></span>
+      
+      <md-button ng-if="isModerator" ng-click="leaveMeeting(meetingInfo);" class="md-primary"> End Meeting </md-button>
+      <md-button ng-if="!isModerator" ng-click="leaveMeeting(meetingInfo);" class="md-primary"> Leave Meeting </md-button>
+     
+   </div>
+</md-dialog>

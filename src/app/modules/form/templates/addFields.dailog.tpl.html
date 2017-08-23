@@ -1,0 +1,219 @@
+<md-dialog aria-label="New Form Fields">
+
+  <md-toolbar class="">
+    <div class="md-toolbar-tools">
+      <h2 flex ng-if="!isEdit && !isDelete">New Form Fields</h2>
+      <h2 flex ng-if="isEdit">Update Form Fields</h2>
+      <h2 flex ng-if="isDelete">Delete Form Fields</h2>
+      
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+
+<md-toolbar class="add-field-toolbar" ng-if="!isEdit && !isDelete">
+<div class="md-toolbar-tools">
+    <span flex></span>
+     <md-button class="add-field-btn" style="background-color: rgb(40,94,187); margin-right: 48px;" 
+        ng-if="!isEdit && !isDelete" ng-click="addNewField();">
+      Add
+    </md-button>
+    
+</div>    
+</md-toolbar>
+  <md-dialog-content  class="full-width">
+  
+  
+    <form name="form.createDynamicForm" novalidate ng-if="!isEdit || !isDelete || newfields.length > 0 || isAnyPostdefined">
+    <div class="list full-width overflow-hide">
+
+    <div ng-repeat="field in newfields" ng-init="fieldName = 'field'+ $index">
+    <!-- jobStatusAllowed: {{jobStatusAllowed}} >> {{field.definitionType}} -->
+     <div  class="card" ng-if="(field.canEdit && (isEdit || isDelete) && 
+     					( (field.definitionType == FIELD_DEF_TYPE.POST ) || (field.definitionType == FIELD_DEF_TYPE.PRE && jobStatusAllowed)) )
+                                 || (!isEdit && !isDelete)">
+     
+        <md-card-header md-colors="::{backgroundColor: 'default-primary-700'}" class="row">
+          
+          <md-card-header-text>
+            <span class="md-title" style="margin-left: 10px;"> Field {{$index+1}}</span>
+          </md-card-header-text>
+          
+          <md-button ng-if="!isEdit && !isDelete && (newfields.length > 1)" class="md-icon-button" style="margin-top:-12px;"
+           layout-align="right" ng-click="removeNewField(field.fieldId);">
+            <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+          <span flex></span>
+		<md-checkbox ng-if="isDelete" ng-model="field.remove" ng-change="checkDeleteButtonStatus(newfields)" layout-align="right" aria-label="remove">Remove</md-checkbox>
+          
+        </md-card-header>
+     
+     
+     
+      <!-- <md-input-container>
+        <label>Field Name</label>
+        <input type="text"
+          ng-model="field.name" 
+          ng-disabled="isEdit"/>
+      </md-input-container> -->
+      
+     <md-input-container class="job-form-field">
+   <label>Field Label</label>
+   <input type="text" name="{{fieldName}}" required ng-model="field.label"  ng-maxlength="50"  ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"/>
+   <div ng-messages="form.createDynamicForm.{{fieldName}}.$error">
+      <div ng-message="maxlength" class="ng-message">Please limit the field name to 50 characters.</div>
+      <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),. are allowed in the
+         field name.
+      </div>
+   </div>
+</md-input-container>
+      
+      <div class="form-group row">
+            <label style="margin-left: 20px;">Field Type</label>
+            <div class="col-sm-3">
+               <select ng-model="field.selectedType" 
+        		ng-options=" item.value for item in field.types"
+        		ng-change="field.getPreparedFieldByType(field.selectedType.type,true);"
+        		ng-disabled="isEdit || isDelete"></select>
+            </div>
+            
+         </div>
+         
+          
+         
+       <!--   <div flex class="card" ng-show="field.fieldConditions.showPredefFlag" ng-if="!isEdit">
+				<md-input-container> 
+				   <md-checkbox 
+					ng-model="field.fieldConditions.hasPredefinedValue" aria-label="predefined"></md-checkbox>
+				<p flex>Predefined</p>
+				</md-input-container>
+				
+				<md-input-container ng-show="field.fieldConditions.hasPredefinedValue"> 
+					   <label>Value</label> <input type="text"
+						ng-model="field.textValue"/> 
+				</md-input-container> 
+		</div>		 -->
+		
+		
+		<div  flex class="column" style="padding-left: 2%" ng-show="field.validations.required.isApplied">
+				<md-input-container>
+				<md-checkbox ng-disabled="isDelete" ng-model="field.validations.required.value"
+					aria-label="validator"> <p flex>Required</p> </md-checkbox>
+				
+				</md-input-container>
+			</div>
+
+			<!-- <div flex class="card">
+				<md-input-container> 
+				   <md-checkbox ng-change="field.getPreparedFieldByType(field.selectedType.type);"
+					ng-model="field.isValidator" aria-label="validator"></md-checkbox>
+				<p flex>Set Validations</p>
+				</md-input-container>
+
+				<div class="form-group row" ng-show="field.isValidator">
+
+					<md-input-container ng-show="field.validations.required.isApplied"> 
+					   <md-checkbox
+						ng-model="field.validations.required.value" aria-label="validator"></md-checkbox>
+					<p flex>Required</p>
+					</md-input-container> 
+					
+					<md-input-container ng-show="field.validations.minLength.isApplied">
+					<label>Min Length</label> <input type="number"
+						ng-model="field.validations.minLength.value" min="1" /> 
+					</md-input-container> 
+						
+				    <md-input-container ng-show="field.validations.maxLength.isApplied">
+					 <label>Max Length</label> <input type="number"
+						ng-model="field.validations.maxLength.value" min="2" /> 
+				   </md-input-container>
+				</div>
+			</div> -->
+			
+			
+			<div ng-show="field.showFieldProps">
+				<!-- <md-input-container class="job-form-field"  class="sub-qty-label"> -->
+				<div style="padding-left: 12px;">
+				 <label>Field Count : </label>
+				    <md-button ng-disabled="isDelete" class="md-raised md-primary" style="min-width: 30px!important; margin-left: 20px;" ng-disabled="field.count<=field.minValue" ng-click="field.fieldCount(field.count-1)">-</md-button>
+				  <input ng-disabled="isDelete" style="width: 50px;text-align: center;" readonly  ng-model="field.count" min="{{field.minValue}}" 
+				  ng-change="field.getPreparedFieldByType(field.selectedType.type);" /> 
+				     <md-button ng-disabled="isDelete" class="md-raised md-primary" style="min-width: 30px!important;"  ng-click="field.fieldCount(field.count+1)">+</md-button>
+				     </div>
+<!-- 			    </md-input-container> -->
+
+<!-- 
+				<md-input-container>
+                   <label>Field Group Name</label>
+			        <input type="text"
+			          ng-model="field.groupFieldName"/>
+                </md-input-container>
+				-->
+
+<div ng-repeat="grpField in field.groupFields" class="card"  ng-init="labelName = field.selectedType.type+'label'+$index">
+  <label style="padding-left: 13px"> {{field.selectedType.value}} &nbsp;&nbsp; {{$index+1}} </label>
+  <md-button style="float: right;padding-right:20px" ng-if="isEdit && ((field.selectedType.type == 'radio' && field.count > 2) || (field.selectedType.type == 'checkbox' && field.count > 1))" class="md-icon-button" ng-click="field.removeGroupField($index)">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+  </md-button>
+   <md-input-container>
+      <label style="padding-left: 10px">label Name</label>
+      <input type="text"  style="padding-left: 13px"
+         ng-model="grpField.label" ng-maxlength="50" name="{{labelName}}" required ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/""/>
+      <div ng-messages="form.createDynamicForm.{{labelName}}.$error">
+         <div ng-message="maxlength" class="ng-message">Please limit the label name to 50 characters.</div>
+         <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),. are allowed in the
+            label name.
+         </div>
+      </div>
+   </md-input-container>
+</div>
+			</div>
+
+			</div>
+		</div>
+     </div> 
+    </form>
+    
+    
+     <div ng-if="(isDelete || isEdit) && ((jobStatusStart == jobStatus && newfields.length > 0 &&  !isAnyPostdefined) || (jobStatusStart != jobStatus && !hasFieldAccess))" 
+         class="item item-backdrop text-center">  
+    No Fields Found
+    </div>
+    
+     <div ng-if="(isDelete || isEdit) && newfields.length == 0 " class="item item-backdrop text-center">  
+    No Fields Found
+    </div>
+
+  </md-dialog-content>
+  <div class="md-actions">
+    <span flex></span>
+    <md-button ng-click="cancel()">
+      Cancel
+    </md-button>
+    <md-button ng-if="!isEdit && !isDelete" ng-disabled="!form.createDynamicForm.$valid" ng-click="submit();">
+      Create
+    </md-button>
+   <!--  <span ng-if="newfields.length > 0 && (jobStatusStart == jobStatus && isAnyPostdefined)" >
+    <md-button ng-if="isEdit" ng-disabled="!form.createDynamicForm.$valid" ng-click="updateField(newfields);">
+      Update
+    </md-button>
+    
+    <md-button ng-if="isDelete" ng-disabled="!form.createDynamicForm.$valid" ng-click="updateField(newfields);">
+      Delete
+    </md-button>
+    </span> -->
+    
+      <span ng-if="((jobStatusStart == jobStatus && newfields.length > 0 && isAnyPostdefined) || (jobStatusStart != jobStatus && hasFieldAccess))" >
+    <md-button ng-if="isEdit" ng-disabled="!form.createDynamicForm.$valid" ng-click="updateField(newfields);">
+      Update
+    </md-button>
+    
+    <md-button ng-if="isDelete" ng-disabled="isDeleteFieldsAvailable" ng-click="updateField(newfields);">
+      Delete
+    </md-button>
+    </span>
+    
+  </div>
+</md-dialog>

@@ -1,0 +1,35 @@
+<view type="toolbarView" screen-type="device" title="'My Subscriptions'">
+   <toolbar app-toolbar title="'My Subscriptions'"> </toolbar>
+   <layout
+      type="linearLayout" orientation="vertical" layout-height="match_parent">
+      <row scroll layout-height="fill_remaining" layout-gravity="free">
+         <div class="list full-width overflow-hide">
+              <div ng-show="OrgData.orgList.length==0" class="item item-backdrop text-center">
+               <div class="backdrop-filler-image">
+                  <i class="icon icon-backdrop icon-briefcase-case-two"></i>
+               </div>
+               <p>No WorkSpaces available</p>
+            </div>
+            <div ng-repeat="org in OrgData.orgList" class="card">
+               <div ng-click="subscriptionItems(org.id)"
+                  class="item item-line-double item-avatar-left">
+                  <!-- <img src="assets/images/org-icon-placeholder.png"
+                     class="img fit round item-image"> -->
+                     <img ng-src="{{org._img_icon}}" on-error-src="assets/images/org-icon-placeholder.png" class="img fit round item-image">
+                  <h2 class="card-title-text">{{org.orgName}}</h2>
+                  <p class="push-top pt-sm push-bottom pb-sm" ng-bind="'Created on '+MU.getDisplayDate_DDMMYYYYHHMMSS(org.createTime)"></p>
+               </div>
+            </div>
+         </div>
+         <div ng-show="isNextPageAvailable" class="item" layout="row"
+            layout-align="center center">
+            <button ng-click="loadNext()" ng-disabled="loadingNext"
+               class="button button-block button-small button-clear"
+               aria-label="Load More">
+            <span ng-show="!loadingNext">Load More</span> <span
+               ng-show="loadingNext">Loading ...</span>
+            </button>
+         </div>
+      </row>
+   </layout>
+</view>

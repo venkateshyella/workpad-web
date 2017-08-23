@@ -1,0 +1,103 @@
+<md-list flex>
+  <md-list-item>
+    <div flex>
+      <md-input-container>
+        <label>{{FIELD_LANG.DEFAULTS.LABEL.LABEL}}</label>
+        <input type="text"
+               name="label"
+               ng-model="editorCtrl.fieldModel.label"
+               ng-model-options="{debounce:{'default':1000}}"
+               ng-change="editorCtrl.getError('label')">
+
+        <div ng-messages="editorCtrl.$error.label" class="ng-messages-floating line-clamp-2">
+          <div ng-message="0" class="ng-message">{{editorCtrl.$error.label[0]}}</div>
+        </div>
+      </md-input-container>
+    </div>
+  </md-list-item>
+
+  <md-list-item>
+    <div flex>
+      <md-input-container flex>
+        <label>{{FIELD_LANG.DEFAULTS.LABEL.DESCRIPTION}}</label>
+        <textarea ng-model="editorCtrl.fieldModel.desc"
+                  ng-model-options="{debounce:{'default':1000}}"
+                  ng-change="editorCtrl.getError('desc')"></textarea>
+
+        <div ng-messages="editorCtrl.$error.desc" class="ng-messages-floating line-clamp-2">
+          <div ng-message="0" class="ng-message">{{editorCtrl.$error.desc[0]}}</div>
+        </div>
+      </md-input-container>
+    </div>
+    <md-divider class=""></md-divider>
+  </md-list-item>
+
+  <md-list-item
+    class="md-item-padding-left md-list-item-complex">
+    <h5 class="color-light" flex><b ng-bind="FIELD_LANG.DEFAULTS.LABEL.VALIDATIONS"></b></h5>
+    <md-button class="md-icon-button"
+               ng-click="selectAndAddValidations($event)"
+               aria-label="Add Validation">
+      <md-icon
+        class="md-secondary no-push-top"
+        aria-label="Remove Validation"
+        md-font-icon="icon icon-add"></md-icon>
+    </md-button>
+  </md-list-item>
+
+  <md-list-item>
+    <md-checkbox
+      ng-model="formField.validation.presence"
+      aria-label="Mandatory"
+      class="md-primary" flex>
+      <span ng-bind="FIELD_LANG.STRING.MANDATORY"></span>
+    </md-checkbox>
+  </md-list-item>
+
+  <md-list-item>
+    <md-checkbox
+      ng-model="formField.templateOptions.fieldModel.multiLine"
+      aria-label="Mandatory"
+      class="md-primary" flex>
+      <span>Multi line</span>
+    </md-checkbox>
+  </md-list-item>
+
+  <md-list-item>
+    <md-select ng-model="stringTypeModel"
+               placeholder="{{FIELD_LANG.STRING.SELECT_TYPE_PLACEHOLDER}}"
+               flex>
+      <md-option value="none" ng-bind="VALIDATION_LANG.DEFAULT_LABEL.ANY"></md-option>
+      <md-option value="email" ng-bind="VALIDATION_LANG.EMAIL.LABEL"></md-option>
+      <md-option value="alpha-numeric" ng-bind="VALIDATION_LANG.ALPHA_NUMERIC.LABEL"></md-option>
+    </md-select>
+
+  </md-list-item>
+
+  <md-list-item ng-show="editorCtrl.isValidationEnabled('length')"
+                ng-click="showValidationEditor('length')"
+                class="md-list-item-complex">
+    <md-divider class="divider-top"></md-divider>
+    <div layout="column" flex>
+      <h4 class="push-top pt-lg"
+          ng-bind="FIELD_LANG.STRING.EDITOR_LABEL"
+          flex></h4>
+      <ul>
+        <li ng-show="formField.validation.length.minimum"><span class="color-light"
+          >Is at-least {{formField.validation.length.minimum}} characters long.</span></li>
+        <li ng-show="formField.validation.length.maximum"><span class="color-light"
+          >Can have up to {{formField.validation.length.maximum}} characters</span></li>
+      </ul>
+    </div>
+    <md-button class="md-icon-button md-secondary"
+               ng-disabled="formField.validation.presence"
+               ng-click="!formField.validation.presence && editorCtrl.removeValidator('length')"
+               aria-label="Add Validation">
+      <md-icon
+        class="no-push-top"
+        aria-label="Remove Validation"
+        md-font-icon="icon icon-close"></md-icon>
+    </md-button>
+  </md-list-item>
+
+</md-list>

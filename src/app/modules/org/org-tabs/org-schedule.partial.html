@@ -1,0 +1,191 @@
+<div>
+<!--    <div class="button-bar padding">
+      <div
+         ng-class="{'button-outline': state.showAudit}"
+         ng-click="toggleAudit(false); loadOrgEventsClick(filters[0].type);selected = 0"
+         class="button">
+         <i class="icon icon-tab icon-event"></i>
+         <small ng-bind="::LANG.JOB.LABEL.TITLE_TAB_EVENT"></small>
+      </div>
+      <div
+         ng-class="{'button-outline': !state.showAudit}"
+         ng-click="toggleAudit(true)"
+         class="button">
+         <i class="icon icon-history"></i>
+         <small ng-bind="::LANG.LABEL.TAB_AUDIT"></small>
+      </div>
+   </div> -->
+   
+
+   <div ng-hide="state.showAudit" class="tab-list-scroll">
+      <div class="event-filter">
+  <ul class="nav nav-pills ">
+    <li ng-repeat="filter in filters" ng-click="selectFilter($index,filter.type)" ng-class="{active: $index == selected}"><a href="#">{{filter.label}}</a></li>
+  </ul>
+</div>
+   
+      <div>
+         <div class="list full-width overflow-hide">
+            <div ng-show="OrgEventsData.orgEvents.length==0" class="item item-backdrop text-center">
+               <div class="backdrop-filler-image">
+                  <i class="icon icon-backdrop icon-briefcase-case-two"></i>
+               </div>
+               <p>{{LANG.ORGANISATION.LOADING_MSG.NO_EVENTS}}</p>
+            </div>
+            <div ng-repeat="orgEvent in OrgEventsData.orgEvents" ng-class="{'border-top':!$first}"
+               class=" item item-text-wrap item-complex item-line-double">
+               <div class="item-content padding-bottom">	
+                  <div class="txt txt-line-pri no-push-bottom" layout="row">
+                     <span ng-bind="orgEvent.eventName" class="text-ellipsis" flex></span>
+    <!-- Temp Disabled   -->
+                    <a href="javascript:void(0);" ng-click="editOrgEvent(orgEvent);" ng-show="orgEvent.canEdit"> <i
+							class="fa fa-pencil" aria-hidden="true" class="md-hue-3"></i></a>
+                  </div>
+                  <p ng-bind="orgEvent.desc" class="overflow-hide txt-pri text-wrap pre-formatted">
+                  </p>
+                 <div> 
+                  <p> <i class="icon icon-tab icon-event"></i> 
+                  <span ng-bind="'Event Type '+orgEvent.eventType.name" style="font-size: 15px;margin: 3px 0px;color: #444444 !important;"></span>
+                  </p>
+                    </div>
+                  <div class="txt-line-sec padding-bottom">
+                     <p class="push-bottom pb-sm ">
+                     <i class="icon icon-tab icon-schedule"></i>                                         
+                        <span class="event-time-space" ng-bind="MU.getDisplayDateOff(orgEvent.recurringTime)"></span>
+                        <span ng-bind="MU.getDisplayTime(orgEvent.startTime)"></span>
+                        <span ng-if="orgEvent.eventType.code != -603" ng-bind="' to '+MU.getDisplayTime(orgEvent.endTime)">{{}}</span>
+                     </p>
+                  
+                 
+                  <!-- <p> <context-path path="orgEvent.eventPath"></context-path> </p> -->
+                  <span ng-if="orgEvent.schedule.repeatFrequencyType == eventRepeatFTypes.DAILY">
+                  <span ng-if="orgEvent.schedule.repeatInterval == 1" >Repeats Every Day</span>
+                  <span ng-if="orgEvent.schedule.repeatInterval != 1" ng-bind=" 'Repeats Every '+orgEvent.schedule.repeatInterval+' Days'"></span>
+                  </span>
+                  <span ng-if="orgEvent.schedule.repeatFrequencyType == eventRepeatFTypes.WEEKLY">
+                  <span ng-if="orgEvent.schedule.repeatInterval == 1" >Repeats Every Week</span>
+                  <span ng-if="orgEvent.schedule.repeatInterval != 1" ng-bind=" 'Repeats Every '+orgEvent.schedule.repeatInterval+' Weeks'"></span>
+                  </span>
+                  <span ng-if="orgEvent.schedule.repeatFrequencyType == eventRepeatFTypes.MONTHLY">
+                  <span ng-if="orgEvent.schedule.repeatInterval == 1">Repeats Every Month</span>
+                  <span ng-if="orgEvent.schedule.repeatInterval != 1" ng-bind=" 'Repeats Every '+orgEvent.schedule.repeatInterval+' Months'"></span>
+                  </span>
+                  <span ng-if="orgEvent.schedule.repeatFrequencyType == eventRepeatFTypes.YEARLY">
+                  <span ng-if="orgEvent.schedule.repeatInterval == 1">Repeats Every Year</span>
+                  <span ng-if="orgEvent.schedule.repeatInterval != 1" ng-bind=" 'RepRepeatseat Every '+orgEvent.schedule.repeatInterval+' Years'"></span>
+                  </span>
+                  <span ng-if="orgEvent.schedule.repeatType == eventRepeatTypes.FOREVER">, Forever</span>
+                  <span ng-if="orgEvent.schedule.repeatType == eventRepeatTypes.UNTIL_DATE" ng-bind=" ', Ends on ' +MU.getDisplayDate_DDMMYYYY(orgEvent.schedule.repeatEndDate)"></span>
+                  <span ng-if="orgEvent.schedule.repeatType == eventRepeatTypes.COUNT" ng-bind=" ', '+orgEvent.schedule.repeatCount+' Occurrences'"></span>
+                  </div>
+                  
+                  <p class="push-bottom pb-sm" ng-repeat="reminder in orgEvent.reminders">
+                  <i class="icon icon-tab icon-notifications"></i>
+                  <span ng-bind=" 'Notification '+(reminder.duration | secondsToTimeString)+' before start' "></span>
+                  <span ng-bind=" ', every '+(reminder.frequency | secondsToTimeString) "></span>             
+                  </p>
+                    <p class="push-bottom pb-sm " ng-if="orgEvent.scheduledJob.expectedFinishDate">
+               <span class="color-light-2">Required Job Completion Time is</span>
+                <span ng-bind="MU.formatDate(orgEvent.scheduledJob.expectedFinishDate)+' '+MU.getDisplayTime(orgEvent.startTime)"></span>
+              </p>
+              <p class="push-bottom pb-sm ">
+               <span class="color-light-2">Job Type </span>
+                <span ng-if="!orgEvent.scheduledJob.templateId"> AdHoc</span>
+                 <span ng-if="orgEvent.scheduledJob.templateId"> Template</span>
+              </p>
+                    </div>
+                    
+                    
+                    <div ng-if="orgEvent.scheduledJob" ng-click="toggleEventMembers(orgEvent.id)"
+                     class="item-content padding-top padding-bottom"
+                     aria-label="View Owner Invitations">
+                     <div layout="row">
+                        <p flex class="no-push-bottom push-top pt-sm">
+                        <i class="icon icon-tab icon-people"></i>
+                        <small ng-if="orgEvent.scheduledJob.templateId == null" ng-bind="::'View Owner Invitations'"></small>
+                           <small ng-if="(orgEvent.scheduledJob.owner == false) && (orgEvent.scheduledJob.templateId != null)" ng-bind="::'View Owner Invitations'"></small>
+                           <small ng-if="(orgEvent.scheduledJob.owner == true) && (orgEvent.scheduledJob.templateId != null)" ng-bind="::'View Contributor Invitations'"></small>
+                           <small ng-bind="'('+orgEvent.allInvitees.length+')'"></small>
+                        </p>
+                        <div class="">
+                           <i ng-class="{'icon-expand-less':viewMembersFlagMeta[orgEvent.id], 'icon-expand-more':!viewMembersFlagMeta[orgEvent.id]}"
+                              class="icon icon-expand-more"></i>
+                        </div>
+                     </div>
+                     <div class=""
+                        ng-show="viewMembersFlagMeta[orgEvent.id]">
+                        <p ng-if="orgEvent.allInvitees.length == 0"
+                           class="no-push-bottom">
+                           <small ng-bind="orgEvent.owner.userFirstName+' '+orgEvent.owner.userLastName" class="color-light-2"></small>
+                        </p>
+                        <div ng-repeat="invitee in orgEvent.allInvitees"
+                           class="item item-complex item-line-double">
+                            <span class="icon-label"><md-icon md-font-icon="icon icon-person" 
+                          	class="ng-isolate-scope md-default-theme md-font icon icon-person" aria-hidden="true"></md-icon>
+                         	 <span class="text-ellipsis no-push-bottom push-right event-attendees" ng-bind="invitee.userFirstName+' '+invitee.userLastName"></span><context-path path="invitee.invitationPath"></context-path></span>
+                          
+                          	<!-- <span ng-if="invitee.id == orgEvent.owner.id"
+                              class="label no-push-left">Owner</span> -->
+                        </div>
+                     </div>
+                
+            </div>
+                  <div ng-if="!orgEvent.scheduledJob" ng-click="toggleEventMembers(orgEvent.id)"
+                     class="item-content padding-top padding-bottom"
+                     aria-label="View Members">
+                     <div layout="row">
+                        <p flex class="no-push-bottom push-top pt-sm">
+                        <i class="icon icon-tab icon-people"></i>
+                           <small ng-bind="::'View Members'"></small>
+                           <small ng-bind="'('+orgEvent.attendees.length+')'"></small>
+                        </p>
+                        <div class="">
+                           <i ng-class="{'icon-expand-less':viewMembersFlagMeta[orgEvent.id], 'icon-expand-more':!viewMembersFlagMeta[orgEvent.id]}"
+                              class="icon icon-expand-more"></i>
+                        </div>
+                     </div>
+                     <div class=""
+                        ng-show="viewMembersFlagMeta[orgEvent.id]">
+                        <p ng-if="orgEvent.attendees.length == 0"
+                           class="no-push-bottom">
+                           <small ng-bind="::'No Attendees'" class="color-light-2"></small>
+                        </p>
+                        <div ng-repeat="attendee in orgEvent.attendees"
+                           class="item item-complex item-line-double">
+                          
+                          <span class="icon-label"><md-icon md-font-icon="icon icon-person" 
+                          class="ng-isolate-scope md-default-theme md-font icon icon-person" aria-hidden="true"></md-icon>
+                          <span class="text-ellipsis no-push-bottom push-right event-attendees" ng-bind="attendee.userFirstName+' '+attendee.userLastName"></span></span>
+                          
+                          <span ng-if="attendee.id == orgEvent.owner.id"
+                              class="label no-push-left">Owner</span>
+                        </div>
+                     </div>
+                
+            </div>
+         </div>
+         </div>
+         <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+            <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+               aria-label="Load More">
+            <span ng-show="!loadingNext">Load More</span>
+            <span ng-show="loadingNext">Loading ...</span>
+            </button>
+         </div>
+      </div>
+   </div>
+   <div ng-show="state.showAudit" class="tab-list-scroll">
+      <audit-list list="orgEventsAuditList"> </audit-list>
+      
+       <div ng-show="isNextAuditPageAvailable()"
+		                   class="item" layout="row" layout-align="center center">
+		                <md-button ng-click="fetchMoreAudits()"
+		                     ng-disabled="ui.auditActivityStore.isLoading" class="full-width txt-ignore-case"
+		                     aria-label="Load More">
+		                 <span>{{ui.auditActivityStore.isLoading ? 'Loading...':'Load more audits'}}</span>
+		               </md-button>
+		             </div>
+      
+   </div>
+</div>
+{{addScrollToList();}}

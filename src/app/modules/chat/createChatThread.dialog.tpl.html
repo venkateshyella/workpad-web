@@ -1,0 +1,41 @@
+<md-dialog class="register-pop-up" aria-label="Create Talk">
+   <md-toolbar >
+      <div class="md-toolbar-tools">
+         <h2 >Create Thread</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="close()">
+            <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+      </div>
+   </md-toolbar>
+   <md-dialog-content class="full-width">
+      <form name="form.create_Chat_Thread" class="full-width"  novalidate>
+         <md-input-container md-no-float>
+            <input auto-input-focus type="text" name="name" placeholder="Thread Name" required ng-model="formModel.name" ng-maxlength="50"
+               ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/" ng-trim>
+            <div ng-messages="form.create_Chat_Thread.name.$error">
+               <div ng-message="maxlength" class="ng-message">Thread name should not exceed 50 characters.</div>
+               <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),. are allowed in the
+                  Thread name.
+               </div>
+            </div>
+         </md-input-container>
+         <md-input-container flex>
+            <label>Description</label>
+            <textarea name="Desc" required ng-model="formModel.desc" columns="1" md-maxlength="256"></textarea>
+            <div ng-messages="form.create_Chat_Thread.Desc.$error">
+               <div ng-message="md-maxlength" class="ng-message">
+                  Please limit the Thread description to 256 characters.
+               </div>
+            </div>
+         </md-input-container>
+      </form>
+   </md-dialog-content>
+   <div class="md-actions full-width" layout="row">
+      <span flex></span>
+      <md-button ng-click="close()">
+         Cancel
+      </md-button>
+      <md-button type="submit" ng-disabled="!form.create_Chat_Thread.$valid" ng-click="submitToCreateThread(formModel)" class="md-primary"> Create </md-button>
+   </div>
+</md-dialog>

@@ -1,0 +1,241 @@
+<md-dialog class="register-pop-up" aria-label="Create Advertisement">
+  <md-toolbar class="toolbar-custom">
+    <div class="md-toolbar-tools">
+      <div>
+        <h2>Job Owner Invitation</h2>
+
+        <p class="toolbar-subtitle">{{jobAdvCtrl.job.title}}</p>
+      </div>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width " >
+    <div class="padding-horizontal ph-lg padding-top push-top full-width">
+
+      <div>
+        <div layout="row">
+          <md-autocomplete
+            placeholder="Search WorkSpace or Room"
+            md-no-cache="true"
+            md-selected-item="newAdvertisementGroup"
+            md-search-text-change="groupSearchCtrl.searchTextChange(groupSearchCtrl.searchText)"
+            md-search-text="groupSearchCtrl.searchText"
+            md-selected-item-change="groupSearchCtrl.selectedItemChange(item)"
+            md-items="item in groupSearchCtrl.querySearch(groupSearchCtrl.searchText)"
+            md-item-text="item.displayText"
+            md-min-length="2"
+            md-delay="300"
+            flex>
+            <md-item-template>
+              <span md-highlight-text="ctrl.searchText"
+                    md-highlight-flags="^i">{{item.displayText}}</span>
+            </md-item-template>
+            <md-not-found>
+              No WorkSpace or Room found.
+            </md-not-found>
+          </md-autocomplete>
+        </div>
+      </div>
+
+      <div class="list no-padding-top">
+
+        <!-- Selected Org -->
+        <div ng-repeat="(orgId, advOrg) in jobAdv.getInvitationOrgs()"
+             class="item card no-padding">
+          <md-list class="">
+            <md-list-item class="">
+              <md-icon
+                ng-click="toggleSelectAllOrgMembers(orgId)"
+                ng-class="advOrg.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+                md-font-icon="icon {{advOrg.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+              ></md-icon>
+              <div flex>
+                <h2>{{getModel.Org(orgId).orgName}}</h2>
+              </div>
+              <md-icon
+                ng-click="removeOrg(orgId)"
+                class="md-secondary no-push-top"
+                aria-label="Remove WorkSpace"
+                md-font-icon="icon icon-close"></md-icon>
+            </md-list-item>
+
+            <md-list-item
+              ng-click="toggleOrgMembersList(orgId)"
+              class="md-list-item-short border-top">
+              <p flex class=""><small ng-bind="'View WorkSpace members'"></small></p>
+              <div class="button button-clear no-padding-left">
+                <i
+                  ng-class="{'icon-expand-less':advOrg.xtras.flag_expanded, 'icon-expand-more':!advOrg.xtras.flag_expanded}"
+                  class="icon icon-expand-more"></i>
+              </div>
+            </md-list-item>
+
+            <md-list-item
+              ng-repeat="user in advOrg.xtras.users"
+              ng-show="advOrg.xtras.flag_expanded"
+              ng-click="toggleAdvOrgMember(orgId, user.id)"
+              class="">
+              <md-icon
+                ng-class="advOrg.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+                md-font-icon="icon {{advOrg.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+              ></md-icon>
+              <div flex class="padding-vertical">
+                <p class="txt text-wrap no-push-bottom">{{user.userFirstName}}
+                  {{user.userLastName}}</p>
+
+                <p class="txt text-wrap color-light-2">{{user.userEmail}}</p>
+              </div>
+            </md-list-item>
+
+          </md-list>
+        </div>
+
+        <!-- Selected Groups for advertisement. -->
+        <div ng-repeat="(groupId, advGroup) in jobAdv.getInvitationGroups()"
+             class="item card no-padding">
+
+          <md-list class="no-padding-bottom">
+            <md-list-item class="">
+              <md-icon
+                ng-click="toggleAdvGroupSelectAll(groupId)"
+                ng-class="advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+                md-font-icon="icon {{advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+              ></md-icon>
+              <div flex>
+                <h2>{{getModel.Group(groupId).groupName}}</h2>
+              </div>
+              <md-icon ng-click="removeGroup(groupId)"
+                       class="md-secondary no-push-top"
+                       aria-label="Remove adv group"
+                       md-font-icon="icon icon-close"></md-icon>
+            </md-list-item>
+
+            <md-divider></md-divider>
+
+            <md-list class="no-padding">
+              <md-list-item
+                ng-click= "toggleAdvGroupMembersList(groupId)" class="md-list-item-short border-top">
+                <!-- <div class="button button-clear no-padding-left"> "toggleAdvGroupMembersList(groupId)" ng-show="advGroup.xtras.flag_expanded"
+                  <i class="icon icon-expand-more push-right"></i>
+                </div> -->
+                <p flex class=""><small ng-bind="'View Room members'"></small></p>
+                <div class="button button-clear no-padding-left">
+                <i
+                <i
+                  ng-class="{'icon-expand-less':advGroup.xtras.flag_expanded, 'icon-expand-more':!advGroup.xtras.flag_expanded}"
+                  class="icon icon-expand-more"></i>
+                  </div>
+              </md-list-item>
+              <md-list-item
+                ng-if="advGroup.xtras._isLoadingMembersList">
+                <md-progress-circular
+                  class="no-push-right"
+                  md-mode="indeterminate"
+                  md-diameter="16"></md-progress-circular>
+                <p class="">Loading Room members..</p>
+              </md-list-item>
+
+              <md-list-item
+                ng-show="advGroup.invitee.length==0 && !advGroup.sendToAll">
+                <p class="text-wrap">
+                  No members selected. Please select at least one member to invite</p>
+              </md-list-item>
+
+              <md-list-item
+                ng-repeat="user in advGroup.xtras.users"
+                ng-show="advGroup.xtras.flag_expanded"
+                ng-click="toggleAdvGroupMember(groupId, user.id)"
+                class="">
+                <md-icon
+                  ng-class="advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+                  md-font-icon="icon {{advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+                ></md-icon>
+                <div flex class="padding-vertical">
+                  <p class="txt text-wrap no-push-bottom">{{user.userFirstName}}
+                    {{user.userLastName}}</p>
+
+                  <p class="txt text-wrap color-light-2">{{user.userEmail}}</p>
+                </div>
+              </md-list-item>
+
+            </md-list>
+
+          </md-list>
+        </div>
+      </div>
+
+      <!-- Pending Invitations list -->
+      <div class="list">
+        <div ng-show="jobAdvertiseInviteOwnerList.length > 0"
+             class="item item-sub-header bg-primary push-top pt-lg">
+          <span class="">Pending Invitations</span>
+             <!--  <span class="push-right pr-sm"
+              >({{jobAdvertiseInviteOwnerList.length}})</span> -->
+        </div>
+        <div ng-repeat="jobAdv in jobAdvertiseInviteOwnerList"
+             class="item card no-padding">
+          <md-list class="no-padding-bottom">
+            <md-list-item class="item-sub-header">
+              <p>{{jobAdv.groupName || jobAdv.orgName}}</p>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-repeat="users in jobAdv.members" class="item-complex item-action-right">
+              <div class="item-content">
+                <h2 class="txt text-wrap">{{users.user.userFirstName}} {{users.user.userLastName}}</h2>
+
+                <p class="text-wrap color-light">{{users.user.userEmail}}</p>
+              </div>
+              <md-divider></md-divider>
+            </md-list-item>
+          </md-list>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reason Text -->
+    <form name="form.createAdvertisement" class="full-width push-top pt-lg" novalidate>
+      <div class="list">
+        <div class="item item-input">
+          <span class="input-label">Reason</span>
+          <textarea
+            ng-model="formModel.inviteMsg"
+            name="invite_msg"
+            id="inviteMsgTextbox" rows="5"
+            maxlength="150"></textarea>
+          <div flex layout="row">
+            <span flex></span>
+            <small ng-bind="formModel.inviteMsg.length+'/150'"
+                   class="color-light-2"></small>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="column">
+    <p ng-show="!jobAdv.isValid()" class="push-top full-width text-right">Please select at-least one room or
+      member.</p>
+
+    <div layout="row" class="full-width">
+      <span flex></span>
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      <md-button type="submit"
+                 ng-disabled="!jobAdv.isValid()"
+                 ng-click="submit()" class="md-primary"
+      >Send Invitation(s)
+      </md-button>
+    </div>
+  </div>
+
+</md-dialog>

@@ -1,0 +1,36 @@
+<div class="card list">
+<!--ng-controller="SkillFinderController as ctrl" -->
+    <div class="item" flex>
+        <div layout="row">
+            <md-autocomplete flex name="newSkillName" 
+              md-selected-item="newSkillName" 
+              md-search-text-change="searchTextChange(newSkillName, searchText)" 
+              md-selected-item-change="selectedItemChange(item)" 
+              md-search-text="searchText" 
+              md-items="item in querySearch(searchText)" 
+              md-item-text="item.name" 
+              md-min-length="2" 
+              placeholder="Skill Name">
+                <md-item-template>
+                    <span md-highlight-text="searchText" md-highlight-flags="^i" class="item-title">{{item.name}}</span>
+                </md-item-template>
+                <md-not-found>
+                    <div ng-click class="item-title">{{searchStatusText}}</div>
+                </md-not-found>
+            </md-autocomplete>
+            <md-button class="md-primary md-raised" ng-click="createAddSkill(searchText)">Add
+            </md-button>
+        </div>
+    </div>
+</div>
+<div ng-repeat="skill in user.skills" class="item item-complex item-line-double item-action-right item-icon-left">
+    <i class="icon icon-tools icon-cling-top"></i>
+    <div class="item-content">
+        <div class="txt text-wrap">{{skill.expertise}}</div>
+        <p class="text-wrap">{{skill.description}}</p>
+        <!-- <p class="text-wrap">{{skill.rating}}</p> -->
+    </div>
+    <div class="item-action item-action-secondary" ng-click="confirmAndDeleteSkill($index)">
+        <i class="icon icon-close"></i>
+    </div>
+</div>

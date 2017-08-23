@@ -1,0 +1,67 @@
+<md-dialog class="register-pop-up" aria-label="Remove Skills"
+           layout="column" layout-align="space-between center">
+  <md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>Remove Skills</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close"
+                 aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-toolbar class="toolbar-clear full-width toolbar-tall">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <small flex ng-bind="LANG.LABEL.SELECT_ALL"></small>
+      </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="toggleSelectAll()">
+        <md-icon md-font-icon="icon"
+                 ng-class="{'icon-check-box':isAllSelected, 'icon-check-box-blank':!isAllSelected}"
+                 aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width"  layout="column">
+    <form name="form.skillsList" flex>
+      <div class="list">
+        <div
+          ng-repeat="skill in skills"
+          class="item item-line-single item-icon-left item-icon-right"
+          ng-class="{'bg-light-primary':skill.isSelected}"
+          ng-click="selectSkillForDeletion(skill)">
+          <i class="icon icon-tools  icon-cling-top"></i>
+          <h2 class="txt txt-line-pri text-wrap">{{skill.expertise}}</h2>
+          <!-- <md-button class="md-icon-button" ng-click="toggleSelectAll()">
+                 <md-icon md-font-icon="icon"
+                 ng-class="{'icon-check-box':isAllSelected, 'icon-check-box-blank':!isAllSelected}"
+                 aria-label="Close dialog"></md-icon>
+          </md-button> -->
+
+          <i class="icon icon-cling-top"
+             ng-class="{'icon-check-box':skill.isSelected, 'icon-check-box-blank': !skill.isSelected}"></i>
+          <!-- <p class="txt txt-line-pri text-wrap color-light">
+            <span>{{address.countryName}}</span></p> -->
+        </div>
+      </div>
+    </form>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               ng-bind="LANG.BUTTON.CANCEL"
+               aria-label="Cancel">
+    </md-button>
+    <!--ng-disabled="selectedSkills.length==0" -->
+    <md-button ng-disabled="selectedSkills.length==0"
+               ng-click="updateUserSkills()"
+               ng-bind="LANG.BUTTON.DELETE"
+               aria-label="Remove Skills">
+    </md-button>
+  </div>
+</md-dialog>

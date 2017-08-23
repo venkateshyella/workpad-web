@@ -1,0 +1,87 @@
+<view type="toolbarView" screen-type="device" title="'User Profile'">
+  <toolbar app-toolbar title="'User Profile'">
+    <toolbar-options>
+      <div class="menu-option-group">
+      </div>
+    </toolbar-options>
+  </toolbar>
+  <tabs>
+    <tab icon="icon-info" on-select="onTabSelect('tabProfile')">
+      <div class="card no-padding-top">
+        <div class="item card-rich-media">
+          <img src="assets/image/material-wall.jpg" alt=""/>
+        </div>
+        <div class="item">
+          <h2 class="card-title-text">John Doe</h2>
+          <p></p>
+        </div>
+      </div>
+    </tab>
+
+    <tab icon="icon-person" on-select="onTabSelect('tabContact')">
+      <div class="list card">
+
+        <div class="item item-line-double item-icon-left">
+          <i class="icon icon-call"></i>
+          <h2 class="txt txt-line-pri">+918 128 310</h2>
+          <div class="txt txt-line-sec">Phone number 1</div>
+        </div>
+
+        <div class="item item-line-double item-icon-left">
+          <i class="icon icon-call"></i>
+          <div class="txt txt-line-sec">Phone number 2</div>
+          <h2 class="txt txt-line-pri">981239192837</h2>
+        </div>
+
+      </div>
+    </tab>
+
+    <tab icon="icon-tools" on-select="onTabSelect('tabSkill')">
+      <div class="card list">
+
+        <div class="item item-line-single item-icon-left">
+          <i class="icon icon-tools"></i>
+          <span class="txt">Java</span>
+        </div>
+
+        <div class="item item-line-double item-icon-left">
+          <i class="icon icon-tools"></i>
+          <h2 class="txt txt-line-pri">Infographic Design</h2>
+          <div class="txt txt-line-sec two-line-sec txt-wrap">Design infographics for large corporations.</div>
+        </div>
+
+        <div class="item item-line-double item-icon-left">
+          <i class="icon icon-tools"></i>
+          <h2 class="txt txt-line-pri">Infographic Design</h2>
+          <div class="txt txt-line-sec two-line-sec txt-line-sec">Design infographics for large corporations.</div>
+        </div>
+
+      </div>
+    </tab>
+
+    <tab icon-before="icon-pin" on-select="onTabSelect('tabLocation')">
+
+      <div class="card list">
+
+        <div class="item item-line-double item-icon-left">
+          <i class="icon icon-pin"></i>
+          <h2 class="txt txt-line-pri">Singapore</h2>
+          <div class="txt txt-line-sec multi-line-sec txt-line-sec">93 Jalan Dua 3900093</div>
+        </div>
+
+        <div class="item item-line-double item-icon-left">
+          <i class="icon icon-pin"></i>
+          <h2 class="txt txt-line-pri">Brazil</h2>
+          <div class="txt txt-line-sec multi-line-sec txt-line-sec">
+            <div>Rua Doc Roquetes 1332</div>
+            <div>RIO DE JANEIRO, RJ, CEP. 11525 - 232</div>
+            <div>Rio De Janeiro, Rj, Cep</div>
+          </div>
+        </div>
+
+      </div>
+
+    </tab>
+
+  </tabs>
+</view>

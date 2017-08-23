@@ -1,0 +1,67 @@
+<div hide-if-data-absent class="card no-padding-top">
+  <div class="item card-rich-media">
+    <div class="profile-card overlay">
+      <div class="profile-cover">
+        <div class="inner" layout="row" layout-align="center center">
+        </div>
+      </div>
+      <div class="inner overlay-content" layout="row">
+        <div class="profile-img border">
+          <img ng-src="{{jobModel._img_icon || assets/images/org-icon-placeholder.png}}"
+               on-error-src="assets/images/org-icon-placeholder.png" alt="" class="img"/>
+        </div>
+        <div flex layout="row" layout-align="center center">
+          <div class="profile-img">
+            <img ng-src="assets/images/logo.png" on-error-src="assets/images/profile-placeholder.png" alt=""
+                 class="img img-floating-icon bg-none"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item item-text-wrap">
+    <h3
+      ng-bind="JobTabCtrl.jobModel.title"
+      class="card-title-text"></h3>
+
+    <!-- Originator info -->
+    <div>
+      <p
+        ng-show="JobTabCtrl.jobModel.originator"
+        class="push-bottom pb-sm">
+        <span
+          ng-bind="::LANG.JOB.LABEL.ORIGINATED_BY"></span>
+        <span
+          ng-bind="JobTabCtrl.jobModel.originator.userFirstName+' '+JobTabCtrl.jobModel.originator.userLastName"></span>
+      </p>
+      <p>
+        <context-path
+          path="JobTabCtrl.jobModel.createdFullPath"
+          class="color-light-2 text-ellipsis" style="max-width: 100%"></context-path>
+      </p>
+    </div>
+
+    <!-- Job Status text -->
+    <div class="push-top pt-sm push-bottom pb-sm">
+      <small><i
+        ng-bind="::LANG.JOB.LABEL.STATUS"
+        class="color-light-2"></i></small>
+      <p class="txt-pri text-wrap">{{JobTabCtrl.jobModel.displayStatus}} on
+        {{MU.getDisplayDate_DDMMYYYYHHMMSS(JobTabCtrl.jobModel.eventLastModified)}}</p>
+    </div>
+
+    <!-- Job description -->
+    <div
+      ng-if="JobTabCtrl.jobModel.desc"
+      class="">
+      <small><i
+        class="color-light-2"
+        ng-bind="::LANG.LABEL.DESCRIPTION"></i></small>
+      <p
+        ng-bind="JobTabCtrl.jobModel.desc"
+        class="overflow-hide txt-pri text-wrap pre-formatted"></p>
+    </div>
+
+
+  </div>
+</div>

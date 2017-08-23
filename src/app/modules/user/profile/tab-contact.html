@@ -1,0 +1,48 @@
+<div data-present-switch="user_isPresent">
+
+  <div hide-if-data-absent class="list card">
+
+    <div class="item item-sub-header">Phone</div>
+
+    <div ng-repeat="telObj in data.user.$_telephoneNumberList | orderBy : 'telNum'"
+         class="item item-line-double item-icon-left">
+      <i class="icon-cling-top icon icon-call"></i>
+
+      <a href="tel:{{telObj.telNum}}"
+         ng-bind="telObj.telNum"
+         class="txt txt-line-pri text-wrap"></a>
+
+      <div ng-show="telObj.telTypeString"
+           ng-bind="telObj.telTypeString"
+           class="txt txt-line-sec"></div>
+    </div>
+
+  </div>
+
+  <div class="list card">
+
+    <div class="item item-sub-header">Email</div>
+
+    <div ng-show="data.user.userEntity.userEmail"
+         class="item item-line-double item-icon-left">
+      <i class="icon icon-email icon-cling-top"></i>
+
+      <a href="mailto:{{data.user.userEntity.userEmail}}"
+         class="txt txt-line-pri text-wrap">{{data.user.userEntity.userEmail}}</a>
+
+     <!--  <div class="txt txt-line-sec">Primary email</div> -->
+    </div>
+
+    <div ng-repeat="emailObj in data.user.$_otherEmailList"
+         class="item item-line-double item-icon-left">
+      <i class="icon-cling-top icon icon-email"></i>
+
+      <a href="mailto:{{emailObj.emailId}}"
+         class="txt txt-line-pri text-wrap">{{emailObj.emailId}}</a>
+
+      <div ng-show="emailObj.emailType"
+           class="txt txt-line-sec">{{emailObj.emailType}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,439 @@
+<view type="toolbarView" screen-type="device">
+  <toolbar
+    ng-hide="viewScope.toggleEditToolbar" app-toolbar title="title">
+    <toolbar-options></toolbar-options>
+  </toolbar>
+  </toolbar>
+  <toolbar
+    ng-show="viewScope.toggleEditToolbar" view-toolbar title="Edit">
+    <toolbar-options class="full-width">
+      <md-button
+        ng-click="discardChanges()" ng-disabled="form.isDisabled"
+        class="toolbar-button"><span>Discard</span>
+        <md-icon
+          class="toolbar-icon" md-font-icon="icon icon-close"></md-icon>
+      </md-button>
+      <md-button
+        ng-click="submitUserProfileData()" ng-disabled="form.isDisabled"
+        class="toolbar-button">
+        <md-icon class="toolbar-icon"
+                 md-font-icon="icon icon-floppy"></md-icon>
+        <span>Save</span></md-button>
+
+    </toolbar-options>
+  </toolbar>
+  <layout
+    type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <form name="form.userForm" ng-model="userFormModel" novalidate>
+
+
+        <md-tabs md-dynamic-height=""
+                 md-border-bottom=""
+                 class="md-primary tabs"
+                 md-selected="tab1"
+                 md-align-tabs="top"
+                 class="row-tabs">
+          <md-tab>
+            <md-tab-label>
+               <i class="icon icon-tab icon-info-outline"></i>
+              <h4 class="tab-text">{{LANG.USER_PROFILE.TAB.INFO.TAB_LABEL}}</h4>
+            </md-tab-label>
+            <md-tab-body class="md-padding">
+
+              <div class="card list">
+
+                <!--<div class="item item-sub-header">Profile Cover Image</div>-->
+                <!--<div class="item item-image">-->
+                <!--<div class="profile-card overlay">-->
+                <!--<div class="profile-cover">-->
+                <!--<div class="inner">-->
+                <!--<img-->
+                <!--ng-src="{{user._img_full || 'assets/images/profile-placeholder.png'}}"-->
+                <!--on-error-src="assets/images/profile-placeholder.png"-->
+                <!--alt="Profile cover" class="img fit editable"/>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="inner overlay-content overlay-bottom">-->
+                <!--<div class="item">-->
+                <!--<div ng-click="editProfileCoverImage()" ng-disabled="form.isDisabled"-->
+                <!--class="button button-small button-stable icon-left icon-camera-alt pull-right">Edit-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <div class="item item-thumbnail-left">
+                  <img class="img corner-round" ng-src="{{user._img_icon}}"
+                       on-error-src="assets/images/profile-image-placeholder.png"/>
+
+                  <div class="txt-sub-header">Profile Image</div>
+                  <div ng-click="editProfileImage()" ng-disabled="form.isDisabled"
+                       class="button button-small icon-left icon-camera-alt button-stable">Edit
+                  </div>
+                </div>
+
+                <div class="card list">
+                  <label for="user_firstName" class="item item-positive item-input item-stacked-label">
+                    <span class="input-label">First Name</span>
+                    <input type="text" name="userFirstName" placeholder="first name" ng-disabled="form.isDisabled"
+                           ng-change="onUserModelFormChange(form.userForm)"
+                           ng-model="user.userEntity.userFirstName" id="user_firstName" required
+                           ng-maxlength="50" ng-pattern="/^[A-Za-z0-9 ]+$/" ng-trim>
+
+                    <div ng-messages="form.userForm.userFirstName.$error">
+                      <div ng-message="required" class="ng-message" style="color: red">First name cannot be empty.</div>
+                      <div ng-message="maxlength" class="ng-message" style="color: red">Please limit the first name to
+                        50 characters.
+                      </div>
+                      <div ng-message="pattern" class="ng-message" style="color: red">Only letters,numbers and spaces
+                        are allowed in the first name.
+                      </div>
+                    </div>
+                  </label>
+                  <label for="user_lastName" class="item item-positive item-input item-stacked-label">
+                    <span class="input-label">Last Name</span>
+                    <input type="text"
+                           name="userLastName" placeholder="last name"
+                           ng-disabled="form.isDisabled"
+                           ng-change="onUserModelFormChange(form.userForm)"
+                           ng-model="user.userEntity.userLastName" id="user_lastName" required
+                           ng-maxlength="50" ng-pattern="/^[A-Za-z0-9 ]+$/" ng-trim>
+
+                    <div ng-messages="form.userForm.userLastName.$error">
+                      <div ng-message="required" class="ng-message" style="color: red">Last name cannot be empty.</div>
+                      <div ng-message="maxlength" class="ng-message" style="color: red">Please limit the last name to 50
+                        characters.
+                      </div>
+                      <div ng-message="pattern" class="ng-message" style="color: red">Only letters, numbers and spaces
+                        are allowed in the last name.
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="card list">
+                  <div class="item">
+                    <md-input-container flex>
+                      <label>Description</label>
+
+                    <textarea name="userDesc"
+                              ng-model="user.userEntity.desc"
+                              ng-change="onUserModelFormChange(form.userForm)"
+                              columns="1" md-maxlength="150"></textarea>
+
+                      <div ng-messages="form.userForm.userDesc.$error">
+                        <div ng-message="md-maxlength" class="ng-message">Please limit the description to 150 characters.</div>
+                      </div>
+                    </md-input-container>
+                  </div>
+                </div>
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <i class="icon icon-tab icon-person"></i>
+              <h4 class="tab-text">{{LANG.USER_PROFILE.TAB.CONTACT.TAB_LABEL}}</h4>
+            </md-tab-label>
+            <md-tab-body class="md-padding">
+
+              <div class="card list">
+                <!-- <div class="item item-sub-header">Contacts</div> -->
+                 <div class="item item-sub-header">Phone</div>
+
+                <label
+                  ng-repeat="telephone in user.$_telephoneNumberList"
+                  class="item item-input item-icon-left item-button-right">
+                  <i class="icon icon-call"></i>
+                  <input name="{{'tel-'+$index}}"
+                         ng-model="telephone.telNum" ng-trim
+                         ng-change="onUserModelFormChange(form.userForm)"
+                         ng-disabled="form.isDisabled"
+                         maxlength="20" max="20" ng-maxlength="20"
+                         ng-pattern="/^\+?[0-9]+$/"
+                         type="text"
+                         placeholder="Phone number">
+
+                  <button ng-click="delPhoneNumber($index)"
+                          class="button button-stable">
+                    <i class="icon icon-close"></i>
+                  </button>
+
+                  <div ng-messages="form.userForm['tel-'+$index].$error">
+                    <div ng-message="pattern" class="ng-message" style="color: red">Phone number
+                      should be numeric and can have '+' sign at the beginning.
+                    </div>
+                    <div ng-message="maxlength" class="ng-message" style="color: red">Please limit
+                      the phone numbers to 20 digits
+                    </div>
+                  </div>
+                </label>
+
+                <div class="item">
+                  <md-button ng-click="addNewPhoneNumber()"
+                             class="md-raised">
+                    Add Phone Number
+                    <md-icon md-font-icon="icon icon-add"></md-icon>
+                  </md-button>
+                </div>
+
+                <!--<label class="item item-input item-icon-left">-->
+                <!--<i class="icon icon-email"></i>-->
+                <!--<input name="userEmail2"-->
+                <!--ng-model="user.userEntity.userEmail2" ng-trim-->
+                <!--ng-change="onUserModelFormChange(form.userForm)"-->
+                <!--ng-disabled="form.isDisabled" type="email" rh-form-email ng-maxlength="70"-->
+                <!--minlength="7" min="7" maxlength="70" max="20" placeholder="Email 1"-->
+                <!--id="userEmail2">-->
+
+                <!--<div ng-messages="form.userForm.userEmail2.$error">-->
+                <!--<div ng-message="email" class="ng-message" style="color: red">Please provide a-->
+                <!--valid email address.-->
+                <!--</div>-->
+                <!--<div ng-message="maxlength" class="ng-message" style="color: red">Please limit the email to 70-->
+                <!--characters.-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</label>-->
+                <!--<label class="item item-input item-icon-left">-->
+                <!--<i class="icon icon-email"></i>-->
+                <!--<input name="userEmail3"-->
+                <!--ng-model="user.userEntity.userEmail3"-->
+                <!--ng-change="onUserModelFormChange(form.userForm)"-->
+                <!--ng-disabled="form.isDisabled" type="email" rh-form-email ng-maxlength="70"-->
+                <!--minlength="7" min="7" maxlength="70" max="20" placeholder="Email 2"-->
+                <!--id="userEmail3">-->
+
+                <!--<div ng-messages="form.userForm.userEmail3.$error">-->
+                <!--<div ng-message="email" class="ng-message" style="color: red">Please provide a-->
+                <!--valid email address.-->
+                <!--</div>-->
+                <!--<div ng-message="maxlength" class="ng-message" style="color: red">Please limit the email to 70-->
+                <!--characters.-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</label>-->
+              </div>
+
+              <div class="card list">
+                <div class="item item-sub-header">Email</div>
+
+                <div class="item item-complex item-line-double ">
+                  <div class="item-content item-icon-left">
+                    <i class="icon icon-email icon-cling-top"></i>
+
+                    <h2 class="txt txt-line-pri text-wrap">{{user.userEntity.userEmail}}</h2>
+
+                  <!--   <div class="txt txt-line-sec txt-wrap">Primary email</div> -->
+                  </div>
+                </div>
+
+                <label
+                  ng-repeat="emailObj in user.$_otherEmailList"
+                  class="item item-input item-icon-left item-button-right">
+                  <i class="icon icon-email"></i>
+                  <input name="{{'email-'+$index}}"
+                         ng-model="emailObj.emailId"
+                         ng-change="onUserModelFormChange(form.userForm)"
+                         ng-disabled="form.isDisabled"
+                         type="email" rh-form-email
+                         ng-maxlength="70" minlength="7"
+                         min="7" maxlength="70" max="20"
+                         placeholder="Email">
+
+                  <button ng-click="delNewEmail($index)"
+                          class="button button-stable">
+                    <i class="icon icon-close"></i>
+                  </button>
+
+                  <div ng-messages="form.userForm['email-'+$index].$error">
+                    <div ng-message="email" class="ng-message" style="color: red">Please provide a
+                      valid email address.
+                    </div>
+                    <div ng-message="maxlength" class="ng-message" style="color: red">Please limit the email to 70
+                      characters.
+                    </div>
+                  </div>
+                </label>
+
+
+                <div class="item">
+                  <md-button ng-click="addNewEmail()"
+                             class="md-raised">
+                    Add Email
+                    <md-icon md-font-icon="icon icon-add"></md-icon>
+                  </md-button>
+                </div>
+
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <i class="icon icon-tab icon-tools"></i>
+              <h4 class="tab-text">{{LANG.USER_PROFILE.TAB.SKILL.TAB_LABEL}}</h4> 
+            </md-tab-label>
+            <md-tab-body class="md-padding">
+              <div class="card list">
+                <!-- <div class="item item-sub-header">Skills</div> -->
+                <div ng-switch="form.skillListEditStatus">
+                  <div ng-switch-when="allowEdit" class="item">
+                    <div ng-click="form.skillListEditStatus='addingNewListItem'"
+                         ng-disabled="form.isDisabled" class="button button-block">Add
+                      New Skill
+                    </div>
+                  </div>
+                  <div ng-switch-when="addingNewListItem" class="">
+                    <!-- <div class="item item-input">
+                      <input name="newSkillName"
+                        ng-focus="form.skillListEditStatus='addingNewListItem'"
+                        ng-disabled="form.isDisabled" ng-model="newSkillName" ng-trim
+                        maxlength="50" type="text" placeholder="Skill Name" />
+                    </div> -->
+                    <div class="item" flex ng-controller="SkillFinderController as ctrl">
+                      <div layout="row">
+                        <md-autocomplete flex
+                                         name="newSkillName"
+                                         ng-disabled="form.isDisabled"
+                                         md-selected-item="newSkillName"
+                                         md-search-text-change="ctrl.searchTextChange(newSkillName, ctrl.searchText)"
+                                         md-selected-item-change="addSkill(item.name,'',''); ctrl.selectedItemChange(item)"
+                                         md-search-text="ctrl.searchText"
+                                         md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                         md-item-text="item.name"
+                                         md-min-length="2"
+                                         placeholder="Skill Name">
+                          <md-item-template>
+                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" class="item-title">{{item.name}}</span>
+                          </md-item-template>
+                          <md-not-found>
+                            <div ng-click class="item-title">{{searchStatusText}}</div>
+                          </md-not-found>
+                        </md-autocomplete>
+                        <md-button ng-disabled="isDisabled" class="md-primary md-raised"
+                                   ng-click="createAddSkill(ctrl.searchText)">Add
+                        </md-button>
+                      </div>
+                    </div>
+                    <!-- <div class="item">
+                      <md-input-container flex md-no-float> <textarea
+                        name="newSkillDesc" ng-model="newSkillDesc"
+                        ng-disabled="form.isDisabled" placeholder="Description"
+                        id="newSkillDesc" rows="2"></textarea> </md-input-container>
+
+                      <div layout="row" layout-align="end center">
+                        <md-button
+                          ng-click="form.skillListEditStatus='allowEdit'; form.userForm.$setPristine();"
+                          ng-disabled="form.isDisabled" class="">Cancel</md-button>
+                        {{searchText}}
+                        <md-button ng-click="addSkill(newSkillName, newSkillDesc, newSkillRating)"
+                          ng-disabled="form.isDisabled" class="md-primary md-raised">Add</md-button>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div ng-repeat="skill in user.skills"
+                   class="item item-complex item-line-double item-action-right item-icon-left">
+                <i class="icon icon-tools icon-cling-top"></i>
+
+                <div class="item-content">
+                  <div class="txt text-wrap">{{skill.expertise}}</div>
+                  <p class="text-wrap">{{skill.description}}</p>
+                  <!-- <p class="text-wrap">{{skill.rating}}</p> -->
+                </div>
+                <div class="item-action item-action-secondary"
+                     ng-click="form.isDisabled || confirmAndDeleteSkill($index)"
+                     ng-disabled="form.isDisabled">
+                  <i class="icon icon-close"></i>
+                </div>
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <i class="icon icon-tab icon-pin"></i>
+              <h4 class="tab-text">{{LANG.USER_PROFILE.TAB.LOCATION.TAB_LABEL}}</h4> 
+            </md-tab-label>
+            <md-tab-body class="md-padding">
+              <div class="card list no-padding-top">
+                <!-- <div layout="row">
+                  <div flex class="item item-sub-header push-top pt-sm">Location</div>
+                </div> -->
+                <div class="item" flex ng-controller="LocationFinderController as ctrl">
+                  <div layout="row">
+                    <md-autocomplete flex ng-model="form.newLocation" name="newLocation"
+                                     ng-disabled="form.isDisabled"
+                                     md-selected-item="ctrl.selectedItem"
+                                     md-search-text-change="ctrl.searchTextChange(form.userForm.newLocation, ctrl.searchText)"
+                                     md-search-text="ctrl.searchText"
+                                     md-selected-item-change="addLocation(item); ctrl.selectedItemChange(item)"
+                                     md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                     md-item-text="item.name+'('+item.countryCode+')'" md-min-length="2"
+                                     placeholder="{{LANG.PLACEHOLDER.LOCATION_SELECT}}">
+                      <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" class="item-title">{{item.name}} </span>
+									<span class="item-metadata">
+										<span class="txt-upper">({{item.countryEntity.countryCode}})</span>
+									</span>
+                      </md-item-template>
+                      <md-not-found>
+                        <div ng-click class="item-title">{{searchStatusText}}</div>
+                      </md-not-found>
+                    </md-autocomplete>
+                    <md-button ng-disabled="isDisabled" class="md-primary md-raised"
+                               ng-click="createAddLocation(ctrl.searchText)">Add
+                    </md-button>
+                  </div>
+                </div>
+                <div ng-repeat="address in user.location"
+                     class="item item-complex item-line-single item-action-right item-icon-left">
+                  <i class="icon icon-pin icon-cling-top"></i>
+
+                  <div class="item-content">
+                    <div class="txt text-wrap">{{address.name}}</div>
+                    <p class="color-light">{{address.countryName}}</p>
+                  </div>
+                  <div class="item-action item-action-secondary"
+                       ng-click="form.isDisabled || confirmAndDeleteLocation($index)">
+                    <i class="icon icon-close"></i>
+                  </div>
+                </div>
+              </div>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
+      </form>
+
+    </row>
+  </layout>
+</view>
+<layout-toolbar title="'User Profile Edit'"
+                component-id="userEditorToolbar" on-navbutton-click="transitionBack()"
+                on-side-menu-toggle-click="toggleSideMenu()" class="ng-hide">
+  <div class="profile-content no-overlay">
+
+    <md-card class="cover">
+      <md-card-content class="inner">
+        <div ng-click="editProfileCoverImage()" class="full-width">
+          <img
+            ng-src="{{user._img_full || 'assets/images/profile-placeholder.png'}}"
+            on-error-src="assets/images/profile-placeholder.png"
+            alt="Profile cover" class="img fit editable"/>
+        </div>
+      </md-card-content>
+    </md-card>
+
+    <div class="mug-shot md-whiteframe-z2">
+      <img ng-click="editProfileImage()" ng-src="{{user._img_icon}}"
+           on-error-src="assets/images/profile-image-placeholder.png" alt=""
+           class="img editable round">
+    </div>
+  </div>
+
+  <!--<form name="form.testForm" fileuploader onupload="onUpload" method="post" ng-submit="testUpload()" enctype="multipart/form-data">-->
+  <!--<input type="file" name="efile" onchange="angular.element(this).scope().updateFile(this.files)"/>-->
+  <!--<input type="submit"/>--> <!--</form>--> </layout-toolbar>

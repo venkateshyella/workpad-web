@@ -1,0 +1,87 @@
+<!-- <md-dialog class="dialog-full-screen" aria-label="Update Group">
+    <md-toolbar class="toolbar-clear">
+        <div class="md-toolbar-tools">
+            <h2>Update Group</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+        <div class="toolbar-content">
+        </div>
+    </md-toolbar>
+    <form name="form.Update_group" class="full-height" novalidate>
+        <div class="full-height" layout="column" layout-align="space-between center">
+            <md-dialog-content class="full-width">
+                <div>
+                    <md-input-container md-no-float>
+                        <label>Group Name</label>
+                        <input type="text" name="groupName" placeholder="Group Name" required ng-model="formModel.Update_group.groupName" ng-maxlength="50" ng-pattern="/^[A-Za-z0-9 ]+$/" ng-trim>
+                        <div ng-messages="form.Update_group.groupName.$error">
+                            <div ng-message="maxlength" class="ng-message">Please limit the Group name to 50 characters.</div>
+                            <div ng-message="pattern" class="ng-message">Only letters, numbers and spaces are allowed in the Group name.
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Description</label>
+                        <textarea name="groupDesc" ng-model="formModel.Update_group.desc" columns="1" md-maxlength="150"></textarea>
+                        <div ng-messages="form.Update_group.groupDesc.$error">
+                            <div ng-message="md-maxlength" class="ng-message">Please limit the Group description to 150 characters.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </md-dialog-content>
+            <div class="md-actions full-width" layout="row">
+                <span flex></span>
+                <md-button ng-click="cancel()">
+                    Cancel
+                </md-button>
+                <md-button type="submit" ng-disabled="!form.Update_group.$valid" ng-click="submit(formModel.Update_group)" class="md-primary">Update
+                </md-button>
+            </div>
+        </div>
+    </form>
+</md-dialog> -->
+<md-dialog class="register-pop-up" aria-label="invite user" layout="column" layout-align="space-between center">
+    <md-toolbar >
+        <div class="md-toolbar-tools">
+            <h2>Update Room</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+        <div class="toolbar-content">
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="full-width no-padding" flex layout="column">
+        <form name="form.Update_group" novalidate>
+            <div class="dialog-content-padding-sides push-top">
+                <md-input-container md-no-float>
+                    <input type="text" name="groupName" placeholder="Room name" required ng-model="formModel.Update_group.groupName" ng-maxlength="50" ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/" ng-trim>
+                    <div ng-messages="form.Update_group.groupName.$error">
+                        <div ng-message="maxlength" class="ng-message">{{LANG.GROUP.VALIDATION_MESSAGE.NAME.MAXLEN}}</div>
+                        <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),. are allowed in the
+                  Room name.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Description</label>
+                    <textarea name="groupDesc" ng-model="formModel.Update_group.desc" columns="1" md-maxlength="256" required></textarea>
+                    <div ng-messages="form.Update_group.groupDesc.$error">
+                        <div ng-message="md-maxlength" class="ng-message">Please limit the Group description to 256 characters.</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </form>
+    </md-dialog-content>
+    <div class="md-actions full-width" layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">
+            Cancel
+        </md-button>
+        <md-button type="submit" ng-disabled="!form.Update_group.$valid" ng-click="submit(formModel.Update_group)" class="md-primary">Update
+        </md-button>
+    </div>
+</md-dialog>

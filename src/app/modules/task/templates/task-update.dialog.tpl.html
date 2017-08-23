@@ -1,0 +1,73 @@
+<md-dialog class="register-pop-up" aria-label="Update Task">
+
+<md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2>Update Task</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+    </div>
+
+  </md-toolbar>
+
+  <form name="form.update_task" class="full-height" novalidate>
+    <div class="full-height" layout="column" layout-align="space-between center">
+
+      <md-dialog-content class="full-width">
+        <!-- <div layout="row">
+          <h2 class="md-title">Update Task</h2>
+        </div> -->
+
+        <div>
+          <md-input-container md-no-float>
+            <input type="text"
+           		name="taskName"
+                placeholder="Task Name"
+                required
+                ng-model="formModel.update_task.title" 
+                ng-maxlength="50"
+                ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+                ng-trim>
+              <div ng-messages="form.update_task.taskName.$error">
+              	<div ng-message="maxlength" class="ng-message">Please limit the Task name to 50 characters.</div>
+              	<div ng-message="pattern" class="ng-message">Only letters, numbers and spaces are allowed in the
+                	Task name.
+              	</div>
+              </div>
+          </md-input-container>
+
+          <md-input-container flex>
+            <label>Description</label>
+            <textarea name="taskDesc" required ng-model="formModel.update_task.desc"
+                      columns="1" md-maxlength="256"></textarea>
+            <div ng-messages="form.update_task.taskDesc.$error">
+              <div ng-message="md-maxlength" class="ng-message">Please limit the WorkSpace description to 256 characters.</div>
+            </div>
+          </md-input-container>
+
+        </div>
+
+
+      </md-dialog-content>
+
+      <div class="md-actions full-width" layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">
+          Cancel
+        </md-button>
+        <md-button type="submit"
+                   ng-disabled="!form.update_task.$valid"
+                   ng-click="submit()" class="md-primary"
+          >Update
+        </md-button>
+      </div>
+
+    </div>
+
+
+  </form>
+</md-dialog>

@@ -1,0 +1,205 @@
+<view type="toolbarView" title="title">
+
+  <toolbar app-toolbar title="title">
+    <toolbar-options>
+
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon ng-if="isContextMenuRequired" md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+
+        <md-menu-content width="4">
+          <!--<md-menu-item>-->
+          <!--<md-button ng-click="refreshScope(); $mdCloseMenu()"-->
+          <!--ng-bind="LANG.BUTTON.REFRESH"-->
+          <!--aria-label="Refresh">-->
+          <!--</md-button>-->
+          <!--</md-menu-item>-->
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('DIRECT_MESSAGE', tab_curr, tabs) && !xtras.isAdmin">
+            <md-button ng-click="newDirectMessage(); $mdCloseMenu()"
+                       ng-bind="LANG.USER_PROFILE.BUTTON.DIRECT_MESSAGE"
+                       aria-label="Direct Message">
+            </md-button>
+          </md-menu-item>
+          
+			<md-menu-item ng-if="MU.isActionAvailableInTab('VIEW_MESSAGE', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="directMessages(); $mdCloseMenu()"
+            ng-bind="LANG.USER_PROFILE.BUTTON.VIEW_MESSAGE"
+                       aria-label="View Message">
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('EDIT_PROFILE', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="onEditClick(); $mdCloseMenu()"
+                       ng-bind="LANG.BUTTON.EDIT"
+                       aria-label="Edit Profile">
+            </md-button>
+          </md-menu-item>
+
+          <!--<md-menu-item ng-if="MU.isActionAvailableInTab('EDIT_CONTACTS', tab_curr, tabs) && xtras.isAdmin">-->
+          <!--<md-button ng-click="onEditClick(); $mdCloseMenu()"-->
+          <!--ng-bind="LANG.USER_EDIT.CONTACTS.DELETE_CONTACTS"-->
+          <!--aria-label="Edit Contacts">-->
+          <!--</md-button>-->
+          <!--</md-menu-item>-->
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('ADD_PHONE_NUM', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="runAddPhoneNumWorkflow();$mdCloseMenu()"
+                       ng-bind="LANG.USER_EDIT.CONTACTS.ADD_TEL"
+                       aria-label="Add Phone Number">
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('ADD_PHONE_NUM', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="runRemovePhoneNumWorkflow();$mdCloseMenu()"
+                       ng-bind="LANG.USER_EDIT.CONTACTS.REMOVE_TEL"
+                       aria-label="Remove Phone Number">
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('ADD_EMAIL', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="runAddEmailWorkflow();$mdCloseMenu()"
+                       ng-bind="LANG.USER_EDIT.CONTACTS.ADD_EMAIL"
+                       aria-label="Add Email">
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('ADD_EMAIL', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="runRemoveEmailWorkflow();$mdCloseMenu()"
+                       ng-bind="LANG.USER_EDIT.CONTACTS.REMOVE_EMAIL"
+                       aria-label="Remove Email">
+            </md-button>
+          </md-menu-item>
+
+          <!--<md-menu-item ng-if="MU.isActionAvailableInTab('EDIT_SKILLS', tab_curr, tabs) && xtras.isAdmin">-->
+          <!--<md-button ng-click="onEditClick(); $mdCloseMenu()"-->
+          <!--ng-bind="LANG.BUTTON.EDIT"-->
+          <!--aria-label="Edit Skills">-->
+          <!--</md-button>-->
+          <!--</md-menu-item>-->
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('ADD_SKILL', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="onAddSkillClick(); $mdCloseMenu()"
+                       ng-bind="LANG.USER_PROFILE.BUTTON.ADD_SKILL"
+                       aria-label="Add Skill">
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('REMOVE_SKILL', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="onRemoveSkillClick(); $mdCloseMenu()"
+                       ng-bind="LANG.USER_PROFILE.BUTTON.REMOVE_SKILL"
+                       aria-label="Remove Skill">
+            </md-button>
+          </md-menu-item>
+          <!--  <md-menu-item >
+            <md-button ng-click="onRemoveSkillClick(); $mdCloseMenu()"
+                       aria-label="Remove Skill">
+                       Remove Skill
+            </md-button>
+          </md-menu-item> -->
+
+
+          <!--<md-menu-item ng-if="MU.isActionAvailableInTab('EDIT_LOCATION', tab_curr, tabs) && xtras.isAdmin">-->
+          <!--<md-button ng-click="onEditClick(); $mdCloseMenu()"-->
+          <!--ng-bind="LANG.BUTTON.EDIT"-->
+          <!--aria-label="Edit Location">-->
+          <!--</md-button>-->
+          <!--</md-menu-item>-->
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('ADD_LOCATION', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="runNewLocationWorkflow(); $mdCloseMenu()"
+                       ng-bind="LANG.USER_PROFILE.BUTTON.ADD_LOCATION"
+                       aria-label="Add Location">
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item ng-if="MU.isActionAvailableInTab('ADD_LOCATION', tab_curr, tabs) && xtras.isAdmin">
+            <md-button ng-click="runRemoveLocationsWorkflow(); $mdCloseMenu()"
+                       ng-bind="LANG.USER_PROFILE.BUTTON.REMOVE_LOCATION"
+                       aria-label="Remove Locations">
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+
+      <md-progress-linear ng-show="toolbarLoader.async_active"
+                          md-mode="indeterminate"
+                          class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+    </toolbar-options>
+
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row layout-gravity="top" layout-height="4em">
+      <md-tabs class="md-primary tabs" md-selected="tab1" md-align-tabs="top">
+
+        <md-tab md-on-select="onTabSelect('TAB_PROFILE')"
+                id="tabProfile"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+            <i class="icon icon-tab icon-info-outline"></i>
+            <h4 class="tab-text">{{LANG.USER_PROFILE.TAB.INFO.TAB_LABEL}}</h4>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_CONTACT')"
+                id="tabContact"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+            <i class="icon icon-tab icon-person"></i>
+            <h4 class="tab-text">{{LANG.USER_PROFILE.TAB.CONTACT.TAB_LABEL}}</h4>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_SKILL')"
+                id="tabSkill"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+            <i class="icon icon-tab icon-tools"></i>
+            <h4 class="tab-text">{{LANG.USER_PROFILE.TAB.SKILL.TAB_LABEL}}</h4>
+
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_LOCATION')"
+                id="tabLocation"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+            <i class="icon icon-tab icon-pin"></i>
+            <h4 class="tab-text">{{LANG.USER_PROFILE.TAB.LOCATION.TAB_LABEL}}</h4>
+
+          </div>
+        </md-tab>
+
+      </md-tabs>
+
+    </row>
+
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <div
+        ng-if="data.user"
+        ng-include="tabs[tab_curr].src"></div>
+      <div ng-show="!data.user"
+           class="item item-backdrop text-center">
+        <div class="backdrop-filler-image">
+          <i class="icon icon-backdrop icon-user"></i>
+        </div>
+        <p ng-if="profile.isActive()" ng-bind="LANG.USER_PROFILE.LABEL.LOADING"></p>
+        <md-button
+          ng-click="refreshScope()"
+          ng-if="profile.isError()"
+          class="button-clear">
+          <span ng-bind="LANG.BUTTON.RETRY"></span>
+        </md-button>
+      </div>
+    </row>
+
+  </layout>
+
+</view>

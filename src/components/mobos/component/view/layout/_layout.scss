@@ -1,0 +1,64 @@
+layout, .layout {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  &[type="linearLayout"] {
+    &[orientation="vertical"] {
+
+      .scroll-container {
+        //overflow-y: hidden;
+        //position: absolute;
+        //overflow: scroll;
+        //-webkit-overflow-scrolling: touch;
+      }
+    }
+
+    &[positioning="absolute"] {
+      height: 100%;
+      row {
+        overflow: auto;
+        &[layout-gravity="top"], &[layout-gravity="bottom"] {
+          position: absolute;
+          overflow: hidden;
+        }
+        &[layout-gravity="free"] {
+          max-height: 100%;
+        }
+      }
+    }
+  }
+  row {
+    display: block;
+    width: 100%;
+    &[scroll] {
+      .scroll-container {
+        width: 100%;
+      }
+    }
+
+    &[layout-gravity='top'] {
+      position: fixed;
+      top: 0px;
+      z-index: 10;
+    }
+    &[layout-gravity="bottom"] {
+      position: fixed;
+      bottom: 0px;
+      z-index: 10;
+    }
+  }
+}
+
+.platform-ios {
+  layout, .layout {
+    row {
+      &[layout-gravity="bottom"] {
+        position: absolute;
+        bottom: 0px;
+        z-index: 10;
+      }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+<div class="button-bar padding" >
+   <div ng-class="{'button-outline': showMainChatTab}"
+      ng-click="toggleOnChatTabs(false)" class="button">
+      <small>Main</small>
+   </div>
+   <div ng-class="{'button-outline': !showMainChatTab}"
+      ng-click="toggleOnChatTabs(true)" class="button">
+      <small>Threads</small>
+   </div>
+</div>
+<div ng-if="!showMainChatTab" class="tab-list-scroll scroll-container" chat-tab-scroll>
+
+   <div ng-if="OrgChatroomNickName && !!orgTabCtrl.orgModel.chatRoomId">
+      <chat-window chatroom-id="orgTabCtrl.orgModel.chatRoomId"
+         nickname="OrgChatroomNickName"
+         on-join-event="chatroomEvent('join')"
+         on-sent-event="chatroomEvent('sent')"
+         on-sending-event="chatroomEvent('sending')"
+         on-error-event="chatroomEvent('error')" 
+         opt-params = "chatProfileParams"
+         force-chat-reload = "true" >
+      </chat-window>
+   </div>
+   <div ng-show="!orgTabCtrl.orgModel.chatRoomId" class="item item-backdrop text-center">
+      <div class="backdrop-filler-image">
+         <i class="icon icon-backdrop icon-forum"></i>
+      </div>
+      <p>{{LANG.ERROR.CHATROOM_UNAVAILABLE}}</p>
+   </div>
+</row>   
+   <row layout-height="8em" layout-gravity="bottom" mv-show="!!orgTabCtrl.orgModel.chatRoomId"
+      ng-show="!!orgTabCtrl.orgModel.chatRoomId">
+      <div class="chatListFooter CLF-textarea">
+         <form name="">
+            <div class="chSubmitForm" layout="row">
+               <div class="chMessageInputField chMessageTextAreaField" flex>
+                  <textarea ng-model="chatFormModel.newMessage"
+                     ng-disabled="!ui.flags.isInARoom || ui.flags.isSendingMessage"
+                     ng-keypress="onInputFieldKeyPress($event, newMessage)" type="text"
+                     placeholder="{{_connStatusMessage}}" class=""></textarea>
+               </div>
+               <md-button
+                  ng-mousedown="sendNewMessage($event, chatFormModel.newMessage)" ng-if="ui.flags.isInARoom"
+                  class="md-icon-button chSubmitBtn" ng-disabled="!ui.flags.isInARoom || ui.flags.sendMessage_inProgress"
+                  aria-label="Send Message" md-no-ink>
+                  <md-icon md-font-icon="icon icon-send"></md-icon>
+                  <!--<span>Send</span>-->
+               </md-button>
+               <md-progress-circular ng-if="!ui.flags.isInARoom" md-diameter="24"
+                  md-mode="indeterminate"></md-progress-circular>
+            </div>
+         </form>
+      </div>
+   </row>
+</div>
+
+
+<div ng-if="showMainChatTab" class="tab-list-scroll scroll-container" chat-tab-scroll >
+<div ng-if="!showThreadView" >
+
+<div ng-show="ChatThreadsData.threads.length==0" class="item item-backdrop text-center">
+   <div ng-switch="_activity">
+      <div ng-switch-when="_idle">
+         <div ng-bind="ChatThreadsData.threads.length>0 ? '' : 'No Chat Threads available'" class="text-center"></div>
+      </div>
+      <div class="list" layout="row" layout-align="center center" ng-show="ChatThreadsData.threads.length == 0">
+         <div class="item item-backdrop text-center">
+            <div class="backdrop-filler-image">
+               <i class="icon icon-backdrop icon-forum"></i>
+               <h4 class="color-light-2">No Threads.Please create new Thread.</h4>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div ng-show="ChatThreadsData.threads.length>0" >
+   <md-list-item ng-repeat="thread in ChatThreadsData.threads" class="md-2-line md-no-proxy">
+      <div class="md-list-item-text" ng-click="viewChatThread(thread)" style="cursor: pointer;">
+         <h3 class="line-clamp-2" style="overflow: visible;" ng-bind="thread.name" ></h3>
+         <p class="color-light">
+            <span ng-bind="thread.desc" class=""></span>
+         </p>
+         <p class="push-top pt-sm push-bottom pb-sm" aria-hidden="false"> <span>Created on {{MU.getDisplayDate_DDMMYYYYHHMMSS(thread.createTime)}}</span></p></p>
+   </md-list-item>
+   <div ng-show="isNextPageAvailable" class="item" layout="row"
+      layout-align="center center">
+   <button ng-click="loadNext()" ng-disabled="loadingNext"
+      class="button button-block button-small button-clear"
+      aria-label="Load More">
+   <span ng-show="!loadingNext">Load More</span> <span
+      ng-show="loadingNext">Loading ...</span>
+   </button>
+   </div>
+   </div>
+
+</div>
+<div ng-if="showThreadView">
+<div class="button-bar padding" >
+       <h4 class="thread-title" ng-bind="threadName"></h4>
+</div>
+      <chat-window chatroom-id="threadRoomId"
+         nickname="ThreadroomNickName"
+         on-join-event="chatroomEvent('join')"
+         on-sent-event="chatroomEvent('sent')"
+         on-sending-event="chatroomEvent('sending')"
+         on-error-event="chatroomEvent('error')"
+         opt-params = "chatProfileParams" 
+         force-chat-reload = "true">
+      </chat-window>
+ <row layout-height="8em" layout-gravity="bottom" mv-show="!!threadRoomId"
+      ng-show="!!threadRoomId">
+      <div class="chatListFooter CLF-textarea">
+         <form name="">
+            <div class="chSubmitForm" layout="row">
+               <div class="chMessageInputField chMessageTextAreaField" flex>
+                  <textarea ng-model="chatFormModel.newMessage"
+                     ng-disabled="!ui.flags.isInARoom || ui.flags.isSendingMessage"
+                     ng-keypress="onInputFieldKeyPress($event, newMessage)" type="text"
+                     placeholder="{{_connStatusMessage}}" class=""></textarea>
+               </div>
+               <md-button
+                  ng-mousedown="sendNewMessage($event, chatFormModel.newMessage)" ng-if="ui.flags.isInARoom"
+                  class="md-icon-button chSubmitBtn" ng-disabled="!ui.flags.isInARoom || ui.flags.sendMessage_inProgress"
+                  aria-label="Send Message" md-no-ink>
+                  <md-icon md-font-icon="icon icon-send"></md-icon>
+                  <!--<span>Send</span>-->
+               </md-button>
+               <md-progress-circular ng-if="!ui.flags.isInARoom" md-diameter="24"
+                  md-mode="indeterminate"></md-progress-circular>
+            </div>
+         </form>
+      </div>
+   </row>
+
+</div>
+</div>

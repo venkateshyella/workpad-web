@@ -1,0 +1,35 @@
+<div ng-hide="!data.user.location || data.user.location.length>0"
+     class="card list">
+  <p class="item item-sub-header text-center">{{LANG_USER.LABEL.LOCATION_NA}}</p>
+</div>
+
+<div ng-show="data.user.location && data.user.location.length>0"
+     class="card list">
+
+  <div
+    ng-repeat="address in data.user.location"
+    class="item item-line-single item-icon-left">
+    <i class="icon icon-pin icon-cling-top"></i>
+
+    <h2 class="txt txt-line-pri text-wrap">{{address.name}}</h2>
+
+    <p class="txt txt-line-pri text-wrap color-light">
+      <span>{{address.countryName}}</span></p>
+
+  </div>
+
+  <!-- Sample Location UI -->
+  <!------------------------>
+  <!--<div class="item item-line-double item-icon-left">-->
+  <!--<i class="icon icon-pin"></i>-->
+
+  <!--<h2 class="txt txt-line-pri">Brazil</h2>-->
+
+  <!--<div class="txt txt-line-sec multi-line-sec txt-line-sec">-->
+  <!--<div>Rua Doc Roquetes 1332</div>-->
+  <!--<div>RIO DE JANEIRO, RJ, CEP. 11525 - 232</div>-->
+  <!--<div>Rio De Janeiro, Rj, Cep</div>-->
+  <!--</div>-->
+  <!--</div>-->
+
+</div>

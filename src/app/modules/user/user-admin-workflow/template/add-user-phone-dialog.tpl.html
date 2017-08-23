@@ -1,0 +1,54 @@
+<md-dialog class="register-pop-up" aria-label="Add New Phone"
+           layout="column" layout-align="space-between center">
+  <md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>Add Phone Number</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width" >
+
+    <div class="list no-padding" flex>
+      <form name="form.newPhoneNumber">
+        <label
+          class="item item-input">
+          <input ng-model="newPhoneNum"
+                 name="newPhoneNumberField"
+                 ng-model="newPhoneNum"
+                 ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                 ng-disabled="form.isDisabled"
+                 maxlength="20" max="20" ng-maxlength="20"
+                 ng-pattern="/^\+?[0-9]+$/"
+                 type="text"
+                 placeholder="Phone number"
+                 focus-me="focusTriggerElem">
+
+          <div ng-messages="form.newPhoneNumber.newPhoneNumberField.$error">
+            <div ng-message="pattern" class="ng-message" style="color: red">Phone number
+              should be numeric and can have '+' sign at the beginning.
+            </div>
+            <div ng-message="maxlength" class="ng-message" style="color: red">Please limit
+              the phone numbers to 20 digits
+            </div>
+          </div>
+        </label>
+      </form>
+    </div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()">
+      <span ng-bind="LANG.BUTTON.CANCEL"></span>
+    </md-button>
+    <md-button ng-click="updateUserPhoneNumbers(newPhoneNum)"
+               ng-disabled="newPhoneNum.length==0 || form.newPhoneNumber.newPhoneNumberField.$invalid">
+      <span ng-bind="LANG.BUTTON.SAVE">Save</span>
+    </md-button>
+  </div>
+</md-dialog>

@@ -1,0 +1,24 @@
+<md-list-item ng-controller="DatePickerFormPartialViewController">
+    <div flex>
+        <md-input-container>
+            <label>{{fieldModel.label}}</label>
+            <input type="date" name="{{formField.keyName}}" ng-model="formField_temp.keyValue" ng-change="dateChangeEvent(formField_temp.keyValue)" ng-disabled="fieldCtrl.isDisabled()">
+            <div ng-messages="fieldCtrl.$formError" class="ng-messages-floating line-clamp-2">
+                <div ng-message="0" class="ng-message">{{fieldCtrl.$formError[0]}}</div>
+            </div>
+        </md-input-container>
+    </div>
+</md-list-item>
+<!-- <md-list-item>
+    <div flex>
+        <md-input-container>
+            <label>{{fieldModel.label}}</label>
+            <input type="text" ng-if="!formField.templateOptions.fieldModel.multiLine" name="{{formField.keyName}}" ng-model="formField.keyValue" ng-model-options="{debounce:{'default':1000}}" ng-disabled="fieldCtrl.isDisabled()" ng-change="fieldCtrl.getFormFieldError()">
+            <textarea type="text" ng-if="formField.templateOptions.fieldModel.multiLine" name="{{formField.keyName}}" ng-model="formField.keyValue" ng-model-options="{debounce:{'default':1000}}" ng-disabled="fieldCtrl.isDisabled()" ng-change="fieldCtrl.getFormFieldError()"></textarea>
+            <div ng-messages="fieldCtrl.$formError" class="ng-messages-floating line-clamp-2">
+                <div ng-message="0" class="ng-message">{{fieldCtrl.$formError[0]}}</div>
+            </div>
+        </md-input-container>
+    </div>
+</md-list-item>
+ -->

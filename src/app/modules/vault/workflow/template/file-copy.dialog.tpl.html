@@ -1,0 +1,105 @@
+<md-dialog class="register-pop-up" aria-label="{{config.title}}"
+           layout="column" layout-align="space-between center">
+  <md-toolbar  class="toolbar-custom">
+    <div class="md-toolbar-tools">
+      <md-button ng-if="FLAG.isSrcFilesSelected"
+                 class="md-icon-button" ng-click="action_toggleSelectDestination()">
+        <md-icon md-font-icon="icon icon-arrow-back" aria-label="Previous View"></md-icon>
+      </md-button>
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>{{config.title || 'default title'}}</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <!--<md-toolbar class="toolbar-clear full-width">-->
+  <!--<div class="md-toolbar-tools">-->
+  <!--<md-select-->
+  <!--ng-model="selectedDestination"-->
+  <!--md-on-open="loadFiles()"-->
+  <!--placeholder="{{config.placeholder_select_destination}}"-->
+  <!--flex>-->
+  <!--<md-option ng-value="destination"-->
+  <!--ng-repeat="destination in destinationList track by trackDestinationBy(destination)"-->
+  <!--&gt;{{destination.name}}-->
+  <!--</md-option>-->
+  <!--</md-select>-->
+  <!--</div>-->
+  <!--</md-toolbar>-->
+
+  <md-dialog-content class="full-width " >
+
+    <!-- Destination Select View -->
+    <div ng-if="FLAG.isSrcFilesSelected" class="list no-padding" flex>
+      <div ng-show="destinationList.length > 0" class="item border-top">
+        <h2>
+          <small ng-bind="config.placeholder_select_destination"
+                 class="txt-bold"></small>
+        </h2>
+      </div>
+      <div ng-repeat="destination in destinationList track by trackDestinationBy(destination)"
+           ng-click="action_selectDestination(destination)"
+           ng-class="{'bg-light-2': destination.isSelected}"
+           class="item">
+        <h2
+          ng-class="{'txt-bold': destination.isSelected}"
+          class="txt txt-line-pri text-wrap padding-top padding-bottom">{{destination.name}}</h2>
+      </div>
+      <div class="list" layout="row" layout-align="center center" ng-show="destinationList.length == 0" aria-hidden="false">
+      <h4 class="color-light-2 ng-binding">No destination available to copy data.</h4>
+      </div>
+    </div>
+
+    <!-- File Select View -->
+    <div ng-if="!FLAG.isSrcFilesSelected" class="list no-padding" flex>
+      <div
+        class="item item-line-single item-icon-right border-top push-bottom"
+        ng-click="multiSelectList.toggleSelectionAll()"
+        flex>
+        <h2 class="txt txt-bold text-wrap">
+          <small ng-bind="selectAllText || 'Select all'"></small>
+        </h2>
+
+        <i class="icon icon-cling-top"
+           ng-class="multiSelectList.isAllSelected ? 'icon-check-box': 'icon-check-box-blank'"></i>
+      </div>
+      <div
+        ng-repeat="file in multiSelectList.list"
+        class="item item-line-single item-icon-left item-icon-right"
+        ng-class="{'bg-light-primary':file.isSelected}"
+        ng-click="multiSelectList.toggleItemSelection(file)"
+        flex>
+        <i class="icon icon-drive-file icon-cling-top"></i>
+
+        <h2 class="txt txt-line-pri text-wrap">{{file.fileDisplayName}}</h2>
+
+        <i class="icon icon-cling-top"
+           ng-class="file.isSelected ? 'icon-check-box' : 'icon-check-box-blank'"></i>
+      </div>
+    </div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               aria-label="Cancel Workflow">
+      <span ng-bind="config.cancelButtonText"></span>
+    </md-button>
+    <md-button ng-click="action_toggleSelectDestination()"
+               ng-if="!FLAG.isSrcFilesSelected"
+               ng-disabled="multiSelectList.selectCount==0"
+               aria-label="Execute Action">
+      <span ng-bind="config.placeholder_select_destination"></span>
+    </md-button>
+    <md-button ng-click="selectedDestination && action()"
+               ng-if="FLAG.isSrcFilesSelected"
+               ng-disabled="!selectedDestination"
+               class="md-primary"
+               aria-label="Execute Action">
+      <span ng-bind="config.actionButtonText"></span>
+    </md-button>
+  </div>
+</md-dialog>

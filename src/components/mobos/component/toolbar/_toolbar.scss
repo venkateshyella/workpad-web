@@ -1,0 +1,183 @@
+$toolbar-height: $bar-height;
+
+.app-toolbar,
+md-toolbar {
+  height: $toolbar-height;
+  min-height: $toolbar-height;
+  .md-toolbar-tools {
+    .toolbar-button {
+      color: find-text-color($primary);
+      min-width: 40px;
+    }
+  }
+  .toolbar-button {
+    &.button-thin {
+      width: 30px;
+      min-width: 30px;
+    }
+  }
+  .toolbar-icon {
+    .md-font {
+      font-size: 1.7rem;
+      color: find-text-color($primary);
+    }
+  }
+
+  .toolbar-title {
+    line-height: 1.7rem;
+    display: block;
+    max-height: 56px;
+    color: find-text-color($primary);
+  }
+  .toolbar-icon {
+  }
+  .appHome-icon {
+    margin-left: 0;
+  }
+}
+
+md-toolbar {
+  .toolbar-icon {
+    .md-font {
+      font-size: 1.7rem;
+    }
+  }
+  md-progress-linear.toolbar-loading-bar {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    .md-container.md-ready {
+      height: 3px;
+      top: 0;
+    }
+  }
+  md-input-container {
+    .md-input {
+      color: inherit;
+    }
+  }
+}
+
+.toolbar {
+  display: block;
+  height: $toolbar-height;
+  overflow: hidden;
+  border-top: 1px solid darken($primary, 10%);
+  background: $primary;
+  &.toolbar-top {
+    height: $toolbar-height;
+  }
+
+  &.title-no-wrap {
+    .toolbar-title {
+      white-space: nowrap;
+      overflow: initial;
+      .toolbar-text {
+        //white-space: nowrap;
+        //overflow: scroll;
+      }
+    }
+  }
+  &.title-ellipsis {
+    .toolbar-title {
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      .toolbar-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .toolbar-subtitle {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .toolbar-content {
+    display: block;
+    position: relative;
+    height: 100%;
+    line-height: 2;
+    overflow: hidden;
+    padding: 0.1em 0.2em;
+    background: $primary;
+    color: find-text-color($primary);
+
+    .toolbar-title-content {
+      display: inline-block;
+      padding: 0.4rem 0;
+    }
+
+    .toolbar-text {
+      font-weight: 500;
+      padding-left: 4px;
+      padding-right: 4px;
+      line-height: 2.3;
+      font-size: 1.4em;
+    }
+
+    .menu-option-item {
+      margin: 0 0.1rem;
+      padding: 0 0.6rem;
+      display: inline-block;
+      float: left;
+      font-size: 1.1em;
+      //line-height: $toolbar-height - 0.6em;
+      height: 2.7rem;
+      overflow: hidden;
+      border-radius: 3px;
+      &.auto-adjust {
+        min-width: initial;
+      }
+      &.thin {
+        padding: 0 0.2rem;
+      }
+      .icon {
+        font-size: 1.7em;
+        height: 2.5rem;
+        min-width: 1.8rem;
+        float: left;
+      }
+      .txt {
+        line-height: 2.6rem;
+        float: left;
+      }
+      //&:focus, &:active {
+      //  background: mix($primary, find-click-active-tone($primary), 80%);
+      //}
+      &.ng-click-active {
+        background: mix($primary, find-click-active-tone($primary), 80%);
+      }
+    }
+
+    .menu-options-container {
+      position: absolute;
+      top: 0.15em;
+      right: 0.3em;
+      //height: $toolbar-height - 0.8em;
+      line-height: 3.3rem;
+
+      .menu-option-group {
+        position: relative;
+        height: 100%;
+        padding: 0.3rem 0;
+        //@include clearfix();
+
+      }
+    }
+
+  }
+}
+
+.platform-ios {
+  .toolbar {
+    &.toolbar-top {
+      height: $toolbar-height + $ios-statusbar-height;
+      padding-top: $ios-statusbar-height;
+    }
+  }
+}

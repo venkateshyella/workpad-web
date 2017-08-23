@@ -1,0 +1,314 @@
+<div class="drawer-content" ng-controller="SideMenuController">
+
+  <div class="drawer-scroll">
+
+    <div class="list side-menu no-padding-top">
+
+      <div class="item-group">
+
+        <div class="item item-no-padding card-rich-media">
+
+          <div class="profile-card overlay no-padding">
+            <div class="profile-cover">
+              <div class="inner">
+                <img ng-src="assets/images/profile-placeholder.png"
+                     on-error-src="assets/images/profile-placeholder.png"
+                     alt=""
+                     class="img fit-height"/>
+              </div>
+            </div>
+
+            <div class="overlay-bg"></div>
+
+            <div class="inner overlay-content">
+              <md-list class="no-padding">
+                <md-list-item class="padding-top pdt-lg">
+                  <div class="profile-img margin-sides-auto">
+                    <div class="padding p-sm">
+                      <img ng-src="{{sharedData.user._img_icon}}"
+                           on-error-src="assets/images/profile-image-placeholder.png"
+                           alt=""
+                           class="img"/>
+                    </div>
+                  </div>
+                </md-list-item>
+
+                <md-list-item>
+                  <div class="txt text-wrap">{{sharedData.user.userEntity.userFirstName}}
+                    {{sharedData.user.userEntity.userLastName}}
+                  </div>
+                </md-list-item>
+
+                <!--<md-list-item class="no-padding">-->
+                  <!--<div layout="row" layout-wrap flex-->
+                       <!--class="md-button-bar border-top">-->
+                    <!--<md-button flex class="padding text-center md-clear">-->
+                      <!--Notification <span></span>-->
+                    <!--</md-button>-->
+
+                    <!--<md-button ng-click="transitionTo('root.app.user-personal-chat', {user1: 3,user2:56})"-->
+                               <!--class="padding text-center md-clear"-->
+                               <!--flex>-->
+                      <!--<span>Ping Messages</span>-->
+                    <!--</md-button>-->
+                  <!--</div>-->
+
+
+                <!--</md-list-item>-->
+
+              </md-list>
+            </div>
+
+          </div>
+
+          <!--<md-list class="no-padding">-->
+          <!--<md-list-item ng-click="onChatNotificationClick();"-->
+          <!--class="md-2-line">-->
+          <!--<div class="md-list-item-text">-->
+          <!--<h5 class="text-ellipsis">Chat Summary</h5>-->
+
+          <!--<p class="text-ellipsis">{{unreadNotificationModel.message}}</p>-->
+          <!--</div>-->
+          <!--<md-icon ng-click-->
+          <!--aria-label="Notifications"-->
+          <!--md-font-icon="icon icon-forum"-->
+          <!--class="md-secondary"></md-icon>-->
+          <!--</md-list-item>-->
+          <!--</md-list>-->
+
+          <div class="item side-menu-item item-icon-left"
+               ng-class="{'active': sharedData.sideMenu.currItem=='dashboard'}"
+               ng-click="resetTransitionTo('root.app.dashboard');action.enableDashboardItem('dashboard')">
+            <i class="icon icon-home"></i>
+
+            <div ng-bind="LANG.APP_NAV.LIST.HOME"></div>
+          </div>
+
+          <div class="item side-menu-item item-icon-left"
+               ng-class="{'active': sharedData.sideMenu.currItem=='my_jobs'}"
+               ng-click="resetTransitionTo('root.app.job-list.openJobList', {userId: session.userId});action.enableDashboardItem('my_jobs')">
+            <i class="icon icon-briefcase-case-two"></i>
+
+            <div ng-bind="LANG.APP_NAV.LIST.JOBS"></div>
+          </div>
+
+          <div class="item side-menu-item item-icon-left"
+               ng-class="{'active': sharedData.sideMenu.currItem=='my_orgs'}"
+               ng-click="resetTransitionTo('root.app.org-list', {userId: session.userId});action.enableDashboardItem('my_orgs')">
+            <i class="icon icon-domain"></i>
+
+            <div ng-bind="LANG.APP_NAV.LIST.ORGANISATIONS"></div>
+          </div>
+
+          <!--<div ng-click-->
+          <!--class="item side-menu-item item-icon-left">-->
+          <!--<i class="icon icon-forum"></i>-->
+
+          <!--<div ng-bind="LANG.APP_NAV.LIST.CHATS"></div>-->
+          <!--</div>-->
+
+          <div class="item side-menu-item item-icon-left"
+               ng-class="{'active': sharedData.sideMenu.currItem=='profile'}"
+               ng-click="resetTransitionTo('root.app.user', {id: session.userId});action.enableDashboardItem('profile')">
+            <i class="icon icon-user"></i>
+
+            <div ng-bind="LANG.APP_NAV.LIST.PROFILE"></div>
+          </div>
+
+          <div class="item-divider"></div>
+
+         
+
+          <!--<div class="item side-menu-item item-icon-left"-->
+          <!--ng-class="{'active': sharedData.sideMenu.currItem=='my_tpl'}"-->
+          <!--ng-click="resetTransitionTo('root.app.user-templates');action.enableDashboardItem('my_tpl')">-->
+          <!--<i class="icon icon-drive-document"></i>-->
+
+          <!--<div ng-bind="LANG.APP_NAV.LIST.TEMPLATES"></div>-->
+          <!--</div>-->
+
+       
+
+
+          <!--<div ng-click="resetTransitionTo('root.app.chatMock')"-->
+          <!--class="item side-menu-item item-icon-left">-->
+          <!--<i class="icon icon-forum"></i>-->
+
+          <!--<div>Chat Mock</div>-->
+          <!--</div>-->
+
+          <!--<div ng-click="resetTransitionTo('root.app.files');"-->
+          <!--class="item side-menu-item item-icon-left">-->
+          <!--<i class="icon icon-drive-file"></i>-->
+
+          <!--<div>Files</div>-->
+          <!--</div>-->
+
+
+          <div class="item side-menu-item item-icon-left"
+               ng-class="{'active': sharedData.sideMenu.currItem=='account'}"
+               ng-click="resetTransitionTo('root.app.account', {id: session.userId});action.enableDashboardItem('account')">
+            <i class="icon icon-tools"></i>
+            <div ng-bind="LANG.APP_NAV.LIST.ACCOUNT"></div>
+          </div>
+
+          <div class="item side-menu-item item-icon-left"
+               ng-class="{'active': sharedData.sideMenu.currItem=='settings'}"
+               ng-click="resetTransitionTo('root.app.settings', {id: session.userId});action.enableDashboardItem('settings')">
+            <i class="icon icon-cog-gear"></i>
+            <div ng-bind="LANG.APP_NAV.LIST.SETTINGS"></div>
+          </div>
+
+        </div>
+
+        <div class="item-divider"></div>
+
+        <div class="item-group">
+
+          <div ng-click="action.logout()"
+               class="item push-top side-menu-item item-icon-left">
+            <!--<div class="side-menu-button">-->
+            <!--<md-button type="submit"-->
+            <!--ng-click="action.logout()"-->
+            <!--class="md-raised md-warn md-hue-3 full-width">-->
+            <!--<span class="push-right">-->
+            <!--<md-icon md-font-icon="icon icon-lock-outline"></md-icon>-->
+            <!--</span>-->
+            <!--<span>{{LANG.APP_NAV.LIST.LOGOUT}}</span>-->
+            <!--</md-button>-->
+            <!--</div>-->
+            <i class="icon icon-lock-outline"></i>
+
+            <div ng-bind="LANG.APP_NAV.LIST.LOGOUT"></div>
+          </div>
+
+        </div>
+
+        <div ng-show="_debug" class="item-divider"></div>
+
+        <div ng-show="_debug"
+             class="item item-complex no-margin">
+          <md-switch ng-model="_debug" ng-change="action.toggleDebugMode(false)">
+            Debug Mode
+          </md-switch>
+        </div>
+
+        <div ng-show="_debug"
+             ng-controller="DebugController"
+             class="item-group">
+
+          <div class="item item-sub-header">
+            Debug Settings
+          </div>
+
+          <div ng-click="endpoint.showServiceUrlDebug()"
+               class="item">
+            <div>End Point</div>
+            <p ng-bind="endpoint.currBaseUrl"></p>
+          </div>
+
+          <div ng-click="transitionTo('root.app.logs')"
+               class="item">
+            <div>Logs</div>
+            <p>Application logs</p>
+          </div>
+
+        </div>
+
+        <div ng-show="_debug"
+             class="item-group">
+
+          <div class="item item-sub-header">
+            Templates
+          </div>
+
+          <div ng-click="resetTransitionTo('root.app.form-create')"
+               class="item"
+          >Form Build
+          </div>
+
+        </div>
+
+        <div ng-show="_debug"
+             class="item-group">
+
+          <div class="item item-sub-header">
+            App Components
+          </div>
+
+          <div ng-click="resetTransitionTo('root.app.statestack')"
+               class="item"
+               ng-bind="LANG.APP_NAV.LIST.NAVIGATION">
+          </div>
+
+          <div ng-click="resetTransitionTo('root.app.forms')"
+               class="item"
+               ng-bind="LANG.APP_NAV.LIST.FORMS">
+          </div>
+
+          <div ng-click="resetTransitionTo('root.app.list')"
+               class="item"
+               ng-bind="LANG.APP_NAV.LIST.LIST">
+          </div>
+
+          <div ng-click="resetTransitionTo('root.app.cards')"
+               class="item"
+               ng-bind="LANG.APP_NAV.LIST.CARDS">
+          </div>
+
+          <div ng-click="resetTransitionTo('root.app.dialogs')"
+               class="item"
+               ng-bind="LANG.APP_NAV.LIST.DIALOGS">
+          </div>
+
+          <div ng-click="resetTransitionTo('root.app.tabs')"
+               class="item"
+               ng-bind="LANG.APP_NAV.LIST.TABS">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="ng-scope toolbar toolbar-top drawer-toolbar">
+
+      <md-toolbar class="app-toolbar">
+        <div class="md-toolbar-tools">
+
+          <h2 class="toolbar-title">
+            <span>Workpad</span>
+          </h2>
+
+        </div>
+      </md-toolbar>
+
+
+      <!--<div class="toolbar-content">-->
+
+      <!--<div class="">-->
+      <!--<div class="toolbar-title-content ng-scope" ng-click="resetTransitionTo('root.app.dashboard')">-->
+      <!--<span class="toolbar-text toolbar-title">Workpad</span>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="toolbar-title-content"></div>-->
+
+      <!--<div class="menu-options-container">-->
+      <!--</div>-->
+
+      <!--</div>-->
+    </div>
+
+    <div class="drawer-footer">
+      <div class="list">
+        <div class="item border-top" ng-click="action.triggerEnableDebug()">
+          <p class="text-center">
+            <span>{{APP_VERSION}}</span>
+            <span ng-if="DEFAULT_ENDPOINT.NAME">({{DEFAULT_ENDPOINT.NAME}})</span></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="card list">
+
+  <div ng-show="!data.user || !data.user.skills || data.user.skills.length<=0"
+       class="item item-sub-header text-center">{{LANG_USER.LABEL.SKILLS_NA}}
+  </div>
+
+  <div ng-show="data.user.skills && data.user.skills.length>0"
+       ng-repeat="skill in data.user.skills"
+       class="item item-line-double item-icon-left"
+       layout="row">
+    <i class="icon icon-tools icon-cling-top"></i>
+
+    <div flex>
+    <div class ="skillrating">
+    <div class="skills-rating">  <h2 class="txt text-wrap push-top pt-sm">{{skill.expertise}}</h2>
+      <p class="txt text-wrap">{{skill.description}}</p></div>
+    
+    
+      <rating ng-model="skill.skillRating"
+              readonly="true"
+              class="rating-skills"
+              max="5" style="min-width: 230px;margin-left: -10px;"></rating>
+      </div>
+     
+    </div>
+
+  </div>
+
+  <!-- Sample Skill with description -->
+  <!--===============================-->
+  <!--<div class="item item-line-double item-icon-left">-->
+  <!--<i class="icon icon-tools"></i>-->
+
+  <!--<h2 class="txt txt-line-pri">Infographic Design</h2>-->
+
+  <!--<div class="txt txt-line-sec two-line-sec txt-line-sec">Design infographics for large corporations.</div>-->
+  <!--</div>-->
+
+</div>

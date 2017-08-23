@@ -1,0 +1,20 @@
+<md-dialog class="" aria-label="Job Invitation'">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools md-tall">
+      <!--<h2>{{locals.LANG.POST.JOB_INVITATION.POST_DIALOG_TITLE}}</h2>-->
+      <h2>{{options.title}}</h2>
+      <span flex></span>
+      <md-button ng-click="selectCtrl.cancel()"
+                 class="md-icon-button"
+                 aria-label="Close">
+        <md-icon md-font-icon="icon icon-close"
+                 class="toolbar-icon"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="dialog-custom" ng-class="options.dialogClass">
+    <div ng-show="selectCtrl.isLoading()">Loading...</div>
+    <div ng-include="options.itemListUrl"></div>
+  </md-dialog-content>
+</md-dialog>

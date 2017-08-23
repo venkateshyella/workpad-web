@@ -1,0 +1,27 @@
+<md-dialog aria-label="Link File">
+    <md-toolbar class="">
+        <div class="md-toolbar-tools">
+            <h2 flex>Link File</h2>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-list class="no-padding-top" >
+            <md-list-item ng-repeat="file in tempFileList">
+                <md-checkbox ng-model="file.selected" aria-label="file.fileName"></md-checkbox>
+                <p flex>{{file.fileName}}</p>
+            </md-list-item>
+        </md-list>
+    </md-dialog-content>
+    <div class="md-actions">
+        <span flex></span>
+        <md-button ng-click="cancel()">
+            Cancel
+        </md-button>
+        <md-button ng-click="linkFile()">
+            Select
+        </md-button>
+    </div>
+</md-dialog>

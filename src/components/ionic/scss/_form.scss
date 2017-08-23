@@ -1,0 +1,544 @@
+/**
+ * Forms
+ * --------------------------------------------------
+ */
+
+// Make all forms have space below them
+form {
+  margin: 0 0 $line-height-base;
+}
+
+// Groups of fields with labels on top (legends)
+legend {
+  display: block;
+  margin-bottom: $line-height-base;
+  padding: 0;
+  width: 100%;
+  border: $input-border-width solid $input-border;
+  color: $dark;
+  font-size: $font-size-base * 1.5;
+  line-height: $line-height-base * 2;
+
+  small {
+    color: $stable;
+    font-size: $line-height-base * .75;
+  }
+}
+
+// Set font for forms
+label,
+input,
+button,
+select,
+textarea {
+  @include font-shorthand($font-size-base, normal, $line-height-base); // Set size, weight, line-height here
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: $font-family-base; // And only set font-family here for those that need it (note the missing label element)
+}
+
+/* Enable editing in contenteditable divs */
+/* ref: http://stackoverflow.com/questions/21295698/html5-contenteditable-attribute-not-working-properly-on-ios7-mobile-safari */
+[contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+// Input List
+// -------------------------------
+
+body {
+  .item-input {
+    //@include display-flex();
+    @include align-items(center);
+    position: relative;
+    overflow: hidden;
+    //padding-left: 0;
+    //padding-right: 0;
+    //padding-bottom: 0;
+    border: none;
+    //margin-bottom: $unit*2;
+
+    input {
+      @include border-radius(0);
+      @include flex(1, 220px);
+      @include appearance(none);
+      margin: 0;
+      padding-right: 24px;
+      background-color: transparent;
+    }
+    textarea,
+    select,
+    [contenteditable="true"],
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"] {
+      border-bottom: 1px solid $button-light-border;
+      &:focus {
+        border-bottom-width: 2px;
+      }
+    }
+    @include input-style($button-primary-border, $item-primary-border);
+
+    [contenteditable="true"] {
+      height: auto;
+      white-space: normal;
+      width: 100%;
+    }
+
+    .button .icon {
+      @include flex(0, 0, 24px);
+      position: static;
+      display: inline-block;
+      height: auto;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .button-bar {
+      @include border-radius(0);
+      @include flex(1, 0, 220px);
+      @include appearance(none);
+    }
+
+    &.item-light {
+      @include input-style($button-light-border, $item-light-border);
+    }
+    &.item-stable {
+      @include input-style($item-stable-border, $item-stable-border);
+    }
+    &.item-positive {
+      @include input-style($item-positive-border, $item-positive-border);
+    }
+    &.item-calm {
+      @include input-style($item-calm-border, $item-calm-border);
+    }
+    &.item-assertive {
+      @include input-style($item-assertive-border, $item-assertive-border);
+    }
+    &.item-balanced {
+      @include input-style($item-balanced-border, $item-balanced-border);
+    }
+    &.item-energized {
+      @include input-style($item-energized-border, $item-energized-border);
+    }
+    &.item-royal {
+      @include input-style($item-royal-border, $item-royal-border);
+    }
+    &.item-dark {
+      @include input-style($item-dark-border, $item-dark-border);
+    }
+
+    .icon {
+      min-width: 5*$unit;
+      font-size: $item-icon-font-size;
+      max-height: $unit*15;
+    }
+    &:focus {
+      border-bottom-width: 2px;
+    }
+
+    .push-bottom {
+      margin-bottom: 1em;
+    }
+    .push-top {
+      margin-top: 1em;
+    }
+
+    .error {
+      white-space: normal;
+      line-height: 3.4*$unit;
+      font-size: 2.5*$unit;
+      color: $error-text;
+    }
+  }
+}
+
+.input-row {
+  .input-col {
+    position: relative;
+  }
+}
+
+.item-input-inset {
+  @include display-flex();
+  @include align-items(center);
+  position: relative;
+  overflow: hidden;
+  padding: ($item-padding / 3) * 2;
+}
+
+.item-input-wrapper {
+  @include display-flex();
+  @include flex(1, 0);
+  @include align-items(center);
+  @include border-radius(4px);
+  padding-right: 8px;
+  padding-left: 8px;
+  //background: #eee;
+}
+
+.item-input-inset .item-input-wrapper input {
+  padding-left: 4px;
+  height: 29px;
+  background: transparent;
+  line-height: 18px;
+}
+
+.item-input-wrapper ~ .button {
+  margin-left: ($item-padding / 3) * 2;
+}
+
+.input-label {
+  display: table;
+  padding: 7px 10px 7px 0px;
+  max-width: 200px;
+  width: 35%;
+  font-size: 16px;
+}
+
+.placeholder-icon {
+  color: #aaa;
+  &:first-child {
+    padding-right: 6px;
+  }
+  &:last-child {
+    padding-left: 6px;
+  }
+}
+
+.item-stacked-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+
+  .input-label {
+    font-size: $font-size-base*0.98;
+    display: inline-block;
+    padding: 0px;
+    vertical-align: middle;
+  }
+  .icon {
+    font-size: $unit*6.0;
+    max-height: $unit*16.0;
+  }
+  &.item-avatar {
+    > img:first-child,
+    .item-image {
+      margin-top: $unit;
+    }
+  }
+  &.item-select {
+    select {
+      position: relative;
+      display: block;
+      width: 100%;
+      border-radius: 0px;
+      max-width: 100%;
+      padding: $unit 0;
+      padding-right: 6*$unit;
+      margin-right: 0;
+      text-align: center;
+      direction: initial;
+    }
+    &:after {
+      top: 8*$unit;
+      right: 2*$unit;
+    }
+  }
+}
+
+.item-input {
+  &.item-stacked-label {
+    input,
+    textarea,
+    [contenteditable="true"] {
+      //background-color: $input-bg;
+    }
+  }
+  &.item-select {
+    select {
+      border-bottom: 1px solid $button-light-border;
+    }
+  }
+  textarea,
+  [contenteditable="true"] {
+    padding-top: $unit*1.5;
+    padding-bottom: 1.5*$unit;
+  }
+}
+
+.item-stacked-label input {
+  overflow: hidden;
+  height: $line-height-computed + $font-size-base + (3 * $unit);
+}
+
+.item-floating-label {
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+
+  .input-label {
+    position: relative;
+    padding: 5px 0 0 0;
+    opacity: 0;
+    top: 10px;
+    @include transition(opacity .15s ease-in, top .2s linear);
+
+    &.has-input {
+      opacity: 1;
+      top: 0;
+      @include transition(opacity .15s ease-in, top .2s linear);
+    }
+  }
+}
+
+// Form Controls
+// -------------------------------
+
+.item-input {
+  textarea,
+  [contenteditable="true"] {
+    line-height: $font-size-base + 0.4;
+    padding-top: 0.5*$unit;
+  }
+
+  // Shared size and type resets
+  textarea,
+  select,
+  [contenteditable="true"],
+  input[type="text"],
+  input[type="password"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="color"] {
+    display: block;
+    //padding-top: $unit;
+    padding-left: 0;
+    height: $line-height-computed + $font-size-base;
+    color: $input-color;
+    vertical-align: middle;
+    font-size: $font-size-base+0.1;
+    line-height: $font-size-base + 0.1;
+    border: 0;
+  }
+}
+
+textarea,
+select,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"] {
+  margin-bottom: 0.5*$unit;
+  &.ng-dirty.ng-invalid {
+    &:not(:focus) {
+      border-color: $error-text;
+    }
+    &:focus {
+    }
+  }
+  &:not(.ng-dirty) {
+    ~ .hide-if-clean {
+      display: none;
+    }
+  }
+
+}
+
+.platform-ios,
+.platform-android {
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"] {
+    padding-top: 8px;
+  }
+}
+
+.item-input {
+  input,
+  textarea {
+    width: 100%;
+    &[rows] {
+      height: auto;
+    }
+  }
+}
+
+textarea {
+  padding-left: 0;
+  @include placeholder($input-color-placeholder, -3px);
+}
+
+// Reset height since textareas have rows
+textarea {
+  height: auto;
+  padding-top: $unit;
+}
+
+// Everything else
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+}
+
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0;
+  line-height: normal;
+}
+
+// Reset width of input images, buttons, radios, checkboxes
+.item-input {
+  input[type="file"],
+  input[type="image"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"],
+  input[type="radio"],
+  input[type="checkbox"] {
+    width: auto; // Override of generic input selector
+  }
+}
+
+// Set the height of file to match text inputs
+input[type="file"] {
+  line-height: $input-height-base;
+}
+
+// Text input classes to hide text caret during scroll
+.previous-input-focus,
+.cloned-text-input + input,
+.cloned-text-input + textarea {
+  position: absolute !important;
+  left: -9999px;
+  width: 200px;
+}
+
+// Placeholder
+// -------------------------------
+input,
+textarea {
+  @include placeholder();
+}
+
+// DISABLED STATE
+// -------------------------------
+
+// Disabled and read-only inputs
+input[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly]:not(.cloned-text-input),
+textarea[readonly]:not(.cloned-text-input),
+select[readonly] {
+  background-color: $input-bg-disabled;
+  color: mix($input-color, #fff, 60%);
+  cursor: not-allowed;
+}
+
+// Explicitly reset the colors here
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][readonly],
+input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
+
+// Submit input
+input.input-hidden {
+  //display: none;
+  visibility: hidden;
+}
+
+// ngMessages Styles
+// -------------------------------
+
+md-input-container {
+  &.md-input-focused {
+    [ng-messages],
+    .ng-messages {
+      //opacity: 0.0 !important;
+    }
+  }
+}
+
+input:focus + [ng-messages],
+input:focus + .ng-messages {
+  opacity: 0.0 !important;
+  display: none;
+}
+
+.item-input {
+  .ng-message {
+    font-size: $font-size-base;
+    color: mix($dark, #fff, 90%);
+    margin-top: $unit;
+    line-height: $font-size-base + 1.2*$unit;
+    color: #ff2a31;
+    @include word-wrap;
+  }
+}
+
+form {
+  md-input-container {
+    padding-bottom: 32px;
+  }
+}
+
+md-input-container {
+  [ng-messages] {
+    &.ng-messages-floating {
+      position: absolute;
+    }
+    .ng-message {
+      line-height: 20px;
+    }
+  }
+}

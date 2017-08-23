@@ -1,0 +1,42 @@
+<div class="list">
+  <div
+    ng-repeat="audit in jobAuditList"
+    ng-click="toggleExpandAuditItemText(audit.auditLogId)"
+    class="item"
+    ng-class="{'item-text-wrap': jobAuditListMeta[audit.auditLogId].isExpanded, 'bg-light-2':$odd}"
+    layout-md="row" layout-lg="row" style="cursor:text">
+
+    <h3 flex
+        class="no-margin padding-right padding-lg">
+      <span ng-bind="audit.desc || 'NA'"></span>
+    </h3>
+
+    <p
+      ng-bind="audit.$_displayTime"
+      class="color-light-2"
+      style="line-height: 22px"></p>
+
+  </div>
+
+  <div ng-hide="jobAuditList.length>0" class="item item-backdrop text-center">
+    <div class="backdrop-filler-image">
+      <i class="icon icon-backdrop icon-history"></i>
+    </div>
+  </div>
+
+  <div
+    ng-show="groupAuditCollectionLoader_activityStore && !groupAuditCollectionLoader_activityStore.allPagesLoaded"
+    class="item" layout="row"
+    layout-align="center center">
+    <button ng-click="fetchGroupAuditPage()"
+            ng-disabled="groupAuditCollectionLoader_activityStore.isLoading"
+            class="button button-block button-clear" aria-label="Load More">
+      <small
+        ng-show="!groupAuditCollectionLoader_activityStore.isLoading"
+        ng-bind="::LANG.MESSAGES.LOAD_MORE"></small>
+      <small
+        ng-show="groupAuditCollectionLoader_activityStore.isLoading"
+        ng-bind="::LANG.MESSAGES.LOADING"></small>
+    </button>
+  </div>
+</div>

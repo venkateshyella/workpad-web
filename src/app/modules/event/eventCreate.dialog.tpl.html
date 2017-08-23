@@ -1,0 +1,486 @@
+<md-dialog class="" aria-label="Create WorkSpace" style="width:750px">
+   <md-toolbar>
+      <div layout="row" class="md-toolbar-tools">
+         <h2 ng-if="!isEventEdit" class="md-title">Add Event</h2>
+         <h2 ng-if="isEventEdit" class="md-title">Update Event</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon
+               md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+      </div>
+   </md-toolbar>
+   <md-dialog-content class="full-width">
+      <form ng-if="!isTemplateView" name="form.createEvent" class="full-height" novalidate>
+         <div class="form-group row">
+            <label for="eventdescription" class="col-sm-3 col-form-label" >Event Type</label>
+            <div class="col-sm-3">
+               <select ng-change="changeEventType(eventModel.eventType)" name="eventType" class="form-control" ng-disabled="isEventEdit" required ng-model="eventModel.eventType" ng-options="opt.code as opt.name for opt in eventTypes"></select>
+            </div>
+         </div>
+         <div ng-if="!showJobFrom" class="form-group row">
+            <label for="eventname" class="col-sm-3 col-form-label">Event Name</label>
+            <div class="col-sm-9">
+               <input auto-input-focus name="eventName"   class="form-control"   placeholder="Event Name" required ng-model="eventModel.name"  ng-maxlength="50" ng-disabled="isEventEdit" ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/" rows="5" ng-trim md-select-on-focus="">
+               <div ng-messages="form.createEvent.eventName.$error" >
+                  <div ng-message="maxlength" class="ng-message event-error">Please limit the Event name to 50 characters.</div>
+                  <div ng-message="pattern" class="ng-message event-error">Only letters, numbers, spaces and special characters _,-,&,',(,),.  are allowed in the
+                     Event name.
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div ng-if="!showJobFrom" class="form-group row">
+            <label for="eventdescription" class="col-sm-3 col-form-label" >Event Description</label>
+            <div class="col-sm-9">
+               <input name="eventDesc" class="form-control"  required ng-model="eventModel.desc"  ng-disabled="isEventEdit" ng-maxlength="256" ng-maxlength="256"  ng-patter rows="5" placeholder="Event Description">
+               <div ng-messages="form.createEvent.eventDesc.$error" >
+                  <div ng-message="maxlength" class="ng-message event-error" >Please limit the Event description to 256 characters.</div>
+               </div>
+            </div>
+         </div>
+         <div class="form-group ">
+            <div class="row">
+               <label for="starttime" class="col-sm-3 col-form-label">Start Date</label>
+               <div class="col-sm-9">
+                  <datepicker datepicker-class="" class="input-group date" selector="form-control" date-format="{{eventDateFormat}}"  date-min-limit="{{minDate}}"
+                     button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+                     button-next="<i class='fa fa-arrow-right'></i>">
+                     <div class="input-group inner-addon right-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <input style="font-family: inherit;" name="startDate" ng-model="eventModel.startDate" class="form-control event-icon"
+                           placeholder="Choose a date" required/>  
+                     </div>
+                  </datepicker>
+               </div>
+            </div>
+            <br>
+            <div class="row start-time-div">
+               <label class="col-sm-3">Time</label>
+               <label ng-if="eventModel.eventType != -603" for="fromtime" class="col-sm-2 col-form-label from-label">From</label>
+               <div class="col-sm-3">
+                  <div class="">
+                     <select name="fromTime" class="form-control" required ng-model="eventModel.fromTime" ng-options="opt.value as opt.label for opt in fromTimeList"></select>
+                  </div>
+               </div>
+               <label ng-if="eventModel.eventType != -603" for="totime" class=" col-sm-1  col-form-label">To</label>
+               <div  ng-if="eventModel.eventType != -603" class="col-sm-3">
+                  <div class=" ">
+                     <select name="toTime" class="form-control"  required ng-model="eventModel.toTime" ng-options="opt.value as opt.label for opt in toTimeList"></select>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div ng-if="showJobFrom"  class="divider dividr-m-10"></div>
+         <div ng-if="showJobFrom" >
+          <div class="form-group row">
+            <label for="eventjobtype" class="col-sm-3 col-form-label" >Job Type</label>
+            <div class="col-sm-3">
+               <select ng-disabled="isEventEdit" ng-change="changeJobType(eventModel.jobType,form)" name="eventJobType" class="form-control"  required ng-model="eventModel.jobType" ng-options="opt.value as opt.label for opt in jobTypes"></select>
+            </div>
+         </div>
+         <div ng-if="showTemplates"  class="form-group row">
+            <label for="eventjobtype" class="col-sm-3 col-form-label" >Select Template</label>
+            <div class="col-sm-4">
+               <select ng-disabled="isEventEdit" ng-change="selectTemplate(templateObj)" name="eventJobType" class="form-control" style="color: #000;" ng-disabled="isEventEdit" required ng-model="templateObj" ng-options="opt as opt.templateName for opt in orgTemplates">
+               <option value="" disabled selected hidden>Select Template</option></select>
+            </div>
+         </div>
+         
+            <div class="form-group row">
+               <label for="jobName" class="col-sm-3 col-form-label">Job Name</label>
+               <div class="col-sm-9">
+                  <input auto-input-focus name="jobName"   class="form-control"   placeholder="Job Name" required ng-model="eventModel.name"  ng-maxlength="50" ng-disabled="isEventEdit" ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/" rows="5" ng-trim md-select-on-focus="">
+                  <div ng-messages="form.createEvent.jobName.$error" >
+                     <div ng-message="maxlength" class="ng-message event-error">Please limit the Job name to 50 characters.</div>
+                     <div ng-message="pattern" class="ng-message event-error">Only letters, numbers, spaces and special characters _,-,&,',(,),.  are allowed in the
+                        Job name.
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="jobDescription" class="col-sm-3 col-form-label" >Job Description</label>
+               <div class="col-sm-9">
+                  <input name="jobDesc" class="form-control"  required ng-model="eventModel.desc"  ng-disabled="isEventEdit" ng-maxlength="256" ng-maxlength="256"  ng-patter rows="5" placeholder="Job Description">
+                  <div ng-messages="form.createEvent.jobDesc.$error" >
+                     <div ng-message="maxlength" class="ng-message event-error" >Please limit the Job description to 256 characters.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row reminder-div">
+               <label for="endtimeType" class="col-sm-6 col-form-label">Required Job Completion Time</label>
+               <div class="col-sm-3 col-pad-0 mrg-lft">
+                  <select class="form-control" name="endtimeType"      
+                     ng-model="eventModel.scheduledJob.endtimeType" 
+                     ng-options="opt.value as opt.label for opt in jobendTimeValueTypes"></select>  
+               </div>
+               <div  class="col-sm-1 col-pad-0">
+                  <label ng-if="eventModel.scheduledJob.endtimeType=='-523'" for="beforeevery" class="col-form-label">Next</label>
+               </div>
+               <div ng-if="eventModel.scheduledJob.endtimeType!='-520'" class="col-sm-1 col-pad-0">
+                  <input class="form-control wd-50" type="number" min="1" ng-model="eventModel.scheduledJob.endTimeValue" > 
+               </div>
+               <div ng-if="eventModel.scheduledJob.endtimeType=='-520'" class="col-sm-4 col-pad-0">
+                  <datepicker datepicker-class="" class="input-group date end-dt-picker" selector="form-control" date-format="{{eventDateFormat}}"  date-min-limit="{{minEndDate}}"
+                     button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+                     button-next="<i class='fa fa-arrow-right'></i>">
+                     <div class="input-group inner-addon right-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <input name="endDate"  ng-model="eventModel.scheduledJob.expectedFinishDate" class="form-control event-icon"
+                           style="font-family: inherit;" placeholder="Choose Date"  />  
+                     </div>
+                  </datepicker>
+               </div>
+               <div class="col-sm-2">
+                  <label for="totime" class="col-form-label"> {{endtimeTypeLabels[eventModel.scheduledJob.endtimeType]}}</label>
+               </div>
+            </div>
+         </div>
+         
+         <div class="divider dividr-m-10"></div>
+         <div ng-if="eventModel.scheduledJob.endtimeType!='-520'" class="form-group">
+            <div class="row reminder-div">
+               <div class="col-sm-3">
+                  <div class="form-check">
+                     <label class="form-check-label col-form-label">
+                     <input class="form-check-input" type="checkbox" ng-click="toResetRepeat();" ng-model="eventModel.isRepeat">
+                     Repeat
+                     </label>
+                  </div>
+               </div>
+               <div class="col-sm-9 repeat-pad-0">
+                  <div ng-show="eventModel.isRepeat" >
+                     <div class="col-sm-5">
+                        <select name="repeatFreqType" class="form-control" ng-model="eventModel.repeatFreqType" ng-required="eventModel.isRepeat"
+                           ng-options="opt.value as opt.label for opt in repeatFreqTypes"></select>
+                     </div>
+                     <label class="col-sm-2 col-form-label repeat-freq">Every</label>
+                     <div class="col-sm-2 col-form-label repeat-freq">
+                        <input class="form-control wd-50" name="repeatInterval" type="number" min="1" ng-model="eventModel.repeatInterval" ng-required="eventModel.isRepeat"> 
+                     </div>
+                     <label for="" class="col-sm-3 col-form-label">{{freqRepeatLabels[eventModel.repeatFreqType]}}</label>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+         <div ng-if="eventModel.scheduledJob.endtimeType!='-520'" ng-show="eventModel.isRepeat" >
+            <div class="row">&nbsp;</div>
+            <div class="form-group row">
+               <label for="repeattype" class="col-sm-3 col-form-label" >Repeat Type</label>
+               <div class="col-sm-3">
+                  <select class="form-control" name="repeatType"  ng-model="eventModel.repeatType" ng-change="setMinEndDate(eventModel.repeatType,eventModel.startDate);" ng-change="onRemDurationTypeChange(eventModel.durationType);" ng-required="eventModel.isRepeat" ng-options="opt.value as opt.label for opt in repeatTypes"></select>
+               </div>
+               <div class="col-sm-6 end-dt">
+                  <div ng-show="eventModel.repeatType == repeatTypeCodes.COUNT">
+                     <label class="end-date">Count</label> <input class="form-control width-150" ng-model="eventModel.repeatCount"
+                        type="number" min="1"
+                        ng-required="eventModel.repeatType == repeatTypeCodes.COUNT">
+                  </div>
+                  <div  ng-show="eventModel.repeatType == repeatTypeCodes.UNTIL_DATE">
+                     <label class="end-date">End Date</label> 
+                     <datepicker datepicker-class="" class="input-group date end-dt-picker" selector="form-control" date-format="{{eventDateFormat}}"  date-min-limit="{{minEndDate}}"
+                        button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+                        button-next="<i class='fa fa-arrow-right'></i>">
+                        <div class="input-group inner-addon right-addon">
+                           <i class="glyphicon glyphicon-calendar"></i>
+                           <input name="endDate"  ng-model="eventModel.endDate" class="form-control event-icon"
+                              style="font-family: inherit;" placeholder="Choose Date" ng-required="eventModel.repeatType == repeatTypeCodes.UNTIL_DATE" />  
+                        </div>
+                     </datepicker>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="divider dividr-m-10"  ng-if="!showJobFrom" ng-show="eventModel.isRepeat"></div>
+         <div ng-if="!showJobFrom"  class="form-group">
+            <div class="row reminder-div">
+               <label for="starttime" class="col-sm-3 col-form-label">Reminders</label>
+               <div class="col-sm-1">
+                  <input class="form-control wd-50" type="number" min="1" name="duration" required ng-model="eventModel.duration"  rows="5" >
+               </div>
+               <div class="col-sm-2 col-pad-0 mrg-lft">
+                  <select class="form-control" name="durationType"      
+                     ng-model="eventModel.durationType" 
+                     ng-options="opt.value as opt.label for opt in reminderDurationTypes"></select>  
+               </div>
+               <div class="col-sm-2 col-pad-0">
+                  <label for="beforeevery" class="col-form-label">before every</label>
+               </div>
+               <div class="col-sm-1 col-pad-0">
+                  <input class="form-control wd-50" type="number" min="1" ng-model="eventModel.frequency" > 
+               </div>
+               <div class="col-sm-2">
+                  <label for="totime" class="col-form-label"> {{eventModel.durationFreqTypeModel.label}}</label>
+               </div>
+            </div>
+            <br>
+         </div>
+         <div ng-if="showJobFrom">
+         		<div class="item item-line-single item-icon-left" ng-click="toggleOwnerFlag()" flex>
+               <i class="icon icon-cling-top" ng-class="eventModel.scheduledJob.owner ? 'icon-check-box' : 'icon-check-box-blank' "></i>
+               <h2 class="txt txt-line-pri text-wrap">Set as Owner</h2>
+            </div>
+            
+            
+            
+            <div ng-if="!eventModel.scheduledJob.owner || showTemplates"  class="padding-horizontal ph-lg padding-top push-top full-width">
+      <div>
+        <div layout="row">
+          <md-autocomplete
+            placeholder="{{placeHolder}}"
+            md-no-cache="true"
+            md-selected-item="newAdvertisementGroup"
+            md-search-text-change="groupSearchCtrl.searchTextChange(groupSearchCtrl.searchText)"
+            md-search-text="groupSearchCtrl.searchText"
+            md-selected-item-change="groupSearchCtrl.selectedItemChange(item)"
+            md-items="item in groupSearchCtrl.querySearch(groupSearchCtrl.searchText)"
+            md-item-text="item.displayText"
+            md-min-length="2"
+            md-delay="300"
+            flex>
+            <md-item-template>
+              <span md-highlight-text="ctrl.searchText"
+                    md-highlight-flags="^i">{{item.displayText}}</span>
+            </md-item-template>
+            <md-not-found>
+              No WorkSpace or Room found.
+            </md-not-found>
+          </md-autocomplete>
+        </div>
+      </div>
+
+      <div class="list no-padding-top">
+
+        <!-- Selected Org -->
+        <div ng-repeat="(orgId, advOrg) in jobAdv.getInvitationOrgs()"
+             class="item card no-padding">
+          <md-list class="">
+            <md-list-item class="">
+              <md-icon
+                ng-click="toggleSelectAllOrgMembers(orgId)"
+                ng-class="advOrg.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+                md-font-icon="icon {{advOrg.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+              ></md-icon>
+              <div flex>
+                <h2>{{getModel.Org(orgId).orgName}}</h2>
+              </div>
+              <md-icon
+                ng-click="removeOrg(orgId)"
+                class="md-secondary no-push-top"
+                aria-label="Remove Org"
+                md-font-icon="icon icon-close"></md-icon>
+            </md-list-item>
+
+            <md-list-item
+              ng-click="toggleOrgMembersList(orgId)"
+              class="md-list-item-short border-top">
+              <p flex class=""><small ng-bind="'View WorkSpace members'"></small></p>
+              <div class="button button-clear no-padding-left">
+                <i
+                  ng-class="{'icon-expand-less':advOrg.xtras.flag_expanded, 'icon-expand-more':!advOrg.xtras.flag_expanded}"
+                  class="icon icon-expand-more"></i>
+              </div>
+            </md-list-item>
+
+            <md-list-item
+              ng-repeat="user in advOrg.xtras.users"
+              ng-show="advOrg.xtras.flag_expanded"
+              ng-click="toggleAdvOrgMember(orgId, user.id)"
+              class="">
+              <md-icon
+                ng-class="advOrg.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+                md-font-icon="icon {{advOrg.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+              ></md-icon>
+              <div flex class="padding-vertical">
+                <p class="txt text-wrap no-push-bottom">{{user.userFirstName}}
+                  {{user.userLastName}}</p>
+
+                <p class="txt text-wrap color-light-2">{{user.userEmail}}</p>
+              </div>
+            </md-list-item>
+
+          </md-list>
+        </div>
+
+        <!-- Selected Groups for advertisement. -->
+        <div ng-repeat="(groupId, advGroup) in jobAdv.getInvitationGroups()"
+             class="item card no-padding">
+
+          <md-list class="no-padding-bottom">
+            <md-list-item class="">
+              <md-icon
+                ng-click="toggleAdvGroupSelectAll(groupId)"
+                ng-class="advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'"
+                md-font-icon="icon {{advGroup.sendToAll ? 'icon-check-box': 'icon-check-box-blank'}}"
+              ></md-icon>
+              <div flex>
+                <h2>{{getModel.Group(groupId).groupName}}</h2>
+              </div>
+              <md-icon ng-click="removeGroup(groupId)"
+                       class="md-secondary no-push-top"
+                       aria-label="Remove adv group"
+                       md-font-icon="icon icon-close"></md-icon>
+            </md-list-item>
+
+            <md-divider></md-divider>
+
+            <md-list class="no-padding">
+              <md-list-item
+                ng-click= "toggleAdvGroupMembersList(groupId)" class="md-list-item-short border-top">
+                <!-- <div class="button button-clear no-padding-left"> "toggleAdvGroupMembersList(groupId)" ng-show="advGroup.xtras.flag_expanded"
+                  <i class="icon icon-expand-more push-right"></i>
+                </div> -->
+                <p flex class=""><small ng-bind="'View Room members'"></small></p>
+                <div class="button button-clear no-padding-left">
+                <i
+                  ng-class="{'icon-expand-less':advGroup.xtras.flag_expanded, 'icon-expand-more':!advGroup.xtras.flag_expanded}"
+                  class="icon icon-expand-more"></i>
+                  </div>
+              </md-list-item>
+              <md-list-item
+                ng-if="advGroup.xtras._isLoadingMembersList">
+                <md-progress-circular
+                  class="no-push-right"
+                  md-mode="indeterminate"
+                  md-diameter="16"></md-progress-circular>
+                <p class="">Loading Room members..</p>
+              </md-list-item>
+
+              <md-list-item
+                ng-show="advGroup.invitee.length==0 && !advGroup.sendToAll">
+                <p class="text-wrap">
+                  No members selected. Please select at least one member to invite</p>
+              </md-list-item>
+
+              <md-list-item
+                ng-repeat="user in advGroup.xtras.users"
+                ng-show="advGroup.xtras.flag_expanded"
+                ng-click="toggleAdvGroupMember(groupId, user.id)"
+                class="">
+                <md-icon
+                  ng-class="advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'"
+                  md-font-icon="icon {{advGroup.invitee.indexOf(user.id)>-1 ? 'icon-check-box': 'icon-check-box-blank'}}"
+                ></md-icon>
+                <div flex class="padding-vertical">
+                  <p class="txt text-wrap no-push-bottom">{{user.userFirstName}}
+                    {{user.userLastName}}</p>
+
+                  <p class="txt text-wrap color-light-2">{{user.userEmail}}</p>
+                </div>
+              </md-list-item>
+
+            </md-list>
+
+          </md-list>
+        </div>
+      </div>
+
+      <!-- Pending Invitations list -->
+      <div class="list">
+        <div ng-show="jobAdvertiseInviteOwnerList.length > 0"
+             class="item item-sub-header bg-primary push-top pt-lg">
+          <span class="">Pending Invitations</span>
+             <!--  <span class="push-right pr-sm"
+              >({{jobAdvertiseInviteOwnerList.length}})</span> -->
+        </div>
+        <div ng-repeat="jobAdv in jobAdvertiseInviteOwnerList"
+             class="item card no-padding">
+          <md-list class="no-padding-bottom">
+            <md-list-item class="item-sub-header">
+              <p>{{jobAdv.groupName || jobAdv.orgName}}</p>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item ng-repeat="users in jobAdv.members" class="item-complex item-action-right">
+              <div class="item-content">
+                <h2 class="txt text-wrap">{{users.user.userFirstName}} {{users.user.userLastName}}</h2>
+
+                <p class="text-wrap color-light">{{users.user.userEmail}}</p>
+              </div>
+              <md-divider></md-divider>
+            </md-list-item>
+          </md-list>
+        </div>
+      </div>
+    </div>
+    
+         </div>
+
+
+
+
+  <div ng-show="showTemplates && eventModel.scheduledJob.tasks.length>0" style="float: right;color: red;">
+         <p> Note* :  This Template has {{eventModel.scheduledJob.tasks.length}} Taks
+              <md-button  type="submit" 
+         ng-click="viewTasks(eventModel)" class="md-primary">View
+      </md-button></p>
+          </div>  
+          
+         <div ng-if="!showJobFrom"  class="form-group row" ng-if="allOrgMembers.members.length > 0">
+            <label for="participants" class="col-sm-3 col-form-label">Members</label>
+            <div class="col-sm-8 part-search">
+               <div 
+                  class="item item-line-single item-icon-right push-bottom"  style="padding-left: 0px !important;"
+                  ng-click="toggleSelectionAll(allOrgMembers.isAllSelected)"
+                  flex>
+                  <h2 class="txt txt-line-pri text-wrap">
+                     <span ng-bind="selectAllText || 'Select all'"></span>
+                  </h2>
+                  <i class="icon icon-cling-top"
+                     ng-class="allOrgMembers.isAllSelected ? 'icon-check-box': 'icon-check-box-blank'"></i>
+               </div>
+               <div
+                  ng-repeat="member in allOrgMembers.members"
+                  class="item item-line-single item-icon-left item-icon-right" style="padding-left: 0px !important;"
+                  ng-class="{'bg-light-primary':file.isSelected}"
+                  ng-click="addInviteeToEvent(member)"
+                  flex>
+                  <!-- <i class="icon icon-user"></i> -->
+                  <h2 class="txt txt-line-pri text-wrap">{{member.userFirstName}} {{member.userLastName}}</h2>
+                  <i class="icon icon-cling-top"
+                     ng-class="member.isSelected ? 'icon-check-box' : 'icon-check-box-blank'"></i>
+               </div>
+            </div>
+         </div>
+         <div ng-if="!showJobFrom"  class="form-group row" ng-show="allOrgMembers.members.length == 0">
+            <label for="participants" class="col-sm-3 col-form-label">Members</label>
+            <div class="col-sm-8 part-search">
+               No members found
+            </div>
+         </div>
+      </form>
+      <div ng-if="isTemplateView">
+      <ng-include src="'app/modules/event/eventTask.dialog.tpl.html'"></ng-include>
+      </div>
+      
+   </md-dialog-content>
+   <div class="md-actions full-width" ng-if="!isTemplateView" layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()"> Cancel </md-button>
+      <span ng-if="!showJobFrom"> 
+       <md-button ng-if="isEventEdit" type="submit" ng-disabled="!form.createEvent.$valid"
+         ng-click="submitUpdateEvent(eventModel)" class="md-primary">Update
+      </md-button>
+      <md-button ng-if="!isEventEdit" type="submit" ng-disabled="!form.createEvent.$valid"
+         ng-click="submitCreateEvent(eventModel)" class="md-primary">Add
+      </md-button>
+      </span> 
+      <span ng-if="showJobFrom">
+       <md-button ng-if="isEventEdit" type="submit" ng-disabled="!(form.createEvent.$valid && (eventModel.scheduledJob.owner || !isEmpty(jobAdv.getInvitationOrgs()) || !isEmpty(jobAdv.getInvitationGroups())) )"
+         ng-click="submitUpdateEvent(eventModel)" class="md-primary">Update
+      </md-button>
+      <md-button ng-if="!isEventEdit" type="submit" ng-disabled="!(form.createEvent.$valid && (eventModel.scheduledJob.owner || !isEmpty(jobAdv.getInvitationOrgs()) || !isEmpty(jobAdv.getInvitationGroups())) )"
+         ng-click="submitCreateEvent(eventModel)" class="md-primary">Add
+      </md-button>
+      </span>
+   </div>
+      <div class="md-actions full-width" ng-if="isTemplateView" layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()"> Cancel </md-button>
+             <md-button type="submit"
+         ng-click="viewTasks()" class="md-primary">Back
+      </md-button>
+   </div>
+</md-dialog>

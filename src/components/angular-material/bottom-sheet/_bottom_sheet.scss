@@ -1,0 +1,25 @@
+body {
+  .view-bottom-sheet {
+    position: fixed;
+
+    .item-sub-header {
+      float: left;
+      background: transparent;
+    }
+
+    .bottom-sheet-wrapper {
+      @include clearfix();
+    }
+    .bottom-sheet-item {
+      min-width: 8rem;
+      margin-top: 2*$unit;
+      float: right;
+    }
+    .button {
+      text-align: center;
+      .icon {
+        margin-right: $unit;
+      }
+    }
+  }
+}

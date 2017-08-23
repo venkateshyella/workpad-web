@@ -1,0 +1,54 @@
+<md-dialog class="register-pop-up" aria-label="Add New Email"
+           layout="column" layout-align="space-between center">
+  <md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>Add Email</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width" >
+
+    <div class="list no-padding" flex>
+      <form name="form.newEmailForm">
+        <label
+          class="item item-input">
+          <input ng-model="emailObj.emailId"
+                 name="newEmailField"
+                 ng-model="emailObj.emailId"
+                 ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
+                 ng-disabled="form.isDisabled"
+                 type="email" rh-form-email
+                 ng-maxlength="70" minlength="7"
+                 min="7" maxlength="70" max="20"
+                 placeholder="Email"
+                 focus-me="focusTriggerElem">
+
+          <div ng-messages="form.newEmailForm.newEmailField.$error">
+            <div ng-message="email" class="ng-message" style="color: red">Please provide a
+              valid email address.
+            </div>
+            <div ng-message="maxlength" class="ng-message" style="color: red">Please limit the email to 70
+              characters.
+            </div>
+          </div>
+        </label>
+      </form>
+    </div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()">
+      <span ng-bind="LANG.BUTTON.CANCEL"></span>
+    </md-button>
+    <md-button ng-click="updateUserEmail(emailObj.emailId)"
+               ng-disabled="emailObj.emailId.length==0 || form.newEmailForm.newEmailField.$invalid">
+      <span ng-bind="LANG.BUTTON.SAVE">Save</span>
+    </md-button>
+  </div>
+</md-dialog>

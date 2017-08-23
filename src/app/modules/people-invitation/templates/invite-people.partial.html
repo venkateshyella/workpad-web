@@ -1,0 +1,96 @@
+<md-dialog class="register-pop-up" aria-label="invite user"
+           layout="column" layout-align="space-between center">
+  <md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2>Invite People</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width"  layout="column">
+    <form name="form.invite_people" novalidate>
+
+      <div class="dialog-content-padding-sides push-top">
+        <md-input-container md-no-float>
+          <input auto-input-focus type="text"
+          		 name="firstName"
+                 placeholder="Enter First name"
+                 required
+                 ng-pattern="/^[A-Za-z0-9 ]+$/"
+                 ng-model="formModel.invite_people.firstName"
+                 ng-maxlength="50"
+                 ng-trim>
+
+          <div ng-messages="form.invite_people.firstName.$error">
+            <div ng-message="maxlength" class="ng-message">Maximum 50 characters allowed for name</div>
+            <div ng-message="pattern" class="ng-message">Only letters, numbers and spaces are allowed in the last name.</div>
+
+          </div>
+        </md-input-container>
+        
+        <md-input-container md-no-float>
+          <input  type="text"
+                 placeholder="Enter Last name"
+                 name="lastName"
+                 required
+                 ng-pattern="/^[A-Za-z0-9 ]+$/"
+                 ng-model="formModel.invite_people.lastName"
+                 ng-maxlength="50"
+                 ng-trim>
+
+          <div ng-messages="form.invite_people.lastName.$error">
+            <div ng-message="maxlength" class="ng-message">Maximum 50 characters allowed for name</div>
+            <div ng-message="pattern" class="ng-message">Only letters, numbers and spaces are allowed in the last name.</div>
+          </div>
+        </md-input-container>
+        
+        <md-input-container md-no-float>
+          <input type="text" rh-form-email
+                 placeholder="Enter email id"
+                 name="userEmail"
+                 required
+                 ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                 ng-model="formModel.invite_people.userEmail"
+                 ng-trim>
+
+          <div ng-messages="form.invite_people.userEmail.$error">
+           <div ng-message="pattern" class="ng-message">Invalid email id.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container flex>
+          <label>Invitation Message</label>
+          <textarea name="message"
+                    ng-model="formModel.invite_people.message"
+                    columns="1"
+                    md-maxlength="256" required></textarea>
+
+          <div ng-messages="form.invite_people.message.$error">
+            <div ng-message="md-maxlength" class="ng-message">Please limit the invitation message to 256 characters.</div>
+          </div>
+        </md-input-container>
+
+      </div>
+
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+     <md-button ng-click="cancel()">
+          Cancel
+        </md-button>
+    <md-button type="submit"
+               ng-disabled="!form.invite_people.$valid"
+               ng-click="submit(formModel.invite_people)" class="md-primary"
+    >Send
+    </md-button>
+  </div>
+</md-dialog>

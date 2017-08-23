@@ -1,0 +1,74 @@
+$color-primary: rgb(40, 94, 187);
+$color-primary-hue-1: lighten($color-primary, 20%);
+$color-primary-hue-2: lighten($color-primary, 10%);
+$color-primary-hue-3: lighten($color-primary, 5%);
+$color-primary-hue-4: darken($color-primary, 5%);
+$color-primary-hue-5: darken($color-primary, 10%);
+
+.bg-primary {
+  background: $color-primary !important;
+  color: find-text-color($color-primary) !important;
+  &.hue-1 {
+    background: $color-primary-hue-1 !important;
+    color: find-text-color($color-primary-hue-1) !important;
+  }
+  &.hue-2 {
+    background: $color-primary-hue-2 !important;
+    color: find-text-color($color-primary-hue-2) !important;
+  }
+  &.hue-3 {
+    background: $color-primary-hue-3 !important;
+    color: find-text-color($color-primary-hue-3) !important;
+  }
+  &.hue-4 {
+    background: $color-primary-hue-4 !important;
+    color: find-text-color($color-primary-hue-4) !important;
+  }
+  &.hue-5 {
+    background: $color-primary-hue-5 !important;
+    color: find-text-color($color-primary-hue-5) !important;
+  }
+
+  &.ng-click-active {
+    background: lighten($color-primary, 10%);
+  }
+  .txt-color-light {
+    color: lighten($color-primary, 40%);
+  }
+}
+
+.bg-light {
+  background: $light !important;;
+}
+
+.bg-light-2 {
+  background: darken($light, 5%) !important;
+}
+
+.bg-light-primary {
+  background: mix($color-primary, #fff, 20%) !important;;
+}
+
+.color-primary {
+  color: $color-primary;
+}
+
+.color-normal {
+  color: $dark;
+}
+
+.color-white {
+  color: $light !important;
+}
+
+.color-light {
+  color: darken($stable, 60%) !important;
+}
+
+.color-light-2 {
+  color: darken($stable, 40%) !important;
+}
+
+.color-light-3 {
+  color: darken($stable, 30%) !important;
+}

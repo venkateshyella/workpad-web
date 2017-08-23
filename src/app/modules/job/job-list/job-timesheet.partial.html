@@ -1,0 +1,65 @@
+<!-- <div
+  ng-hide="pendingTimesheetJobsList.length>0"
+  class="item text-center push-top pt-lg">
+  <p>No jobs available</p>
+</div> -->
+<div ng-show="pendingTimesheetJobsList.length==0" class="item item-backdrop text-center">
+  <div class="backdrop-filler-image">
+    <i class="icon icon-backdrop icon-briefcase-case-two"></i>
+  </div>
+  <p>{{LANG.JOB.JOB_LOADING_MSGS.NO_JOBS}}</p>
+</div>
+<div ng-repeat="job in pendingTimesheetJobsList"
+     ng-class="{'border-top':!$first}"
+     class="item item-complex item-line-double">
+  <div class="item-content" ng-click="jobItemClickAction($event, job)">
+
+    <div class="txt txt-line-pri no-push-bottom"
+         layout="row">
+      <h3 class="no-push-bottom" flex>{{job.title}}</h3>
+
+      <!--<div class="color-light-2 text-ellipsis">-->
+      <!--<small>{{MU.getDisplayDateOffset(job.createTime)}}</small>-->
+      <!--</div>-->
+    </div>
+
+    <div ng-show="job.desc"
+         layout="row" class="push-top pt-sm">
+      <p class="txt txt-line-sec text-ellipsis">
+        <span class="overflow-hide txt-pri text-wrap pre-formatted" ng-bind="job.desc"></span></p>
+    </div>
+
+    <div layout="column">
+      <div class="txt text-ellipsis">
+        <p
+          ng-show="job.createdFullPath.length>0"
+          class="text-ellipsis push-bottom pb-sm">
+          <span ng-repeat="item in job.createdFullPath"
+                class="push-right pr-sm max-full-width">
+            <i ng-class="{'icon-group-work':item.type=='GROUP', 'icon-domain':item.type=='ORG'}"
+               class="icon"></i>
+            <small ng-bind="item.name" class="text-ellipsis"></small>
+          </span>
+        </p>
+
+        <p class="txt-line-sec">
+          <span
+            class="label no-push-left"
+            ng-class="{'label-balanced': job.isInProgress(),'label-accent':job.isStopped()}"
+            ng-bind="job.displayStatus"></span>
+          <span ng-repeat="role in job.roles"
+                ng-bind="LANG.JOB.ROLES[ROLE_NAMES[role]]"
+                class="label no-push-left"></span>
+          <!--<i class="icon icon-domain"></i>-->
+          <!--<span>{{job.organization.orgName}}</span>-->
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-show="!ui.isRefreshing && isNextPageAvailable" class="item" layout="row" layout-align="center center">
+  <md-button ng-click="fetchMoreJobs()" ng-disabled class="full-width txt-ignore-case" aria-label="Load More">
+    <span ng-hide="ui.isLoadingNext">{{LANG.JOB.JOB_LOADING_MSGS.LOAD_MORE}}</span>
+    <span ng-show="ui.isLoadingNext">{{LANG.JOB.JOB_LOADING_MSGS.LOADING}}</span>
+  </md-button>
+</div>

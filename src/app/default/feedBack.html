@@ -1,0 +1,124 @@
+<md-dialog aria-label="Support and Feedback">
+   <md-toolbar>
+   <div layout="row"  class="md-toolbar-tools">
+         <h2 class="md-title">Support and Feedback</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon
+               md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+         </div>
+   </md-toolbar>
+   
+      <md-dialog-content class="full-width">
+      <div layout="column" layout-align="space-between center">
+         <form ng-submit=""
+            name="form.feedback"
+            novalidate>
+            <div style="padding: 0.9rem 0rem;">We would love to hear your thoughts, concerns or problems with anything so we can improve !</div>
+            <md-divider style="padding: 10px;"></md-divider>
+            <label><b>Feedback Type</b></label><br/>
+            <div layout-gt-sm="row">
+               <md-radio-group ng-model="feedBack.feedbackType" class="md-primary">
+                  <md-radio-button style="float:left;" ng-repeat="type in feedBackTypes"
+                     ng-value="type.value" required>
+                     {{ type.label }}
+                  </md-radio-button>
+               </md-radio-group>
+            </div>
+            <md-input-container  class="md-block" >
+               <label>Subject</label>
+               <input type="text"
+                  name="subject"
+                  required
+                  ng-model="feedBack.subject"
+                  ng-maxlength="100"
+                  ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+                  ng-trim>
+               <div ng-messages="form.feedback.subject.$error">
+                  <div ng-message="maxlength" class="ng-message">Please limit the Subject to 100 characters.</div>
+                  <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),.  are allowed in the
+                     Subject.
+                  </div>
+               </div>
+            </md-input-container>
+            <md-input-container  class="md-block">
+               <label>Description</label>
+               <textarea name="desc" 
+                  ng-model="feedBack.desc"  
+                  md-maxlength="2000" required ></textarea>
+               <div ng-messages="form.feedback.desc.$error">
+                  <div ng-message="md-maxlength" class="ng-message">Please limit the description to 2000 characters.</div>
+               </div>
+            </md-input-container>
+            <div ng-if="fromLogin">
+               <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-sm="">
+                     <md-icon class="icon icon-user"></md-icon>
+                     <input 
+                        name="userFirstName"
+                        type="text" 
+                        ng-model="feedBack.firstName" placeholder="First name"
+                        ng-pattern="/^[A-Za-z0-9 ]+$/"
+                        ng-maxlength="50"
+                        required/>
+                     <div ng-messages="form.feedback.userFirstName.$error" ng-show="form.feedback.userFirstName.$dirty">
+                        <div ng-message="required"
+                           class="ng-message"
+                           >First name cannot be empty
+                        </div>
+                        <div ng-message="pattern"
+                           class="ng-message"
+                           >Only letters, numbers and spaces are allowed in the first
+                           name.
+                        </div>
+                        <div ng-message="maxlength"
+                           class="ng-message"
+                           >Please limit the first name to 50 characters
+                        </div>
+                     </div>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm="">
+                     <input name="userLastName"
+                        type="text" 
+                        ng-model="feedBack.lastName" placeholder="Last name"
+                        ng-pattern="/^[A-Za-z0-9 ]+$/"
+                        ng-maxlength="50"
+                        required/>
+                     <div ng-messages="form.feedback.userLastName.$error" ng-show="form.feedback.userLastName.$dirty">
+                        <div ng-message="required" class="ng-message">Last name cannot be empty</div>
+                        <div ng-message="pattern" class="ng-message">Only letters, numbers and spaces are allowed in the last
+                           name.
+                        </div>
+                        <div ng-message="maxlength" class="ng-message">Please limit the last name to 50 characters</div>
+                     </div>
+                  </md-input-container>
+               </div>
+               <md-input-container class="md-block">
+                  <md-icon class="icon icon-email"></md-icon>
+                  <input name="userEmail"
+                     rh-form-email
+                     type="email" 
+                     ng-model="feedBack.userEmail" placeholder="Email"
+                     minlength="7"
+                     maxlength="70"
+                     required/>
+                  <div ng-messages="form.feedback.userEmail.$error" ng-show="form.feedback.userEmail.$dirty">
+                     <div ng-message="email" class="ng-message">Please provide a valid email address.</div>
+                     <div ng-message="required" class="ng-message">Please provide an email address.</div>
+                     <div ng-message="minlength" class="ng-message">The email must be at least 7 characters long.</div>
+                     <div ng-message="maxlength" class="ng-message">Please limit the email address to 50 characters.</div>
+                  </div>
+               </md-input-container>
+            </div>
+         </form>
+         </div>
+      </md-dialog-content>
+   
+   <div class="md-actions full-width" layout="row">
+      <md-button ng-click="cancel()">Cancel
+      </md-button>
+      <md-button  ng-disabled="!form.feedback.$valid" ng-click="submit(feedBack)">Submit
+      </md-button>
+   </div>
+</md-dialog>

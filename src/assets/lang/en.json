@@ -1,0 +1,724 @@
+{
+  "APP_NAME": "Workpad",
+  "UTILS": {
+    "TODAY_PREFIX": "Today ",
+    "YESTERDAY_PREFIX": "Yesterday "
+  },
+  "BOOT_PROCESS": {
+    "LANG_LOADING_IN_PROGRESS": "Loading Language files.",
+    "PING_IN_PROGRESS": "Connecting to application servers.",
+    "PUSH_NOTIFICATION_REGISTRATION": "Registering for push notifications.",
+    "LOADING_USER_PROFILE": "Loading user data.",
+    "AUTHENTICATING_USER": "Authenticating user.",
+    "AUTHENTICATING_USER_SUCCESS": "User Authenticated.",
+    "AUTHENTICATING_USER_ERROR": "User Authenticated.",
+    "COMPLETE": "Starting app..."
+  },
+  "ERROR": {
+    "DEFAULT": "Unknown error occurred.",
+    "NETWORK_FAILURE": "Unable to Connect to Server.",
+    "SERVICE_ERROR": "The application is unable to process this request.",
+    "CHATROOM_UNAVAILABLE": "Chat room unavailable.",
+    "FILE_TRANSFER_ERROR": {
+      "FILE_NOT_FOUND": "Unable to read the source file on the device",
+      "INVALID_URL": "Incorrect file upload URL found.",
+      "ABORT_ERR": "File transfer aborted by user.",
+      "NOT_MODIFIED": "File not modified error."
+    },
+    "GROUP_ACCESS_RESTRICTED": "Access restricted for this Room."
+  },
+  "SUCCESS": {
+    "SERVICE_SUCCESS": "The request was completed successfully."
+  },
+  "FORMS": {
+    "DEFAULT": {
+      "SUBMIT_IN_PROGRESS_MESSAGE": "Updating...",
+      "SUBMIT_SUCCESS_MESSAGE": "Update success.",
+      "SUBMIT_ERROR_MESSAGE": "Update failed."
+    }
+  },
+  "TEMPLATE_EDITOR": {
+    "FACTORY": {
+      "string": {
+        "NAME": "String Field"
+      },
+      "checkbox": {
+        "NAME": "Checkbox Field"
+      },
+      "toggle": {
+        "NAME": "Toggle Field"
+      },
+      "datepicker": {
+        "NAME": "DatePicker Field"
+      },
+      "number": {
+        "NAME": "Number Field"
+      },
+      "upload": {
+        "NAME": "Upload Field"
+      },
+      "filelink": {
+        "NAME": "Link File Field"
+      }
+    },
+    "DIALOG": {
+      "INVALID_TEMPLATE": {
+        "TITLE": "Invalid template",
+        "CONTENT": "Please add at-least one field in the template"
+      }
+    },
+    "LABEL": {
+      "VALIDATION_MSG": {
+        "INVALID_NAME": "Please provide a name for the template."
+      }
+    }
+  },
+  "VALIDATION_EDITOR": {
+    "length": {
+      "NAME": "String Length"
+    },
+    "presence": {
+      "NAME": "Mandatory"
+    }
+  },
+  "DATA": {
+    "DEFAULT": {
+      "LOADING_MESSAGE": "Loading.."
+    }
+  },
+  "AUTH": {
+    "DIALOG": {
+      "LOGIN_ERROR": {
+        "TITLE": "Login failed",
+        "BODY": "Unable to sign in this email id and password.",
+        "OK_TEXT": "Ok"
+      },
+      "REGISTER_SUCCESS": {
+        "TITLE": "Welcome to Workpad",
+        "BODY": "A confirmation email has been sent to your email address",
+        "OK_TEXT": "Ok"
+      },
+      "REGISTER_ERROR": {
+        "TITLE": "Registration Failed",
+        "BODY": "We were unable to register you with this email id...",
+        "OK_TEXT": "Ok"
+      },
+      "RECOVERY_PASSWORD": {
+        "TITLE": "Forgot Password",
+        "BODY_SUCCESS": "A temporary password has been sent to your email address.",
+        "BODY_ERROR": "Unable to reset your password.",
+        "OK_TEXT": "Ok"
+      },
+      "RESET_PASSWORD_SUCCESS": {
+        "TITLE": "Password update.",
+        "BODY": "A confirmation email has been sent to your email address",
+        "OK_TEXT": "Ok"
+      },
+      "RESET_PASSWORD_ERROR": {
+        "TITLE": "Password update failed",
+        "BODY": "Unable to update your password.",
+        "OK_TEXT": "Ok"
+      },
+      "UPDATE_PASSWORD_SUCCESS": {
+        "TITLE": "Password updated",
+        "CONTENT_POSTFIX": " You will be logged out of the application. Please log in with your new credentials.",
+        "OK_TEXT": "Ok"
+      },
+      "UPDATE_PASSWORD_ERROR": {
+        "TITLE": "Password update failed",
+        "OK_TEXT": "Ok"
+      }
+    },
+    "LABEL": {
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name"
+    }
+  },
+  "SKILL": {
+    "EXPERTISE_LEVEL": [
+      "Poor",
+      "Average",
+      "Profecient",
+      "Expert"
+    ]
+  },
+  "MODULES": {
+    "USER_SELECT": {
+      "ERROR_LOADING": "Unable to find users",
+      "EMPTY_LIST": "No users found."
+    }
+  },
+  "BUTTON": {
+    "OK": "OK",
+    "CANCEL": "Cancel",
+    "BACK": "Back",
+    "CREATE": "Create",
+    "APPROVE": "Approve",
+    "ACCEPT": "Accept",
+    "REJECT": "Decline",
+    "DELETE": "Delete",
+    "REMOVE": "Remove",
+    "SAVE": "Save",
+    "DISCARD": "Discard",
+    "SUBMIT": "Submit",
+    "REFRESH": "Sync",
+    "EDIT": "Edit",
+    "UPDATE": "update",
+    "SEND": "Send",
+    "RETRY": "Retry"
+  },
+  "MESSAGES": {
+    "LOADING": "Loading",
+    "LOAD_MORE": "Load More",
+    "NO_MEMBERS": "No Members available. Please add a member.",
+    "NO_FILES": "No Files available. Please upload a file."
+  },
+  "OPTIONS_MENU": {
+    "REFRESH": "Sync",
+    "EDIT": "Edit"
+  },
+  "DIALOG": {
+    "SESSION_EXPIRY": {
+      "TITLE": "Session Expired",
+      "CONTENT": "Please Login again."
+    },
+    "APP_UPDATE": {
+      "TITLE": "Application update",
+      "CONTENT": "A new update is available for download. Please proceed to the download page to download the new update.",
+      "CONTENT_HTML": "<div>A new update is available for download.</div><div>Please proceed to the download page to download the new update.</div>",
+      "OK_TEXT": "Download",
+      "CANCEL_TEXT": "Exit"
+    },
+    "DELETE_SKILL": {
+      "TITLE": "Delete Skill",
+      "CONTENT": "Are you sure you want to delete?"
+    },
+    "DELETE_LOCATION": {
+      "TITLE": "Delete Location",
+      "CONTENT": "Are you sure you want to delete?"
+    },
+    "ERROR_OCCURED": {
+      "TITLE": "Error"
+    },
+    "AUTH_FAIL": {
+      "TITLE": "Login Failed",
+      "CONTENT_DEFAULT": "Unable to log in.."
+    },
+    "USER_INVITE_ORG": {
+      "LABEL_VIEW_ORG": "View WorkSpace details"
+    },
+    "USER_INVITE_GROUP": {
+      "LABEL_VIEW_GROUP": "View Room details"
+    },
+    "USER_INVITE_JOB": {
+      "LABEL_VIEW_JOB": "View job details"
+    }
+  },
+  "APP_NAV": {
+    "LIST": {
+      "HOME": "Notifications",
+      "PROFILE": "Profile",
+      "CHATS": "Chats",
+      "ORGANISATIONS": "WorkSpaces",
+      "TEMPLATES": "Forms",
+      "ACCOUNT": "Account",
+      "GROUPS": "Groups",
+      "SETTINGS": "Settings",
+      "LOGOUT": "Logout",
+      "NAVIGATION": "App Navigation",
+      "FORMS": "Forms",
+      "CARDS": "Cards",
+      "DIALOGS": "Dialogs",
+      "TABS": "Tabs",
+      "LIST": "List",
+      "LOGIN": "Login",
+      "CHANGE_PASSWORD": "Change Password",
+      "REGISTER": "Register",
+      "USER_PROFILE": "User Profile",
+      "CONNECT_DEV": "Connect to DEV",
+      "JOBS": "Work"
+    }
+  },
+  "LABEL": {
+    "ADMIN": "Owner",
+    "SELECT_ALL": "Select All",
+    "TAB_INFO": "Info",
+    "TAB_MEMBERS": "Members",
+    "TAB_GROUPS": "Groups",
+    "TAB_SUB_GROUPS": "Groups",
+    "TAB_CHAT": "Chat",
+    "TAB_DATA": "Data",
+    "TAB_JOBS": "Jobs",
+    "TAB_AUDIT": "Audit",
+    "DESCRIPTION": "Description"
+  },
+  "USER_PROFILE": {
+    "LABEL": {
+      "LOCATION_NA": "No locations found.",
+      "SKILLS_NA": "No Skills available.",
+      "CREATED_AT": "Member since ",
+      "LAST_ACTIVITY_TIMESTAMP": "Last activity",
+      "RATING_PREFIX": "Rated",
+      "RATING_POSTFIX": "Stars",
+      "USER_NOT_FOUND": "User profile not found",
+      "LOADING": "Loading user profile"
+    },
+    "TAB": {
+      "INFO": {
+        "TAB_LABEL": "Info"
+      },
+      "CONTACT": {
+        "TAB_LABEL": "Contact"
+      },
+      "SKILL": {
+        "TAB_LABEL": "Skills"
+      },
+      "LOCATION": {
+        "TAB_LABEL": "Location"
+      }
+    },
+    "BUTTON": {
+      "DIRECT_MESSAGE": "Ping",
+      "VIEW_MESSAGE": "View Ping",
+      "ADD_LOCATION": "Add Location",
+      "REMOVE_LOCATION": "Remove Location",
+      "ADD_SKILL": "Add Skill",
+      "REMOVE_SKILL": "Remove Skill"
+    }
+  },
+  "USER_EDIT": {
+    "TITLE": {
+      "EDIT_PROFILE": "Edit Profile",
+      "EDIT_CONTACTS": "Edit Contacts",
+      "DELETE_CONTACTS": "Remove Contacts"
+    },
+    "MESSAGE": {
+      "NO_EMAILS_AVAILABLE": "You do not have any emails (other than your primary email) that are editable.",
+      "NO_TEL_AVAILABLE": "You do not have any phone numbers.",
+      "NO_SKILL_AVAILABLE": "You do not have any skills.",
+      "NO_LOCATION_AVAILABLE": "You do not have any locations."
+    },
+    "PLACEHOLDER": {
+      "LOCATION_SELECT": "Pick a city.",
+      "COUNTRY_SELECT": "Pick a country."
+    },
+    "LOADING_MSGS": {
+      "LOADING": "Loading user data",
+      "UPDATING_PROFILE": "Updating profile.",
+      "UPDATING_PROFILE_SUCCESS": "Profile updated."
+    },
+    "CONTACTS": {
+      "ADD_EMAIL": "Add Email",
+      "REMOVE_EMAIL": "Remove Email",
+      "ADD_TEL": "Add Phone Number",
+      "REMOVE_TEL": "Remove Phone Number",
+      "DELETE_CONTACTS": "Remove Contacts",
+       "REMOVE_SKILLS": "Remove Skill",
+        "REMOVE_LOCATIONS": "Remove Location"
+    },
+    "LOCATION": {
+      "CREATE_CITY_TITLE": "Create New City",
+      "CREATE_CITY": "Create",
+      "SEARCH_CITY": "Search city",
+      "ADD_CITY_TITLE": "Add Location"
+    },
+    "BUTTON": {
+      "EDIT_IMAGE": "Edit Image",
+      "CANCEL_CITY_CREATION": "Cancel"
+    }
+  },
+  "ORGANISATION": {
+    "DETAILS": {
+      "DEFAULT": {
+        "TITLE": "WorkSpace details"
+      }
+    },
+    "LABEL": {
+      "TITLE": "WorkSpaces",
+      "SUB_TITLE_MEMBERS": "Members",
+      "MEMBERS": "members",
+      "MEMBER": "member",
+      "GROUPS": "Rooms",
+      "GROUP": "Room",
+      "PREFIX_CREATED_DATE": "Created On"
+    },
+    "OPTIONS_MENU": {
+      "CREATE_ORG": "Create WorkSpace",
+      "DELETE_ORG": "Delete",
+      "CREATE_GROUP": "Create Room",
+      "ADD_FILE": "Upload File",
+      "REMOVE_FILES": "Delete File",
+      "RENAME_FILES": "Rename File",
+      "INVITE_USER": "Invite Member",
+      "CREATE_JOB": "Create Job"
+    },
+    "LOADING_MSG": {
+      "FETCHING_OWNER_FILES": "Fetching Files",
+      "SEND_INVITATION": "Sending Invitation",
+      "NO_EVENTS" : "No events found",
+      "NO_TEMPLATES" : "No templates found"
+    },
+    "ROLES": {
+      "ADMIN": "Owner",
+      "MEMBER": "Member"
+    }
+  },
+  "GROUP": {
+    "LABEL": {
+      "PREFIX_CREATED_DATE": "Created On",
+      "NO_GROUPS": "No groups available"
+    },
+    "DEFAULTS": {
+      "DETAILS_TITLE": "Room",
+      "DETAILS_LOADING_MESSAGE": "Loading Room details."
+    },
+    "CREATE_ACTION": {
+      "TITLE": "Create new Room"
+    },
+    "VALIDATION_MESSAGE": {
+      "NAME": {
+        "MAXLEN": "Please limit the room name to 50 characters.",
+        "PATTERN": "Only letters, numbers and spaces are allowed in the room name."
+      },
+      "DESC": {
+        "MAXLEN": "Please limit the room description to 150 characters."
+      }
+    },
+    "LOADING_MSG": {
+      "NO_GROUPS_FOUND": "No rooms found.",
+      "FETCHING_OWNER_FILES": "Fetching files."
+    },
+    "OPTIONS_MENU": {
+      "CREATE_SUB_GROUP": "Create Sub Room",
+      "CREATE_INVITATION": "Invite member",
+      "DELETE_GROUP": "Delete"
+    },
+    "ROLES": {
+      "ADMIN": "Owner",
+      "MEMBER": "Member"
+    }
+  },
+  "JOB": {
+    "BUTTON": {
+      "ADVERTISE": "Invite Owner",
+      "CREATE_TASK": "Create Task",
+      "ADD_NEW_FILE": "Add New File",
+      "ADD_NEW_FORM": "Add Form",
+      "INVITE_CONTRIBUTORS": "Invite Contributor",
+      "VIEW_CONTRIBUTORS": "View Contributors",
+      "FORMS": "Forms",
+      "POSTFIX_": "Job",
+      "TRY_CANCEL": "Cancel",
+      "TRY_FINISH": "Finish",
+      "TRY_RESUME": "Resume",
+      "TRY_PAUSE": "Pause",
+      "TRY_STOP": "Pause",
+      "TRY_START": "Start",
+      "TRY_VERIFY": "Verify",
+      "TRY_REJECT": "Reject",
+      "TRY_CLOSE": "Close"
+    },
+    "LABEL": {
+      "TITLE_LIST": "Work",
+      "TITLE_TAB_JOBS": "Jobs",
+      "TITLE_TAB_TIMESHEET": "Timesheet",
+      "TITLE_TAB_RATING": "Rating",
+      "TITLE_TAB_EVENT": "Events",
+      "ORIGINATED_BY": "Originated by",
+      "OWNED_BY": "Owned by",
+      "CREATED_BY": "Created by",
+      "STATUS": "Status",
+      "DESCRIPTION": "Description",
+      "OBJECTIVE": "Objective",
+      "CONTRIBUTORS": "Contributors",
+      "INVITE_CONTRIBUTOR_TITLE": "Invite Contributor",
+      "HISTORY": "Activities",
+      "FORMS": "Forms",
+      "PENDING_FORMS_TITLE": "Job Forms",
+      "CREATE_JOB": "Create Job",
+      "UPDATE_JOB": "Update Job",
+      "DELETE_JOB": "Delete Job",
+      "JOB_PENDING_ADVERTISEMENT_MEMBERS": "Members",
+      "JOB_ACCESS_RESTRICTED": "Access restricted for this Job.",
+      "LCE_NAME": {
+        "TRY_CANCEL": "Job Cancel",
+        "TRY_FINISH": "Job Finish",
+        "TRY_RESUME": "Job Resume",
+        "TRY_PAUSE": "Job Pause",
+        "TRY_STOP": "Job Pause",
+        "TRY_START": "Job Start",
+        "TRY_VERIFY": "Job Verify",
+        "TRY_REJECT": "Job Reject",
+        "TRY_CLOSE": "Job Close"
+      },
+      "PENDING_FORMS_TEXT": {
+        "TRY_START": "Please complete the following forms before starting the job",
+        "TRY_STOP": "Please complete the following forms before stopping the job",
+        "TRY_PAUSE": "Please complete the following forms before pausing the job",
+        "TRY_RESUME": "Please complete the following forms before resuming the job",
+        "TRY_FINISH": "Please complete the following forms before finishing the job",
+        "TRY_CANCEL": "Please complete the following forms before cancelling the job",
+        "TRY_REJECT": "Please complete the following forms before rejecting the job"
+      }
+    },
+    "JOB_DASHBOARD_TABS": {
+      "AUDIT": "Audit",
+      "JOB": "Work",
+      "CHAT": "Chat",
+      "VAULT": "Data",
+      "TASKS": "Tasks",
+      "INFO": "Info",
+      "DATA": "Data",
+      "MEMBERLIST": "MEMBERS",
+      "FORMS": "Forms",
+      "GROUPS": "Rooms",
+      "EVENT": "Events",
+      "SCHEDULE": "Schedule",
+      "TEMPLATE":"Template",
+      "FORM":"Form"
+    },
+    "JOB_CREATE_VALIDATION_MSGS": {
+      "JOB_NAME_LIMIT": "Job name should not exceed 50 characters.",
+      "JOB_NAME_ALLOW": "Only letters, numbers and spaces are allowed in the Job name.",
+      "JOB_DESCRIPTION_LIMIT": "Please limit the Job description to 150 characters.",
+      "JOB_OBJECTIVE_LIMIT": "Please limit the Job Objective to 150 characters."
+    },
+    "JOB_LOADING_MSGS": {
+      "JOB_UPDATE": "Updating Job",
+      "JOB_DELETE": "Deleting Job",
+      "JOB_CREATE": "Creating Job",
+      "JOBS_LOAD": "Loading Jobs.. ",
+      "NO_JOBS": "No jobs available.",
+      "REMOVING_MEMBER": "Removing Member",
+      "YOUR_JOBS": "Your Jobs..",
+      "LOAD_MORE": "Load more...",
+      "LOADING": "Loading"
+    },
+    "MESSAGES": {
+      "UNRATED_USERS_NOT_FOUND": "You have already rated all the users in this job."
+    },
+    "JOB_STATUS": {
+      "NEW": "Created",
+      "CREATE": "Created",
+      "START": "Started",
+      "FINISH": "Finished",
+      "CLOSE": "Closed",
+      "OWNED": "Owned.",
+      "IN_PROGRESS": "In Progress",
+      "STOPPED": "Stopped",
+      "FINISHED": "Completed",
+      "UNDER_VERIFICATION": "Under verification",
+      "CLOSED": "Closed",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled",
+      "ASSIGNED": "Assigned",
+      "JOB_CAN_NOT_BE_OWNED": "Job can not be owned",
+      "JOB_OWNED": "Owned",
+      "JOB_OWNERSHIP_WAITING": "Owner ship waiting"
+    },
+    "ROLES": {
+      "ORIGINATOR": "Originator",
+      "OWNER": "Owner",
+      "MEMBER": "Member",
+      "DELEGATOR": "Contributor",
+      "CONTRIBUTOR": "Contributor"
+    }
+  },
+  "TASK": {
+    "TASK_CREATE_VALIDATION_MSGS": {
+      "TASK_NAME_LIMIT": "Task name should not exceed 50 characters.",
+      "TASK_NAME_ALLOW": "Only letters, numbers and spaces are allowed in the Task name.",
+      "TASK_DESCRIPTION_LIMIT": "Please limit the Task description to 150 characters."
+    },
+    "ROLES": {
+      "ORIGINATOR": "Originator",
+      "OWNER": "Owner",
+      "MEMBER": "Member",
+      "DELEGATOR": "Contributor",
+      "CONTRIBUTOR": "Contributor"
+    },
+    "TASK_LOADING_MSGS": {
+      "TASK_UPDATE": "Updating Task",
+      "TASK_CREATE": "Creating Task",
+      "TASK_DELETE": "Deleting Task",
+      "NO_TASKS": "No Tasks available.",
+      "LOAD_MORE": "Load more...",
+      "LOADING": "Loading"
+    },
+    "MESSAGES": {
+      "ERROR_TASK_ASSIGNEE_NOT_FOUND": "Task Owner not found.",
+      "NO_MATCH_FOUND_PREFIX_INVITE_CONTRIBUTOR": "No matching results found for ",
+      "UPDATING_TASK": "Updating Task",
+      "TASK_BLOCKED": "Task is blocked"
+    },
+    "BUTTON": {
+      "TRY_FINISH": "Finish",
+      "TRY_RESUME": "Resume",
+      "TRY_PAUSE": "Pause",
+      "TRY_STOP": "Pause",
+      "TRY_START": "Start",
+      "TRY_VERIFY": "Verify",
+      "TRY_REJECT": "Reject",
+      "TRY_CLOSE": "Close",
+      "TRY_CANCEL": "Cancel",
+      "POSTFIX_": "Task"
+    },
+    "LABEL": {
+      "TASK_DELETE": "Task Delete",
+      "OWNER_TEXT_PREFIX": "Owned by",
+      "OWNED_DATE_TEXT_PREFIX": "Owner since",
+      "OWNER": "Owner",
+      "CREATOR_TEXT_PREFIX": "Originated by",
+      "CREATED_DATE_TEXT_PREFIX": "Originator since",
+      "CREATOR": "Originator",
+      "CONTRIBUTOR": "Contributor",
+      "CONTRIBUTOR_JOIN_DATE_PREFIX": "Contributor since",
+      "ACTION_ASSIGN_OWNER": "Assign Owner",
+      "ACTION_INVITE_CONTRIBUTOR": "Invite Contributor",
+      "PLACEHOLDER_CONTRIBUTOR_SEARCH_INPUT": "Search Job Memeber",
+      "LABEL_INVITE_CONTRIBUTOR": "Send Invitations",
+      "ACTION_TASK_BLOCK": "Block Task",
+      "ACTION_TASK_UNBLOCK": "Un-block Task",
+      "TASK_FINISH": "Finish",
+      "TASK_RESUME": "Resume",
+      "TASK_PAUSE": "Pause",
+      "TASK_STOP": "Pause",
+      "TASK_START": "Start",
+      "TASK_VERIFY": "Verify",
+      "TASK_REJECT": "Reject",
+      "TASK_CANCEL": "Cancel",
+      "TASK_CLOSE": "Close",
+      "LCE_NAME": {
+        "TRY_CANCEL": "Task Cancel",
+        "TRY_FINISH": "Task Finish",
+        "TRY_RESUME": "Task Resume",
+        "TRY_PAUSE": "Task Pause",
+        "TRY_STOP": "Task Pause",
+        "TRY_START": "Task Start",
+        "TRY_VERIFY": "Task Verify",
+        "TRY_REJECT": "Task Reject",
+        "TRY_CLOSE": "Task Close"
+      },
+      "PENDING_FORMS_TEXT": {
+        "TRY_START": "Please complete the following forms before starting the task",
+        "TRY_STOP": "Please complete the following forms before stopping the task",
+        "TRY_PAUSE": "Please complete the following forms before pausing the task",
+        "TRY_RESUME": "Please complete the following forms before resuming the task",
+        "TRY_FINISH": "Please complete the following forms before finishing the task"
+      },
+      "TASK_DELETE_CONFORM_MSG": "Do you want to delete this task ?"
+    }
+  },
+  "POST": {
+    "LABEL": {
+      "LABEL_POST_TYPE_INFORMATION": "Information",
+      "LABEL_POST_TYPE_ACTION": "Action",
+      "LABEL_POST_TYPE_SPONSOR": "Sponsor"
+    },
+    "DEFAULT": {
+      "LOADING_POST_DATA": "Loading post details...",
+      "SUBMITTING_REPLY": "Sending reply.."
+    },
+    "REQUEST_CREATE_GROUP": {
+      "POST_DIALOG_TITLE": "Create Room request",
+      "REPLY_APPROVE_PROGRESS_MESSAGE": "Approving create Room request.",
+      "REPLY_REJECT_PROGRESS_MESSAGE": "Rejecting create Room request."
+    },
+    "JOB_ADVERTISEMENT": {
+      "SENDING_REPLY": "Sending reply..",
+      "POST_DIALOG_TITLE": "Job Advertisement"
+    },
+    "JOB_INVITATION": {
+      "SENDING_REPLY": "Sending reply..",
+      "POST_DIALOG_TITLE": "Job Invitation"
+    }
+  },
+  "DASHBOARD": {
+    "LABEL": {
+      "TITLE": "Notifications",
+      "CHAT_POST_DISPLAY_MESSAGE_PREFIX": "You have unread messages in "
+    },
+    "MESSAGES": {
+      "NO_POSTS_AVAILABLE": "No Notifications",
+      "LOADING_POST_LIST": "Fetching Notifications"
+    }
+  },
+  "VAULT": {
+    "VAULT_FILE_LIST_SUB_HEADER": "Data files",
+    "MAX_FILE_SIZE": "Maximum allowed file size is",
+    "LOADING_MSG": {
+      "DELETING_FILES": "Deleting Files(s).",
+      "FETCHING_FILES": "Fetching Files.",
+      "RENAME_FILES": "Renaming Files.",
+      "COPY_IN_PROGRESS": "Copying files"
+    },
+    "BUTTON": {
+      "RENAME": "Rename",
+      "COPY": "Copy",
+      "DOWNLOAD": "Download"
+    },
+    "LABEL": {
+      "UPLOAD_FILE": "Upload File",
+      "TITLE_DELETE_FILES": "Delete File",
+      "TITLE_RENAME_FILES": "Rename File",
+      "TITLE_COPY_FILES": "Copy File",
+      "TITLE_DOWNLOAD_FILES": "Download File",
+      "PLACEHOLDER_SELECT_DESTINATION_VAULT": "Select copy destination",
+      "PLACEHOLDER_NEW_FILE_NAME": "New name",
+      "NO_FILES_FOUND": "No files available",
+      "LAST_MODIFIED": "Last Modified"
+    },
+    "": ""
+  },
+  "VALIDATION": {
+    "DEFAULT_LABEL": {
+      "ANY": "Any"
+    },
+    "EMAIL": {
+      "LABEL": "Email"
+    },
+    "ALPHA_NUMERIC": {
+      "LABEL": "Alpha Numeric"
+    }
+  },
+  "FORM_FIELD": {
+    "DEFAULTS": {
+      "BUTTON": {
+        "ADD_VALIDATION": "Add Validation"
+      },
+      "LABEL": {
+        "LABEL": "Label",
+        "DESCRIPTION": "Description",
+        "VALIDATIONS": "Validations"
+      }
+    },
+    "STRING": {
+      "EDITOR_LABEL": "String",
+      "SELECT_TYPE_PLACEHOLDER": "Field type",
+      "MANDATORY": "Mandatory"
+    }
+  },
+  "CHAT_SUMMARY_TYPE": {
+    "ORGANIZATION": "WorkSpace",
+    "GROUP": "Room",
+    "JOB": "Job"
+  },
+  "DIRECT_MESSAGE": {
+    "ERROR": {
+      "MESSAGE_MAX_LENGTH": "Please limit the message length to 200 characters."
+    },
+    "LABEL": {
+      "TITLE_DIRECT_MESSAGE": "Ping"
+    }
+  },
+  "SETTINGS": {
+    "LABEL_PN_SETTINGS_SUB_HEADER": "Push Notification Settings",
+    "LABEL_PN_INVITATION": "Invitation Notifications",
+    "LABEL_PN_INVITATION_SUBTEXT": "Receive push notification about Invitation related activities.",
+    "LABEL_PN_CHAT": "Chat Notifications",
+    "LABEL_PN_CHAT_SUBTEXT": "Receive push notification for incoming chat messages.",
+    "LABEL_PN_DATA": "Data Notifications",
+    "LABEL_PN_DATA_SUBTEXT": "Receive push notification when changes are made to any of the files in your vaults."
+  }
+}
+

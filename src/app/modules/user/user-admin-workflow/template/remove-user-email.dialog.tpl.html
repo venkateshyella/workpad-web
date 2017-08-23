@@ -1,0 +1,58 @@
+<md-dialog class="register-pop-up" aria-label="Add New Location"
+           layout="column" layout-align="space-between center">
+  <md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span ng-bind="LANG.USER_EDIT.CONTACTS.REMOVE_EMAIL"></span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close"
+                 aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-toolbar class="toolbar-clear full-width toolbar-tall">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <small flex ng-bind="LANG.LABEL.SELECT_ALL">Select emails</small>
+      </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="toggleSelectAll()">
+        <md-icon md-font-icon="icon"
+                 ng-class="{'icon-check-box':isAllSelected, 'icon-check-box-blank':!isAllSelected}"
+                 aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width"  layout="column">
+    <div class="list">
+      <div
+        ng-repeat="email in emails"
+        class="item item-line-single item-icon-left item-icon-right"
+        ng-class="{'bg-light-primary':email.isSelected}"
+        ng-click="selectTelNumberForDeletion(email)"
+        flex>
+        <i class="icon icon-call icon-cling-top"></i>
+
+        <h2 class="txt txt-line-pri text-wrap">{{email.emailId}}</h2>
+
+        <i class="icon icon-cling-top"
+           ng-class="email.isSelected ? 'icon-check-box' : 'icon-check-box-blank'"></i>
+      </div>
+    </div>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               aria-label="Cancel">
+      <span ng-bind="LANG.BUTTON.CANCEL"></span>
+    </md-button>
+    <md-button ng-click="updateUserEmails()"
+               ng-disabled="selectedItemsCount==0"
+               aria-label="Update Emails">
+      <span ng-bind="LANG.BUTTON.DELETE"></span>
+    </md-button>
+  </div>
+</md-dialog>

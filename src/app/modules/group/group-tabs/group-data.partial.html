@@ -1,0 +1,103 @@
+<!-- <div class="button-bar padding">
+
+  <div
+    ng-class="{'button-outline': state.showAudit}"
+    ng-click="toggleAudit(false)"
+    class="button">
+    <i class="icon icon-drive-document"></i>
+    <small ng-bind="::LANG.LABEL.TAB_DATA"></small>
+  </div>
+
+  <div
+    ng-class="{'button-outline': !state.showAudit}"
+    ng-click="toggleAudit(true)"
+    class="button">
+    <i class="icon icon-history"></i>
+    <small ng-bind="::LANG.LABEL.TAB_AUDIT"></small>
+  </div>
+
+</div> -->
+
+<div ng-if="!state.showAudit" class="tab-list-scroll">
+<div class="breadCrum-org" ng-if="folderView.isEnabled"> 
+  <i class="fa fa-folder-open fa-2" aria-hidden="true"></i>
+  <span ng-click="viewAllData();" style="cursor:pointer">Data </span>
+  <md-icon  md-font-icon="icon icon-chevron-right"></md-icon>
+   <span ng-bind="folderView.folderName"></span>
+</div>
+
+  <md-list class="no-padding-top">
+    <md-list-item ng-repeat="file in queuedFiles" class="md-2-line md-no-proxy">
+      <!-- <md-icon md-font-icon="icon icon-drive-file"></md-icon> -->
+      <div class="md-list-item-text">
+        <h3 class="line-clamp-2">{{file.fileObject.name}}</h3>
+        <p class="color-light">{{file.size_displayText}}</p>
+        <p class="color-light">In queue.</p>
+      </div>
+    </md-list-item>
+    <md-list-item ng-repeat="file in GroupVaultData.groupVaultFiles" class="md-2-line md-no-proxy">
+      <md-icon ng-if="file.isFile != 0" md-font-icon="icon icon-drive-file"></md-icon>
+      <!-- <i ng-if="file.isFile == 0" class="fa fa-folder fa-2" aria-hidden="true"></i> -->
+      <md-icon ng-if="file.isFile == 0" ng-click="viewFolder(file.id, file.fileDisplayName);" md-font-icon="icon icon-folder" style="cursor:pointer"></md-icon>
+      
+     <!-- For File related details -->
+      <div class="md-list-item-text" ng-if="file.isFile != 0">
+        <h3 class="line-clamp-2">{{file.fileDisplayName}}</h3>
+        <p class="color-light">
+          <span ng-bind="file.owner.userFirstName + ' ' + file.owner.userLastName" class=""></span>
+        </p>
+        <p>
+          <span ng-bind="file.fileSize" class="push-right pr-sm"></span>
+                <span class="text-no-wrap">
+                <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(file.createTime)"></span>
+                </span>
+        </p>
+      </div>
+      
+      <!-- For Folder related details -->
+       <div class="md-list-item-text" ng-if="file.isFile == 0">
+        <h3 ng-click="viewFolder(file.id, file.fileDisplayName);" class="line-clamp-2" style="cursor:pointer">{{file.fileDisplayName}}</h3> 
+        
+        
+        <p class="color-light">
+          <span ng-bind="file.owner.userFirstName + ' ' + file.owner.userLastName" class=""></span>
+        </p>
+        <p>
+          <span ng-bind="file.foldersize" class="push-right pr-sm"></span>
+          <span class="text-no-wrap"><b ng-bind="file.totalFilesCount" ></b> <span>{{file.totalFilesCount == 1 ? 'file' : 'files'}}</span></span>
+                <span class="text-no-wrap">
+                <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(file.createTime)"></span>
+                </span>
+        </p>
+      </div>
+      
+      <a class="download-icon" ng-if="file.isFile != 0" file-http-download='groupFileDownloadUrl+"?id="+file.id' download="file.fileDisplayName"  extention="file.extType">
+		<md-icon md-font-icon="icon icon-file-download" aria-label="Preview file" class="md-hue-3"></md-icon>
+	</a>
+      
+    </md-list-item>
+  </md-list>
+  <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+    <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+            aria-label="Load More">
+      <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+      <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+    </button>
+  </div>
+  <div class="list" layout="row" layout-align="center center"
+       ng-show="GroupVaultData.groupVaultFiles.length == 0">
+    <div class="item item-backdrop text-center">
+      <div class="backdrop-filler-image">
+        <i class="icon icon-backdrop icon-list-unordered"></i>
+        <h4 class="color-light-2">No Files.Please upload a file.</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-if="state.showAudit" class="tab-list-scroll">
+  <audit-list
+    audit-collection="groupAuditCollection"
+    page-loader="groupAuditPageLoader"
+  ></audit-list>
+</div>
+{{addScrollToList();}}

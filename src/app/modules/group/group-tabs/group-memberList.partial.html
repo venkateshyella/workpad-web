@@ -1,0 +1,38 @@
+<div class="list full-width overflow-hide">
+  <div ng-repeat="member in groupMembers" class="item item-complex item-action-right">
+    <div class="item-content item-avatar-left" ng-click="onGroupMemberListItemClick(member, $event)">
+      <img ng-src="{{member._img_icon}}" on-error-src="assets/images/profile-image-placeholder.png"
+           class="img fit round item-image">
+      <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+        {{member.userFirstName}} {{member.userLastName}}
+      </h2>
+      <div layout="row" class="push-top pt-sm">
+        <p class="txt txt-line-sec text-ellipsis">
+          <span
+            ng-if="member.id == groupTabCtrl.groupModel.adminId">
+            <span ng-bind="::'Owner since '"></span>
+            <span ng-bind="::MU.formatDate(member.joinedTime)"></span></span>
+          <span
+            ng-if="member.id != groupTabCtrl.groupModel.adminId">
+            <span ng-bind="::'Member since '"></span>
+            <span ng-bind="MU.formatDate(member.joinedTime)"></span></span>
+        </p>
+      </div>
+    </div>
+    <!-- <button ng-click="showGroupMemberOptions(member)" class="item-action button button-clear push-top">
+          <i class="icon icon-more-vert"></i>
+      </button> -->
+    <button ng-click="askAndRemoveGroupMember(member)" class="item-action button button-clear push-top"
+            ng-show="session.userId == groupTabCtrl.groupModel.adminId && member.id != groupTabCtrl.groupModel.adminId">
+      <i class="icon icon-close"></i>
+    </button>
+  </div>
+</div>
+<div class="list" layout="row" layout-align="center center" ng-show="groupMembers.length == 0">
+  <div class="item item-backdrop text-center">
+    <div class="backdrop-filler-image">
+      <i class="icon icon-backdrop icon-people"></i>
+      <h4 class="color-light-2">No Members.Please add a member.</h4>
+    </div>
+  </div>
+</div>

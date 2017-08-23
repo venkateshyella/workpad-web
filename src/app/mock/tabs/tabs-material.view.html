@@ -1,0 +1,85 @@
+<view type="toolbarView" title="'Tabs'">
+
+  <toolbar app-toolbar title="'Tabs'">
+    <toolbar-options>
+      <div class="menu-option-group">
+      </div>
+    </toolbar-options>
+  </toolbar>
+
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row layout-gravity="top" layout-height="4em">
+      <md-tabs class="md-accent" md-selected="data.selectedIndex" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
+
+        <md-tab id="tab2" ng-disabled="data.secondLocked">
+          <div ng-click="tab_content='tab1'">Tab 1</div>
+        </md-tab>
+
+        <md-tab id="tab1">
+          <div ng-click="tab_content='tab2'">Tab 2</div>
+        </md-tab>
+      </md-tabs>
+
+    </row>
+
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <div ng-switch="tab_content">
+
+
+        <div ng-switch-when="tab1">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, vel.</p>
+
+          <p>Dolor doloremque expedita laborum nihil perferendis perspiciatis repellendus repudiandae tempora.</p>
+
+          <p>Ab cupiditate, dicta illum ipsum natus odit provident quos voluptate.</p>
+
+          <p>Dolorem excepturi labore necessitatibus odit provident quas quo quod saepe!</p>
+
+          <p>Fugit quaerat, qui quidem sapiente ullam vel vero? Eos, sequi?</p>
+
+          <p>Beatae eius eveniet explicabo harum nam possimus praesentium quod, sapiente!</p>
+
+          <p>Amet autem corporis ex illo illum quis reprehenderit rerum totam?</p>
+
+          <p>Facere fugiat nulla officiis praesentium reiciendis! In numquam possimus tempore!</p>
+
+          <p>Ab aliquam dolore facere libero natus odio, repellat tempore ut.</p>
+
+          <p>Illo maiores nam officiis quaerat soluta! Architecto aut autem libero.</p>
+
+          <p>Accusantium ad asperiores delectus molestiae nemo numquam reiciendis sequi tempore?</p>
+
+          <p>Assumenda enim, error itaque labore nemo nesciunt quaerat repellat. Beatae.</p>
+
+          <p>Animi consequuntur deserunt, eius natus nisi obcaecati quia recusandae temporibus?</p>
+
+          <p>Ex exercitationem iure minus officia placeat possimus reiciendis vel voluptate?</p>
+
+          <p>Eveniet in ipsum nihil odit officiis pariatur quidem quis, sequi?</p>
+
+          <p>Aspernatur harum illum inventore quibusdam soluta? Adipisci aperiam cupiditate incidunt?</p>
+
+          <p>Ab deleniti est expedita explicabo nulla officia quibusdam reprehenderit saepe?</p>
+
+          <p>Ducimus ea eligendi libero magni nam optio pariatur ut veritatis!</p>
+
+          <p>Accusamus, eaque eligendi enim expedita necessitatibus odit repudiandae vero voluptas.</p>
+
+          <p>Culpa doloribus ea, facilis nisi nostrum pariatur repellendus sit voluptates!</p>
+        </div>
+
+        <div ng-switch-when="tab2">
+          <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, excepturi.</h2>
+
+          <h2>Aut culpa dignissimos dolorem illo laborum placeat, sunt velit voluptatem!</h2>
+
+          <h2>Accusamus ducimus laboriosam minus molestiae, nihil obcaecati sequi sint tempora.</h2>
+        </div>
+
+      </div>
+    </row>
+
+  </layout>
+
+ </view>

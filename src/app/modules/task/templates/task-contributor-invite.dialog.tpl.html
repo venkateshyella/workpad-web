@@ -1,0 +1,107 @@
+<md-dialog
+  class="register-pop-up"
+  aria-label="Invite Contributor"
+  layout="column"
+  layout-align="space-between center">
+  <md-toolbar class="toolbar-custom">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>Task Contributor Invitation</span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="full-width" >
+
+    <div
+      class="list no-padding-top">
+
+      <div class="item item-input item-input-inset">
+        <label class="item-input-wrapper">
+          <input
+            ng-model="searchKey"
+            type="text"
+            trigger-focus="triggerFocus" placeholder="{{placeholderText}}">
+        </label>
+        <button
+          ng-show="searchKey.length>0"
+          ng-click="clearSearchKey()"
+          class="button button-small button-clear no-push-left">
+          <i class="icon icon-close icon-2x color-light-2"></i>
+        </button>
+      </div>
+
+      <!--<div class="item item-input full-width">-->
+      <!--<input-->
+      <!--ng-model="searchKey"-->
+      <!--type="text"-->
+      <!--trigger-focus="triggerFocus" placeholder="{{placeholderText}}">-->
+      <!--</div>-->
+
+      <div class="item no-padding"
+           style="position: relative; overflow: visible;">
+
+        <div class="item padding full-width" style="z-index: 1">
+          <div class="list no-padding">
+            <div class="item item-sub-header">
+              Selected Users
+            </div>
+
+            <div
+              ng-repeat="user in selectedUsersList"
+              class="item"
+              layout="row">
+              <h3
+                ng-bind="user.userFirstName+' '+user.userLastName"
+                style="line-height: 27px;"
+                flex></h3>
+              <div
+                ng-click="removeSelectedUser(user)"
+                class="button button-clear button-small">
+                <i class="icon icon-close"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card no-push-top list no-padding scrollBox1"
+             ng-show="resultUserList.length>0 || error!=null"
+             style="position: absolute;left: 0;right: 0;top: 0;z-index: 2;max-height: 400px; overflow: scroll;">
+
+          <md-progress-linear ng-show="loading"
+                              md-mode="indeterminate"
+                              style=""
+                              class="toolbar-loading-bar md-hue-3 md-accent"></md-progress-linear>
+
+          <div
+            ng-show="error"
+            class="item scrollBox">
+            <p ng-bind="error.dispText"></p>
+          </div>
+          <div
+            ng-repeat="user in resultUserList"
+            ng-click="onItemSelect(user)"
+            class="item full-width">
+            <p><span
+              ng-bind="user.userFirstName+' '+user.userLastName"></span></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </md-dialog-content>
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()" aria-label="Cancel">
+      Cancel
+    </md-button>
+    <md-button
+      ng-disabled="!selectedUsersList.length>0"
+      ng-click="onSendInviteClick()"
+      class="md-primary">
+      <span ng-bind="inviteLabel"></span>
+    </md-button>
+  </div>
+</md-dialog>

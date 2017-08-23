@@ -1,0 +1,51 @@
+<view title="'Form View'">
+   <!-- 
+      <toolbar app-toolbar title="'Form View'">
+        <toolbar-options>
+      
+          
+      
+          <md-progress-linear ng-show="toolbarLoader.async_active"
+                              md-mode="indeterminate"
+                              class="toolbar-loading-bar md-hue-3"></md-progress-linear>
+      
+        </toolbar-options>
+      </toolbar>
+      -->
+   <!--  <layout type="linearLayout" orientation="vertical"
+      layout-height="match_parent">
+      <row scroll layout-height="fill_remaining" layout-gravity="free">
+      -->
+   <div  layout="column" ng-cloak>
+   <md-content class="full-width">
+      <div class="list full-width overflow-hide">
+         <div ng-show="formModel.fields.length==0"
+            class="item item-backdrop text-center">
+            <div class="backdrop-filler-image">
+               <i class="icon icon-backdrop icon-briefcase-case-two"></i>
+            </div>
+            <p>No Job Form Created</p>
+         </div>
+         <ng-form name="jobDynamicForm" class="" novalidate ng-show="formModel.fields && formModel.fields.length > 0">
+            <div class="card">
+               <div ng-repeat="field in formModel.fields | orderBy: 'id'">
+                  <dynamic-form-field field-model="field" fields-list="formModel.fields" job-dynamic-form="jobDynamicForm" is-job-in-progress="isJobInProgress"
+                     can-disable="canDisable"></dynamic-form-field>
+               </div>
+            </div>
+         </ng-form>
+<!--          <div ng-show="!formModel.formId && !isUpdate && isJobInProgress" class="md-actions full-width" layout="row">
+            <span flex></span>
+            <md-button ng-click="submitJobForm(true);" ng-disabled="!jobDynamicForm.$valid"> Create </md-button>
+         </div> -->
+         <div ng-show="(formModel.fields.length > 0) &&  formModel.formId && isUpdate && !isJobInProgress"  class="md-actions full-width" layout="row">
+            <span flex></span>
+            <md-button ng-click="submitJobForm(true);" ng-disabled="!jobDynamicForm.$valid"> Update </md-button>
+         </div>
+      </div>
+   </md-content>
+   </div>
+   <!-- 
+      </row>
+      </layout> -->
+</view>

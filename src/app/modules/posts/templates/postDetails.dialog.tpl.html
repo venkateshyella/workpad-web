@@ -1,0 +1,33 @@
+<md-dialog aria-label="Post details">
+  <md-toolbar class="toolbar-clear">
+    <div class="md-toolbar-tools">
+      <h2
+        ng-bind="post.$_notificationCategoryText"
+        class="txt-capitalize text-ellipsis"></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="padding-top full-width">
+    <p ng-click="close('sec')" style="padding-bottom: 24px;">{{post.notificationDescription}}</p>
+    <div class="timeline-title">
+         <p ng-if="post.groupPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="post.groupPath"></context-path></a></p>
+         <p ng-if="post.messageLineItems.length>0"  ng-repeat="item in post.messageLineItems"><a href="javascript:;" >{{item}}</a></p>
+    </div>
+    <p class="color-light-2 text-right push-top">
+      <span>{{post.createdDate_displayText}}</span>
+    </p>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="close('sec')"
+               ng-show="xtras.secText">
+      <span>{{xtras.secText}}</span>
+    </md-button>
+    <md-button ng-click="close('pri')">
+      <span>{{xtras.priText}}</span>
+    </md-button>
+  </div>
+</md-dialog>

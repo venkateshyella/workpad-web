@@ -1,0 +1,55 @@
+<md-dialog aria-label="Delete Events"
+  layout="column">
+
+  <md-toolbar>
+<div layout="row" class="md-toolbar-tools">
+	<h2 class="md-title">Delete Events</h2>
+	<span flex></span>
+	<md-button class="md-icon-button" ng-click="cancel()"> <md-icon
+		md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon> </md-button>
+</div>
+</md-toolbar>
+
+    <md-dialog-content class="full-width " >
+
+    <div class="list no-padding" flex>
+      <div
+        class="item item-line-single item-icon-right push-bottom"
+        ng-click="multiSelectList.toggleSelectionAll()"
+        flex>
+        <h2 class="txt txt-line-pri text-wrap" ng-bind="selectAllText || 'Select all'">
+        </h2>
+
+        <i class="icon icon-cling-top"
+           ng-class="multiSelectList.isAllSelected ? 'icon-check-box': 'icon-check-box-blank'"></i>
+      </div>
+      <div
+        ng-repeat="event in multiSelectList.list"
+        class="item item-line-single item-icon-left item-icon-right"
+        ng-class="{'bg-light-primary':event.isSelected}"
+        ng-click="multiSelectList.toggleItemSelection(event)"
+        flex>
+        <i class="icon icon-drive-file icon-cling-top"></i>
+
+        <h2 class="txt txt-line-pri text-wrap">{{event.eventName}}</h2>
+
+        <i class="icon icon-cling-top"
+           ng-class="event.isSelected ? 'icon-check-box' : 'icon-check-box-blank'"></i>
+      </div>
+    </div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               aria-label="Cancel Workflow">
+      <span ng-bind="config.cancelButtonText"></span>
+    </md-button>
+    <md-button ng-click="action()"
+               ng-disabled=""
+               aria-label="Execute Action">
+      <span ng-bind="config.actionButtonText"></span>
+    </md-button>
+  </div>
+
+</md-dialog>

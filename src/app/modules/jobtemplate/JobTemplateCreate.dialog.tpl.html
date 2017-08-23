@@ -1,0 +1,116 @@
+<md-dialog class="register-pop-up">
+   <md-toolbar class="toolbar-custom">
+      <div class="md-toolbar-tools" >
+        <h3 ng-if='!isUpdate || fromClosedJob'>Create Job Template</h3>
+      	<h3 ng-if='isUpdate && !fromClosedJob'>Update Job Template</h3>
+      
+         <span flex></span>
+         <a href="javascript:void(0)" ng-if="!isPreview">
+            <md-icon ><i class="fa fa-times fa-1x" ng-click="close()" aria-hidden="true"></md-icon >
+            </i>
+         </a>
+      </div>
+   </md-toolbar>
+   <md-dialog-content ng-if="!isTemplateFromJob"  class="full-width" >
+   
+      <div id="wizard-container" ng-if="!isPreview">
+         <div id="wizard-step-container">
+           <!--  <ul class="nav nav-pills nav-justified job-template">
+               <li  ng-repeat="step in vm.steps" ng-class="{'active':step.step == vm.currentStep}">{{step.name}}</li>
+            </ul> -->
+               <div class="stepsForm sf-theme-green" style="width: 100%;">
+                <div class="sf-steps">
+                    <div class="sf-steps-content">
+                    	<div ng-repeat="step in vm.steps" ng-class="{'sf-active':step.step == vm.currentStep}" ng-click="vm.gotoStep(step.step, vm.currentStep)" style="cursor: pointer; ">
+                        	 <i ng-if="step.step == 1" class="icon icon-tab icon-info-outline"></i>
+                        	 <i ng-if="step.step == 2"  class="icon icon-tab icon-people"></i>
+                        	 <i ng-if="step.step == 3"  class="icon icon-tab icon-drive-document"></i>
+                        	 <span class="tab-text-template"> {{step.name}}</span>
+                        </div>
+                    </div>
+                </div>                
+        </div>
+         </div>
+         <div id="wizard-content-container">
+            <ng-include src="vm.getStepTemplate()"></ng-include>
+         </div>
+      </div>
+      
+      <div ng-if="isPreview">
+       	<ng-include src="'app/modules/jobtemplate/jobTemplatePreview.dailog.tpl.html'"></ng-include>
+      </div>
+      
+   </md-dialog-content>
+ 	 <div ng-if="!isTemplateFromJob" class="md-actions full-width" layout="row" id="wizard-container">
+      <div id="wizard-navigation-container">
+         <div class="pull-right">
+         <md-button ng-if="!isPreview && (vm.currentStep == 3)"class="md-primary" ng-click="showJobTemplatePreview(jobTemplateModel);"> Preview </md-button>
+         <md-button ng-if="isPreview"class="md-primary" ng-click="closeTemplatePreview();"> Ok </md-button>
+         
+         <md-button ng-if="!isPreview" class="md-primary" ng-click="close()"> Cancel </md-button>
+            <span ng-if='(vm.currentStep == 1) && !isPreview' class="btn-group">
+               <md-button class="md-primary" ng-disabled="!form.createTemplate.$valid" name="next" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+            </span>
+			<span ng-if='(vm.currentStep == 2) && !isPreview' class="btn-group">
+               <md-button class="md-primary" name="previous" type="button" ng-click="vm.gotoStep(vm.currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous</md-button>
+               <md-button ng-if='!jobTemplateModel.jobOwner' class="md-primary"  ng-disabled="!jobTemplateModel.jobOwner" name="next" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+               <md-button ng-if='jobTemplateModel.jobOwner' class="md-primary"  name="next" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+               <md-button class="md-primary"  ng-disabled="!ownerInvite.isValid() && !jobTemplateModel.jobOwner" class="btn btn-success" name="next" type="button" ng-click="templateSubmit(jobTemplateModel)">Save</md-button>
+            </span>
+            
+			<span ng-if='(vm.currentStep == 3) && !isPreview' class="btn-group">
+               <md-button class="md-primary" name="previous" type="button" ng-click="vm.gotoStep(vm.currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous</md-button>
+               <md-button ng-if='!isUpdate || fromClosedJob' class="md-primary" class="btn btn-success" name="next" type="button" ng-click="templateSubmit(jobTemplateModel)">
+               Save</md-button>
+               <md-button ng-if='isUpdate && !fromClosedJob' class="md-primary" class="btn btn-success" name="next" type="button" ng-click="updateSubmit(jobTemplateModel)">Update</md-button>
+            </span>
+         </div>
+      </div>
+   </div>
+   
+   <!-- <div ng-if="!isTemplateFromJob" class="md-actions full-width" layout="row" id="wizard-container">
+      <div id="wizard-navigation-container">
+         <div class="pull-right">
+         <md-button ng-if="!isPreview && (vm.currentStep == 3)"class="md-primary" ng-click="showJobTemplatePreview(jobTemplateModel);"> Preview </md-button>
+         <md-button ng-if="isPreview"class="md-primary" ng-click="closeTemplatePreview();"> Ok </md-button>
+         
+         <md-button ng-if="!isPreview" class="md-primary" ng-click="close()"> Cancel </md-button>
+            <span ng-if='(vm.currentStep == 1) && !isPreview' class="btn-group">
+               <md-button class="md-primary"  name="next" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+            </span>
+			<span ng-if='(vm.currentStep == 2) && !isPreview' class="btn-group">
+               <md-button class="md-primary" name="previous" type="button" ng-click="vm.gotoStep(vm.currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous</md-button>
+               <md-button ng-if='!jobTemplateModel.jobOwner' class="md-primary" name="next" type="button" ng-disabled="!jobTemplateModel.templateName && !jobTemplateModel.desc || !ownerInvite.isValid() " ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+               <md-button ng-if='jobTemplateModel.jobOwner' class="md-primary"  name="next" type="button" ng-disabled="!jobTemplateModel.templateName || !jobTemplateModel.desc" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+            </span>
+            
+			<span ng-if='(vm.currentStep == 3) && !isPreview' class="btn-group">
+               <md-button class="md-primary" name="previous" type="button" ng-click="vm.gotoStep(vm.currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous</md-button>
+               <md-button ng-if='!isUpdate || fromClosedJob' class="md-primary" class="btn btn-success" name="next" type="button" ng-disabled="!jobTemplateModel.templateName || !jobTemplateModel.desc || (!jobTemplateModel.jobOwner && !ownerInvite.isValid())" ng-click="templateSubmit(jobTemplateModel)">
+               Save</md-button>
+               <md-button ng-if='isUpdate && !fromClosedJob' class="md-primary" class="btn btn-success" name="next" type="button" ng-disabled="!jobTemplateModel.templateName || !jobTemplateModel.desc || (!jobTemplateModel.jobOwner && !ownerInvite.isValid())" ng-click="updateSubmit(jobTemplateModel)">Update</md-button>
+            </span>
+         </div>
+      </div>
+   </div>  -->
+
+<md-dialog-content ng-if="isTemplateFromJob" class="full-width">
+<div class="item item-line-single item-icon-right push-bottom" flex>
+	<h2 class="txt txt-line-pri text-wrap">Select a Job to create a template</h2>
+</div>
+
+<div ng-repeat="job in closedJobs" class="item item-line-single item-icon-left ng-scope" flex="" role="button" >
+<i class="icon icon-tab icon-work"></i>
+<span class="text-ellipsis no-push-bottom push-right event-attendees">{{job.jobName}}</span><context-path path="job.createdFullPath"></context-path></span>
+
+<!-- <h2 class="txt txt-line-pri text-wrap template-job-list">{{job.jobName}}</h2><context-path path="job.createdFullPath"></context-path> -->
+<md-button ng-click="existingjobTemplateInfo(job.id)" style=" float: right;background-color: rgba(158,158,158,0.2)">Select</md-button>
+
+</div>
+
+</md-dialog-content>
+   <div ng-if="isTemplateFromJob" class="md-actions full-width" layout="row" >
+    <md-button  ng-click="close()">Cancel</md-button>
+   </div>
+   
+</md-dialog>

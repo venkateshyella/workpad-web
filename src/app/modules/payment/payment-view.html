@@ -1,0 +1,74 @@
+<view type="" title="title">
+    <md-toolbar >
+      <div class="md-toolbar-tools">
+        <md-truncate> <p class="toolbar-text" style="font-weight: 400;" ng-bind="title"></p> <p ng-if="isPaymentView" style="font-weight: 400; class="toolbar-subtitle" ng-bind="subTitle"></p></md-truncate>
+        <span flex=""></span>
+        <span ng-if="isPaymentView"  style="font-weight: 500;font-size: 16px;" ng-bind="totalAmount"></span>
+      </div>
+    </md-toolbar>
+   <layout  ng-if="isPaymentView" 
+      type="linearLayout" orientation="vertical" layout-height="match_parent">
+      <row scroll layout-height="fill_remaining" layout-gravity="free">
+         <form id="form_payment_id" name="form_payment" method="post" novalidate>
+            <braintree-dropin options="btPaypalOptions"></braintree-dropin>
+            <input id="submitButtonId" ng-disabled="!form_payment.$valid"  style="float: right;" ng-if="isReady" type="submit" ng-click="initFormEvents()" class="button button--small"  value="Submit"/>
+         </form>
+         <input ng-if="isReady" style="float: right;margin-right: 15px;background: #285ebb;" ng-click="cancel()" type="submit"  class="button button--small" value="Cancel" id="submit"/>
+      </row>
+      
+   </layout>
+   
+   
+   
+   <layout ng-if="!isPaymentView" type="linearLayout" orientation="vertical" layout-height="match_parent">
+      <row scroll layout-height="fill_remaining" layout-gravity="free" ng-class="APP_DATA_CSS[_state]" >
+         <div class="card">
+            <div ng-if="isTransactionSuccess" class="sucess-page">
+               <i class="fa fa-check-circle-o fa-3x" aria-hidden="true"></i>
+               <h1>Thank you.</h1>
+               <h3 class="payment-msg">Your payment has been successfully received for {{trans.orgName}} WorkSpace with the following details. Please quote your transaction reference number for any queries related to this request.</h3>
+            </div>
+            <div ng-if="!isTransactionSuccess" class="sucess-page">
+               <i style="color:red" class="fa fa-times-circle-o fa-3x" aria-hidden="true"></i>
+               <h1>Transaction declined.</h1>
+               <h3 class="payment-msg">Your payment has not been completed with the following details. Please quote your transaction reference number for feature reference.</h3>
+            </div>
+            <table style="width:95%; margin:10px;">
+               <tr class="tr-payment">
+                  <td>Transaction Status</td>
+                  <td>:</td>
+                  <td ng-if="isTransactionSuccess" class="payment-status-sucess"><b ng-bind="trans.status"></b></td>
+                  <td ng-if="!isTransactionSuccess" class="payment-status-sucess" style="color:red"><b  ng-bind="trans.status"></b></td>
+               </tr>
+               <tr class="tr-payment">
+                  <td>Transaction Reference Number</td>
+                  <td>:</td>
+                  <td ng-bind="trans.referenceId"></td>
+               </tr>
+               <tr class="tr-payment">
+                  <td>User Name</td>
+                  <td>:</td>
+                  <td ng-bind="userInfo.userName"></td>
+               </tr>
+               <tr class="tr-payment">
+                  <td>E-mail ID</td>
+                  <td>:</td>
+                  <td ng-bind="userInfo.emailID"></td>
+               </tr>
+               <tr class="tr-payment">
+                  <td>Transaction Date and Time</td>
+                  <td>:</td>
+                  <td ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(trans.transactionDateTime)"></td>
+               </tr>
+               <tr class="tr-payment">
+                  <td>Payment Amount</td>
+                  <td>:</td>
+                  <td ng-if="isTransactionSuccess" ng-bind="'USD '+trans.amountPaid"></td>
+                  <td ng-if="!isTransactionSuccess"  ng-bind="'USD '+trans.amount"></td>
+               </tr>
+            </table>
+            <span ng-if="isTransactionSuccess" style="float:right;padding-right:5px;"><a href="javascript:;" style="text-decoration: underline;" ng-click="gotoOrgPage(trans.orgId)" >Click here</a>&nbsp; to Go to Organization</span>
+         </div>
+      </row>
+   </layout>
+</view>

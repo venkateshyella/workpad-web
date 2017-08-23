@@ -1,0 +1,26 @@
+<md-dialog class="" aria-label="Task Status">
+    <md-toolbar>
+        <div class="md-toolbar-tools" layout="column">
+            <h2 flex>{{LANG.JOB.BUTTON[lifecycleEvent]}} {{LANG.TASK.BUTTON.POSTFIX_}}</h2>
+            <md-button class="toolbar-button" aria-label="Cancel Dialog" ng-click="cancel()" >
+                <md-icon md-font-icon="icon icon-close"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="full-width dialog-custom">
+        <md-list class="full-width">
+            <md-list-item>
+                <div>Do you wish to {{LANG.JOB.BUTTON[lifecycleEvent]}} the {{LANG.TASK.BUTTON.POSTFIX_}} {{taskModel.title}} ?</div>
+            </md-list-item>
+        </md-list>
+    </md-dialog-content>
+    <div class="md-actions full-width" layout="row">
+        <span flex></span>
+        <md-button ng-disabled="" ng-click="cancel()">
+            Cancel
+        </md-button>
+        <md-button type="submit" ng-click="submit()" class="md-primary">
+            {{LANG.JOB.BUTTON[lifecycleEvent]}} {{LANG.TASK.BUTTON.POSTFIX_}}
+        </md-button>
+    </div>
+</md-dialog>

@@ -1,0 +1,87 @@
+<view type="toolbarView" title="'Payment Details'">
+   <toolbar app-toolbar title="'Payment Details'">
+      <toolbar-options>
+         <md-progress-linear ng-show="toolbarLoader.async_active" md-mode="indeterminate" class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+      </toolbar-options>
+   </toolbar>
+   <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+      <row scroll layout-height="fill_remaining" layout-gravity="free" ng-class="APP_DATA_CSS[_state]" style="padding-right:15px;">
+         <div class="list full-width overflow-hide">
+            <h2 class="md-title" style="margin:0px;"> Payment Template Preview </h2>
+            <small class="color-light-2 no-push-bottom"><span class="ng-binding">Payable in advance for 12 month period.No refund .Can upsize  during 12 month period </span></small>
+            <div class="full-width" layout="row">
+               <md-list class="full-width">
+                  <div class="job-subscribers-head" > Number of Users</div>
+                  <md-list-item style="padding:0px;  min-height:30px; width:100% important;">
+                     <label class="checkbox-inline"><input type="checkbox" ng-model="users" >Upgrade</label>
+                     <span ng-if="!users " ng-init="newObject.usersCount=0;cal(newObject);"></span>
+                     <label  ng-if="users" class="checkbox-inline" style="width:30%;">
+                     <input auto-input-focus="" type="number" min="0" style="display: inline-block; width: 56px;" class="form-control" ng-change="cal(newObject);" ng-model="newObject.usersCount" >&nbsp;&nbsp;members</label>
+                     <label  ng-if="users" class="checkbox-inline " style="float: right !important; color: black; width: 100%;"> 
+                     <span class="dollar"><label class="checkbox-inline">Charges</label>&nbsp;&nbsp;<b>{{newObject.usersCount*10}}$</b></span></label>
+                  </md-list-item>
+               </md-list>
+            </div>
+            <div class="full-width" layout="row">
+               <md-list class="full-width">
+                  <div class="job-subscribers-head" > Number of Groups</div>
+                  <md-list-item style="padding:0px;  min-height:30px; width:100% important;">
+                     <label class="checkbox-inline"><input type="checkbox" ng-model="groups" value=""  >Upgrade</label>
+                     <span ng-if="!groups" ng-init="newObject.grpCount=0;cal(newObject);"></span>
+                     <label  ng-if="groups" class="checkbox-inline" style="width:30%;"><input auto-input-focus="" type="number" min="0" style="display: inline-block; width: 56px;" ng-model="newObject.grpCount" ng-change="cal(newObject)" class="form-control">&nbsp;&nbsp;members</label>
+                     <label  ng-if="groups" class="checkbox-inline " style="float: right !important; color: black; width: 100%;"> 
+                     <span class="dollar"><label class="checkbox-inline">Charges</label>&nbsp;&nbsp;<b>{{newObject.grpCount *10}}$</b></span></label>
+                  </md-list-item>
+               </md-list>
+            </div>
+            <div class="full-width" layout="row">
+               <md-list class="full-width">
+                  <div class="job-subscribers-head" > Concurrent Jobs</div>
+                  <md-list-item style="padding:0px;  min-height:30px; width:100% important;">
+                     <label class="checkbox-inline"><input type="checkbox" ng-model="jobs" value=""  >Upgrade</label>
+                     <span ng-if="!jobs" ng-init="newObject.jobs=0;cal(newObject);"></span>
+                     <label ng-if="jobs" class="checkbox-inline" style="width:30%;"><input auto-input-focus="" type="number" min="0" style="display: inline-block; width: 56px;"  ng-model="newObject.jobs" ng-change="cal(newObject)"  class="form-control">&nbsp;&nbsp;members</label>
+                     <label ng-if="jobs" class="checkbox-inline " style="float: right !important; color: black; width: 100%;"> 
+                     <span class="dollar"><label class="checkbox-inline">Charges</label>&nbsp;&nbsp;<b>{{newObject.jobs * 10}}$</b></span></label>
+                  </md-list-item>
+               </md-list>
+            </div>
+            <div class="full-width" layout="row">
+               <md-list class="full-width">
+                  <div class="job-subscribers-head" > Chat Logs</div>
+                  <md-list-item style="padding:0px;  min-height:30px; width:100% important;">
+                     <label class="checkbox-inline">
+                     <input type="checkbox" ng-model="chatLogs" >Upgrade</label>
+                     <span ng-if="!chatLogs" ng-init="newObject.chatLogs=0;cal(newObject);"></span>
+                     <label ng-if="chatLogs" class="checkbox-inline" style="width:30%;">
+                     <input auto-input-focus="" style="display: inline-block; width: 56px;"  type="number" min="0" ng-model="newObject.chatLogs" ng-change="cal(newObject)" class="form-control"></label>
+                     <label ng-if="chatLogs" class="checkbox-inline " style="float: right !important; color: black; width: 100%;"> 
+                     <span class="dollar"><label class="checkbox-inline">Charges</label>&nbsp;&nbsp;<b>{{newObject.chatLogs}}$</b></span></label>
+                  </md-list-item>
+               </md-list>
+            </div>
+            <div class="full-width" layout="row">
+               <md-list class="full-width">
+                  <div class="job-subscribers-head" > Data Encryption</div>
+                  <md-list-item style="padding:0px;  min-height:30px; width:100% important;">
+                     <label class="checkbox-inline"><input type="checkbox" ng-model="newObject.dataEncryption" ng-change="cal(newObject)" >Upgrade</label>
+                     <label ng-if="newObject.dataEncryption" class="checkbox-inline" style="width:30%;"></label>
+                     <label ng-if="newObject.dataEncryption" class="checkbox-inline " style="float: right !important; color: black; width: 100%;"> 
+                     <span class="dollar"><label class="checkbox-inline">Charges</label>&nbsp;&nbsp;<b>50$</b></span></label>
+                  </md-list-item>
+               </md-list>
+            </div>
+         </div>
+         <label class="checkbox-inline text-leftm" style="
+            float: right;
+            font-size: 20px;
+            font-weight: 600;
+            ">Total&nbsp; &nbsp;<span class="dollar"><b>{{newObject.total}}$</b></span></label>
+         <div class="item h-center padding p-lg" style="
+            width: 23%;
+            display: flex;
+            margin-top: 50px;
+            "><input type="submit" ng-click="fetchClientToken()"  class="button button-block" value="Proceed to Payment"></div>
+      </row>
+   </layout>
+</view>

@@ -1,0 +1,99 @@
+<!--  <md-dialog class="register-pop-up">
+ 
+ <md-toolbar class="toolbar-custom">
+      <div class="md-toolbar-tools" >
+        Register
+          <span flex></span>
+        <a href="javascript:void(0)" ><md-icon ><i class="fa fa-times fa-1x" ng-click="closeDialog()" aria-hidden="true"></i></md-icon></a>
+      
+      </div>
+
+    </md-toolbar>
+
+  <md-dialog-content class="full-width" >
+   -->
+  
+   <form style="padding-top: 8rem; max-width: 500px;" ng-submit="onRegisterClick();"
+            name="form.userRegister"
+            class="center-content full-width item h-center" 
+            novalidate>
+        <div class="list padding">
+
+          <div class="item">
+            <img class="img v-center" src="assets/images/logo.png" alt="Workwise"
+                 style="width:100px"/>
+          </div>
+
+          <label class="item item-positive item-input item-stacked-label">
+            <input  auto-input-focus
+              name="userFirstName"
+              type="text" ng-disabled="isSubmitInProgress"
+              ng-model="userInfo.firstName" placeholder="First name"
+              ng-pattern="/^[A-Za-z0-9 ]+$/"
+              ng-maxlength="50"
+              required/>
+
+            <div ng-messages="form.userRegister.userFirstName.$error" ng-show="form.userRegister.userFirstName.$dirty">
+              <div ng-message="required"
+                   class="ng-message"
+              >First name cannot be empty
+              </div>
+              <div ng-message="pattern"
+                   class="ng-message"
+              >Only letters, numbers and spaces are allowed in the first
+                name.
+              </div>
+              <div ng-message="maxlength"
+                   class="ng-message"
+              >Please limit the first name to 50 characters
+              </div>
+            </div>
+
+          </label>
+
+          <label class="item item-input">
+            <input name="userLastName"
+                   type="text" ng-disabled="isSubmitInProgress"
+                   ng-model="userInfo.lastName" placeholder="Last name"
+                   ng-pattern="/^[A-Za-z0-9 ]+$/"
+                   ng-maxlength="50"
+                   required/>
+            <div ng-messages="form.userRegister.userLastName.$error" ng-show="form.userRegister.userLastName.$dirty">
+              <div ng-message="required" class="ng-message">Last name cannot be empty</div>
+              <div ng-message="pattern" class="ng-message">Only letters, numbers and spaces are allowed in the last
+                name.
+              </div>
+              <div ng-message="maxlength" class="ng-message">Please limit the last name to 50 characters</div>
+            </div>
+          </label>
+
+          <label class="item item-input">
+            <input name="userEmail"
+                   rh-form-email
+                   type="email" ng-disabled="isSubmitInProgress"
+                   ng-model="userInfo.email" placeholder="john@email.id"
+                   minlength="7"
+                   maxlength="70"
+                   required/>
+            <div ng-messages="form.userRegister.userEmail.$error" ng-show="form.userRegister.userEmail.$dirty">
+              <div ng-message="email" class="ng-message">Please provide a valid email address.</div>
+              <div ng-message="required" class="ng-message">Please provide an email address.</div>
+              <div ng-message="minlength" class="ng-message">The email must be at least 7 characters long.</div>
+              <div ng-message="maxlength" class="ng-message">Please limit the email address to 50 characters.</div>
+            </div>
+          </label>
+
+          <div class="padding">
+            <div
+              ng-click="onRegisterClick()"
+              ng-disabled="isSubmitInProgress || !form.userRegister.$valid"
+              class="button button-block">Submit
+            </div>
+          </div>
+
+        </div>
+      </form>
+  <!-- 
+  </md-dialog-content>
+  
+  </md-dialog> -->

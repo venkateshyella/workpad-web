@@ -1,0 +1,89 @@
+<view type="toolbarView" screen-type="device" title="'Home'">
+
+  <toolbar app-toolbar title="'Home'">
+    <toolbar-options>
+      <div class="menu-option-group">
+
+        <div ng-click="showSimpleMenu($event)"
+             class="menu-option-item thin">
+          <div class="icon icon-account-box"></div>
+        </div>
+
+        <div ng-click="showSimpleMenu($event)"
+             class="menu-option-item thin">
+          <div class="icon icon-more-vert"></div>
+        </div>
+
+      </div>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <div class="list">
+
+        <div class="item item-text-wrap">
+          <div ng-include="'app/modules/lorem.html'"></div>
+        </div>
+
+        <div class="ng-scope toolbar">
+          <div class="toolbar-content">
+
+            <div class="toolbar-title-content">
+              <div class="toolbar-title ng-scope">
+                <div ng-click="showSimpleMenu($event, 'left')"
+                     class="menu-option-item">
+                  <div class="appIcon icon icon-menu"></div>
+                </div>
+                <span class="toolbar-text" ng-bind="title">Content toolbar</span></div>
+            </div>
+
+            <div class="menu-options-container">
+              <div class="menu-option-group">
+                <div ng-click="showSimpleMenu($event, 'right')"
+                     class="menu-option-item thin">
+                  <div class="icon icon-more-vert"></div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="item item-text-wrap">
+          <div ng-include="'app/modules/lorem.html'"></div>
+        </div>
+
+      </div>
+    </row>
+
+    <row layout-gravity="top" layout-height="4em">
+      <toolbar>
+        <toolbar-home>
+          <div class="menu-option-item">
+            <div class="icon icon-menu"></div>
+          </div>
+        </toolbar-home>
+
+        <toolbar-options>
+
+          <div class="menu-option-group">
+            <div ng-click="showSimpleMenu($event)"
+                 class="menu-option-item thin">
+              <div class="icon icon-more-vert"></div>
+            </div>
+
+          </div>
+        </toolbar-options>
+      </toolbar>
+    </row>
+
+    <row id="footer" layout-gravity="bottom" layout-height="1.0em">
+
+    </row>
+
+  </layout>
+
+</view>

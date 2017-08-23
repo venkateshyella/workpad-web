@@ -1,0 +1,86 @@
+<div class="list">
+
+  <!-- Task Originator -->
+  <div ng-show="taskTabCtrl.taskModel.$_creator"
+       class="item item-complex">
+    <div class="item-content item-avatar-left"
+         ng-click="transitionTo('root.app.user', {id: taskTabCtrl.taskModel.originator.id})">
+      <img ng-src="{{taskTabCtrl.taskModel.$_creator._img_icon}}"
+           on-error-src="assets/images/profile-image-placeholder.png" class="img fit round item-image">
+      <h2 class="txt txt-large txt-line-pri text-wrap txt-capitalize push-top pt-sm">
+        {{taskTabCtrl.taskModel.$_creator.userFirstName}} {{taskTabCtrl.taskModel.$_creator.userLastName}}
+      </h2>
+        <p class="txt txt-line-sec text-ellipsis">
+          <small><span
+            class="label no-push-left " ng-bind="LANG.JOB.ROLES.ORIGINATOR"></span></small>
+       </p>
+      <!-- <div layout="row" class="">
+        <p class="txt txt-line-sec text-ellipsis">
+          <span ng-bind="::LANG.TASK.LABEL.CREATED_DATE_TEXT_PREFIX"></span>
+          <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(taskTabCtrl.taskModel.createTime)"></span>
+        </p>
+      </div> -->
+    </div>
+  </div>
+
+  <!-- Task Owner -->
+  <div ng-show="taskTabCtrl.taskModel.$_owner"
+       class="item item-complex item-action-right">
+    <div class="item-content item-avatar-left"
+         ng-click="transitionTo('root.app.user', {id: taskTabCtrl.taskModel.owner.id})">
+      <img ng-src="{{taskTabCtrl.taskModel.$_owner._img_icon}}"
+           on-error-src="assets/images/profile-image-placeholder.png" class="img fit round item-image">
+      <h2 class="txt txt-large txt-line-pri text-wrap txt-capitalize push-top pt-sm">
+        {{taskTabCtrl.taskModel.$_owner.userFirstName}} {{taskTabCtrl.taskModel.$_owner.userLastName}}
+      </h2>
+       <p class="txt txt-line-sec text-ellipsis">
+          <small><span
+            class="label no-push-left " ng-bind="LANG.JOB.ROLES.OWNER"></span></small>
+       </p>
+      <!-- <div layout="row" class="">
+        <p class="txt txt-line-sec text-ellipsis">
+          <span ng-bind="::LANG.TASK.LABEL.OWNED_DATE_TEXT_PREFIX"></span>
+          <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(taskTabCtrl.taskModel.assignmentTime)"></span>
+        </p>
+      </div> -->
+    </div>
+    <!-- remove task owner button -->
+    <button ng-click="askAndRemoveTaskOwner(taskTabCtrl.taskModel)"
+            class="item-action button button-clear push-top"
+            ng-show="taskTabCtrl.taskModel.can().removeOwner()">
+      <i class="icon icon-close"></i>
+    </button>
+  </div>
+
+  <!-- Task Contributors list -->
+  <div ng-repeat="user in taskTabCtrl.taskModel.$_memberCollection"
+       class="item item-complex item-action-right">
+    <div class="item-content item-avatar-left"
+         ng-click="transitionTo('root.app.user', {id: user.id})">
+      <img ng-src="{{user._img_icon}}"
+           on-error-src="assets/images/profile-image-placeholder.png"
+           class="img fit round item-image">
+      <h2 class="txt txt-large txt-line-pri text-wrap txt-capitalize push-top pt-sm">
+        {{user.userFirstName}} {{user.userLastName}}
+      </h2>
+      
+             <p class="txt txt-line-sec text-ellipsis">
+          <small><span
+            class="label no-push-left " ng-bind="::LANG.TASK.LABEL.CONTRIBUTOR"></span></small>
+       </p>
+      <!-- <div layout="row" class="">
+        <p class="txt txt-line-sec text-ellipsis">
+          <span ng-bind="::LANG.TASK.LABEL.CONTRIBUTOR_JOIN_DATE_PREFIX"></span>
+          <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(user.joinedTime)"></span>
+        </p>
+      </div> -->
+
+    </div>
+    <!-- remove task owner button -->
+    <button ng-click="askAndRemoveTaskMember(user)"
+            class="item-action button button-clear push-top"
+            ng-show="taskTabCtrl.taskModel.can().removeContributor()">
+      <i class="icon icon-close"></i>
+    </button>
+  </div>
+</div>

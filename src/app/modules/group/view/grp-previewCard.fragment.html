@@ -1,0 +1,30 @@
+<div hide-if-data-absent class="card no-padding-top">
+  <div class="item card-rich-media">
+
+    <div class="profile-card overlay">
+      <div class="profile-cover">
+        <div class="inner">
+          <img ng-src="{{data.group._img_full}}"
+               on-error-src="assets/images/profile-placeholder.png"
+               alt=""
+               class="img"/>
+        </div>
+      </div>
+
+      <div class="inner overlay-content">
+      </div>
+    </div>
+
+  </div>
+  <div class="item item-text-wrap item-thumbnail-left">
+    <div class="item-image item-padded overflow-hide">
+      <img ng-src="{{data.group._img_icon}}"
+           on-error-src="assets/images/profile-image-placeholder.png"
+           alt=""
+           class="img"/>
+    </div>
+
+    <h2 class="card-title-text">{{data.group.groupName}}</h2>
+    <p>{{data.group.desc}}</p>
+  </div>
+</div>

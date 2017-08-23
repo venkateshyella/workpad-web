@@ -1,0 +1,26 @@
+$color-sideMenuItem: lighten(desaturate($color-primary, 10%), 5%);
+
+.side-menu {
+  width: 100%;
+  .profile-card {
+    min-height: 150px;
+  }
+  .side-menu-item {
+    &.active {
+      background: $color-sideMenuItem;
+      color: find-text-color($color-sideMenuItem);
+    }
+    &.item-icon-left {
+      .icon {
+        font-size: $item-icon-font-size - (0.3 * $unit);
+
+      }
+    }
+    .side-menu-button {
+      button {
+        margin: 0;
+        padding: $unit;
+      }
+    }
+  }
+}

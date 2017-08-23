@@ -1,0 +1,42 @@
+<md-list flex>
+  <md-list-item>
+    <div flex>
+      <md-input-container>
+        <label>Label</label>
+        <input type="text"
+               name="label"
+               ng-model="fieldModel.label"
+               ng-model-options="{debounce:{'default':1000}}"
+               ng-change="fieldCtrl.getError('label')">
+
+        <div ng-messages="fieldCtrl.$error.label" class="ng-messages-floating line-clamp-2">
+          <div ng-message="0" class="ng-message">{{fieldCtrl.$error.label[0]}}</div>
+        </div>
+      </md-input-container>
+    </div>
+  </md-list-item>
+
+  <md-list-item>
+    <div flex>
+      <md-input-container flex>
+        <label>Description</label>
+        <textarea ng-model="fieldModel.desc"
+                  ng-model-options="{debounce:{'default':1000}}"
+                  ng-change="fieldCtrl.getError('desc')"></textarea>
+
+        <div ng-messages="fieldCtrl.$error.desc" class="ng-messages-floating line-clamp-2">
+          <div ng-message="0" class="ng-message">{{fieldCtrl.$error.desc[0]}}</div>
+        </div>
+      </md-input-container>
+    </div>
+    <md-divider class=""></md-divider>
+  </md-list-item>
+
+
+  <md-list-item class="md-list-item-complex">
+        <p> Link file Mandatory</p>
+        <md-switch class="md-secondary" ng-model="formField.validation.presence"></md-switch>
+    </md-list-item>
+
+</md-list>
+

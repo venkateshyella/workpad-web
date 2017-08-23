@@ -1,0 +1,281 @@
+
+/**
+ * Buttons
+ * --------------------------------------------------
+ */
+
+.button {
+  // set the color defaults
+
+  @include button-style($button-primary-bg, $button-primary-border, $button-primary-active-bg, $button-primary-active-border, $button-primary-text);
+  @include button-clear($button-primary-border);
+  @include button-outline(mix(#fff, $button-primary-border, 40%));
+
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0 $button-padding;
+  line-height: $button-height;
+
+  min-width: ($button-padding * 2) + $button-font-size;
+  //min-height: $button-height + 2px;
+
+  border-width: $button-border-width;
+  border-style: solid;
+  border-radius: $button-border-radius;
+
+  vertical-align: top;
+  text-align: center;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: $button-font-size;
+
+  text-transform: uppercase;
+  &.no-caps {
+    text-transform: none;
+  }
+  font-weight: 500;
+
+  cursor: pointer;
+
+  &:after {
+    // used to create a larger button "hit" area
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    bottom: -6px;
+    left: -6px;
+    content: ' ';
+  }
+
+  .icon {
+    vertical-align: top;
+    pointer-events: none;
+  }
+
+  .icon:before,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
+    display: inline-block;
+    padding: 0 0 $button-border-width 0;
+    vertical-align: inherit;
+    font-size: $button-icon-size;
+    line-height: $button-height;
+    pointer-events: none;
+  }
+
+  &.icon-center:before {
+
+  }
+  &.icon-left:before {
+    float: left;
+    padding-right: $unit;
+    padding-left: 0;
+  }
+  &.icon-right:before {
+    float: right;
+    padding-right: 0;
+    padding-left: $unit;
+  }
+
+  &.button-block, &.button-full {
+    margin-top: $button-block-margin;
+    margin-bottom: $button-block-margin;
+  }
+
+  &.button-light {
+    @include button-style($button-light-bg, $button-light-border, $button-light-active-bg, $button-light-active-border, $button-light-text);
+    @include button-clear($button-light-border);
+    @include button-outline($button-light-border);
+  }
+
+  &.button-stable {
+    @include button-style($button-stable-bg, $button-stable-border, $button-stable-active-bg, $button-stable-active-border, $button-stable-text);
+    @include button-clear($button-stable-border);
+    @include button-outline($button-stable-border);
+  }
+
+  &.button-positive {
+    @include button-style($button-positive-bg, $button-positive-border, $button-positive-active-bg, $button-positive-active-border, $button-positive-text);
+    @include button-clear($button-positive-bg);
+    @include button-outline($button-positive-bg);
+  }
+
+  &.button-calm {
+    @include button-style($button-calm-bg, $button-calm-border, $button-calm-active-bg, $button-calm-active-border, $button-calm-text);
+    @include button-clear($button-calm-bg);
+    @include button-outline($button-calm-bg);
+  }
+
+  &.button-assertive {
+    @include button-style($button-assertive-bg, $button-assertive-border, $button-assertive-active-bg, $button-assertive-active-border, $button-assertive-text);
+    @include button-clear($button-assertive-bg);
+    @include button-outline($button-assertive-bg);
+  }
+
+  &.button-balanced {
+    @include button-style($button-balanced-bg, $button-balanced-border, $button-balanced-active-bg, $button-balanced-active-border, $button-balanced-text);
+    @include button-clear($button-balanced-bg);
+    @include button-outline($button-balanced-bg);
+  }
+
+  &.button-energized {
+    @include button-style($button-energized-bg, $button-energized-border, $button-energized-active-bg, $button-energized-active-border, $button-energized-text);
+    @include button-clear($button-energized-bg);
+    @include button-outline($button-energized-bg);
+  }
+
+  &.button-royal {
+    @include button-style($button-royal-bg, $button-royal-border, $button-royal-active-bg, $button-royal-active-border, $button-royal-text);
+    @include button-clear($button-royal-bg);
+    @include button-outline($button-royal-bg);
+  }
+
+  &.button-dark {
+    @include button-style($button-dark-bg, $button-dark-border, $button-dark-active-bg, $button-dark-active-border, $button-dark-text);
+    @include button-clear($button-dark-bg);
+    @include button-outline($button-dark-bg);
+  }
+}
+
+button {
+  &.ng-click-active {
+    opacity: 0.8;
+  }
+}
+
+.button-small {
+  padding: 2px $button-small-padding 1px;
+  min-width: $button-small-height;
+  //min-height: $button-small-height + 2;
+  font-size: $button-small-font-size;
+  line-height: $button-small-height;
+
+  .icon:before,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
+    font-size: $button-small-icon-size;
+    line-height: $button-small-icon-size + (3.0*$unit);
+    margin-top: 3px;
+  }
+}
+
+.button-large {
+  padding: 0 $button-large-padding;
+  min-width: ($button-large-padding * 3) + $button-large-font-size;
+  min-height: $button-large-height + 5;
+  font-size: $button-large-font-size;
+  line-height: $button-large-height - $button-border-width;
+
+  .icon:before,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
+    padding-bottom: ($button-border-width * 2);
+    font-size: $button-large-icon-size;
+    line-height: $button-large-height - ($button-border-width * 2) - 1;
+  }
+}
+
+.button-icon {
+  @include transition(opacity .1s);
+  padding: 0 6px;
+  min-width: initial;
+  border-color: transparent;
+  background: none;
+
+  &.button.active,
+  &.button.activated, &.button.ng-click-active{
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+  }
+
+  .icon:before,
+  &.icon:before {
+    font-size: $button-large-icon-size;
+  }
+}
+
+.button-clear {
+  @include button-clear($button-primary-border);
+  @include transition(opacity .1s);
+  padding: 0 $button-clear-padding;
+  max-height: $button-height;
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+
+  &.active,
+  &.activated, &.ng-click-active {
+    //opacity: 0.3;
+  }
+}
+
+.button-outline {
+  @include transition(background-color .3s);
+}
+
+.button-dashed {
+  border-style: dashed !important;
+}
+
+.button-jumbo {
+  display: block;
+  text-transform: none;
+  white-space: normal;
+  line-height: initial;
+  padding-top: 5*$unit;
+  padding-bottom: 5*$unit;
+}
+
+.padding > .button.button-block:first-child {
+  margin-top: 0;
+}
+
+.button-block {
+  display: block;
+  clear: both;
+
+  &:after {
+    clear: both;
+  }
+}
+
+.button-full,
+.button-full > .button {
+  display: block;
+  margin-right: 0;
+  margin-left: 0;
+  border-right-width: 0;
+  border-left-width: 0;
+  border-radius: 0;
+}
+
+button.button-block,
+button.button-full,
+.button-full > button.button,
+input.button.button-block  {
+  width: 100%;
+}
+
+a.button {
+  text-decoration: none;
+
+  .icon:before,
+  &.icon:before,
+  &.icon-left:before,
+  &.icon-right:before {
+    margin-top: 2px;
+  }
+}
+
+.button.disabled,
+.button[disabled] {
+  opacity: .4;
+  cursor: default !important;
+  pointer-events: none;
+}

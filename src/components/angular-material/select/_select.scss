@@ -1,0 +1,26 @@
+md-select {
+
+  &.custom-select {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  &.md-primary.md-raised {
+    md-select-label {
+      //border-bottom-color: inherit;
+    }
+    &:focus {
+      md-select-label {
+        color: inherit;
+      }
+    }
+    .md-select-label.md-placeholder {
+      color: inherit;
+    }
+  }
+  &.full-width {
+    .md-select-label {
+      width: 100%;
+    }
+  }
+}

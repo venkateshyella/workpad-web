@@ -1,0 +1,45 @@
+<md-dialog aria-label="Job Advertisement">
+  <md-toolbar class="toolbar-clear">
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        {{locals.action.getNotificationCategory(locals.post.notificationCategory)}}</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="$mdDialog.cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="padding-top full-width">
+    <p ng-click="$mdDialog.cancel();locals.action.viewJobDetails();">{{locals.content}}</p>
+        <div class="timeline-title">
+      <p ng-if="locals.post.groupPath.length>0" style="padding-bottom: 5px;"><context-path path="locals.post.groupPath"></context-path></p>
+      <p ng-if="locals.post.messageLineItems.length>0" ng-repeat="item in locals.post.messageLineItems">{{item}}</p>
+    </div>
+
+    <div ng-if="locals.post.reason">
+      <p ng-bind="locals.post.fromUser.userFirstName+' '+locals.post.fromUser.userLastName+':'"
+         ng-if="locals.post.fromUser"
+         class="push-top"></p>
+      <p ng-bind="locals.post.reason"
+         class="blockquote pre-formatted">
+      </p>
+    </div>
+<!--         <div class="timeline-title" style="padding-top: 12px;">
+         <p ng-if="locals.post.groupPath.length>0" style="padding-bottom: 12px;"><a href="javascript:;"><context-path path="locals.post.groupPath"></context-path></a></p>
+         <p ng-if="locals.post.messageLineItems.length>0"  ng-repeat="item in locals.post.messageLineItems"><a href="javascript:;" >{{item}}</a></p>
+    </div> -->
+    <p class="color-light-2 text-right push-top">
+      <span>{{locals.Utils.getDisplayDateTime(locals.post.createDate)}}</span>
+    </p>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="$mdDialog.hide('false')">
+      <span>{{locals.cancel}}</span>
+    </md-button>
+    <md-button ng-click="$mdDialog.hide('true')">
+      <span>{{locals.ok}}</span>
+    </md-button>
+  </div>
+</md-dialog>
+

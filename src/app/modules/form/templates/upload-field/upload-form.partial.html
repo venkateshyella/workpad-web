@@ -1,0 +1,25 @@
+<md-list ng-controller="UploadFormPartialViewController">
+    <md-list-item ng-show="!uploadedFileName">
+        <md-button class="md-raised" ng-click="invokeFileChooserForUpload()" 
+                                     ng-disabled="fieldCtrl.isDisabled()"> Upload File</md-button>
+        <div ng-messages="fieldCtrl.$formError" class="ng-messages-floating line-clamp-2">
+            <div ng-message="0" class="ng-message">{{fieldCtrl.$formError[0]}}</div>
+        </div>
+    </md-list-item>
+    <md-subheader ng-show="uploadedFileName" class="md-no-sticky">Uploaded file is</md-subheader>
+    <md-list-item ng-show="uploadedFileName">
+        <p>{{uploadedFileName}}</p>
+        <md-icon class="md-secondary no-push-top" ng-click="removeUploadedFile($event)" 
+                                                  aria-label="close" 
+                                                  md-font-icon="icon icon-close">
+        </md-icon>
+    </md-list-item>
+    <md-list-item ng-show="uploadedFileName">
+       <div class="card" flex>
+            <img ng-src="{{uploadedImageUrl}}"
+                 on-error-src="assets/images/profile-placeholder.png"
+                 alt=""
+                 class="img"/>
+        </div>
+    </md-list-item>
+</md-list>

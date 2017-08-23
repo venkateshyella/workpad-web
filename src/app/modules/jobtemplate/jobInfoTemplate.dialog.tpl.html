@@ -1,0 +1,75 @@
+<form ng-submit=""
+      name="form.createTemplate"
+      novalidate>
+      <div>
+         <md-input-container md-no-float>
+            <input auto-input-focus type="text"
+               name="templateName"
+               placeholder="Template Name"
+               required
+               ng-model="jobTemplateModel.templateName"
+               ng-maxlength="50"
+               ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+               ng-trim>
+            <div ng-messages="form.createTemplate.templateName.$error">
+               <div ng-message="maxlength" class="ng-message">Please limit the Template name to 50 characters.</div>
+               <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),.  are allowed in the
+                  Template name.
+               </div>
+            </div>
+         </md-input-container>
+         <md-input-container flex>
+            <label>Description</label>
+            <textarea name="templateDesc" 
+               ng-model="jobTemplateModel.desc"
+               columns="1" md-maxlength="256" required ></textarea>
+            <div ng-messages="form.createTemplate.templateDesc.$error">
+               <div ng-message="md-maxlength" class="ng-message">Please limit the Template description to 256 characters.</div>
+            </div>
+         </md-input-container>
+        <div class="row reminder-div">
+        <span for="endTimeType" class="col-form-label" style="margin-bottom:10px;">Required Job Completion Time:</span>
+        </div>
+              <div class="row reminder-div">
+               <div class="col-sm-4 col-pad-0 ">
+                  <select class="form-control" name="endTimeType"      
+                    required ng-model="jobTemplateModel.endTimeType" 
+                     ng-options="opt.value as opt.label for opt in jobendTimeValueTypes"></select>  
+               </div>
+               <div  class="col-sm-1 col-pad-0">
+                  <label ng-if="jobTemplateModel.endTimeType=='-523'" for="beforeevery" class="col-form-label">Next</label>
+               </div>
+               <div ng-if="jobTemplateModel.endTimeType!='-520'" class="col-sm-1 col-pad-0">
+                  <input class="form-control wd-50" type="number" min="1" max="99" required ng-model="jobTemplateModel.endTimeValue" width="100%" onkeypress='return event.charCode >= 48 && event.charCode <= 57'> 
+               </div>
+               <div ng-if="jobTemplateModel.endTimeType=='-520'" class="col-sm-4 col-pad-0">
+                  <datepicker datepicker-class="" class="input-group date end-dt-picker" selector="form-control" date-format="{{eventDateFormat}}"  date-min-limit="{{minDate}}"
+                     button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+                     button-next="<i class='fa fa-arrow-right'></i>">
+                     <div class="input-group inner-addon right-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        <input name="endDate"  required ng-model="jobTemplateModel.expectedFinishDate" class="form-control event-icon"
+                           style="font-family: inherit;" placeholder="Choose Date"  />  
+                     </div>
+                  </datepicker>
+               </div>
+               <div class="col-sm-2">
+                  <label for="totime" class="col-form-label"> {{endtimeTypeLabels[jobTemplateModel.endTimeType]}}</label>
+               </div>
+            </div>
+         <!-- <div class="row" style="padding: 20px 0px;">
+            <label for="starttime" class="col-sm-5 col-form-label" style="padding-left:0px;padding-top: 7px;">Expected Finish Date : </label>
+            <div class="col-sm-7">
+               <datepicker datepicker-class="" class="input-group date" style="width:100%" selector="form-control" date-format="{{eventDateFormat}}"  date-min-limit="{{minDate}}"
+                  button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+                  button-next="<i class='fa fa-arrow-right'></i>">
+                  <div class="input-group inner-addon right-addon">
+                     <i class="glyphicon glyphicon-calendar"></i>
+                     <input name="expectedFinishDate" ng-model="jobTemplateModel.expectedFinishDate" class="form-control event-icon"
+                        placeholder="Choose a date" />  
+                  </div>
+               </datepicker>
+            </div>
+         </div> -->
+      </div>
+   </form>

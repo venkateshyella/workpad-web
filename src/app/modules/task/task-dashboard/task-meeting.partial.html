@@ -1,0 +1,106 @@
+<div class="button-bar padding">
+   <div id="meetingsListId" ng-class="{'button-outline': state.showAudit}"
+      ng-click="toggleAudit(false)" class="button">
+      <i style="font-size: 20px;" class="icon-tab demo-icon icon-docs">
+      &#xf0c5;</i> <small>Meetings</small>
+   </div>
+   <div ng-class="{'button-outline': !state.showAudit}"
+      ng-click="toggleAudit(true)" class="button">
+      <i class="icon icon-history"></i> <small
+         ng-bind="::LANG.LABEL.TAB_AUDIT"></small>
+   </div>
+</div>
+<div ng-hide="state.showAudit" class="tab-list-scroll">
+   <div class="list full-width overflow-hide">
+      <div ng-show="TaskMeetingsData.taskMeetings.length==0"
+         class="item item-backdrop text-center">
+         <div class="backdrop-filler-image">
+            <i class="icon icon-tab demo-icon icon-docs"> &#xf0c5;</i>
+         </div>
+         <p>No Meetings</p>
+      </div>
+      <div ng-show="TaskMeetingsData.taskMeetings.length > 0">
+         <div  ng-repeat="meeting in TaskMeetingsData.taskMeetings" ng-class="{'border-top':!$first}" class=" item item-text-wrap item-complex item-line-double">
+            <div class="item-content">
+               <div class="txt txt-line-pri no-push-bottom" layout="row">
+                  <span ng-bind="meeting.meetingName" class="text-ellipsis" flex></span>
+                 <!--  <a href="javascript:void(0);" ng-click="editMeeting(meeting);" ng-show="meeting.moderator.id == userId"> <i
+                     class="fa fa-pencil" aria-hidden="true" class="md-hue-3"></i></a>  -->
+               </div>
+               <p ng-bind="meeting.desc" class="overflow-hide txt-pri text-wrap pre-formatted">
+               </p>
+               <div class="txt-line-sec">
+                  <p class="push-bottom pb-sm ">
+                     <i class="icon icon-tab icon-schedule"></i>                                         
+                     <span ng-bind="MU.getDisplayDateTimeOffset(meeting.startTime)"></span>
+                     <span>&nbsp;&nbsp;to&nbsp;&nbsp;</span>
+                     <span class="" ng-bind="MU.getDisplayDateTimeOffset(meeting.endTime)"></span>
+                  </p>
+               </div>
+               <div ng-click="toggleMeetingMembers(meeting.id)"
+                  aria-label="View Attendees">
+                  <div layout="row">
+                     <p flex class="no-push-bottom push-top pt-sm">
+                        <i class="icon icon-tab icon-people"></i>
+                        <small ng-bind="::'View Attendees'"></small>
+                        <small ng-bind="'('+meeting.members.length+')'"></small>
+                     </p>
+                     <div class="">
+                        <i ng-class="{'icon-expand-less':viewMembersFlagMeta[meeting.id], 'icon-expand-more':!viewMembersFlagMeta[meeting.id]}"
+                           class="icon icon-expand-more"></i>
+                     </div>
+                  </div>
+                  <div class=""
+                     ng-show="viewMembersFlagMeta[meeting.id]">
+                     <p ng-if="meeting.members.length == 0"
+                        class="no-push-bottom">
+                        <small ng-bind="::'No Attendees'" class="color-light-2"></small>
+                     </p>
+                     <div style="padding-left: 15px;" ng-repeat="member in meeting.members"
+                        class="item item-complex item-line-double padding-bottom padding-top">
+                        <span class="icon-label">
+                           <md-icon md-font-icon="icon icon-person" 
+                              class="ng-isolate-scope md-default-theme md-font icon icon-person" aria-hidden="true"></md-icon>
+                           <span class="text-ellipsis no-push-bottom push-right event-attendees" ng-bind="member.userFirstName+' '+member.userLastName"></span>
+                           <span ng-if="meeting.moderator.id == member.id"
+                              class="label no-push-left">Owner</span>
+                        </span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+          
+          <!--   
+            <a href="javascript:void(0);" ng-click="joinMeeting(meeting);" ng-if="userId == meeting.moderator.id"> Start </a>
+            <a href="javascript:void(0);" ng-click="joinMeeting(meeting);" ng-if="userId != meeting.moderator.id"> Join </a>
+            --> 
+            <md-button ng-if="meeting.hasAccess" class="md-primary md-raised" ng-click="joinMeeting(meeting);" >
+           			<i class="fa fa-phone"></i> 
+           			<span>Join</span>
+            </md-button>
+         </div>
+      </div>
+   </div>
+   <div ng-show="isNextPageAvailable" class="item" layout="row"
+      layout-align="center center">
+      <button ng-click="loadNext()" ng-disabled="loadingNext"
+         class="button button-block button-small button-clear"
+         aria-label="Load More">
+      <span ng-show="!loadingNext">Load More</span> <span
+         ng-show="loadingNext">Loading ...</span>
+      </button>
+   </div>
+</div>
+<div ng-show="state.showAudit" class="tab-list-scroll">
+   <audit-list list="taskMeetingsAuditList"> </audit-list>
+   <div ng-show="isNextAuditPageAvailable()" class="item" layout="row"
+      layout-align="center center">
+      <md-button ng-click="fetchMoreAudits()"
+         ng-disabled="ui.auditActivityStore.isLoading"
+         class="full-width txt-ignore-case" aria-label="Load More">
+         <span>{{ui.auditActivityStore.isLoading ? 'Loading...':'Load
+         more audits'}}</span> 
+      </md-button>
+   </div>
+</div>
+{{addScrollToList();}}

@@ -1,0 +1,59 @@
+<md-dialog class="" aria-label="Edit Length validation">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Length</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="dialog-custom">
+    <form name="form.lengthEditor">
+      <md-list>
+        <md-list-item layout="column" layout-align="start start">
+          <div layout="column" class="full-width">
+            <md-input-container>
+              <label>Min</label>
+              <input ng-model="validationModel.minimum"
+                     max="{{validationModel.maximum}}"
+                     type="number">
+              <div ng-messages="form.lengthEditor.$error">
+                <div ng-message="max"
+                     class="ng-message"
+                  >Please set a value smaller than {{validationModel.maximum}}.</div>
+              </div>
+            </md-input-container>
+
+            <md-input-container>
+              <label>Max</label>
+              <input ng-model="validationModel.maximum"
+                     min="{{validationModel.minimum}}"
+                     type="number">
+              <div ng-messages="form.lengthEditor.$error">
+                <div ng-message="min"
+                     class="ng-message"
+                  >Please set a value greater than {{validationModel.minimum}}.</div>
+              </div>
+            </md-input-container>
+          </div>
+        </md-list-item>
+
+      </md-list>
+    </form>
+
+  </md-dialog-content>
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+    <md-button ng-click="cancel()"
+      >Cancel
+    </md-button>
+    <md-button type="submit"
+               ng-disabled="!form.lengthEditor.$valid"
+               ng-click="saveValidationModel()"
+               class="md-primary"
+      >Save
+    </md-button>
+
+  </div>
+</md-dialog>

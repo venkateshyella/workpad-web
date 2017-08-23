@@ -1,0 +1,52 @@
+<view type="toolbarView" title="'Tabs'">
+
+  <toolbar app-toolbar title="'Tabs'">
+    <toolbar-options>
+      <div class="menu-option-group">
+      </div>
+    </toolbar-options>
+  </toolbar>
+  <div tabs>
+
+    <div tab label="'tab 100'" on-select="onTabSelect('tab100')">
+      <h2 ng-bind="tab1Content"></h2>
+
+      <div ng-click="onTab1ContentClick()" class="button">Change</div>
+    </div>
+
+    <div tab label="'tab 200'" on-select="onTabSelect('tab200')">
+      <h2>Tab 2</h2>
+
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At delectus molestias ratione reprehenderit
+        totam ullam voluptate. A animi aut corporis cumque deserunt doloremque dolorum, eius eos facere facilis
+        illo impedit ipsum labore modi nesciunt pariatur possimus quidem quod sed sequi sit tenetur vitae
+        voluptas. Esse est exercitationem nam sunt temporibus.</p>
+
+      <h1>Title</h1>
+
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, similique.</p>
+
+    </div>
+
+    <div tab label="'tab 300'" on-select="onTabSelect('tab300')">
+      <h2>Tab 3</h2>
+
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, voluptate.</p>
+
+      <p>Aperiam et hic ipsam natus pariatur quidem sed temporibus, veniam!</p>
+
+      <p>Aliquam dolor mollitia voluptate voluptatibus? Autem dignissimos incidunt natus quo!</p>
+    </div>
+
+  </div>
+
+</view>

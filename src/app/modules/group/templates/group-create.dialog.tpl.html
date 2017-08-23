@@ -1,0 +1,124 @@
+<md-dialog class="register-pop-up" aria-label="invite user"
+           layout="column" layout-align="space-between center">
+  <md-toolbar >
+    <div class="md-toolbar-tools">
+      <h2>Create Room</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="toolbar-content">
+    </div>
+
+  </md-toolbar>
+
+  <md-dialog-content class="full-width"  layout="column">
+    <form name="form.create_group" novalidate>
+
+      <div class="dialog-content-padding-sides push-top">
+        <md-input-container md-no-float>
+          <input auto-input-focus type="text"
+                 name="groupName"
+                 placeholder="Room name"
+                 required
+                 ng-model="formModel.create_group.name"
+                 ng-maxlength="50"
+                 ng-pattern="/^[ A-Za-z0-9_\-\&\'\().]*$/"
+                 ng-trim>
+
+          <div ng-messages="form.create_group.groupName.$error">
+            <div ng-message="maxlength" class="ng-message">{{LANG.GROUP.VALIDATION_MESSAGE.NAME.MAXLEN}}</div>
+            <div ng-message="pattern" class="ng-message">Only letters, numbers, spaces and special characters _,-,&,',(,),. are allowed in the
+                  Room name.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container flex>
+          <label>Description</label>
+          <textarea name="desc"
+                    ng-model="formModel.create_group.desc"
+                    columns="1"
+                    md-maxlength="256" required></textarea>
+
+          <div ng-messages="form.create_group.desc.$error">
+            <div ng-message="md-maxlength" class="ng-message">Please limit the Group description to 256 characters.</div>
+          </div>
+        </md-input-container>
+
+      </div>
+
+    </form>
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <span flex></span>
+     <md-button ng-click="cancel()">
+          Cancel
+        </md-button>
+    <md-button type="submit"
+               ng-disabled="!form.create_group.$valid"
+               ng-click="submit(formModel.create_group)" class="md-primary"
+    >Create
+    </md-button>
+  </div>
+</md-dialog>
+
+
+<!-- 
+<md-dialog class="dialog-full-screen" aria-label="Create Organisation">
+  <form name="form.create_org" class="full-height" novalidate>
+    <div class="full-height" layout="column" layout-align="space-between center">
+
+      <md-dialog-content class="full-width">
+        <div layout="row">
+          <h2 class="md-title">Create Group</h2>
+        </div>
+
+        <div>
+          <md-input-container md-no-float>
+            <input type="text"
+              name="orgName"
+                placeholder="Organisation Name"
+                required
+                ng-model="formModel.create_group.name" 
+                ng-maxlength="50"
+                ng-pattern="/^[A-Za-z0-9 ]+$/"
+                ng-trim>
+              <div ng-messages="form.create_group.groupName.$error">
+                <div ng-message="maxlength" class="ng-message">Please limit the Group name to 50 characters.</div>
+                <div ng-message="pattern" class="ng-message">Only letters, numbers and spaces are allowed in the
+                  Organisation name.
+                </div>
+              </div>
+          </md-input-container>
+
+          <md-input-container flex>
+            <label>Description</label>
+            <textarea name="groupDesc" ng-model="formModel.create_group.desc"
+                      columns="1" md-maxlength="150"></textarea>
+            <div ng-messages="form.create_group.groupDesc.$error">
+              <div ng-message="md-maxlength" class="ng-message">Please limit the Group description to 150 characters.</div>
+            </div>
+          </md-input-container>
+
+        </div>
+
+
+      </md-dialog-content>
+
+      <div class="md-actions full-width" layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">
+          Cancel
+        </md-button>
+        <md-button type="submit"
+                   ng-disabled="!form.create_group.$valid"
+                   ng-click="submit(formModel.create_group)" class="md-primary"
+          >Create
+        </md-button>
+      </div>
+    </div>
+  </form>
+</md-dialog> -->

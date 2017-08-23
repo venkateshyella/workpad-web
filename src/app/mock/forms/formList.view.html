@@ -1,0 +1,118 @@
+<view type="toolbarView" screen-type="device" title="'Forms'">
+
+  <toolbar app-toolbar title="'Forms'">
+    <toolbar-options>
+      <div class="menu-option-group">
+      </div>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+
+    <row id="content" scroll layout-height="fill_remaining" layout-gravity="free">
+      <form name="shform" class="list">
+
+        <div class="card">
+
+          <div class="item">
+            <div class="card-title-text">Sample form fields</div>
+          </div>
+
+          <label class="item item-avatar item-positive item-input item-stacked-label">
+            <img src="mcfly.jpg">
+            <span class="input-label">First Name</span>
+            <input name="firstName1" ng-model="firstName1" type="text" required placeholder="First Name">
+
+            <div ng-messages="shform.firstName1.$error" ng-if='shform.firstName1.$dirty'>
+              <div ng-message="required" class="error">Please enter a valid telephone number.</div>
+            </div>
+          </label>
+
+          <div class="item item-stacked-label item-icon-left item-input input-row">
+            <i class="icon icon-call"></i>
+
+            <div style="margin-right: 6.5em;"
+                 class="item-input input-col item-stacked-label">
+              <span class="input-label">Phone</span>
+              <input type="number" placeholder="Tel">
+
+            </div>
+
+            <div style="width: 6em;position: absolute;right: 1.2rem;top: 1.2em;float: left;"
+                 class="">
+              <div class="item-input input-col item-select item-stacked-label">
+                <span class="input-label">Sel</span>
+                <select>
+                  <option>Blue</option>
+                  <option>Green</option>
+                  <option>Red</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="item item-icon-left item-input">
+            <i class="icon icon-book"></i>
+            <textarea name="desc1" rows="3" placeholder="Description"></textarea>
+          </div>
+
+          <div class="item item-icon-left item-stacked-label item-input">
+            <i class="icon icon-book"></i>
+            <span class="input-label">Contenteditable</span>
+
+            <div contenteditable="true" ></div>
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="item">
+            <h2 class="card-title-text">Active validation.</h2>
+          </div>
+
+          <div class="item item-royal item-icon-left item-input item-stacked-label">
+            <i class="icon icon-email"></i>
+            <span class="input-label">Email</span>
+            <input name="email1" ng-model="email1" ng-model-options="{ updateOn: 'blur'}" type="email"
+                   placeholder="Email">
+
+            <div ng-messages="shform.email1.$error" ng-if='shform.email1.$dirty'>
+              <div ng-message="email" class="error">Please provide a valid email.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card">
+          <label class="item item-positive item-input item-stacked-label">
+            <span class="input-label">First Name</span>
+            <input type="text" placeholder="First Name">
+          </label>
+
+          <label class="item item-input">
+            <input type="text" placeholder="Last Name">
+          </label>
+
+          <label class="item item-input">
+            <textarea placeholder="Comments"></textarea>
+          </label>
+
+        </div>
+
+
+      </form>
+
+      <div class="list">
+        <div class="item item-text-wrap">
+          <h2>Error messages powered by angular 'ngMessages'</h2>
+
+          <p>Check out: <span class="label">https://docs.angularjs.org/api/ngMessages</span></p>
+        </div>
+      </div>
+
+    </row>
+
+  </layout>
+
+</view>

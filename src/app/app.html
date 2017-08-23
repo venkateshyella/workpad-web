@@ -1,0 +1,106 @@
+<div class="backdrop-container"></div>
+
+<!-- <md-sidenav class="md-sidenav-left md-whiteframe-z2"
+            md-component-id="appLeftNav"
+            md-is-locked-open="false"
+  >
+  <div ng-include="'app/modules/side-menu/appSideMenu.html'"></div>
+</md-sidenav>
+
+ -->
+
+<div id="header" ng-include="'app/modules/app-partials/appHeader.partial.html'">
+ <!--header start-->
+  
+  <!--header end--> 
+</div>
+
+<div ui-view="leftSection" id="leftSection">
+  
+</div>
+
+<div> 
+
+<!--main content start-->
+  <section id="main-content">
+    <section class="wrapper min-height-750"> 
+    
+    <div id="bcSection"></div>
+    
+      <!--state overview start-->
+      <div class="row state-overview"> 
+      
+      <div ui-view flex class="col-md-8 col-sm-6"></div>
+      
+      <!-- right section start -->
+       
+        <div ui-view="rightSection" class="col-md-4 col-sm-6" id="timeline-events">
+        
+        </div>
+       
+      <!-- right section end -->
+
+      </div>
+      <!--state overview end-->
+      
+      <div class="row"> </div>
+      
+    </section>
+    <div id="footer">
+ <!--footer start-->
+  <footer class="site-footer" >
+  <div style="float:left;">
+  	<a href="#" class="terms-hover" ng-click="showTermsConditions()" style="color: #285fbc;padding-left: 22px;">Terms and Conditions&nbsp;|</a>
+  	<a href="#" class="terms-hover" ng-click="supportAndFeedBack(false)" style="color: #285fbc;">&nbsp;Support and Feedback </a>
+  </div>
+    <div class=" pdg-left-20" style="float:right;">  &copy; WORKPAD 2016. All rights reserved. {{APP_VERSION}}.&nbsp;  <a href="#" class="go-top" style="float: none;"> <i class="fa fa-angle-up"></i> </a>
+    
+    
+     </div>
+    
+    
+    
+  </footer>
+  <!--footer end--> 
+</div>
+  </section>
+  <!--main content end--> 
+
+</div>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+funct();
+});
+	 $(window).resize(function(){
+		
+funct();
+	}); 
+
+function funct(){
+var doc = $(window ).height();
+//var min =$( ".min" ).height();
+
+
+
+var footer =  $( ".site-footer" ).height();
+//var rem = doc-min-footer;
+
+var diff = doc-footer;
+//alert(diff);
+    $(".min-height-750").css("min-height", diff);
+
+};
+
+
+</script>
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+<md-dialog class="register-pop-up" aria-label="Create Invitation">
+    <md-toolbar class="toolbar-custom">
+        <div class="md-toolbar-tools">
+            <div>
+                <h2>Room Member Invitation</h2>
+                <p class="toolbar-subtitle">{{group.groupName}}</p>
+            </div>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+        <div class="toolbar-content">
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="full-width" >
+        <div class="padding-horizontal ph-lg padding-top push-top full-width">
+            <div layout="row">
+                <md-autocomplete placeholder="Search member" md-no-cache="true" md-selected-item="newAdvertisementGroup" md-search-text-change="memberSearchCtrl.searchTextChange(memberSearchCtrl.searchText)" md-search-text="memberSearchCtrl.searchText" md-selected-item-change="memberSearchCtrl.selectedItemChange(user)" md-items="user in memberSearchCtrl.querySearch(memberSearchCtrl.searchText)" md-item-text="user.userFirstName" md-min-length="2" md-delay="300" flex>
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{user.userFirstName}}  {{user.userLastName}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No Members found.
+                    </md-not-found>
+                </md-autocomplete>
+            </div>
+        </div>
+        <div class="list no-padding-top push-top pt-lg" ng-show="GroupInviteesSelected.length > 0 ">
+            <div class="item item-input">
+                <span class="input-label">Selected members are</span>
+            </div>
+            <div class="item card no-padding">
+                <md-list class="no-padding-bottom">
+                    <md-list-item class="" ng-repeat="invitee in GroupInviteesSelected">
+                            <h2>{{invitee.userFirstName}} {{invitee.userLastName}}</h2>
+                        <md-icon ng-click="removeSelectedMember(invitee)" class="md-secondary no-push-top" aria-label="Remove adv group" md-font-icon="icon icon-close"></md-icon>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions full-width" layout="column">
+        <p ng-show="GroupInviteesSelected.length == 0" class="push-top full-width text-right">Please select at-least one member for invitation.
+        </p>
+        <div layout="row" class="full-width">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+            <md-button type="submit" ng-disabled="GroupInviteesSelected.length == 0" ng-click="submit()" class="md-primary">Send
+            </md-button>
+        </div>
+    </div>
+</md-dialog>

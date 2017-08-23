@@ -1,0 +1,143 @@
+<div type="linearLayout" orientation="vertical" layout-height="match_parent">
+  <div class="list">
+
+    <!-------------------->
+    <!-- Job Originator -->
+    <!-------------------->
+    <div class="item item-complex"
+         ng-show="JobTabCtrl.jobModel.originator">
+      <div
+        class="item-content item-avatar-left"
+        ng-click="onJobMemberListItemClick(JobTabCtrl.jobModel.originator.id)">
+        <img ng-src="{{MU.getUserIconImageUrl(JobTabCtrl.jobModel.originator.id)}}"
+             on-error-src="assets/images/profile-image-placeholder.png"
+             class="img fit round item-image">
+
+        <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+          {{JobTabCtrl.jobModel.originator.userFirstName}} {{JobTabCtrl.jobModel.originator.userLastName}}
+        </h2>
+
+        <p class="txt txt-line-sec text-ellipsis">
+          <small><span
+            ng-bind="LANG.JOB.ROLES.ORIGINATOR"
+            class="label no-push-left " ng-bind="LANG.JOB.ROLES.ORIGINATOR"></span></small>
+            <span class="icon-label">
+              <md-icon
+                ng-show="JobTabCtrl.jobModel.createdFullPath[JobTabCtrl.jobModel.createdFullPath.length - 1].type == 'ORG'"
+                md-font-icon="icon icon-domain"></md-icon>
+              <md-icon
+                ng-show="JobTabCtrl.jobModel.createdFullPath[JobTabCtrl.jobModel.createdFullPath.length - 1].type == 'GROUP'"
+                md-font-icon="icon icon-group-work"></md-icon>
+              <span> {{JobTabCtrl.jobModel.createdFullPath[JobTabCtrl.jobModel.createdFullPath.length - 1].name}} </span>
+            </span>
+        </p>
+      </div>
+      <!--  <button
+         ng-click="onJobMemberOptionClick(jobModel.originator, true)"
+         class="item-action button button-clear push-top">
+         <i class="icon icon-more-vert"></i>
+       </button> -->
+    </div>
+
+    <!--------------->
+    <!-- Job Owner -->
+    <!--------------->
+    <div class="item item-complex"
+         ng-class="{'item-action-right': JobTabCtrl.jobModel.isOriginator()}"
+         ng-show="JobTabCtrl.jobModel.isOwned() && JobTabCtrl.jobModel.owner">
+      <div ng-click="onJobMemberListItemClick(JobTabCtrl.jobModel.owner.id)"
+           class="item-content item-avatar-left">
+        <img ng-src="{{MU.getUserIconImageUrl(JobTabCtrl.jobModel.owner.id)}}"
+             on-error-src="assets/images/profile-image-placeholder.png"
+             class="img fit round item-image">
+
+        <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+          {{JobTabCtrl.jobModel.owner.userFirstName}} {{JobTabCtrl.jobModel.owner.userLastName}}
+        </h2>
+        <div layout="row" class="push-top pt-sm">
+          <p class="txt txt-line-sec text-ellipsis">
+            <small><span
+              ng-bind="LANG.JOB.ROLES.OWNER"
+              class="label no-push-left"></span></small>
+              <span class="icon-label">
+              <md-icon
+                ng-show="JobTabCtrl.jobModel.ownedFullPath[JobTabCtrl.jobModel.ownedFullPath.length - 1].type == 'ORG'"
+                md-font-icon="icon icon-domain"></md-icon>
+              <md-icon
+                ng-show="JobTabCtrl.jobModel.ownedFullPath[JobTabCtrl.jobModel.ownedFullPath.length - 1].type == 'GROUP'"
+                md-font-icon="icon icon-group-work"></md-icon>
+              <span> {{JobTabCtrl.jobModel.ownedFullPath[JobTabCtrl.jobModel.ownedFullPath.length - 1].name}} </span>
+              </span>
+          </p>
+        </div>
+      </div>
+      <!-- <button
+        ng-click="onJobOwnerOptionClick(jobModel.owner, false)"
+        class="item-action button button-clear push-top">
+        <i class="icon icon-more-vert"></i>
+      </button> -->
+      <button ng-if="JobTabCtrl.jobModel.originator.id != JobTabCtrl.jobModel.owner.id" ng-click="askAndRemoveJobOwner(JobTabCtrl.jobModel.owner)"
+              class="item-action button button-clear push-top"
+              ng-show="JobTabCtrl.jobModel.isOriginator()">
+        <i class="icon icon-close"></i>
+      </button>
+    </div>
+
+    <div
+      ng-hide="contributorList.length > 0 || JobTabCtrl.jobModel.originator || JobTabCtrl.jobModel.owner"
+      class="item item-backdrop text-center">
+      <div class="backdrop-filler-image">
+        <i class="icon icon-backdrop icon-people"></i>
+      </div>
+    </div>
+
+    <p
+      class="color-light-2 text-center push-top"
+      ng-show="jobMemberListLoaderFn.isActive()">{{LANG.MESSAGES.LOADING}}</p>
+
+    <!-------------------------->
+    <!-- Job Contributor List -->
+    <!-------------------------->
+    <div ng-repeat="user in contributorList"
+         class="item item-complex item-action-right">
+      <div class="item-content item-avatar-left"
+           ng-click="onJobMemberListItemClick(user.userid)">
+        <img ng-src="{{MU.getUserIconImageUrl(user.userid)}}"
+             on-error-src="assets/images/profile-image-placeholder.png"
+             class="img fit round item-image">
+
+        <h2 class="txt txt-large txt-line-pri text-wrap">
+          {{user.userFirstName}} {{user.userLastName}}
+        </h2>
+
+        <div layout="row" class="push-top pt-sm">
+          <p class="txt txt-line-sec text-ellipsis">
+            <small><span
+              ng-bind="LANG.JOB.ROLES.CONTRIBUTOR"
+              class="label no-push-left"></span></small>
+              <span class="icon-label">
+              <md-icon ng-show="user.invitationPath[user.invitationPath.length - 1].type == 'ORG'"
+                       md-font-icon="icon icon-domain"></md-icon>
+              <md-icon ng-show="user.invitationPath[user.invitationPath.length - 1].type == 'GROUP'"
+                       md-font-icon="icon icon-group-work"></md-icon>
+              <span> {{user.invitationPath[user.invitationPath.length - 1].name}} </span>
+              </span>
+          </p>
+        </div>
+      </div>
+      <!-- <button
+        ng-click="onJobContributorOptionClick(user, false)"
+        class="item-action button button-clear push-top">
+        <i class="icon icon-more-vert"></i>
+      </button> -->
+
+      <button ng-click="askAndRemoveJobMember(user)" class="item-action button button-clear push-top"
+              ng-show="JobTabCtrl.jobModel.isOwner()">
+        <i class="icon icon-close"></i>
+      </button>
+
+
+    </div>
+  </div>
+</div>
+

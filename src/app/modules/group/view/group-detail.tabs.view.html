@@ -1,0 +1,431 @@
+<view type="toolbarView" title="'Group Detail'">
+
+  <toolbar app-toolbar title="xtras.title" sub-title="data.org.orgName"
+           class="title-ellipsis">
+    <toolbar-options>
+
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item ng-if="MU.isActionAvailableInTab('REFRESH', tab_curr, viewTabs)">
+            <md-button ng-click="$mdCloseMenu(); refresh({bypassCache:true})">
+              {{LANG.OPTIONS_MENU.REFRESH}}
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item
+            ng-if="MU.isActionAvailableInTab('EDIT', tab_curr, viewTabs) && data.group.isActionAuthorized('EDIT')">
+            <md-button
+              ng-click="$mdCloseMenu(); transitionTo('root.app.group-edit', {userId:session.userId,orgId:data.org.id,groupId:data.group.id})">
+              {{LANG.OPTIONS_MENU.EDIT}}
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item
+            ng-if="MU.isActionAvailableInTab('CREATE_SUB_GROUP', tab_curr, viewTabs) && data.group.isActionAuthorized('CREATE_SUB_GROUP')">
+            <md-button ng-click="$mdCloseMenu(); createSubGroup({$event: $event})">
+              <span ng-bind="LANG.GROUP.OPTIONS_MENU.CREATE_SUB_GROUP"></span>
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item
+            ng-if="MU.isActionAvailableInTab('ADD_NEW_FILE', tab_curr, viewTabs) && data.group.isActionAuthorized('VAULT_ADD_FILE')">
+            <md-button ng-click="$mdCloseMenu(); invokeFileChooser()">
+              <span ng-bind="LANG.VAULT.LABEL.UPLOAD_FILE"></span>
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item
+            ng-if="MU.isActionAvailableInTab('REMOVE_FILE', tab_curr, viewTabs) && data.org.isActionAuthorized('VAULT_REMOVE_FILE')">
+            <md-button ng-click="$mdCloseMenu(); findAndRemoveVaultFiles()">
+              <span ng-bind="LANG.VAULT.LABEL.TITLE_DELETE_FILES"></span>
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item
+            ng-if="MU.isActionAvailableInTab('RENAME_FILE', tab_curr, viewTabs) && data.org.isActionAuthorized('VAULT_RENAME_FILE')">
+            <md-button ng-click="$mdCloseMenu(); findAndRenameVaultFiles()">
+              <span ng-bind="LANG.VAULT.LABEL.TITLE_RENAME_FILES"></span>
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item
+            ng-if="MU.isActionAvailableInTab('COPY_FILE', tab_curr, viewTabs) && data.org.isActionAuthorized('VAULT_COPY_FILE')">
+            <md-button ng-click="$mdCloseMenu(); findAndCopyVaultFiles()">
+              {{LANG.VAULT.LABEL.TITLE_COPY_FILES}}
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item
+            ng-if="MU.isActionAvailableInTab('INVITE_USER', tab_curr, viewTabs) && data.group.isActionAuthorized('INVITE_TO_JOIN')">
+            <md-button ng-click="$mdCloseMenu(); findThenInviteUser(data.org, data.group, {$event: $event})">
+              <span ng-bind="LANG.GROUP.OPTIONS_MENU.CREATE_INVITATION"></span>
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item
+            ng-if="MU.isActionAvailableInTab('DELETE_GROUP', tab_curr, viewTabs) && data.group.isActionAuthorized('DELETE_GROUP')">
+            <md-button ng-click="$mdCloseMenu(); confirmAndDeleteGroup(data.group, {$event: $event})"
+                       class="md-accent md-raised">
+              <span ng-bind="LANG.GROUP.OPTIONS_MENU.DELETE_GROUP"></span>
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+
+      <md-progress-linear ng-if="toolbarLoader.async_active"
+                          md-mode="indeterminate"
+                          class="toolbar-loading-bar md-hue-3"></md-progress-linear>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical"
+          layout-height="match_parent">
+    <row layout-gravity="top" layout-height="4em">
+      <md-tabs class="md-primary tabs"
+               md-selected="xtras.curr_tab_index"
+               md-align-tabs="top"
+               md-stretch-tabs="never"
+               md-swipe-content>
+
+        <md-tab md-on-select="onTabSelect('TAB_INFO')"
+                id="tabProfile"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+            <i class="icon icon-tab icon-info-outline"></i>
+            <span class="tab-text"
+                  ng-bind="LANG.LABEL.TAB_INFO">Info</span>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_MEMBERS')"
+                id="tabMembers"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+
+            <i class="icon icon-tab icon-people"></i>
+            <span class="tab-text"
+                  ng-bind="LANG.LABEL.TAB_MEMBERS">Members</span>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_GROUPS')"
+                id="tabSubgroups"
+                ng-disabled="viewModel.status == 'IS_LOADING'">
+          <div>
+
+            <i class="icon icon-tab icon-group-work"></i>
+            <span class="tab-text"
+                  ng-bind="LANG.LABEL.TAB_SUB_GROUPS">Groups</span>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_CHAT')"
+                ng-disabled="!xtras.flag.isChatEnabled || !xtras.flag.isChatCredentialsAvailable"
+                id="tabChat">
+          <div>
+            <i class="icon icon-tab icon-forum"></i>
+            <span class="tab-text"
+                  ng-bind="LANG.LABEL.TAB_CHAT">Chat</span>
+          </div>
+        </md-tab>
+
+        <md-tab md-on-select="onTabSelect('TAB_GROUP_VAULT')"
+                id="tabVault"
+                ng-disabled="xtras.flag.isVaultDisabled || viewModel.status == 'IS_LOADING'">
+          <div>
+            <i class="icon icon-tab icon-drive-document"></i>
+            <span class="tab-text"
+                  ng-bind="LANG.LABEL.TAB_DATA">Data</span>
+          </div>
+        </md-tab>
+
+
+      </md-tabs>
+
+    </row>
+
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <div ng-switch="tab_curr" id="group_detail_tab_content">
+
+        <div ng-switch-when="TAB_INFO">
+          <div hide-if-data-absent class="card no-padding-top">
+            <div class="item card-rich-media">
+              <div class="profile-card overlay">
+                <div class="profile-cover">
+                  <div class="inner" layout="row" layout-align="center center">
+                    <!--<img ng-src="assets/images/WW-img.png"-->
+                    <!--on-error-src="assets/images/profile-placeholder.png"-->
+                    <!--alt=""-->
+                    <!--class="img"/>-->
+                  </div>
+                </div>
+                <div class="inner overlay-content" layout="row">
+                  <div class="profile-img border">
+                    <img ng-src="{{data.group._img_full || 'assets/images/group-icon-placeholder.png'}}"
+                         on-error-src="assets/images/group-icon-placeholder.png"
+                         alt=""
+                         class="img"/>
+                  </div>
+
+                  <div flex layout="row" layout-align="center center">
+                    <div class="profile-img">
+                      <img ng-src="assets/images/logo.png"
+                           on-error-src="assets/images/profile-placeholder.png"
+                           alt=""
+                           class="img img-floating-icon bg-none"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item item-text-wrap">
+              <!--<div class="item-image item-padded overflow-hide">-->
+              <!--<img ng-src="{{data.group._img_full || 'assets/images/group-icon-placeholder.png'}}"-->
+              <!--on-error-src="assets/images/group-icon-placeholder.png"-->
+              <!--alt=""-->
+              <!--class="img"/>-->
+              <!--</div>-->
+              <h2 class="card-title-text">{{data.group.groupName}}</h2>
+
+              <p ng-if="data.group.$_adminUser"
+                 class="push-top pt-sm push-bottom pb-sm">Owned by
+                <span>{{data.group.$_adminUser.userFirstName}}</span>
+                <span>{{data.group.$_adminUser.userLastName}}</span></p>
+
+              <p ng-show="data.group.createTime"
+                 class="push-top push-bottom pb-sm">Created on
+                <span>{{MU.getDisplayDate_DDMMYYYYHHMMSS(data.group.createTime)}}</span></p>
+
+              <p ng-class="{'line-clamp-2 overflow-hide':!ui.flags.toggleGroupDesc}"
+                 ng-click="ui.flags.toggleGroupDesc=!ui.flags.toggleGroupDesc"
+                 class="txt txt-line-sec text-wrap">{{data.group.desc}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div ng-switch-when="TAB_CHAT">
+          <md-list id="groupChatListView"
+                   class="chatList withStickyChSubmitForm tall-form">
+
+            <md-list-item
+              ng-show="_connStatus.isInARoom"
+              layout="column" layout-align="center center">
+              <button ng-click="loadEarlierMessages()"
+                      ng-if="messageStackInfo.isOlderMessagesPending"
+                      ng-disabled="_connStatus.loadingMessages"
+                      class="button button-clear button-small">
+                {{_connStatus.loadingMessages ? 'Loading...' : 'Load earlier messages'}}
+              </button>
+            </md-list-item>
+
+            <md-list-item ng-repeat="message in messageStack"
+                          class="chItem"
+                          ng-class="message.fromUserInfo.userId==session.userId ? 'item-align-right':'item-align-left'"
+                          layout="row" layout-align="center start">
+              <div class="chBubble whiteframe-z1">
+                <p class="">{{message.text}}</p>
+
+                <div class="color-light-2 chSubtext"
+                     ng-class="message.fromUserInfo.userId==session.userId ? 'color-light-2 chSubtext pull-right':'color-light-2 chSubtext pull-left'"
+                     layout="row" layout-align="start center">
+                  <!-- <span class="push-right">{{message.fromUser}}</span> -->
+                  <span>{{MU.getDisplayTime(message.timestamp)}}</span>
+                </div>
+              </div>
+              <div class="chIcon" ng-click="transitionTo('root.app.user', {id: message.fromUserInfo.userId})">
+                <img src="{{MU.getUserIconImageUrl(message.fromUserInfo.userId)}}"
+                     on-error-src="assets/images/profile-image-placeholder.png"
+                     alt=""
+                     class="img round"/>
+              </div>
+            </md-list-item>
+
+          </md-list>
+        </div>
+
+        <!-- Tab: Sub Groups -->
+        <div ng-switch-when="TAB_GROUPS">
+          <div class="list push-top">
+
+            <div ng-show="data.subGroups.length==0"
+                 class="item">
+              <!-- <div
+                ng-click="createSubGroup()"
+                class="button button-jumbo icon-left icon-add button-outline">
+                <div class="push-bottom">This Group has no sub groups.</div>
+                <div>Click here to create a new sub group.</div>
+              </div> -->
+
+              <p class="text-center">No sub-groups found.Create a new one.</p>
+
+            </div>
+
+            <div ng-repeat="group in data.subGroups"
+                 ng-click="transitionTo('root.app.group', {orgId:data.org.id, groupId:group.id})"
+                 class="item item-text-wrap item-line-double item-avatar-left">
+              <img ng-src="{{group._img_icon  || 'assets/images/group-icon-placeholder.png'}}"
+                   on-error-src="assets/images/group-icon-placeholder.png"
+                   class="img fit item-image with-padding corner-round">
+
+              <h2 class="txt txt-line-pri">{{group.groupName}}</h2>
+              <span
+                ng-show="LANG.JOB.ROLES[group._roleName]"
+                ng-bind="LANG.JOB.ROLES[group._roleName]"
+                class="label"></span>
+
+              <span class="inline-block push-left pl-sm">{{LANG.GROUP.LABEL.PREFIX_CREATED_DATE}} {{MU.getDisplayDate_DDMMYYYYHHMMSS(group.createTime)}}</span>
+
+              <!--<span class="icon-label">-->
+              <!--<md-icon md-font-icon="icon icon-people"></md-icon>-->
+              <!--<span ng-bind="group.subGroupCount || 0"></span>-->
+              <!--</span>-->
+              <!--<span class="icon-label push-left pl-lg">-->
+              <!--<md-icon md-font-icon="icon icon-person"></md-icon>-->
+              <!--<span ng-bind="group.membersCount || 0"></span>-->
+              <!--</span>-->
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tab: Group Members -->
+        <div ng-switch-when="TAB_MEMBERS">
+          <div class="list">
+
+            <!--<user-list-item-->
+            <!--model="user"-->
+            <!--on-listitem-click="select(user)"-->
+            <!--ng-repeat="user in data.orgMembers"></user-list-item>-->
+
+            <div ng-repeat="user in data.group.$_members"
+                 class="item item-complex item-action-right">
+              <div class="item-content item-avatar-left"
+                   ng-click="onGroupMemberListItemClick(user, $event)">
+                <img ng-src="{{user._img_icon}}"
+                     on-error-src="assets/images/profile-image-placeholder.png"
+                     class="img fit round item-image">
+
+                <h2 class="txt text-wrap txt-large txt-line-pri push-top">{{user.userFirstName}}
+                  {{user.userLastName}}</h2>
+
+                <!--  <h3 class="txt txt-line-sec">
+                   <span class="push-top"
+                         ng-show="user.id == data.group.adminId">Owner since {{MU.formatDate(user.joinedTime)}}</span>
+                   <span class="" ng-show="user.id != data.group.adminId">Member since {{MU.formatDate(user.joinedTime)}}</span>
+                 </h3> -->
+
+                <p class="txt txt-line-sec text-ellipsis">
+                    <span class=""
+                          ng-show="user.id == data.group.adminId">Owner since {{MU.formatDate(user.joinedTime)}}</span>
+                    <span class=""
+                          ng-show="user.id != data.group.adminId">Member since {{MU.formatDate(user.joinedTime)}}</span>
+                </p>
+              </div>
+              <button
+                ng-click="showGroupMemberOptions(user, $event)"
+                class="item-action button button-clear push-top">
+                <i class="icon icon-more-vert"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tab: Group Vault -->
+        <div ng-switch-when="TAB_GROUP_VAULT">
+          <md-list class="no-padding-top">
+            <!--<md-list-item ng-show="data.vaultInfo"-->
+            <!--class="color-light-2 dark-bg">-->
+            <!--<p class="">-->
+            <!--<md-icon md-font-icon="icon icon-info-outline"-->
+            <!--class="push-right color-light-2"></md-icon>-->
+            <!--<span>Maximum allowed file size is {{data.vaultInfo.fileLimitSize}}</p>-->
+            <!--</span>-->
+            <!--</md-list-item>-->
+
+            <!--<md-subheader ng-show="data.vaultInfo"-->
+            <!--class="md-no-sticky multi-line">-->
+            <!--<span class=""><b>{{LANG.VAULT.VAULT_FILE_LIST_SUB_HEADER}}</b></span>-->
+            <!--<span class="push-left">-->
+            <!--<i>{{data.group.vaultInfo.usedSize}} of {{data.vaultInfo.totalSize}} used.</i></span>-->
+            <!--</md-subheader>-->
+
+            <md-list-item ng-show="data.groupVaultFiles.length==0 && !isFetching_groupVaultFiles">
+              <p class="text-center">No files found.</p>
+            </md-list-item>
+
+            <md-list-item ng-repeat="file in data.group.$_files"
+                          class="md-2-line md-no-proxy">
+              <md-icon md-font-icon="icon icon-drive-file"></md-icon>
+              <div
+                class="md-list-item-text">
+                <h3 class="line-clamp-2">{{file.fileDisplayName}}</h3>
+                <p class="color-light">
+                  <span ng-bind="file.owner.userFirstName + ' ' + file.owner.userLastName"
+                        class=""></span>
+                </p>
+                <p>
+                  <span ng-bind="file.fileSize"
+                        class="push-right pr-sm"></span>
+                  <span class="text-no-wrap">
+                    <!--<span ng-bind="LANG.VAULT.LABEL.LAST_MODIFIED"></span>-->
+                    <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(file.createTime)"></span>
+                  </span>
+                </p>
+              </div>
+              <md-button ng-click="onGroupVaultFileItemClick_secondary(file, $event)"
+                         ng-disabled="xtras.flag.fileDownloadInProgress"
+                         class="md-secondary-container align-top md-icon-button">
+                <md-icon md-font-icon="icon icon-file-download"
+                         aria-label="Preview file" class="md-hue-3"></md-icon>
+              </md-button>
+            </md-list-item>
+          </md-list>
+        </div>
+      </div>
+      <!--<div ng-include="tabs[tab_curr].src"></div>-->
+    </row>
+
+    <row layout-height="8em" layout-gravity="bottom"
+         ng-show="tab_curr=='TAB_CHAT'">
+      <div class="chatListFooter CLF-textarea">
+        <form name="groupChatForm">
+          <div class="chSubmitForm"
+               layout="row">
+            <div class="chMessageInputField chMessageTextAreaField" flex>
+            <textarea ng-model="chatFormModel.newMessage"
+                      ng-disabled="!_connStatus.isInARoom"
+                      ng-keypress="onInputFieldKeyPress($event, newMessage)"
+                      type="text"
+                      placeholder="{{_connStatusMessage}}"
+                      class=""></textarea>
+            </div>
+            <md-button ng-click="sendMessage()"
+                       ng-if="_connStatus.isInARoom"
+                       class="md-icon-button chSubmitBtn"
+                       ng-disabled="!_connStatus.isInARoom"
+                       aria-label="Send Message"
+                       md-no-ink>
+              <md-icon md-font-icon="icon icon-send"></md-icon>
+              <!--<span>Send</span>-->
+            </md-button>
+            <md-progress-circular
+              ng-if="!_connStatus.isInARoom"
+              md-diameter="24"
+              md-mode="indeterminate"></md-progress-circular>
+          </div>
+        </form>
+      </div>
+    </row>
+
+  </layout>
+
+</view>

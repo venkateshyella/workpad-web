@@ -1,0 +1,70 @@
+<view type="toolbarView" title="'WorkSpace Room'">
+
+  <toolbar app-toolbar title="data.org.orgName" sub-title="'ROOMS'">
+    <toolbar-title></toolbar-title>
+    <toolbar-options>
+      <md-progress-linear ng-show="toolbarLoader.async_active"
+                          md-mode="indeterminate"
+                          class="toolbar-loading-bar md-hue-3"></md-progress-linear>
+
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical"
+          layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free"
+         ng-class="APP_DATA_CSS[_state]">
+
+      <div class="list">
+      
+      	<div class="item"
+          ng-show="data.groups && data.groups.length==0">
+          <p class="text-center">No rooms found...</p>
+        </div>
+
+        <div class="item item-avatar-left"
+             ng-repeat="group in data.groups"
+             ng-click="showGroupOptions(group, $event)">
+          <img ng-src="{{group._img_icon}}"
+               on-error-src="assets/images/group-icon-placeholder.png"
+               class="img fit item-image with-padding corner-round">
+
+          <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+            <span>{{group.groupName}}</span>
+          </h2>
+          
+          <div layout="row" class="push-top pt-sm">
+              <p class="txt txt-line-sec text-ellipsis">
+                <span ng-show="group.role == 3" class="label">Owner</span>
+            	<span ng-show="group.role != 3" class="label">Member</span>
+              </p>
+          </div>
+
+		  <div layout="row">
+              <div class="txt txt-line-sec text-ellipsis">
+                <p>
+            		<span>{{group.membersCount || 0}} Member(s)</span>
+            		<span class="push-left" ng-show="group.subGroupCount">{{group.subGroupCount || 0}} Subgroup(s)</span>
+          		</p>
+          	</div>
+          </div>
+        </div>
+
+        <div ng-show="!ui.refreshing && ui.isNextPageAvailable"
+             layout="row" layout-align="center center"
+             class="item">
+          <md-button ng-click="loadNextPage()"
+                     ng-disabled="ui.loadingNext"
+                     class="full-width txt-ignore-case"
+                     aria-label="Load next page">
+            <span ng-if="!ui.loadingNext">Load more</span>
+            <span ng-if="ui.loadingNext">Loading ...</span>
+          </md-button>
+        </div>
+
+      </div>
+
+    </row>
+  </layout>
+
+</view>

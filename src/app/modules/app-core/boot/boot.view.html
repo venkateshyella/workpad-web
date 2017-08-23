@@ -1,0 +1,51 @@
+<view type="fullScreenView" screen-type="device">
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+
+    <row id="content" scroll
+         layout-height="fill_remaining"
+         layout-gravity="center">
+
+      <div class="full-width text-center overflow-x-hide"
+           style="position:absolute;top:0;left:0;height:100%;"
+           layout="column" layout-align="space-around center">
+        <span flex></span>
+
+        <div class="list full-width overflow-hide"
+          flex>
+
+          <div class="item">
+            <!--<img class="img v-center" src="assets/images/logo.png" alt="Workwise"-->
+                 <!--style="width:120px"/>-->
+            <md-progress-circular ng-show="bootInProgress"
+                                  class=" h-center"
+                                  md-mode="indeterminate"
+                                  md-diameter="32"
+                                  onload-hide-loader="initLoader" ></md-progress-circular>
+            <!--<h2 ng-bind="bootState.msg"></h2>-->
+          </div>
+
+
+          <div ng-show="enableRetry && !bootInProgress"
+               class="ng-hide">
+            <div ng-click="runBoot()"
+                 class="button button-clear">Retry
+            </div>
+          </div>
+
+          <div ng-show="enableLoginAction && !bootInProgress"
+               class="ng-hide">
+            <div ng-click="loginAction()"
+                 class="button button-clear">Proceed to Login
+            </div>
+          </div>
+
+        </div>
+
+        <p ng-bind="bootState.msg"
+          class="color-light padding"></p>
+      </div>
+
+    </row>
+
+  </layout>
+</view>

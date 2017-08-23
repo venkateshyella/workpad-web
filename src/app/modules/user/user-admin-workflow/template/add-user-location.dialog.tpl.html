@@ -1,0 +1,145 @@
+<md-dialog class="register-pop-up" aria-label="Add New Location"
+           layout="column" layout-align="space-between center">
+  <md-toolbar >
+    <div class="md-toolbar-tools">
+      <md-button ng-if="FLAG.CREATE_NEW_LOCATION"
+                 class="md-icon-button  " ng-click="toggleCreateLocation()">
+        <md-icon md-font-icon="icon icon-arrow-back" aria-label="Close dialog"></md-icon>
+      </md-button>
+      <h2 class="txt-capitalize text-ellipsis">
+        <span>{{FLAG.CREATE_NEW_LOCATION ? LANG.USER_EDIT.LOCATION.CREATE_CITY_TITLE : LANG.USER_EDIT.LOCATION.ADD_CITY_TITLE}}</span>
+      </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content class="full-width"  layout="column">
+
+    <div class="list padding" flex>
+
+      <div class="item"
+           ng-if="!FLAG.CREATE_NEW_LOCATION"
+           layout="row">
+        <md-autocomplete flex ng-model="form.newLocationForm.locationObj" name="newLocation"
+                         ng-disabled="form.isDisabled"
+                         md-selected-item="autoCompleteCtrl.selectedItem"
+                         md-search-text-change="autoCompleteCtrl.searchTextChange(autoCompleteCtrl.searchText)"
+                         md-search-text="autoCompleteCtrl.searchText"
+                         md-items="item in autoCompleteCtrl.querySearch(autoCompleteCtrl.searchText)"
+                         md-selected-item-change="autoCompleteCtrl.selectedItemChange(item)"
+                         md-item-text="item.name+' ('+item.countryEntity.countryCode+')'"
+                         md-min-length="2"
+                         md-no-cache="true"
+                         placeholder="{{LANG.USER_EDIT.PLACEHOLDER.LOCATION_SELECT}}"
+                         class="">
+          <md-item-template>
+            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i" class="item-title">{{item.name}} </span>
+									<span class="item-metadata">
+										<span class="txt-upper">({{item.countryEntity.countryCode}})</span>
+									</span>
+          </md-item-template>
+          <md-not-found>
+            <div class="item-title">{{autoCompleteCtrl.searchStatusText}}</div>
+          </md-not-found>
+        </md-autocomplete>
+        <md-button ng-click="FLAG.CREATE_NEW_LOCATION = true"
+                   ng-disabled="autoCompleteCtrl.flag.didFindLocation || autoCompleteCtrl.flag.isSearching || !autoCompleteCtrl.flag.isTextAvailable"
+                    class="md-raised md-primary create-button"
+                   aria-label="Create new Location">
+          <span
+            ng-bind="LANG.USER_EDIT.LOCATION.CREATE_CITY"></span>
+        </md-button>
+      </div>
+
+      <div class="item" flex
+           ng-if="FLAG.CREATE_NEW_LOCATION"
+           ng-controller="CountryFinderController as ctrl">
+        <form name="form.create_newLocation">
+          <div class="push-bottom">
+            <md-input-container flex>
+              <label>New City Name</label>
+              <input type="text"
+                     name="cityName"
+                     ng-model="userLocationObj.cityName"
+                     required
+                     columns="1"
+                     md-maxlength="50">
+
+              <div ng-messages="form.create_newLocation.cityName.$error">
+                <div ng-message="md-maxlength"
+                     class="ng-message text-wrap">Please limit the new city name
+                  to 50 characters.
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout="row" class="padding-bottom">
+            <md-autocomplete flex name="userLocationObj.country"
+                             ng-disabled="form.isDisabled"
+                             md-delay="300"
+                             md-no-cache
+                             md-selected-item="formModel.create_newLocation.searchCountry"
+                             md-search-text-change="ctrl.searchTextChange(formModel.create_newLocation.searchCountry, ctrl.searchText)"
+                             md-search-text="ctrl.searchText"
+                             md-items="item in ctrl.querySearch(ctrl.searchText)"
+                             md-selected-item-change="onCountrySelect(item)"
+                             md-item-text="item.countryName+'('+item.countryCode+')'" md-min-length="2"
+                             placeholder="{{LANG.PLACEHOLDER.COUNTRY_SELECT}}">
+              <md-item-template>
+                <span md-highlight-text="ctrl.searchText"
+                      md-highlight-flags="^i"
+                      class="item-title">{{item.countryName}}</span>
+                <span class="item-metadata">
+                  <span class="txt-upper">({{item.countryCode}})</span></span>
+              </md-item-template>
+              <md-not-found>
+                <div ng-click class="item-title">{{searchStatusText}}</div>
+              </md-not-found>
+            </md-autocomplete>
+          </div>
+        </form>
+
+        <!--<md-button ng-click="FLAG.CREATE_NEW_LOCATION = !FLAG.CREATE_NEW_LOCATION"-->
+                   <!--class="push-top pt-lg no-push-left md-raised"-->
+                   <!--aria-label="Cancel City creation">-->
+          <!--<span>{{LANG.BUTTON.CANCEL_CITY_CREATION}}</span>-->
+        <!--</md-button>-->
+
+      </div>
+
+      <form name="form.newLocationForm">
+      </form>
+    </div>
+
+    <div class="list hide-on-keyboard-open" layout="row" layout-align="center center"
+         flex>
+
+    </div>
+
+    <p class="padding color-light p-lg"
+       ng-if="FLAG.CREATE_NEW_LOCATION">Please select a country and provide a name for the new city.</p>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="row">
+    <md-button ng-click="cancel()"
+               aria-label="Cancel workflow">
+      <span ng-bind="LANG.BUTTON.CANCEL"></span>
+    </md-button>
+    <md-button ng-click="updateUserLocation(autoCompleteCtrl.selectedItem)"
+               ng-if="!FLAG.CREATE_NEW_LOCATION"
+               ng-disabled="!autoCompleteCtrl.selectedItem"
+               aria-label="Save">
+      <span ng-bind="LANG.BUTTON.SAVE">Save</span>
+    </md-button>
+    <md-button ng-click="updateUserLocation(userLocationObj)"
+               ng-if="FLAG.CREATE_NEW_LOCATION"
+               ng-disabled="userLocationObj.country && userLocationObj.cityName"
+               aria-label="Save">
+      <span ng-bind="LANG.BUTTON.SAVE">Save</span>
+    </md-button>
+  </div>
+</md-dialog>

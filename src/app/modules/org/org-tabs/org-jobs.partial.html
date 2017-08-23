@@ -1,0 +1,186 @@
+<!-- <div>
+  <div class="button-bar padding">
+
+    <div
+      ng-class="{'button-outline': state.showAudit}"
+      ng-click="toggleAudit(false)"
+      class="button">
+      <i class="icon icon-drive-document"></i>
+      <small ng-bind="::LANG.JOB.LABEL.TITLE_TAB_JOBS"></small>
+    </div>
+
+    <div
+      ng-class="{'button-outline': !state.showAudit}"
+      ng-click="toggleAudit(true)"
+      class="button">
+      <i class="icon icon-history"></i>
+      <small ng-bind="::LANG.LABEL.TAB_AUDIT"></small>
+    </div>
+
+  </div> -->
+
+  <div ng-hide="state.showAudit" class="tab-list-scroll">
+    <div>
+      <div class="list full-width overflow-hide">
+        <!-- <div ng-show="OrgJobsdata.orgJobs.length==0" class="item item-backdrop text-center">
+        <div class="backdrop-filler-image">
+            <i class="icon icon-backdrop icon-briefcase-case-two"></i>
+        </div>
+        <div ng-show="!orgJobsLoaderStore.isLoading">{{LANG.JOB.JOB_LOADING_MSGS.NO_JOBS}}</div>
+    </div> -->
+        <!-- <div class="list" layout="row" layout-align="center center" ng-show="OrgJobsdata.orgJobs.length==0">
+        <div class="item item-backdrop text-center">
+            <div class="backdrop-filler-image">
+                <i class="icon icon-backdrop icon-briefcase-case-two"></i>
+                <h4 class="color-light-2">{{LANG.JOB.JOB_LOADING_MSGS.NO_JOBS}}</h4>
+            </div>
+        </div>
+    </div> -->
+        <div ng-show="OrgJobsdata.orgJobs.length==0" class="item item-backdrop text-center">
+          <div class="backdrop-filler-image">
+            <i class="icon icon-backdrop icon-briefcase-case-two"></i>
+          </div>
+          <p>{{LANG.JOB.JOB_LOADING_MSGS.NO_JOBS}}</p>
+        </div>
+        <div ng-repeat="job in OrgJobsdata.orgJobs" ng-class="{'border-top':!$first}"
+             class="item item-text-wrap item-complex item-line-double">
+          <div class="item-content" ng-click="jobItemClickAction($event, job)">
+            <div class="txt txt-line-pri no-push-bottom" layout="row">
+              <h2 ng-bind="job.title" class="text-ellipsis" flex></h2>
+              <!-- <div class="color-light-2 text-ellipsis">
+        <small>{{MU.getDisplayDate_DDMMYYYYHHMMSS(job.createTime)}}</small>
+    </div> -->
+            </div>
+            <p ng-bind="job.desc" class="overflow-hide txt-pri text-wrap pre-formatted" style="margin-bottom:1px;" >
+            </p>	
+                <p style="margin-bottom:1px;"> <i class="icon icon-tab icon-briefcase-case-two"></i> 
+                  <span ng-bind="'Job Type '+job.jobType" class="text-ellipsis" style="color: #444;"></span>
+                  </p>
+            <div class="txt-line-sec">
+              <!-- Job status -->
+              <p class="push-bottom pb-sm">
+                <span ng-bind="job.displayStatus" class="color-light-2"
+                      ng-class="{'label-balanced': job.isInProgress(),'label-accent':job.isStopped()}"
+                      aria-hidden="false"></span>
+                <span ng-bind="'on '+MU.getDisplayDate_DDMMYYYYHHMMSS(job.eventLastModified)"></span>
+              </p>
+              <p class="push-bottom pb-sm ">
+               <span class="color-light-2">Required Job Completion Time is</span>
+                <span ng-bind="MU.getDisplayDate_DDMMYYYYHHMMSS(job.jobEndTimeInfo.requiredJobCompletionTime)"></span>
+              </p>
+              <!-- Job Roles -->
+              <!--  <p class="push-bottom pb-sm max-full-width">
+      <span ng-repeat="role in job.roles"
+            class="label padding-bottom pdb-sm no-push-left max-full-width">
+        <span ng-bind="::LANG.JOB.ROLES[ROLE_NAMES[role]]"></span>
+        <span
+          ng-if="role==8"
+          ng-show="job.ownedFullPath && job.ownedFullPath.length>0"
+          class="">
+          <span>: </span>
+          <i
+            ng-class="{'icon-group-work':job.ownedFullPath[job.ownedFullPath.length-1].type=='GROUP', 'icon-domain':job.ownedFullPath[job.ownedFullPath.length-1].type=='ORG'}"
+            class=""></i>
+          <span ng-bind="job.ownedFullPath[job.ownedFullPath.length-1].name"
+                class=""></span>
+        </span>
+      </span>
+    </p> -->
+              <p class="push-bottom pb-sm max-full-width text-ellipsis txt-line-sec"
+                 ng-show="job.originator && job.originator.groupId">
+                        <span class="label no-push-left">
+                            <small>Originator</small>
+                        </span>
+
+                        <span class="icon-label">
+                          <md-icon ng-show="job.createdFullPath[job.createdFullPath.length - 1].type == 'ORG'"
+                                   md-font-icon="icon icon-domain"></md-icon>
+                          <md-icon ng-show="job.createdFullPath[job.createdFullPath.length - 1].type == 'GROUP'"
+                                   md-font-icon="icon icon-group-work"></md-icon>
+                          <span> {{job.createdFullPath[job.createdFullPath.length - 1].name}} </span>
+                        </span>
+                        <span class="icon-label">
+                          <md-icon md-font-icon="icon icon-person"></md-icon>
+                          <span> {{job.originator.userFirstName}}  {{job.originator.userLastName}}</span>
+                        </span>
+              </p>
+
+              <p class="push-bottom pb-sm max-full-width text-ellipsis txt-line-sec"
+                 ng-show="job.owner && job.owner.groupId">
+                        <span class="label no-push-left">
+                            <small>Owner</small>
+                        </span>
+
+                        <span class="icon-label">
+                          <md-icon ng-show="job.ownedFullPath[job.ownedFullPath.length - 1].type == 'ORG'"
+                                   md-font-icon="icon icon-domain"></md-icon>
+                          <md-icon ng-show="job.ownedFullPath[job.ownedFullPath.length - 1].type == 'GROUP'"
+                                   md-font-icon="icon icon-group-work"></md-icon>
+                          <span> {{job.ownedFullPath[job.ownedFullPath.length - 1].name}} </span>
+                        </span>
+                         <span class="icon-label">
+                          <md-icon md-font-icon="icon icon-person"></md-icon>
+                          <span> {{job.owner.userFirstName}}  {{job.owner.userLastName}}</span>
+                        </span>
+              </p>
+
+              <p ng-repeat="contributor in job.contributors"
+                 class="push-bottom pb-sm max-full-width text-ellipsis txt-line-sec"
+                 ng-show="job.contributors.length > 0">
+                        <span class="label no-push-left">
+                            <small>Contributor</small>
+                        </span>
+                        <span class="icon-label" ng-if="!contributor.group">
+                          <md-icon style="margin-right: 3px" md-font-icon="icon icon-domain"></md-icon>
+                          <span> {{contributor.organization.orgName}} </span>
+                        </span>
+                        
+						<span class="icon-label" ng-if="contributor.group">
+                          <md-icon style="margin-right: 3px" md-font-icon="icon icon-group-work"></md-icon>
+                          <span> {{contributor.group.groupName}} </span>
+                        </span>
+                        <span class="icon-label">
+                          <md-icon md-font-icon="icon icon-person"></md-icon>
+                          <span> {{contributor.userFirstName}}  {{contributor.userLastName}}</span>
+                        </span>
+              </p>
+              <!--<p class="push-bottom pb-sm max-full-width">
+                  Owner is {{job.owner.userFirstName}} {{job.owner.userLastName}} of {{job.owner.groupName}}
+              </p>
+              <p class="push-bottom pb-sm max-full-width">
+                  Contributors are {{job.contributors[0].userFirstName}} {{job.contributors[0].userLastName}} of {{job.owner.groupName}}
+              </p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div ng-show="isNextOrgJobPageAvailable()" class="item" layout="row" layout-align="center center">
+        <button ng-click="loadNextOrgJobPage()" ng-disabled="orgJobsLoaderStore.isLoading" class="button button-block button-small button-clear" aria-label="Load More">
+            <span ng-hide="orgJobsLoaderStore.isLoading">{{LANG.JOB.JOB_LOADING_MSGS.LOAD_MORE}}</span>
+            <span ng-show="orgJobsLoaderStore.isLoading">{{LANG.JOB.JOB_LOADING_MSGS.LOADING}}</span>
+        </button>
+    </div> -->
+      <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+        <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+                aria-label="Load More">
+          <span ng-show="!loadingNext">Load More</span>
+          <span ng-show="loadingNext">Loading ...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div ng-show="state.showAudit" class="tab-list-scroll">
+   <audit-list list="orgJobsAuditList"></audit-list>
+   
+          <div ng-show="isNextAuditPageAvailable()"
+		                   class="item" layout="row" layout-align="center center">
+		                <md-button ng-click="fetchMoreAudits()"
+		                     ng-disabled="ui.auditActivityStore.isLoading" class="full-width txt-ignore-case"
+		                     aria-label="Load More">
+		                 <span>{{ui.auditActivityStore.isLoading ? 'Loading...':'Load more audits'}}</span>
+		               </md-button>
+		             </div>
+   
+</div>
+</div>
+{{addScrollToList();}}

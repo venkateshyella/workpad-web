@@ -1,0 +1,185 @@
+// _user.scss
+
+$profile-img-height: 100px;
+$profile-img-sm-height: 70px;
+
+.profile-card {
+  position: relative;
+  padding: 4*$unit;
+  min-height: 9rem;
+  &.profile-large {
+    min-height: 150px;
+    .mug-shot {
+      top: 15px;
+    }
+  }
+  &.overlay {
+    position: relative;
+    .overlay-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparentize($dark, 0.3);
+    }
+    .overlay-content {
+      position: relative;
+      top: 0px;
+      width: 100%;
+      left: 0;
+      right: 0;
+      //padding: 4*$unit;
+      color: $light;
+
+      &.overlay-bottom {
+        position: absolute;
+        top: auto;
+        bottom: 0px;
+      }
+      &.overlay-full {
+        height: 100%;
+      }
+    }
+    .profile-cover {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      bottom: 0px;
+      right: 0px;
+      overflow: hidden;
+      text-shadow: white 0px 0px 2px;
+      .img {
+        //margin: auto;
+        display: block;
+      }
+    }
+    .profile-img {
+      z-index: 10;
+    }
+  }
+  .profile-img {
+    margin: 0px 0 6px;
+    width: $profile-img-height;
+    height: $profile-img-height;
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+    &.border {
+      border-radius: 4px;
+      padding: $unit;
+      background-color: rgba(245, 245, 245, 1.0);
+    }
+    .img {
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+      background-color: white;
+      overflow: hidden;
+    }
+
+    &.pi-round {
+      border-radius: 50%;
+      .img {
+        border-radius: 50%;
+      }
+    }
+    &.pi-sm {
+      width: $profile-img-sm-height;
+      height: $profile-img-sm-height;
+    }
+
+  }
+  .info {
+    position: relative;
+    color: white;
+    padding-top: $unit;
+    padding-bottom: $unit;
+    .txt {
+      font-size: 1.2*$font-size-base;
+    }
+  }
+  .profile-cover {
+    .inner {
+      position: relative;
+      height: 100%;
+      background-color: rgb(157, 184, 206);
+      .img {
+        background-color: transparent;
+        min-height: 140px;
+        //max-height: 100%;
+        //height: 100%;
+        width: 100%;
+      }
+    }
+    &.cover-flex-center {
+      .inner {
+        height: auto;
+      }
+    }
+    .shadow {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      bottom: 0px;
+      right: 0px;
+      background-color: rgba(0, 0, 0, 0.8);
+      opacity: 0.4;
+    }
+  }
+
+  .backdrop-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: hidden;
+    .backdrop {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      overflow: hidden;
+    }
+  }
+  .mug-shot {
+    background-color: rgba(245, 245, 245, 1.0);
+    margin: 0px auto 6px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    padding: 4px;
+    position: relative;
+    .img {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      overflow: hidden;
+    }
+  }
+
+}
+
+.profile-img {
+  width: 100px;
+  min-width: 100px;
+  height: 100px;
+  min-height: 100px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  &.img-small {
+  }
+  &.img-tiny {
+  }
+
+  &.round {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}

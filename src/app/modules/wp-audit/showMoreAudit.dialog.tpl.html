@@ -1,0 +1,67 @@
+<style>
+   table, th, td  {
+   border: 1px solid grey;
+   border-collapse: collapse;
+   padding: 5px;
+   }
+   th {
+   color: #244071;
+   font-weight: 400;
+   text-align: center;
+   min-width: 80px;
+   }
+   table tr:nth-child(odd) {
+   background-color: #f1f1f1;
+   }
+   table tr:nth-child(even) {
+   background-color: #ffffff;
+   }
+</style>
+<md-dialog class="" aria-label="Create WorkSpace" >
+   <md-toolbar>
+      <div layout="row" class="md-toolbar-tools">
+         <h2 class="md-title">More Audit Details</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon
+               md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+      </div>
+   </md-toolbar>
+   <md-dialog-content class="padding-top full-width" style="min-height: 200px;">
+      <div class="item-content padding-bottom">
+         <div class="txt txt-line-pri no-push-bottom" layout="row">
+            <span style="margin-top: 10px;">
+               <small><i
+                  class="color-light-2">Audit Details</i></small>
+               <p style="padding-bottom: 10px;" ng-bind="desc"
+                  class="txt txt-line-sec text-wrap pre-formatted push-top pt-sm"> </p>
+            </span>
+         </div>
+         <div ng-if="summaryData" class="txt txt-line-pri no-push-bottom" style="padding-bottom: 10px;" layout="row">
+            <span class="audit-summary-data">
+               <div ng-repeat="summary in summaryData" class="text-wrap ">
+                  <i style=" float: left;" class="fa fa-hand-o-right" aria-hidden="true"></i> 
+                  <div class="audit-summary" ng-bind="summary"></div>
+               </div>
+            </span>
+         </div>
+      </div>
+      
+     <table ng-if="entityAuditProperties.length > 0" class="table-margin">
+   <th>Name</th>
+   <th>Old Value</th>
+   <th>New Value</th>
+   <tr ng-repeat="property in entityAuditProperties">
+         <td ng-if="property.propertyType == 'CHECKBOX'" colspan="3" class="text-wrap" ng-bind="property.propertyName ? property.propertyName : '-' " ></td>
+      <td ng-if="property.propertyType != 'CHECKBOX'" class="text-wrap" ng-bind="property.propertyName ? property.propertyName : '-' " ></td>
+      <td ng-if="property.propertyType != 'CHECKBOX'" class="text-wrap" ng-bind="property.propertyOldValue ? property.propertyOldValue : '-' " ></td>
+      <td ng-if="property.propertyType != 'CHECKBOX'" class="text-wrap" ng-bind="property.propertyNewValue ? property.propertyNewValue : '-' " ></td>
+   </tr>
+</table>
+   </md-dialog-content>
+   <div class="md-actions" layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()"> Cancel </md-button>
+   </div>
+</md-dialog>

@@ -1,0 +1,173 @@
+<view type="toolbarView" screen-type="device" title="'List'">
+  <toolbar app-toolbar title="'List'">
+  </toolbar>
+
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <!-- Three line list -->
+      <div class="card list">
+
+        <div class="item item-sub-header">Three Line list</div>
+
+        <!-- Three line item-->
+        <div class="item item-line-double">
+          <h2 class="txt txt-line-pri">Primary text...</h2>
+          <div class="txt txt-line-sec two-line-sec txt-wrap">long secondary text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad, aut facere facilis harum nulla omnis suscipit totam vero voluptatibus.</div>
+        </div>
+
+        <div class="item item-line-double item-icon-left">
+          <i class="icon icon-call"></i>
+          <h2 class="txt txt-line-pri">Primary text...</h2>
+          <div class="txt txt-line-sec two-line-sec txt-wrap">long secondary text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad, aut facere facilis harum nulla omnis suscipit totam vero voluptatibus.</div>
+        </div>
+
+        <div class="item item-line-double item-icon-left">
+          <i class="icon icon-call icon-cling-top"></i>
+          <h2 class="txt txt-line-pri">Top aligned icon</h2>
+          <div class="txt txt-line-sec two-line-sec txt-wrap">
+            Add "icon-cling-top" CSS to align the icon near the first line.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Single line list -->
+
+      <div class="card list">
+
+        <div class="item item-sub-header">Single Line list</div>
+
+        <div class="item item-line-single">
+          Single Line text... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, odit.
+        </div>
+
+        <div class="item item-line-single item-icon-left">
+          <i class="icon icon-email"></i>
+          Single Line text with a left icon.
+        </div>
+
+        <div class="item item-complex item-line-single item-action-right">
+          <div class="item-content" ng-click>
+            <span class="txt">Single Line text with a right action.</span>
+          </div>
+          <div class="item-action" ng-click><i class="icon icon-message"></i></div>
+        </div>
+
+        <div class="item item-complex item-line-single item-action-left">
+          <div class="item-content" ng-click>
+            <span class="txt">Single Line text with a left action.</span>
+          </div>
+          <div class="item-action" ng-click><i class="icon icon-star"></i></div>
+        </div>
+
+        <div class="item item-line-single item-icon-left item-icon-right">
+          <i class="icon icon-person"></i>
+          <span class="txt">Single Line text with a left and a right icon</span>
+          <i class="icon icon-info"></i>
+        </div>
+
+        <div class="item item-line-single item-icon-left item-avatar-left">
+          <img class="item-image" src="mcfly.jpg">
+          <h2 class="txt">Single line with image on the left</h2>
+        </div>
+
+      </div>
+
+      <!-- Two line list-->
+
+      <div class="card list">
+
+        <div class="item item-sub-header">Double Line list</div>
+
+        <!-- Simple Double line item-->
+        <div class="item item-line-double">
+          <h2 class="txt txt-line-pri">Primary text...</h2>
+          <div class="txt txt-line-sec txt-wrap">Simple double line item</div>
+        </div>
+
+
+        <!-- Simple Two line item with icon on the left -->
+        <div class="item item-complex item-line-double ">
+          <div class="item-content item-icon-left" ng-click>
+            <i class="icon icon-person" ng-click></i>
+            <h2 class="txt txt-line-pri">Double-w-icon</h2>
+            <div class="txt txt-line-sec txt-wrap">Simple Two line item with icon on the left</div>
+          </div>
+        </div>
+
+
+        <!-- Double line item with secondary action-->
+        <div class="item item-complex item-line-double item-action-right">
+          <div class="item-content item-icon-left" ng-click>
+            <i class="icon icon-person" ng-click></i>
+            <h2 class="txt txt-line-pri">Double-w-action</h2>
+            <div class="txt txt-line-sec txt-wrap">Double line item with secondary action.</div>
+          </div>
+          <div class="item-action" ng-click>
+            <i class="icon icon-message"></i>
+          </div>
+        </div>
+
+
+
+        <div class="item item-complex item-line-double ">
+          <div class="item-content item-icon-right" ng-click>
+            <i class="icon icon-person" ng-click></i>
+            <h2 class="txt txt-line-pri">Complex item</h2>
+            <div class="txt txt-line-sec txt-wrap">With right left... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, quae!</div>
+          </div>
+        </div>
+
+
+
+        <div class="item item-complex item-line-double item-action-right">
+          <div class="item-content item-icon-right" ng-click>
+            <i class="icon icon-person" ng-click></i>
+            <h2 class="txt txt-line-pri">Complex item</h2>
+            <div class="txt txt-line-sec txt-wrap">With right left... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, quae!</div>
+          </div>
+          <div class="item-action" ng-click>
+            <i class="icon icon-message"></i>
+          </div>
+        </div>
+
+
+        <div class="item item-complex item-line-double item-action-left">
+          <div class="item-content item-icon-right" ng-click>
+            <i class="icon icon-person" ng-click></i>
+            <h2 class="txt txt-line-pri">Complex item</h2>
+            <div class="txt txt-line-sec txt-wrap">With right left... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, quae!</div>
+          </div>
+          <div class="item-action" ng-click>
+            <i class="icon icon-search"></i>
+          </div>
+        </div>
+
+
+
+        <div class="item item-line-double item-avatar-left">
+          <img class="item-image" src="mcfly.jpg">
+          <h2 class="txt txt-line-pri">Image left</h2>
+          <div class="txt txt-line-sec txt-wrap">Item with an image on the left</div>
+        </div>
+
+        <div class="item item-line-double item-complex item-action-right">
+          <div class="item-content item-avatar-left" ng-click>
+            <img class="item-image" src="mcfly.jpg">
+            <h2 class="txt txt-line-pri">Image left</h2>
+            <div class="txt txt-line-sec txt-wrap">And a secondary action on the right.</div>
+          </div>
+          <div class="item-action" ng-click>
+            <i class="icon icon-message"></i>
+          </div>
+        </div>
+
+      </div>
+
+    </row>
+  </layout>
+
+
+</view>

@@ -1,0 +1,138 @@
+<style>
+  .ui-grid-cell {
+   float: none;
+   display: table-cell;
+   }
+   
+   ._720kb-datepicker-calendar {position:absolute !important; z-index:99999 !important;}
+   
+   .card-search { display:inline-block; width:100%; padding:0px 20px;}
+   .input-group {margin:0px; padding:0px;}
+   .card-search form label {line-height:34px;}
+   .flds-width {width:48%;}
+   .bdr-radius {border-radius:4px !important;}
+   
+</style>
+
+
+<div>
+<!--
+ <div>
+      <div class="event-filter">
+  <ul class="nav nav-pills ">
+    <li ng-repeat="type in productivityTypes" ng-click="selectProductivity($index,type.value)" ng-class="{active: $index == selectedIndex}">
+      <a href="javascript:void(0);">{{type.label}}</a>
+    </li>
+  </ul>
+</div>
+   
+      
+</div>
+-->
+
+<div layout-align="center center " layout-padding class="" style="position:relative;">
+	<div class="card-search">
+   <form name="form.chart_search" class="full-height form-horizontal " novalidate>
+   
+   <div layout="row" layout-align="start" flex>
+         
+         <div flex="50" style="margin-top:10px;">
+            <label style="padding-bottom: 5px;" class="col-sm-4">Chart Type :</label>
+            <!-- ng-change="selectProductivity(0, searchModel.factorsType);" -->
+            <select name="factorsType" class="form-control col-sm-7 flds-width"  ng-change="clearChartView();"
+             ng-model="searchModel.factorsType" ng-options="opt.code as opt.name for opt in chartFactorTypes[productivityTypes[selectedIndex].value]" style="color: #000;"> </select>
+         </div>
+      </div>
+   
+   <div class="divider dividr-m-10"></div>
+   
+      <div layout="row" layout-align="start" flex>
+         <div flex="50">
+            <label style="padding-bottom: 5px;" class="col-sm-4">From Date<span style="color:red">*</span> :</label>
+            <datepicker  datepicker-class="" class=" col-sm-7 flds-width input-group date end-dt-picker " selector="form-control" date-format="{{dateFormat}}"  date-max-limit="{{maxDate}}" 
+               date-min-limit="{{minDate}}"
+               button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+               button-next="<i class='fa fa-arrow-right'></i>">
+               <div class="input-group inner-addon right-addon" >
+                  <i class="glyphicon glyphicon-calendar"></i>
+                  <input name="fromDate" ng-model="searchModel.fromDate" class="bdr-radius form-control event-icon"
+                     style="font-family: inherit;color: #000;" placeholder="Choose Date"  />  
+               </div>
+            </datepicker>
+         </div>
+         <div flex="50">
+            <label style="padding-bottom: 5px;" class="col-sm-4">To Date<span style="color:red">*</span> :</label>
+            <datepicker datepicker-class="" class="col-sm-7 flds-width input-group date end-dt-picker" selector="form-control" date-format="{{dateFormat}}"  date-max-limit="{{maxDate}}" date-min-limit="{{minDate}}"
+               button-prev="<i class='fa fa-arrow-left'></i>" class="form-control" 
+               button-next="<i class='fa fa-arrow-right'></i>">
+               <div class="input-group inner-addon right-addon">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                  <input name="endDate" ng-model="searchModel.endDate" class="bdr-radius form-control event-icon"
+                     style="font-family: inherit;color: #000;" placeholder="Choose Date"  />  
+               </div>
+            </datepicker>
+         </div>
+      </div>
+      <div layout="row" layout-align="start" flex>
+         <div flex="50" style="margin-top:10px;">
+            <label style="padding-bottom: 5px;font-size:15px;" class="col-sm-4">User Name</label>
+            <input style="color: #000;" class="form-control flds-width" type="text" name="userName" placeholder="Please Enter Username" ng-model="searchModel.userName" ng-maxlength="50" ng-pattern="/^[A-Za-z0-9 ]+$/" ng-trim>
+            <div ng-messages="form.audit_search.userName.$error">
+               <div ng-message="maxlength" class="ng-message">{{LANG.JOB.JOB_CREATE_VALIDATION_MSGS.JOB_NAME_LIMIT}}</div>
+               <div ng-message="pattern" class="ng-message">{{LANG.JOB.JOB_CREATE_VALIDATION_MSGS.JOB_NAME_ALLOW}}
+               </div>
+            </div>	
+         </div>
+         <div flex="50" style="margin-top:10px;">
+            <label style="padding-bottom: 5px;" class="col-sm-4">Job Type :</label>
+            <select name="factorType" class="form-control col-sm-7 flds-width"  
+                    ng-change="loadOrgJobTemplates(searchModel.jobType);"
+                    ng-model="searchModel.jobType" ng-options="opt.value as opt.label  for opt in jobTypes" style="color: #000;"></select>
+         </div>
+      </div>
+      <div layout="row" layout-align="start" flex>
+         <div  flex="50" >
+          <div style="margin-top:10px;" ng-show="showTemplates">
+            <label style="padding-bottom: 5px;" class="col-sm-4">Templates<span style="color:red">*</span> :</label>
+            <select name="templateType" class="form-control col-sm-7 flds-width"  
+                    ng-style="{ color: searchModel.templateId ? '#353535' : '#b3b3b3' }" 
+                    ng-model="searchModel.templateId" ng-options="opt.id as opt.templateName  for opt in orgJobTemplates" style="color: #000;">
+                    <option value="" disabled selected hidden>Please Choose Template</option> </select>
+         </div>
+         </div>
+       <div flex="50" class=" full-width" layout="" style="margin-top:10px;margin-left: 110px;">
+     	<md-button ng-disabled="!(searchModel.endDate && searchModel.endDate != null && searchModel.fromDate && searchModel.fromDate != null)  || (showTemplates && noTemplates)" 
+     	ng-click="filterChartData(searchModel.factorsType)">
+      <span>SEARCH</span>
+    </md-button>
+    <md-button  ng-click="clearChartView();">
+      <span >RESET</span>
+    </md-button>
+  </div>
+  
+  <div class="divider dividr-m-10"></div> 
+      </div>
+    
+   </form>
+   </div>
+</div>
+
+ 
+
+  <h2 ng-bind="chartTitle" style="float: center;text-align: center;font-size: 24px;"></h2>
+  <canvas ng-show="!noChart && graphType == 'line'" 
+  id="prodChart" class="chart chart-line" chart-data="data"
+chart-labels="labels" chart-series="series" chart-options="options"
+chart-dataset-override="datasetOverride"
+chart-colors="type2Colors" >
+</canvas>
+
+ <canvas ng-show="!noChart && graphType == 'mixed'"
+  id="prodMixedChart" class="chart-bar" chart-data="data"
+chart-labels="labels" chart-series="series" chart-options="options"
+chart-colors="type1Colors"
+chart-dataset-override="datasetOverride" >
+</canvas>
+
+  
+</div>

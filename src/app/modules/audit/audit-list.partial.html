@@ -1,0 +1,50 @@
+  <!--
+<div class="list">
+  <div 
+    ng-repeat="audit in list | orderBy:'updateTime':true"
+    ng-click="toggleExpandAuditItemText(audit.auditLogId)"
+    class="item audit-show"
+    ng-class="{'item-text-wrap': auditListMeta[audit.auditLogId].isExpanded, 'bg-light-2':$odd}"
+    layout-md="row" layout-lg="row">
+
+    <h3 flex
+        class="no-margin padding-right padding-lg">
+      <span ng-bind="audit.desc || 'NA'"></span>
+    </h3>
+
+    <p
+      ng-bind="audit.$_displayTime"
+      class="color-light-2"
+      style="line-height: 22px"></p>
+
+  </div>
+  </div>
+  -->
+  <ul class="notifications">
+  <li ng-repeat="audit in list | orderBy:'updateTime':true"
+    		ng-click="toggleExpandAuditItemText(audit.auditLogId)" class="notification" ng-class-even="'row-alt-color'">
+                  <div class="media">
+                    <div class="media-body"> <strong class="notification-title"> <span ng-bind="audit.desc || 'NA'"></span></strong>
+                      <div class="notification-meta"> <small class="timestamp" ng-bind="audit.$_displayTime"></small> </div>
+                    </div>
+                  </div>
+    </li> 
+</ul>
+  <div ng-show="autoLoad && !activityStore.allPagesLoaded"
+       class="item" layout="row" layout-align="center center">
+    <md-button ng-click="fetchNextAuditPage()"
+               ng-disabled="activityStore.isLoading" class="full-width txt-ignore-case"
+               aria-label="Load More">
+      <span>{{activityStore.isLoading ? 'Loading...':'Load more audits'}}</span>
+    </md-button>
+  </div>
+
+          
+             
+		      <div class="item item-backdrop text-center" ng-if="list.length<=0">
+   						 <div class="backdrop-filler-image">
+     					 <i class="icon icon-backdrop icon-history"></i>
+    					</div>
+ 			</div>
+ 			</li>
+ 	     	

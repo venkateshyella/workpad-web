@@ -1,0 +1,21 @@
+<md-dialog aria-label="Skill edit">
+  <md-content class="sticky-container">
+    <md-subheader class="md-sticky-no-effect">Skill Edit</md-subheader>
+    <div class="dialog-content">
+      <md-input-container>
+        <label>Name</label>
+        <input ng-model="skill.name"></md-input-container>
+      <md-slider flex md-discrete ng-model="rating1" step="1" min="1" max="5" aria-label="rating">
+      </md-slider>
+    </div>
+  </md-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="">
+      Cancel
+    </md-button>
+    <md-button ng-click="" class="md-primary">
+      Update
+    </md-button>
+  </div>
+</md-dialog>

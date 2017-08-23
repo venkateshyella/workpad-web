@@ -1,0 +1,56 @@
+<md-dialog class="register-pop-up" aria-label="Assign Task" layout="column" layout-align="space-between center">
+    <md-toolbar >
+        <div class="md-toolbar-tools">
+            <h2 class="txt-capitalize text-ellipsis">
+        <span>Assign Task</span></h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="full-width "  layout="column">
+        <div class="list" layout="row" layout-align="center center" ng-show="showMsgJobContainer">
+            <div class="item item-backdrop text-center">
+                <div ng-show="loadingImage" class="backdrop-filler-image"><i class="icon icon-backdrop icon-drafts"></i>
+                    <div class="text-center">Loading Contributors..</div>
+                </div>
+                <div ng-show="showNoDataMsg">No Contributors to display.</div>
+            </div>
+        </div>
+        <!--&&  !isJobOriginator -->
+        <!-- ng-show="taskModel.isNew() && (isJobOwner || isJobOriginator)  && !showMsgJobContainer" -->
+        <div>
+            <div class="list full-width overflow-hide">
+                <div class="item no-padding-top no-padding-bottom item-text-wrap">
+                    <p>This task is not assigned to anyone. Please select an assignee from the contributors list.</p>
+                </div>
+                <div class="item ng-binding">
+                    <div ng-if="jobContributorList.length > 0">
+                        <span class="color-light txt-normal">Contributors</span>
+                        <span ng-show="jobContributorList && jobContributorList.length > 0">({{jobContributorList.length}})</span>
+                    </div>
+                    <div ng-if="jobContributorList.length == 0">
+                        <span class="color-light txt-normal">No Contributors to display.</span>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="item item-icon-right" ng-repeat="contributor in jobContributorList" ng-click="selectContributor($index)">
+                       <!--  <img ng-src="{{MU.getUserIconImageUrl(contributor.userid)}}" on-error-src="assets/images/profile-image-placeholder.png" class="img fit round item-image"> -->
+                        <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+                            {{contributor.userFirstName}} {{contributor.userLastName}}
+                        </h2>
+                        <i class="icon icon-cling-top" ng-class="{'icon-check-box':contributor.isSelected, 'icon-check-box-blank': !contributor.isSelected}"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-dialog-content>
+    <div class="md-actions full-width" layout="row">
+        <md-button ng-click="cancel()" aria-label="Cancel">
+            Cancel
+        </md-button>
+        <md-button type="submit" ng-disabled = "!selectedContributor"ng-click="assignTask()" class="md-primary">Assign
+        </md-button>
+    </div>
+</md-dialog>

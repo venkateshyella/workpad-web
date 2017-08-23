@@ -1,0 +1,68 @@
+<md-dialog class="register-pop-up" aria-label="Direct Message"
+           layout="column" layout-align="space-between center">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="txt-capitalize text-ellipsis">
+        <span ng-bind="config.title || 'Ping'"></span></h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="icon icon-close"
+                 aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+    <md-progress-linear ng-show="FLAG.loadMessages_inProgress"
+                        md-mode="indeterminate"
+                        class="toolbar-loading-bar"></md-progress-linear>
+  </md-toolbar>
+  <md-dialog-content class="full-width" >
+
+    <div class="list">
+      <div class="item bordered" ng-repeat="msg in topicMessagesList">
+        <div layout="row">
+          <h3
+            ng-bind="msg.fromUser.userFirstName+' '+msg.fromUser.userLastName"
+            class="txt-bold text-ellipsis padding-right">
+          </h3>
+          <span flex></span>
+          <small ng-bind="displayDate(msg.createTime)"></small>
+        </div>
+        <p
+          ng-bind="msg.body"
+          style="line-height: 21px;"
+          class="pre-formatted"></p>
+      </div>
+    </div>
+
+  </md-dialog-content>
+
+  <div class="md-actions full-width" layout="column">
+    <p ng-show="FLAG.send_failed"
+       ng-bind="send_errMsg"
+       class="full-width push-bottom"></p>
+    <div layout="row" class="full-width">
+      <div class="item-input" flex>
+      <textarea ng-model="msgText" focus-me="triggerInputFocus"
+                type="text" flex
+                ng-disabled="FLAG.send_inProgress"
+                ng-change="onMessageTextChange()"
+                rows="2" style="resize: none; height: 45px; margin-top:10px; line-height: 20px;"></textarea>
+      </div>
+      <md-button type="submit"
+                 ng-click="sendMessage()"
+                 ng-disabled="!(msgText.length>0) || FLAG.send_inProgress"
+                 class="md-primary md-raised"
+                 aria-label="Add Skill">
+        <div layout="row" layout-align="center center">
+        <span ng-bind="sendButtonText"
+              ng-hide="send_inProgress"
+              ng-disabled="send_inProgress"></span>
+          <md-progress-circular ng-show="send_inProgress"
+                                class=" h-center md-accent"
+                                md-mode="indeterminate"
+                                md-diameter="20"></md-progress-circular>
+        </div>
+      </md-button>
+    </div>
+  </div>
+</md-dialog>
+{{addScrollToPingList();}}

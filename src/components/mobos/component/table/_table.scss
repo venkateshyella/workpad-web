@@ -1,0 +1,23 @@
+.table {
+  .tr {
+    margin-bottom: 2px;
+    .tc {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top;
+      &.tc-label {
+        width: 100px;
+        &.tcl-lg {
+          width: 200px;
+        }
+        &.tcl-sm {
+          width: 60px;
+        }
+      }
+      line-height: 1.5rem;
+    }
+  }
+  &.table-2-col {
+    .tc.tc-label {}
+  }
+}

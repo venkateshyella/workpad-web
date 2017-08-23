@@ -1,0 +1,33 @@
+<div class="item-content item-avatar-left">
+  <!--<i-->
+    <!--ng-class="postModel.isRead ? 'icon-email':'icon-drafts'"-->
+    <!--class="icon icon-cling-top"></i>-->
+
+  <!--<img src="assets/images/N-icon.png">-->
+
+  <div class="item-image">
+    <div class="letter-icon">
+      <div class="iconLetters">
+       <!--  <span class="icon-letter-1" ng-show="!(postModel.notificationCategory == -2)">I</span>
+         <span class="icon-letter-1" ng-show="(postModel.notificationCategory == -2)">A</span> -->
+      <span class="icon-letter-1">{{MU.getDisplayAlphabet(postModel.notificationCategory)}}</span> 
+
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="txt txt-line-pri push-top">
+    <h3>{{postModel.notificationDescription}}</h3>
+  </div>
+  <div class="txt txt-line-pri" layout="row">
+    <h3
+      ng-class="postModel.status == -2 ? '':'txt-bold'"
+      class="txt-capitalize no-push-bottom" flex>
+    </h3>
+
+    <div class="push-left pl-sm color-light-2 text-ellipsis">
+      <small>{{MU.getDisplayDateTimeOffset(postModel.createDate)}}</small>
+    </div>
+  </div>
+</div>

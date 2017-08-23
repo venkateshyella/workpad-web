@@ -1,0 +1,40 @@
+<div hide-if-data-absent class="no-padding-top">
+<div class="list">
+  <div ng-repeat="member in OrgMemberdata.orgMembers" class="item item-complex item-action-right">
+      <div class="item-content item-avatar-left" ng-click="onOrgMemberListItemClick(member, $event)">
+          <img ng-src="{{member._img_icon}}" on-error-src="assets/images/profile-image-placeholder.png" class="img fit round item-image">
+         <a  class="a-org" href="javascript:void(0);" > <h2 class="txt txt-large txt-line-pri push-top text-wrap">
+              {{member.userFirstName}} {{member.userLastName}}
+            </h2></a>
+          <div layout="row" class="push-top pt-sm">
+              <p class="txt txt-line-sec text-ellipsis">
+                  <span class="" ng-show="member.id == orgTabCtrl.orgModel.adminId">Owner since {{MU.formatDate(member.joinedTime)}}</span>
+                  <span class="" ng-show="member.id != orgTabCtrl.orgModel.adminId">Member since {{MU.formatDate(member.joinedTime)}}</span>
+              </p>
+          </div>
+      </div>
+      <!-- <button ng-click="showOrgMemberOptions(member)" class="item-action button button-clear push-top">
+          <i class="icon icon-more-vert"></i>
+      </button> -->
+      <button ng-click="askAndRemoveOrgMember(member)" class="item-action button button-clear push-top" ng-show="session.userId == orgTabCtrl.orgModel.adminId && member.id != orgTabCtrl.orgModel.adminId">
+          <i class="icon icon-close"></i>
+      </button>
+
+  </div>
+
+  <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+      <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear" aria-label="Load More">
+          <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+          <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+      </button>
+  </div>
+</div>
+</div>
+<div class="list" layout="row" layout-align="center center" ng-show="OrgMemberdata.orgMembers.length == 0">
+<div class="item item-backdrop text-center">
+  <div class="backdrop-filler-image">
+      <i class="icon icon-backdrop icon-people"></i>
+      <h4 class="color-light-2">{{LANG.MESSAGES.NO_MEMBERS}}</h4>
+  </div>
+</div>
+</div>

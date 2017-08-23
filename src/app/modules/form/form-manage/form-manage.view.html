@@ -1,0 +1,41 @@
+<view type="toolbarView" title="'Forms'">
+
+  <toolbar app-toolbar title="'Forms'">
+    <toolbar-options>
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ng-click="workFlow.refresh(); $mdCloseMenu();">
+              Refresh
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <md-list>
+        <md-list-item ng-repeat="form in contextModel.forms"
+                      ng-click
+                      class="md-2-line">
+          <h4 ng-bind="form.formName"></h4>
+          <p ng-bind="form.desc"></h3>
+        </md-list-item>
+      </md-list>
+
+    </row>
+  </layout>
+
+</view>

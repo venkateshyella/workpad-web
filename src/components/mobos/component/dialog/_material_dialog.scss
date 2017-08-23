@@ -1,0 +1,86 @@
+body {
+  .md-scroll-mask {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+  }
+  .md-dialog-container {
+    position: fixed;
+    top: 0 !important;
+  }
+  &.platform-ios {
+    .md-dialog-container {
+      position: absolute;
+    }
+  }
+  md-dialog {
+    min-width: $popup-width;
+    width: 80%;
+
+    &.dialog-full-screen {
+      height: 100%;
+      max-height: initial;
+      width: 100%;
+      max-width: initial;
+    }
+    &.select-dialog {
+      md-dialog-content {
+        padding: 0;
+
+        md-radio-button {
+          margin: 0;
+          padding: 15px 15px 15px 22px;
+
+          md-label {
+            margin-left: 18px;
+          }
+        }
+      }
+    }
+
+    .md-actions {
+      &.border-top {
+        border-top: 1px solid #D4D4D4;
+      }
+      &.border-bottom {
+        border-bottom: 1px solid #D4D4D4;
+      }
+    }
+
+    .dialog-filler {
+      order: 2;
+      -webkit-order: 2;
+    }
+  }
+  md-dialog-content {
+    position: relative;
+    &.dialog-custom {
+      padding-top: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .dialog-content-padding-sides {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .dialog-content-blocker {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: beige;
+      z-index: 2;
+    }
+    md-list {
+      &.list-complex {
+        padding: 0;
+      }
+    }
+    md-list-item {
+      &.item-complex {
+        padding: 0px;
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<view type="toolbarView" title="'WorkSpaces'">
+
+
+    <toolbar app-toolbar title="'WorkSpaces'">
+        <toolbar-options>
+            <!--<md-button ng-click="showOptionsMenu($event)"-->
+            <!--class="md-icon-button toolbar-button button-thin"-->
+            <!--aria-label="Options">-->
+            <!--<md-icon md-font-icon="icon icon-more-vert"-->
+            <!--class="toolbar-icon"></md-icon>-->
+            <!--</md-button>-->
+            <md-menu ng-show="!isSupportUser" md-position-mode="target-right target">
+                <md-button ng-click="$mdOpenMenu()" class="md-icon-button toolbar-button button-thin" aria-label="Options">
+                    <md-icon md-font-icon="icon icon-more-vert" class="toolbar-icon" md-menu-origin></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                    <!--<md-menu-item>-->
+                    <!--<md-button ng-click="refresh({bypassCache:true}); $mdCloseMenu()">-->
+                    <!--{{LANG.OPTIONS_MENU.REFRESH}}-->
+                    <!--</md-button>-->
+                    <!--</md-menu-item>-->
+                    <md-menu-item>
+                        <md-button ng-click="createThenEditOrganisation($event);  $mdCloseMenu()">
+                            {{LANG.ORGANISATION.OPTIONS_MENU.CREATE_ORG}}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+            <md-progress-linear ng-show="toolbarLoader.async_active" md-mode="indeterminate" class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+        </toolbar-options>
+    </toolbar>
+    <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+        <row scroll layout-height="fill_remaining" layout-gravity="free" ng-class="APP_DATA_CSS[_state]">
+            <div ng-show="(_state=='_data_na') || (_activity='_fetching')" class="list full-width" layout="row" layout-align="center center">
+                <div ng-show="data.orgList.length==0" class="item item-backdrop text-center">
+                    <!-- <div ng-show="_state=='_data_na'" class="backdrop-filler-image">
+                        <i class="icon icon-backdrop icon-domain"></i></div> -->
+                    <div ng-switch="_activity">
+                        <div ng-switch-when="_idle">
+                            <div ng-bind="data.orgList.length>0 ? '' : 'No WorkSpaces available'" class="text-center"></div>
+                        </div>
+                        <div class="list" layout="row" layout-align="center center" ng-show="data.orgList.length == 0">
+                            <div class="item item-backdrop text-center">
+                                <div class="backdrop-filler-image">
+                                    <i class="icon icon-backdrop icon-domain"></i>
+                                    <h4 class="color-light-2">No WorkSpaces. Please create an WorkSpace.</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--transitionTo('root.app.org', {userId:session.userId, orgId:org.id}) -->
+            <div class="list full-width overflow-hide">
+                <div ng-repeat="org in data.orgList" class="card">
+                    <div  ng-click="org.canView && onOrgListItemClick(org)" class="item item-line-double item-avatar-left">
+                        <img ng-src="{{org._img_icon}}" on-error-src="assets/images/org-icon-placeholder.png" class="img fit round item-image">
+                        <h2 class="txt txt-line-pri" style="font-size: 18px;font-weight: 300;">{{org.orgName}}</h2>
+                        <p>
+                            <span ng-show="org.adminId == session.userId" class="label label-sm">{{LANG.LABEL.ADMIN}}</span>
+                            <span ng-show="(org.adminId != session.userId) && (org.memberType == 2)" class="label label-sm">Member</span>
+                            <!-- <span class="icon-label">
+            <md-icon md-font-icon="icon icon-people"></md-icon>
+            <span ng-bind="org.groupCount || 0"></span>
+                            </span>
+                            <span class="icon-label push-left">
+            <md-icon md-font-icon="icon icon-person"></md-icon>
+            <span ng-bind="org.membersCount || 0"></span> -->
+                            </span>
+                        </p>
+                    </div>
+                    <!--  <div class="item-divider" ng-if="org.myGroups.length > 0"></div> -->
+                    <div class="list full-width overflow-hide" style="padding-left: 25px;">
+                        <div ng-repeat=" group in org.myGroups " ng-click="onOrgGroupListItemClick(group) " class="item item-line-double item-avatar-left padding-vertical" style="min-height: 4.0rem;">
+                            <img ng-src="{{group._img_icon}} " on-error-src="assets/images/group-icon-placeholder.png " class="img fit round item-image " style="height: 40px;width: 40px;top: 0.6rem;">
+                            <h2 class="txt txt-line-pri " style="font-size: 16px;font-weight: 300;">{{group.groupName}}</h2>
+                            <p>
+                                <span ng-show="group.role==ROLE.GROUP_ADMIN " class="label label-sm" style="font-size: 10px;padding: 1px 4px;">{{LANG.LABEL.ADMIN}}</span>
+                                <span ng-show="group.role==ROLE.GROUP_MEMBER " class="label label-sm " style="font-size: 10px;padding: 1px 4px;">Member</span>
+                                <!--  <span class="icon-label push-left ">
+                                      <md-icon md-font-icon="icon icon-person "></md-icon>
+                                       <span ng-bind="group.membersCount || 0 "></span>
+                                </span> -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="!ui.isRefreshing && isNextPageAvailable " class="item " layout="row " layout-align="center center ">
+                    <md-button ng-click="fetchMoreOrgs() " ng-disabled class="full-width txt-ignore-case " aria-label="Load More ">
+                        <span ng-hide="ui.isLoadingNext ">Load more.</span>
+                        <span ng-show="ui.isLoadingNext ">Loading...</span>
+                    </md-button>
+                </div>
+            </div>
+        </row>
+    </layout>
+</view>
+
+

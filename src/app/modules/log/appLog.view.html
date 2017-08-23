@@ -1,0 +1,26 @@
+<view>
+  <toolbar app-toolbar title="'App Logs'">
+    <toolbar-options>
+    </toolbar-options>
+  </toolbar>
+
+
+  <layout type="linearLayout" orientation="vertical"
+          layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <md-list>
+
+        <md-list-item ng-repeat="log in logData">
+          <div>
+            <h5 class="color-light">{{log.displayTime}}</h5>
+            <h5 class="text-break-all">{{log.msg}}</h5>
+          </div>
+        </md-list-item>
+
+      </md-list>
+
+    </row>
+  </layout>
+
+</view>

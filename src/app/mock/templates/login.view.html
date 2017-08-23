@@ -1,0 +1,55 @@
+<view type="toolbarView" screen-type="device" title="'Login'">
+  <toolbar app-toolbar title="'Login'">
+    <toolbar-options>
+      <div class="menu-option-group">
+      </div>
+    </toolbar-options>
+  </toolbar>
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+
+    <row id="content" scroll layout-height="fill_remaining" layout-gravity="center" class="">
+      <form class="center-content full-width">
+        <div class="list padding">
+          <label class="item item-positive item-input item-stacked-label">
+            <input type="text" placeholder="Username">
+          </label>
+
+          <label class="item item-input">
+            <input type="password" placeholder="password">
+          </label>
+
+          <div class="padding">
+            <div class="button button-block" ng-click>Log in</div>
+          </div>
+
+          <div class="row row-no-padding">
+            <div class="col-50">
+              <div class="item item-checkbox">
+                <label for="remcb" class="checkbox checkbox-square">
+                  <input id="remcb" type="checkbox" ng-model="cb1">
+                </label>
+                Auto Login
+              </div>
+            </div>
+            <div class="col-50">
+              <div class="item item-no-padding">
+                <div class="button button-clear button-block text-right no-caps" ng-click>Forgot Password.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+
+    </row>
+
+    <row layout-gravity="bottom" layout-height="3.5em">
+      <div class="row-no-padding">
+        <div class="item item-no-padding">
+          <div class="button button-clear button-block button-small " ng-click>Create New Account</div>
+        </div>
+      </div>
+    </row>
+
+  </layout>
+</view>

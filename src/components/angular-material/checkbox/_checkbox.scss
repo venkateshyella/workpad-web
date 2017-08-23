@@ -1,0 +1,7 @@
+md-list-item .md-list-item-inner {
+  > md-checkbox:first-child {
+    .md-label {
+      display: inline-block !important;
+    }
+  }
+}

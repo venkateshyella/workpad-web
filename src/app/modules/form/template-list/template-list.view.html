@@ -1,0 +1,59 @@
+<view type="toolbarView" title="'Forms List'">
+
+  <toolbar app-toolbar title="'Forms'">
+    <toolbar-options>
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ng-click="refresh({bypassCache:true}); $mdCloseMenu();">
+              Refresh
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-item>
+            <md-button ng-click="askAndCreateNewTemplate(); $mdCloseMenu();">
+              <md-icon md-font-icon="icon icon-clippy"></md-icon>
+              Create New Template
+            </md-button>
+          </md-menu-item>
+
+
+        </md-menu-content>
+
+      </md-menu>
+
+      <md-progress-linear ng-show="toolbarLoader.async_active"
+                          md-mode="indeterminate"
+                          class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <md-list>
+        <md-list-item ng-repeat="tpl in userTemplateData"
+                      ng-click="transitionTo('root.app.template-edit', {id:tpl.templateId})"
+                      class="md-2-line">
+          <div class="md-list-item-text">
+            <h3>{{tpl.name}}</h3>
+
+            <div layout="row">
+              <p class="text-ellipsis">{{tpl.desc}}</p>
+            </div>
+          </div>
+          <md-divider></md-divider>
+        </md-list-item>
+      </md-list>
+
+    </row>
+  </layout>
+</view>

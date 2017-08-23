@@ -1,0 +1,9 @@
+<md-list-item ng-controller="DatePickerFormPreviewViewController">
+    <div flex>
+        <md-input-container>
+            <label ng-show="fieldModel.label">{{fieldModel.label}}</label>
+
+            <input type="date" type="date" name="{{field_temp.keyName}}" ng-model="field_temp.keyValue" ng-disabled="true">
+        </md-input-container>
+    </div>
+</md-list-item>

@@ -1,0 +1,33 @@
+{
+  "name": "angular-ui-router",
+  "version": "0.2.14-Beta-1",
+  "main": "./build/angular-ui-router.js",
+  "dependencies": {
+    "angular": ">= 1.0.8"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "component.json",
+    "package.json",
+    "lib",
+    "config",
+    "sample",
+    "test",
+    "tests",
+    "ngdoc_assets",
+    "Gruntfile.js",
+    "files.js"
+  ],
+  "homepage": "https://github.com/rihdus/ui-router",
+  "_release": "0.2.14-Beta-1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.14-Beta-1",
+    "commit": "94a7ea35e246288d71e3cf9081f6195106116d36"
+  },
+  "_source": "https://github.com/rihdus/ui-router.git",
+  "_target": "0.2.14-Beta-1",
+  "_originalSource": "https://github.com/rihdus/ui-router.git"
+}

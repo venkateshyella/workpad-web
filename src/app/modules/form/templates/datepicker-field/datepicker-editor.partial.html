@@ -1,0 +1,76 @@
+<md-list flex >
+    <md-list-item>
+        <div flex>
+            <md-input-container>
+                <label>Label</label>
+                <input type="text" name="label" ng-model="fieldModel.label" ng-model-options="{debounce:{'default':1000}}" ng-change="fieldCtrl.getError('label')">
+                <div ng-messages="fieldCtrl.$error.label" class="ng-messages-floating line-clamp-2">
+                    <div ng-message="0" class="ng-message">{{fieldCtrl.$error.label[0]}}</div>
+                </div>
+            </md-input-container>
+        </div>
+    </md-list-item>
+    <md-list-item>
+        <div flex>
+            <!-- <label ng-model="fieldModel.desc">CheckBox Description</label> -->
+            <md-input-container flex>
+                <label>Description</label>
+                <textarea ng-model="fieldModel.desc" ng-model-options="{debounce:{'default':1000}}" ng-change="fieldCtrl.getError('desc')"></textarea>
+                <div ng-messages="fieldCtrl.$error.desc" class="ng-messages-floating line-clamp-2">
+                    <div ng-message="0" class="ng-message">{{fieldCtrl.$error.desc[0]}}</div>
+                </div>
+            </md-input-container>
+        </div>
+        <md-divider class=""></md-divider>
+    </md-list-item>
+
+    <md-list-item
+    class="md-item-padding-left md-list-item-complex">
+    <h5 class="color-light" flex><b>Validations</b></h5>
+    <md-button class="md-icon-button"
+               ng-click="selectAndAddValidations($event)"
+               aria-label="Add Validation">
+      <md-icon
+        class="md-secondary no-push-top"
+        aria-label="Remove Validation"
+        md-font-icon="icon icon-add"></md-icon>
+    </md-button>
+  </md-list-item>
+
+
+ <md-list-item ng-show="fieldCtrl.isValidationEnabled('datetime')"
+                ng-click="showValidationEditor('datetime',true)"
+                class="md-list-item-complex">
+    <md-divider class="divider-top"></md-divider>
+    <div layout="column" flex>
+      <h4 class="push-top pt-lg" flex>Date Validation</h4>
+      <ul>
+        <li ng-show="formField.validation.datetime.earliest"><p class="color-light"
+          >Can't have less than {{formField.validation.datetime.earliest}} </p></li>
+           <li ng-show="formField.validation.datetime.latest"><p class="color-light"
+          >Can't have more than {{formField.validation.datetime.latest}} </p></li>
+      </ul>
+    </div>
+    <md-button class="md-icon-button md-secondary"
+               ng-click="fieldCtrl.removeValidator('datetime')"
+               aria-label="Add Validation">
+      <md-icon
+        class="no-push-top"
+        aria-label="Remove Validation"
+        md-font-icon="icon icon-close"></md-icon>
+    </md-button>
+  </md-list-item>
+  <md-list-item class="md-list-item-complex">
+        <p> Date Mandatory </p>
+        <md-switch class="md-secondary" ng-model="formField.validation.presence"></md-switch>
+    </md-list-item>
+
+   <!--  <md-list-item>
+    To the user : 
+    <input type="date" ng-model="fieldModel.dateValue" min="{{fieldModel.minDate}}" max="{{fieldModel.maxDate}}" ng-change="fieldCtrl.getError('dateValue')">
+
+    <div ng-messages="fieldCtrl.$error.dateValue" class="ng-messages-floating line-clamp-2">
+                    <div ng-message="0" class="ng-message">"Invalid date"</div>
+                </div>
+    </md-list-item> -->
+</md-list>

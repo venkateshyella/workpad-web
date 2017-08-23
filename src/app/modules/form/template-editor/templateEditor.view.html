@@ -1,0 +1,127 @@
+<view type="toolbarView" title="'Edit Form'">
+  <toolbar ng-hide="form.templateEditorForm.$dirty" app-toolbar title="'Edit Form'">
+    <toolbar-options class="full-width">
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+
+        <md-menu-content width="4">
+
+          <md-menu-item>
+            <md-button ng-click="refresh(); $mdCloseMenu();"
+                       class="">
+              Refresh
+            </md-button>
+          </md-menu-item>
+
+          <md-menu-divider ng-show="ui.flags.editorMode = 'edit'"></md-menu-divider>
+
+          <md-menu-item
+            ng-show="ui.flags.editorMode = 'edit' && formModel.templateEditorForm.canEdit">
+            <md-button
+              nd-disabled=""
+              ng-click="askAndDeleteTemplateModel(); $mdCloseMenu();"
+              class="md-accent md-raised">
+              Delete
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+    </toolbar-options>
+  </toolbar>
+  <toolbar
+    ng-show="form.templateEditorForm.$dirty" view-toolbar title="Edit">
+    <toolbar-options class="full-width">
+      <md-button
+        ng-click="restoreTemplateModel()" ng-disabled="form.isDisabled"
+        class="toolbar-button"><span>Discard</span>
+        <md-icon
+          class="toolbar-icon" md-font-icon="icon icon-close"></md-icon>
+      </md-button>
+      <md-button
+        ng-click="submit()" ng-disabled="!form.templateEditorForm.$valid || form.isDisabled"
+        class="toolbar-button">
+        <md-icon class="toolbar-icon"
+                 md-font-icon="icon icon-floppy"></md-icon>
+        <span>Save</span></md-button>
+    </toolbar-options>
+  </toolbar>
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+      <form name="form.templateEditorForm" class="full-height" novalidate>
+        <md-list>
+          <md-list-item>
+            <md-input-container flex>
+              <label>Name</label>
+              <input ng-model="formModel.templateEditorForm.name"
+                     type="text"
+                     required/>
+              <div ng-messages="form.templateEditorForm.$error" class="ng-messages-floating line-clamp-2">
+                <div ng-message="required" class="ng-message">{{LANG.LABEL.VALIDATION_MSG.INVALID_NAME}}</div>
+              </div>
+            </md-input-container>
+          </md-list-item>
+
+          <md-list-item>
+            <md-input-container flex>
+              <label>Description</label>
+              <textarea ng-model="formModel.templateEditorForm.desc"></textarea>
+            </md-input-container>
+          </md-list-item>
+
+        </md-list>
+
+        <md-list>
+          <md-list-item
+            class="md-item-padding-left md-list-item-complex padding-bottom push-bottom">
+            <h5 class="color-light" flex><b>Fields</b></h5>
+            <md-button class="md-primary"
+                       ng-click="templateEditorCtrl.selectAndAddNewField($event)"
+                       aria-label="Add Field">
+              <md-icon
+                class="no-push-top"
+                aria-label="Add New Validation"
+                md-font-icon="icon icon-add"></md-icon>
+              Add
+            </md-button>
+            <md-divider class=""></md-divider>
+          </md-list-item>
+
+
+          <md-list-item ng-repeat="field in formModel.templateEditorForm.template"
+                        class="no-padding">
+            <md-card layout="column" flex>
+              <md-toolbar>
+                <div class="md-toolbar-tools">
+                  <h4>{{LANG.FACTORY[field.keyType].NAME}}</h4>
+                  <span flex></span>
+                  <md-button ng-click="templateEditorCtrl.removeField(field.keyName, $event)"
+                             class="md-icon-button"
+                             aria-label="Remove">
+                    <md-icon md-font-icon="icon icon-close"></md-icon>
+                  </md-button>
+                </div>
+              </md-toolbar>
+              <md-card-content class="no-padding">
+                <field-editor
+                  form-field="field"
+                  flex></field-editor>
+              </md-card-content>
+            </md-card>
+
+          </md-list-item>
+
+
+        </md-list>
+
+
+      </form>
+    </row>
+  </layout>
+</view>

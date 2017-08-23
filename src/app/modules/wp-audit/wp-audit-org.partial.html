@@ -1,0 +1,54 @@
+<view type="toolbarView" title="'WorkSpaces'">
+   <toolbar app-toolbar title="'WorkSpaces'">
+      <toolbar-options>
+         <md-menu md-position-mode="target-right target">
+            <md-button ng-click="$mdOpenMenu()" class="md-icon-button toolbar-button button-thin" aria-label="Options">
+               <md-icon md-font-icon="icon icon-more-vert" class="toolbar-icon" md-menu-origin></md-icon>
+            </md-button>
+            <md-menu-content width="4">
+               <md-menu-item>
+                  <md-button ng-click="delegateAccessClicked();  $mdCloseMenu()">
+                     Delegate Access
+                  </md-button>
+               </md-menu-item>
+            </md-menu-content>
+         </md-menu>
+         <md-progress-linear ng-show="toolbarLoader.async_active" md-mode="indeterminate" class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+      </toolbar-options>
+   </toolbar>
+   <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+      <row scroll layout-height="fill_remaining" layout-gravity="free" ng-class="APP_DATA_CSS[_state]">
+         <div ng-if="OrgData.orgs.length==0" class="item item-backdrop text-center">
+            <div ng-switch="_activity">
+               <div ng-switch-when="_idle">
+                  <div ng-bind="OrgData.orgs.length>0 ? '' : 'No WorkSpaces available'" class="text-center"></div>
+               </div>
+               <div class="list" layout="row" layout-align="center center" ng-show="OrgData.orgs.length == 0">
+                  <div class="item item-backdrop text-center">
+                     <div class="backdrop-filler-image">
+                        <i class="icon icon-backdrop icon-domain"></i>
+                        <h4 class="color-light-2">No WorkSpaces. Please create an WorkSpace.</h4>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div ng-if="OrgData.orgs.length>0" class="list full-width overflow-hide">
+            <div ng-repeat="org in OrgData.orgs" class="card">
+               <div  ng-click="onOrgListItemClick(org)" class="item item-line-double item-avatar-left">
+                  <img ng-src="assets/images/org-icon-placeholder.png" class="img fit round item-image">
+                  <h2 class="txt txt-line-pri">{{org.orgName}}</h2>
+                  <p ng-bind="org.desc" class="overflow-hide txt-pri text-wrap pre-formatted ng-binding" style="margin-bottom:1px;"></p>
+               </div>
+            </div>
+         </div>
+         <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+            <button ng-click="fetchMoreOrgs()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+               aria-label="Load More">
+            <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+            <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+            </button>
+         </div>
+      </row>
+   </layout>
+</view>

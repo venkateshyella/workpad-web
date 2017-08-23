@@ -1,0 +1,196 @@
+<!-- <div class="button-bar padding">
+   <div
+      ng-class="{'button-outline': state.showAudit}"
+      ng-click="toggleAudit(false);loadOrgTemplatesClick()"
+      class="button">
+      <i style="font-size: 20px;" class="icon-tab demo-icon icon-docs"> &#xf0c5;</i>
+      <small>TEMPLATES</small>
+   </div>
+   <div
+      ng-class="{'button-outline': !state.showAudit}"
+      ng-click="toggleAudit(true)"
+      class="button">
+      <i class="icon icon-history"></i>
+      <small ng-bind="::LANG.LABEL.TAB_AUDIT"></small>
+   </div>
+</div> -->
+<div ng-hide="state.showAudit" class="tab-list-scroll">
+   <div>
+      <div class="list full-width overflow-hide">
+         <div ng-show="JobTemplatesData.jobTemplates.length==0" class="item item-backdrop text-center">
+            <div class="backdrop-filler-image">
+               <i class="icon icon-tab demo-icon icon-docs"> &#xf0c5;</i>
+            </div>
+            <p>{{LANG.ORGANISATION.LOADING_MSG.NO_TEMPLATES}}</p>
+         </div>
+         <div ng-repeat="template in JobTemplatesData.jobTemplates" ng-class="{'border-top':!$first}"
+            class=" item item-text-wrap item-complex item-line-double">
+            <div class="item-content padding-bottom">
+               <span ng-bind="template.templateName" class="txt txt-line-pri no-push-bottom text-ellipsis" flex></span>
+                      <a href="javascript:void(0);" style="float:right" ng-click="editJobTemplate(template);" ng-show="template.templateOwner.id == userId"> <i
+							 class="fa fa-pencil " aria-hidden="true" class="md-hue-3"></i></a>
+               <p ng-bind="template.desc" class="overflow-hide txt-pri text-wrap pre-formatted">
+               </p>
+ 
+               <div ng-if='template.expectedFinishDate != null' class=" txt text-ellipsis">
+                  <p class="color-light-2 no-push-bottom">
+                     <span ng-bind="'Expected finish on '+MU.getDisplayDate_DDMMYYYY(template.expectedFinishDate)"></span>
+                  </p>
+               </div>
+               
+				<div class="padding-top padding-bottom" ng-if='template.templateOwner'>
+               <span class="txt txt-line-pri no-push-bottom text-ellipsis" ng-bind="'Created by '+template.templateOwner.userFirstName+' '+template.templateOwner.userLastName"></span>
+               </div>
+              <div class="">
+                  <p class="push-top pt-sm push-bottom pb-sm">
+                     <span ng-bind="'Created on '+MU.getDisplayDate_DDMMYYYYHHMMSS(template.createTime)"></span>
+                  </p>
+               </div>
+               
+                <div class="padding-top padding-bottom" ng-if='template.jobOwner'>
+              	<span class="txt txt-line-pri no-push-bottom text-ellipsis">Orginator will become the owner of the job</span> 
+               </div> 
+               
+               <div ng-if='!template.jobOwner' ng-click="toggleTemplateOwner(template.id)"
+                  class="padding-top padding-bottom"
+                  aria-label="View Owners">
+                  <div layout="row">
+                     <p flex class="no-push-bottom push-top pt-sm">
+                        <i class="icon icon-tab icon-people"></i>
+                        <small ng-bind="::'View Owners'"></small>
+                        <small ng-bind="'('+template.owners.length+')'"></small>
+                     </p>
+                     <div class="">
+                        <i ng-class="{'icon-expand-less':viewTemplateOwnerFlagMeta[template.id], 'icon-expand-more':!viewTemplateOwnerFlagMeta[template.id]}"
+                           class="icon icon-expand-more"></i>
+                     </div>
+                  </div>
+                  <div style="padding-left:15px;" ng-show="viewTemplateOwnerFlagMeta[template.id]">
+                     <p ng-if="template.owners.length == 0"
+                        class="no-push-bottom ">
+                        <small ng-bind="::'No Owners'" class="color-light-2"></small>
+                     </p>
+                     <p ng-repeat="owner in template.owners"
+                        class="push-bottom  pb-sm">
+                        <span class="icon-label">
+                           <md-icon md-font-icon="icon icon-person" style='font-size:17px' 
+                              class="ng-isolate-scope md-default-theme md-font icon icon-person" aria-hidden="true"></md-icon>
+                           <span style="font-size:15px" class="text-ellipsis no-push-bottom push-right event-attendees" ng-bind="owner.userFirstName+' '+owner.userLastName"></span>
+                           
+                           
+                      <span ng-if="owner.organization">
+                        <i class="icon icon-domain" style="margin-right: 3px"></i>
+                       <small ng-bind="owner.organization.orgName" class="text-ellipsis ng-binding"></small>
+                      </span>
+                     <span ng-if="owner.group">
+                        <i class="icon-group-work" style="margin-right: 3px"></i>
+                       <small ng-bind="owner.group.groupName" class="text-ellipsis ng-binding"></small>
+                      </span>
+                      
+                        </span>
+                        <!-- <span class="label no-push-left">Owner</span> -->
+                        <!-- owner.organization -->
+                     </p>
+                  </div>
+               </div>
+               <div ng-click="toggleTemplateMem(template.id)"
+                  class=" padding-top padding-bottom"
+                  aria-label="View Contributors">
+                  <div layout="row">
+                     <p flex class="no-push-bottom push-top pt-sm">
+                        <i class="icon icon-tab icon-people"></i>
+                        <small ng-bind="::'View Contributors'"></small>
+                        <small ng-bind="'('+template.contributors.length+')'"></small>
+                     </p>
+                     <div class="">
+                        <i ng-class="{'icon-expand-less':viewTemplateMemFlagMeta[template.id], 'icon-expand-more':!viewTemplateMemFlagMeta[template.id]}"
+                           class="icon icon-expand-more"></i>
+                     </div>
+                  </div>
+                  <div style="padding-left:15px;" ng-show="viewTemplateMemFlagMeta[template.id]">
+                     <p ng-if="template.contributors.length == 0"
+                        class="no-push-bottom">
+                        <small ng-bind="::'No Contributors'" class="color-light-2"></small>
+                     </p>
+                     <p ng-repeat="contributor in template.contributors"
+                        class="push-bottom  pb-sm">
+                        <span class="icon-label">
+                           <md-icon md-font-icon="icon icon-person" style='font-size:17px' 
+                              class="ng-isolate-scope md-default-theme md-font icon icon-person" aria-hidden="true"></md-icon>
+                           <span style="font-size:15px" class="text-ellipsis no-push-bottom push-right event-attendees" ng-bind="contributor.userFirstName+' '+contributor.userLastName"></span>
+                              
+	 				<span ng-if="contributor.organization">
+                        <i class="icon icon-domain" style="margin-right: 3px"></i>
+                       <small ng-bind="contributor.organization.orgName" class="text-ellipsis ng-binding"></small>
+                      </span>
+                     <span ng-if="contributor.group">
+                        <i class="icon-group-work" style="margin-right: 3px"></i>
+                       <small ng-bind="contributor.group.groupName" class="text-ellipsis ng-binding"></small>
+                      </span>
+
+                        </span>
+                     </p>
+                  </div>
+               </div>
+               <div ng-click="toggleTemplateTask(template.id)"
+                  class=" padding-top padding-bottom"
+                  aria-label="View Tasks">
+                  <div layout="row">
+                     <p flex class="no-push-bottom push-top pt-sm">
+                     <i class="icon icon-tab icon-drive-document"></i>
+                        <small ng-bind="::'View Tasks'"></small>
+                        <small ng-bind="'('+template.tasks.length+')'"></small>
+                     </p>
+                     <div class="">
+                        <i ng-class="{'icon-expand-less':viewTemplateTaskFlagMeta[template.id], 'icon-expand-more':!viewTemplateTaskFlagMeta[template.id]}"
+                           class="icon icon-expand-more"></i>
+                     </div>
+                  </div>
+                  <div class="list full-width overflow-hide"
+                   style="padding-left:15px;" ng-show="viewTemplateTaskFlagMeta[template.id]">
+                     <p ng-if="template.tasks.length == 0"
+                        class="no-push-bottom">
+                        <small ng-bind="::'No Tasks'" class="color-light-2"></small>
+                     </p>
+                    <div ng-repeat="task in template.tasks"
+                     ng-class="{'border-top':!$first}"
+                     class="item item-complex item-line-double">
+                  <div class="padding-vertical">
+                    <div class="txt txt-line-pri no-push-bottom"
+                         layout="column">
+                      <div ng-bind="task.name"
+                           class="text-ellipsis no-push-bottom push-right" style="font-size:15px;">
+                      </div>
+                       <p ng-bind="task.desc" class="overflow-hide txt-pri text-wrap pre-formatted">
+                        </p>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+               <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+            <button ng-click="loadNext()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+               aria-label="Load More">
+            <span ng-show="!loadingNext">Load More</span>
+            <span ng-show="loadingNext">Loading ...</span>
+            </button>
+         </div>
+         
+         
+   </div>
+</div>
+<div ng-show="state.showAudit" class="tab-list-scroll">
+   <audit-list list="orgTemplatesAuditList"> </audit-list>
+   <div ng-show="isNextAuditPageAvailable()"
+      class="item" layout="row" layout-align="center center">
+      <md-button ng-click="fetchMoreAudits()"
+         ng-disabled="ui.auditActivityStore.isLoading" class="full-width txt-ignore-case"
+         aria-label="Load More">
+         <span>{{ui.auditActivityStore.isLoading ? 'Loading...':'Load more audits'}}</span>
+      </md-button>
+   </div>
+</div>
+{{addScrollToList();}}

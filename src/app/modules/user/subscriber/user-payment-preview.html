@@ -1,0 +1,48 @@
+<style>
+.sucess-page{padding:0; margin:0; text-align:center;}
+.sucess-page h1{marhin:30px 0; font-size:20px;}
+.sucess-page h3{marhin: 0; font-size:15px;}
+.sucess-page i{color:#1b926c;}
+.trans-detail, .temp-label{margin:30px 0; text-align:center;}
+</style>
+
+<view type="toolbarView" title="'Transaction Details'">
+
+
+    <toolbar app-toolbar title="'Transaction Details'">
+        <toolbar-options>
+            <md-progress-linear ng-show="toolbarLoader.async_active" md-mode="indeterminate" class="toolbar-loading-bar md-accent md-hue-3"></md-progress-linear>
+        </toolbar-options>
+    </toolbar>
+    <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+        <row scroll layout-height="fill_remaining" layout-gravity="free" ng-class="APP_DATA_CSS[_state]">
+            <div class="list full-width overflow-hide">
+                          <div class="sucess-page">
+<i class="fa fa-check-circle-o fa-3x" aria-hidden="true"></i>
+    <h1>Thank you!</h1>
+    <h3>Your payment has been processed!</h3>
+</div>
+         <div class="full-width trans-detail">
+          
+              <div class="temp-label">
+               Transaction Id : &nbsp;<span>{{trans.id}}</span> 
+              </div>
+      
+              <div class="temp-label">
+                 Transaction Date  : &nbsp; <span>{{trans.createdAt | date:'MM/dd/yyyy'}} </span> 
+              </div>
+       
+              <div class="temp-label">
+                   Transaction Amount  : &nbsp; <span>{{trans.amount}}</span>
+              </div>
+              
+</div>        
+
+                
+            </div>
+        </row>
+    </layout>
+</view>  
+
+
+   

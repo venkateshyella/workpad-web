@@ -1,0 +1,191 @@
+<div>
+
+
+	<!--   <div class="button-bar padding">
+
+    <div
+      ng-class="{'button-outline': state.showAudit}"
+      ng-click="toggleAudit(false)"
+      class="button">
+      <i class="icon icon-drive-document"></i>
+      <small ng-bind="::LANG.JOB.LABEL.TITLE_TAB_JOBS""></small>
+    </div>
+
+    <div
+      ng-class="{'button-outline': !state.showAudit}"
+      ng-click="toggleAudit(true)"
+      class="button">
+      <i class="icon icon-history"></i>
+      <small ng-bind="::LANG.LABEL.TAB_AUDIT"></small>
+    </div>
+
+  </div> -->
+
+
+	<!--       <md-menu md-position-mode="target-right target"
+               ng-show="optionJobsMenuItems.length > 0">
+        <md-button ng-click="$mdOpenMenu()" class="md-icon-button toolbar-button button-thin" aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert" class="toolbar-icon" md-menu-origin></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item ng-repeat="optionItem in optionJobsMenuItems">
+            <md-button
+              ng-click="optionItem.action(optionItem.args); $mdCloseMenu()"
+              ng-class="optionItem.btn_type"
+              aria-label="{{optionItem.name}}">
+              <span ng-bind="optionItem.name"></span>
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu> -->
+
+	<div ng-show="state.showAudit" class="tab-list-scroll">
+		<audit-list list="jobAuditList"></audit-list>
+		<div ng-show="inNextJobsAuditPageAvailable" class="item" layout="row"
+			layout-align="center center">
+			<md-button ng-click="fetchNextAuditPage()"
+				ng-disabled="auditActivityStore.isLoading"
+				class="full-width txt-ignore-case" aria-label="Load More">
+			<span>{{auditActivityStore.isLoading ? 'Loading...':'Load more
+				audits'}}</span> </md-button>
+		</div>
+	</div>
+
+	<div ng-show="!state.showAudit" class="tab-list-scroll">
+
+
+		<!-- Jobs List -->
+		<div class="list full-width overflow-hide">
+
+			<div ng-show="openJobsList.length==0"
+				class="item item-backdrop text-center">
+				<div class="backdrop-filler-image">
+					<i class="icon icon-backdrop icon-briefcase-case-two"></i>
+				</div>
+				<p>{{LANG.JOB.JOB_LOADING_MSGS.NO_JOBS}}</p>
+			</div>
+
+			<!-- Open Job List -->
+			<div ng-repeat="job in openJobsList" style="padding-left: 15px;">
+				<div ng-class="{'border-top':!$first}"
+					class="item item-complex item-line-double">
+					<div class="item-content padding-bottom"
+						ng-click="jobItemClickAction($event, job)">
+
+						<!-- Job Title -->
+						<div class="txt txt-line-pri no-push-bottom" layout="column">
+							<div ng-bind="job.title"
+								class="text-ellipsis no-push-bottom push-right"></div>
+						</div>
+
+						<!-- Job Description -->
+						<div ng-show="job.desc" layout="row" class="">
+							<small class="color-light-2 text-ellipsis no-push-bottom">
+								<span class="overflow-hide txt-pri text-wrap pre-formatted">{{job.desc}}</span>
+							</small>
+						</div>
+
+						<!--<p-->
+						<!--ng-show="job.createdFullPath.length>0"-->
+						<!--class="text-ellipsis no-push-bottom">-->
+						<!--<context-path path="job.createdFullPath"></context-path>-->
+						<!--</p>-->
+
+						<!-- Job Roles -->
+						<div layout="row">
+							<div class="txt text-ellipsis">
+								<small class="color-light-2 no-push-bottom"> 
+								<span class="">Created</span> 
+								<span ng-bind="'on '+MU.getDisplayDate_DDMMYYYYHHMMSS(job.createTime)"></span></br>
+									<span ng-if="job.status != -301" class=""
+									ng-class="{'label-balanced': job.isInProgress(),'label-accent':job.isStopped()}"
+									aria-hidden="false">{{job.displayStatus}}</span> <span ng-if="job.status != -301"
+									ng-bind="'on '+MU.getDisplayDate_DDMMYYYYHHMMSS(job.eventLastModified)"></span>
+								</small>
+								<p>
+									<small class="color-light-2 no-push-bottom"> <span
+										class="">Required Job Completion Time is</span> <span
+										ng-bind="'on '+MU.getDisplayDate_DDMMYYYYHHMMSS(job.jobEndTimeInfo.requiredJobCompletionTime)"></span>
+									</small>
+								</p>
+								<p ng-repeat="role in job.roles" class="push-bottom pb-sm">
+									<small><span class="label no-push-left"
+										ng-bind="::LANG.JOB.ROLES[ROLE_NAMES[role]]"></span></small> <span
+										ng-switch="role"> <span ng-switch-when="7"> <context-path
+												path="job.createdFullPath"></context-path>
+									</span> <span ng-switch-when="8"> <context-path
+												path="job.ownedFullPath"></context-path>
+									</span> <span ng-switch-when="9"> <context-path
+												path="job.invitationPath"></context-path>
+									</span> <span ng-switch-default> </span>
+									</span>
+								</p>
+
+							</div>
+						</div>
+					</div>
+
+					<!-- Job user's tasks -->
+					<div ng-click="toggleTaskList(job)"
+						class="item-content padding-top padding-bottom"
+						aria-label="View Tasks">
+						<div layout="row">
+							<p flex class="no-push-bottom push-top pt-sm">
+								<small ng-bind="::'View Tasks'"></small> <small
+									ng-bind="'('+job.getMyTasks().length+')'"></small>
+							</p>
+							<div class="">
+								<i
+									ng-class="{'icon-expand-less':viewTaskFlagMeta[job.id], 'icon-expand-more':!viewTaskFlagMeta[job.id]}"
+									class="icon icon-expand-more"></i>
+							</div>
+						</div>
+						<div class="" ng-show="viewTaskFlagMeta[job.id]">
+							<p ng-if="job.getMyTasks().length == 0" class="no-push-bottom">
+								<small ng-bind="::'No Tasks.'" class="color-light-2"></small>
+							</p>
+							<div class="list full-width overflow-hide"
+								style="padding-left: 15px;" ng-show="viewTaskFlagMeta[job.id]">
+								<div ng-repeat="task in job.getMyTasks()"
+									ng-class="{'border-top':!$first}"
+									class="item item-complex item-line-double">
+									<div class="padding-vertical"
+										ng-click="taskItemClickAction($event, task)">
+										<div class="txt txt-line-pri no-push-bottom" layout="column">
+											<div ng-bind="task.title"
+												class="text-ellipsis no-push-bottom push-right"
+												style="font-size: 15px;"></div>
+										</div>
+										<div layout="row">
+											<div class="txt txt-line-sec text-ellipsis">
+												<p class="color-light-2 no-push-bottom">
+													<span class="" aria-hidden="false">{{task.displayStatus}}</span>
+													<span
+														ng-bind="'on '+MU.getDisplayDate_DDMMYYYYHHMMSS(task.eventLastModified)"></span>
+												</p>
+												<!--  <i class="icon icon-domain"></i>
+                             <span>{{job.organization.orgName}}</span></p> -->
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div ng-show="areMoreOpenJobsAvailable()" class="item" layout="row"
+				layout-align="center center">
+				<md-button ng-click="openJobsLoader.refresh()"
+					ng-disabled="openJobsLoader.isActive()"
+					class="full-width txt-ignore-case" aria-label="Load More">
+				<span ng-hide="ui.isLoadingNext">{{LANG.JOB.JOB_LOADING_MSGS.LOAD_MORE}}</span>
+				<span ng-show="ui.isLoadingNext">{{LANG.JOB.JOB_LOADING_MSGS.LOADING}}</span>
+				</md-button>
+			</div>
+		</div>
+	</div>
+</div>
+{{addScrollToList();}}

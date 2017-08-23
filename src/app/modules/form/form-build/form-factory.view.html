@@ -1,0 +1,77 @@
+<view type="toolbarView" title="'Form Create'">
+
+  <toolbar app-toolbar title="'Form Create'">
+    <toolbar-options>
+      <md-menu md-position-mode="target-right target">
+        <md-button ng-click="$mdOpenMenu()"
+                   class="md-icon-button toolbar-button button-thin"
+                   aria-label="Options">
+          <md-icon md-font-icon="icon icon-more-vert"
+                   class="toolbar-icon"
+                   md-menu-origin></md-icon>
+        </md-button>
+
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ng-click="askAndCreateNewTemplate(); $mdCloseMenu();">
+              New Template
+            </md-button>
+          </md-menu-item>
+
+        </md-menu-content>
+      </md-menu>
+    </toolbar-options>
+  </toolbar>
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent">
+    <row scroll layout-height="fill_remaining" layout-gravity="free">
+
+      <form name="formFactory">
+        <md-list class="no-padding">
+          <md-list-item class="no-padding">
+            <md-button ng-click
+                       class=""
+                       aria-label="Add">
+              Add field
+              <md-icon md-font-icon="icon icon-add"
+                       class="toolbar-icon"></md-icon>
+            </md-button>
+          </md-list-item>
+
+          <md-list-item ng-repeat="field in mockFields"
+                        class="no-padding">
+            <div flex>
+              <field-editor form-field="field"
+                            flex></field-editor>
+
+              <field form-field="field"
+                     field-model="field.templateOptions.fieldModel"
+                     form-model="field.formModel"></field>
+            </div>
+
+          </md-list-item>
+
+        </md-list>
+      </form>
+
+      <!--<form name="formForm">-->
+      <!--<md-list>-->
+      <!--<md-list-item ng-show="formForm.$error">-->
+      <!--<p>Error in form</p>-->
+      <!--</md-list-item>-->
+      <!--<md-list-item ng-repeat="field in mockFields"-->
+      <!--class="no-padding">-->
+      <!--<md-card layout="column" flex>-->
+      <!--<md-card-content class="no-padding">-->
+      <!--</md-card-content>-->
+      <!--</md-card>-->
+      <!--</md-list-item>-->
+      <!--</md-list>-->
+      <!--</form>-->
+
+      <md-button class="md-raised" ng-click="submit(mockFields)">Submit</md-button>
+
+    </row>
+  </layout>
+
+</view>

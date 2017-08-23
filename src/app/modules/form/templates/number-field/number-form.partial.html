@@ -1,0 +1,18 @@
+<md-list-item>
+  <div flex>
+    <md-input-container>
+      <label>{{fieldModel.label}}</label>
+      <input type="number"
+             name="{{formField.keyName}}"
+             ng-model="formField.keyValue"
+             ng-model-options="{debounce:{'default':1000}}"
+             ng-change="fieldCtrl.getFormFieldError()"
+             ng-disabled="fieldCtrl.isDisabled()">
+
+      <div ng-messages="fieldCtrl.$formError" class="ng-messages-floating line-clamp-2">
+        <div ng-message="0" class="ng-message">{{fieldCtrl.$formError[0]}}</div>
+      </div>
+    </md-input-container>
+  </div>
+</md-list-item>
+

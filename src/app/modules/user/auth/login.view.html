@@ -1,0 +1,80 @@
+<view type="fullScreenView" screen-type="device" title="'Login'" class="loginCSS">
+
+
+  <layout type="linearLayout" orientation="vertical" layout-height="match_parent" positioning="fullScreenAutoScroll">
+
+    <row id="content" layout-height="fill_remaining" layout-gravity="center" class="">
+      <div class="list full-width center-content overflow-hide">
+        <div class="item" style="padding-top: 8rem;">
+          <img class="img v-center" src="assets/images/logo.png" alt="Workwise"
+               style="width:120px"/>
+        </div>
+
+        <div class="item h-center" style="padding-bottom: 4rem; max-width: 500px;">
+          <div auth-form auto-login="true" on-forgot-password="runForgotPassword()"
+               on-auth-start="action.onAuthStart()"
+               on-auth-finish="action.onAuthFinish()"
+               on-auth-error="action.onAuthError()"></div>
+        </div>
+               <div class="item item-no-padding">
+          <div ng-disabled="authInProgress"
+               ng-click="onUserRegisterClick($event)"
+               class="button button-clear button-block button-small" 
+           >Create New Account
+          </div>
+        </div>
+      </div>
+        
+<!--         <div class="item item-no-padding">
+          <div ng-disabled="authInProgress"
+               ng-click="showTermsConditions()" 
+               class="button button-clear button-block button-small" >Terms and Conditions
+          </div>
+        </div> -->
+        
+        <div id="footer">
+ <!--footer start-->
+  <!--footer end--> 
+</div>
+        
+      </div>
+ 
+    </row>
+    
+  </layout>
+   
+</view>
+
+<view style="position: initial;"type="fullScreenView" screen-type="device" title="'Login'" class="loginCSS">
+<footer class="site-footer" style="padding:10px 50px">
+ <a href="#" class="terms-hover" ng-click="showTermsConditions()" style="color: #285fbc;">Terms and Conditions&nbsp;| </a>
+  <a href="#" class="terms-hover" ng-click="supportAndFeedBack(true)" style="color: #285fbc;">&nbsp;Support and Feedback </a> 
+    <div class=" pdg-left-20" style="float:right">  &copy; WORKPAD 2016. All rights reserved. {{APP_VERSION}}</div>
+    
+    
+    
+  </footer>
+</view>
+
+
+<!--<div-->
+<!--class="ly-col col-align-center full-height m_auth" style="min-height: 530px">-->
+<!--<span></span>-->
+
+<!--<div class="login-container ly-col col-align-center" style="padding-top: 100px;">-->
+<!--<img class="hero img fit v-center" src="assets/images/logo.png" alt="Workwise"-->
+<!--style="width:100px"/>-->
+
+<!--<div auth-form auto-login="true" on-forgot-password="runForgotPassword()" on-auth-start="action.onAuthStart()"-->
+<!--on-auth-finish="action.onAuthFinish()"></div>-->
+<!--</div>-->
+<!--<div class="footer ly-row">-->
+<!--<div class="txt-center subtext sm">{{APP_INFO.version.name}}</div>-->
+<!--<md-button-->
+<!--ng-click="onRegisterClick()"-->
+<!--ng-disabled="authInProgress"-->
+<!--md-no-ink-->
+<!--class="md-primary md-hue-2 v-center full-width">Create New Account-->
+<!--</md-button>-->
+<!--</div>-->
+<!--</div>-->

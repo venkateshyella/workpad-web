@@ -1,0 +1,16 @@
+<md-dialog class="select-dialog" aria-label="listSelectDialog">
+  <md-dialog-content>
+
+
+    <form>
+      <md-radio-group ng-model="data.selectedItem">
+        <md-radio-button ng-repeat="item in data.selectItems"
+                         value="{{item.value}}"
+                         class="md-primary">{{item.text}}
+        </md-radio-button>
+      </md-radio-group>
+    </form>
+
+
+  </md-dialog-content>
+</md-dialog>

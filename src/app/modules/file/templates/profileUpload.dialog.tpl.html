@@ -1,0 +1,68 @@
+<md-dialog class="register-pop-up">
+   <md-toolbar>
+      <div layout="row" class="md-toolbar-tools">
+         <h2 class="md-title">Image Upload</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon
+               md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+      </div>
+   </md-toolbar>
+
+   <md-dialog-content >
+      <div ng-if="!isEditImageShow" >
+         <lf-ng-md-file-input lf-files="fileObj" accept="image/*"  progress lf-browse-label="Search" 
+            lf-remove-label="Delete" lf-drag-and-drop-label="Drag and Drop here!" drag preview></lf-ng-md-file-input>
+            
+            <span ng-if="fileObj[0]" ng-init="crop(fileObj[0].lfDataUrl)" ></span>
+            
+            
+         <div class="md-actions full-width tc-upload-button" layout="row">
+            <span flex></span>
+            
+            <md-button class="md-primary" ng-click="cancel()">
+               Cancel
+            </md-button>
+             <!-- <md-button class="md-primary"  ng-disabled="fileObj == '' " ng-click="crop(fileObj[0].lfDataUrl)">crop</md-button> -->
+<!--             <md-button type="submit"
+               ng-disabled="fileObj == '' "
+               ng-click="confirm(fileObj[0])"
+               class="md-primary">
+               <span>Upload
+               <md-icon md-font-icon="icon icon-file-upload"></md-icon>
+            </md-button> -->
+         </div>
+      </div>
+      
+      <div ng-if="isEditImageShow && !showPreview">
+         <div class="cropArea">
+            <img-crop image="image.originalImage" area-type="square" result-image="image.croppedImage" ></img-crop>
+         </div>
+         <div class="md-actions full-width tc-upload-button" layout="row">
+            <span flex></span>
+            <md-button class="md-primary" ng-click="cancel()">
+               Cancel
+            </md-button>
+              <md-button class="md-primary" ng-click="save()">
+               save
+            </md-button>
+            </div>
+       </div>
+            <div ng-if="isEditImageShow && showPreview" >
+            <div class="crop-image" ><img ng-src="{{image.croppedImage}}"/></div>
+            <div class="md-actions full-width tc-upload-button" layout="row">
+             <md-button class="md-primary" ng-click="cancel()">
+               Cancel
+            </md-button>
+            <md-button type="submit"
+               ng-click="confirmWithCrop(image.croppedImage)"
+               class="md-primary">
+               <span>Upload
+               <md-icon md-font-icon="icon icon-file-upload"></md-icon>
+            </md-button> 
+            
+            </div>
+            </div>
+   </md-dialog-content>
+</md-dialog>

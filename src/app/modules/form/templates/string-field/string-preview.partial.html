@@ -1,0 +1,15 @@
+<ng-form class="row"  name="jobDynamicForm.formfield{{fieldModel.id}}" >
+   <md-input-container class="flex full-width job-form-field">
+      <label>{{fieldModel.label}} <span
+         ng-if="fieldModel.validations.required.value" style="color: red;">*</span></label>
+      <input ng-disabled="isJobInProgress" type="text" ng-model="fieldModel.textValue"
+          ng-maxlength="50"   maxlength="50"
+         name="field{{fieldModel.id}}"
+         ng-required="{{fieldModel.validations.required.value}}">
+      <div ng-messages="jobDynamicForm.formfield{{fieldModel.id}}.field{{fieldModel.id}}.$error">
+         <div ng-message="maxlength" class="ng-message">Please limit the
+            {{fieldModel.label}} value to 50 characters.
+         </div>
+      </div>
+   </md-input-container>
+</ng-form>

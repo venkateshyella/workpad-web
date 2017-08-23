@@ -1,0 +1,73 @@
+<form ng-submit="submit(userCreds, {delay:100})"
+      name="form.userForm"
+      class="full-width auth-form"
+      novalidate autocomplete="off">
+  <div class="list">
+    <label class="item item-positive item-input item-stacked-label">
+      <input type="email" rh-form-email
+             name="userEmail"
+             id="userEmail"
+             ng-disabled="loginInProgress" ng-model="userCreds.email"
+             maxlength="70"
+             required
+             placeholder="User Email" auto-input-focus/>
+    </label>
+
+    <label class="item item-input">
+      <input class="full-width" type="password"
+             name="userPassword"
+             ng-disabled="loginInProgress" ng-model="userCreds.password"
+             maxlength="40"
+             required
+             placeholder="Password"/>
+    </label>
+
+    <!--<input type="submit" class="ng-hide"/>-->
+
+    <div class="padding p-lg">
+      <input ng-disabled="loginInProgress"
+             type="submit"
+             class="button button-block"
+             value="Log in"/>
+      <!--<div ng-disabled="loginInProgress"-->
+      <!--type="submit"-->
+      <!--ng-click="submit(userCreds)"-->
+      <!--class="button button-block">Log in</div>-->
+    </div>
+
+    <div class="row row-no-padding auth-form-options-row">
+      <div class="col-50">
+      <!--   <div class="item item-checkbox auth-option-checkbox">
+          <label for="rem_cb" class="checkbox checkbox-square">
+            <input ng-model="autoLogin" ng-disabled="loginInProgress" aria-label="Auto Login"
+                   id="rem_cb" type="checkbox">
+          </label>
+          Auto Login
+        </div>
+        --> 
+<!-- 	<div class=" item-no-padding " >
+          <div ng-disabled="authInProgress" style="margin-top:0px;text-transform:none;line-height: 20px;"
+               ng-click="onUserRegisterClick($event)"
+               class="button button-clear button-block button-small" 
+           >Create New Account
+          </div>
+        </div> -->
+      </div>
+      <div class="col-50">
+        <div class="item item-no-padding auth-option-button">
+          <div
+            ng-hide="!onForgotPassword"
+            ng-disabled="loginInProgress"
+            ng-click="onForgotPasswordClick()"
+            class="button button-clear button-block text-right no-caps" ng-click>Forgot Password?
+          </div>
+        </div>
+        
+      </div>
+      
+      
+    </div>
+
+  </div>
+</form>
+

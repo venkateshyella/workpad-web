@@ -1,0 +1,138 @@
+<md-dialog class="register-pop-up" aria-label="Create Job">
+   <md-toolbar >
+      <div class="md-toolbar-tools">
+         <h2>{{LANG.JOB.LABEL.CREATE_JOB}}</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon md-font-icon="icon icon-close" aria-label="Close dialog"></md-icon>
+         </md-button>
+      </div>
+      <div class="toolbar-content">
+      </div>
+   </md-toolbar>
+   <md-dialog-content class="full-width">
+      
+         <div class="full-height"  layout-align="space-between center">
+            <div  ng-if="!isTemplateClicked" class="form-group row">
+               <label for="currentJobType" class="col-sm-3 col-form-label" style="line-height: 35px;" >Job Type</label>
+               <div class="col-sm-4">
+                  <select ng-change="changeJobType(currentJobType)" name="currentJobType" class="form-control" ng-model="currentJobType" ng-options="opt.value as opt.label for opt in jobTypes"></select>
+               </div>
+            </div>
+            <div ng-if="currentJobType==1" >
+               <ng-include src="'app/modules/job/templates/job-create-adhoc.dialog.tpl.html'"></ng-include>
+            </div>
+            <div ng-if="currentJobType==2" >
+               <div ng-if="template.templates.length>0">
+               
+               <div ng-if="!isTemplateClicked"  ng-repeat="template in template.templates"
+                     ng-class="{'border-top':!$first}"
+                     class="item item-complex item-line-double">
+               
+               
+                  <!-- <div  class="item item-line-single item-icon-left ng-scope" flex="" role="button" > -->
+                     <!-- <i class="icon icon-tab demo-icon icon-docs"> &#xf0c5;</i> -->
+                     <span class="text-ellipsis no-push-bottom push-right event-attendees" style="line-height: 45px;">{{template.templateName}}</span>
+                     <p><context-path path="template.createdFullPath"></context-path>
+                     <md-button ng-click="fillTemplateModel(template)" style=" float: right;background-color: rgb(40, 94, 187)"><font style="color: white;">Select</font></md-button></p>
+                     </span>
+                     
+                  </div>
+                  <div ng-show="isNextPageAvailable" class="item" layout="row" layout-align="center center">
+                     <button ng-click="fetchMoreTemplates()" ng-disabled="loadingNext" class="button button-block button-small button-clear"
+                        aria-label="Load More">
+                     <span ng-show="!loadingNext">{{LANG.MESSAGES.LOAD_MORE}}</span>
+                     <span ng-show="loadingNext">{{LANG.MESSAGES.LOADING}}</span>
+                     </button>
+                  </div>
+                  <div ng-show="isLoading" class="item" layout="row"
+                     layout-align="center center">
+                     <button ng-disabled="true"
+                        class="button button-block button-small button-clear"
+                        aria-label="Load More">
+                     <span>{{LANG.MESSAGES.LOADING}}...</span>
+                     </button>
+                  </div>
+                  <div ng-if="isTemplateClicked" >
+                     <div id="wizard-container" >
+                        <div id="wizard-step-container">
+                           <div class="stepsForm sf-theme-green" style="width: 100%;">
+                              <div class="sf-steps">
+                                 <div class="sf-steps-content">
+                                    <div ng-repeat="step in vm.steps" ng-class="{'sf-active':step.step == vm.currentStep}" ng-click="vm.gotoStep(step.step, vm.currentStep)" style="cursor: pointer; ">
+                                       <i ng-if="step.step == 1" class="icon icon-tab icon-info-outline"></i>
+                                       <i ng-if="step.step == 2" class="icon icon-tab icon-people"></i>
+                                       <i ng-if="step.step == 3" class="icon icon-tab icon-drive-document"></i>
+                                       <span class="tab-text-template"> {{step.name}}</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div id="wizard-content-container">
+                           <ng-include src="vm.getStepTemplate()"></ng-include>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div ng-if="template.templates.length==0">
+                  No Templates
+               </div>
+            </div>
+         </div>
+   </md-dialog-content>
+   <div  ng-if="currentJobType==1" class="md-actions full-width" layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()">
+         {{LANG.BUTTON.CANCEL}}
+      </md-button>
+      <md-button type="submit" ng-disabled="!form.create_job.$valid" ng-click="submit()" class="md-primary">
+         {{LANG.BUTTON.CREATE}}
+      </md-button>
+   </div>
+   <div ng-if="currentJobType==2"  class="md-actions full-width" layout="row" id="wizard-container">
+      <div id="wizard-navigation-container">
+         <div class="pull-right">
+          <md-button ng-if="isTemplateClicked" class="md-primary" ng-click="cancel()"> Cancel </md-button> 
+            <span ng-if='(vm.currentStep == 1)' class="btn-group">
+               <md-button ng-if="isTemplateClicked" class="md-primary" ng-disabled="!form.create_job.$valid" name="next" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+            </span>
+            <span ng-if='(vm.currentStep == 2)' class="btn-group">
+               <md-button class="md-primary" name="previous" type="button" ng-disabled="!ownerInvite.isValid() && !formModel.jobOwner" ng-click="vm.gotoStep(vm.currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous</md-button>
+               <md-button ng-if='!formModel.jobOwner' class="md-primary"  ng-disabled="!formModel.jobOwner" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+               <md-button ng-if='formModel.jobOwner' class="md-primary"  name="next" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+               <md-button ng-if='!formModel.jobOwner' class="md-primary"  ng-disabled="!ownerInvite.isValid()"  type="button" ng-click="templateJobSubmit(formModel)">Create</md-button>
+               <md-button ng-if='formModel.jobOwner' class="md-primary" class="btn btn-success"  type="button" ng-click="templateJobSubmit(formModel)">Create</md-button>
+            </span>
+            <span ng-if='(vm.currentStep == 3)' class="btn-group">
+               <md-button class="md-primary" name="previous" type="button" ng-click="vm.gotoStep(vm.currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous</md-button>
+               <md-button class="md-primary" class="btn btn-success" name="next" type="button" ng-click="templateJobSubmit(formModel)">
+                  Create
+               </md-button>
+            </span>
+         </div>
+      </div>
+   </div> 
+<!--       <div ng-if="currentJobType==2"  class="md-actions full-width" layout="row" id="wizard-container">
+      <div id="wizard-navigation-container">
+         <div class="pull-right">
+            <md-button class="md-primary" ng-click="cancel()"> Cancel </md-button>
+            <span ng-if='(vm.currentStep == 1)' class="btn-group">
+               <md-button class="md-primary" name="next" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+            </span>
+            <span ng-if='(vm.currentStep == 2)' class="btn-group">
+               <md-button class="md-primary" name="previous" type="button" ng-click="vm.gotoStep(vm.currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous</md-button>
+               <md-button ng-if='!formModel.jobOwner' class="md-primary" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+               <md-button ng-if='formModel.jobOwner' class="md-primary"  name="next" type="button" ng-click="vm.gotoStep(vm.currentStep + 1)">Next<i class="fa fa-arrow-right"></i></md-button>
+               <md-button ng-if='!formModel.jobOwner' class="md-primary"  ng-disabled="!formModel.templateName && !formModel.desc || !ownerInvite.isValid() "  type="button" ng-click="templateJobSubmit(formModel)">Create</md-button>
+               <md-button ng-if='formModel.jobOwner' class="md-primary" class="btn btn-success"  ng-disabled="!formModel.templateName || !formModel.desc "  type="button" ng-click="templateJobSubmit(formModel)">Create</md-button>
+            </span>
+            <span ng-if='(vm.currentStep == 3)' class="btn-group">
+               <md-button class="md-primary" name="previous" type="button" ng-click="vm.gotoStep(vm.currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous</md-button>
+              <md-button ng-if='!formModel.jobOwner' class="md-primary"  ng-disabled="!formModel.templateName && !formModel.desc || !ownerInvite.isValid() "  type="button" ng-click="templateJobSubmit(formModel)">Create</md-button>
+               <md-button ng-if='formModel.jobOwner' class="md-primary" class="btn btn-success"  ng-disabled="!formModel.templateName || !formModel.desc "  type="button" ng-click="templateJobSubmit(formModel)">Create</md-button>
+            </span>
+         </div>
+      </div>
+   </div> -->
+</md-dialog>
